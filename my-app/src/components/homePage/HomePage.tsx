@@ -18,8 +18,7 @@ export default function HomePage() {
 	//load commands from file
 	useEffect(() => {
 		const localCommands: Command[] = [];
-		//@ts-ignore
-		commandsFileLoc.forEach((readCommand) => {
+		commandsFileLoc.forEach((readCommand: Command) => {
 			localCommands.push(readCommand);
 		});
 		setCommands(localCommands);
