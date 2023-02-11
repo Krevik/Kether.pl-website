@@ -11,9 +11,7 @@ type Command = {
 };
 
 export default function HomePage() {
-	const [commands, setCommands] = useState<Command[]>([
-		{ command: "!r , !nr", description: "Sets your ready status" },
-	]);
+	const [commands, setCommands] = useState<Command[]>([]);
 
 	//load commands from file
 	useEffect(() => {

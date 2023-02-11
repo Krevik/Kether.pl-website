@@ -23,21 +23,20 @@ export default function Navbar() {
 			icon: "pi pi-fw pi-home",
 		},
 		{
-			tabType: TabType.SERVERS,
-			label: "Servers",
-			icon: "pi pi-fw pi-calendar",
-		},
-		{
 			tabType: TabType.HALL_OF_FAME,
 			label: "Hall of Fame",
-			icon: "pi pi-fw pi-pencil",
+			icon: "pi pi-fw pi-camera",
 		},
 		{
 			tabType: TabType.GITHUB,
 			label: "Github Repo",
 			icon: "pi pi-fw pi-file",
 		},
-		{ tabType: TabType.DONATE, label: "Donate", icon: "pi pi-fw pi-cog" },
+		{
+			tabType: TabType.DONATE,
+			label: "Donate",
+			icon: "pi pi-fw pi-credit-card",
+		},
 	];
 
 	return (

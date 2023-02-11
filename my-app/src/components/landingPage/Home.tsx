@@ -4,8 +4,10 @@ import { useSelector } from "react-redux";
 import { AppState } from "../../redux/store";
 import { TabType } from "../navbar/models/TabModels";
 import HomePage from "../homePage/HomePage";
-import Servers from "../servers/Servers";
 import Footer from "../footer/Footer";
+import HallOfFame from "../hallOfFame/HallOfFame";
+import GithubRepo from "../githubRepo/GithubRepo";
+import Donate from "../donate/Donate";
 
 export default function Home() {
 	const activeTabIndex = useSelector(
@@ -16,8 +18,12 @@ export default function Home() {
 		switch (activeTabIndex) {
 			case TabType.HOME:
 				return <HomePage />;
-			case TabType.SERVERS:
-				return <Servers />;
+			case TabType.HALL_OF_FAME:
+				return <HallOfFame />;
+			case TabType.GITHUB:
+				return <GithubRepo />;
+			case TabType.DONATE:
+				return <Donate />;
 			default:
 				return <div>In progress</div>;
 		}
