@@ -2,18 +2,24 @@
 	height: 100%;
 	width: 100%;
 	min-width: 1000px;
-	overflow-x: auto;
 }
 
 .column {
 	float: left;
-	width: 33%;
+	width: 33.33%;
+	padding-left: 50px;
+	padding-right: 50px;
 }
 
 .row:after {
 	content: "";
 	display: table;
 	clear: both;
+}
+
+.commands {
+	overflow-x: hidden;
+	min-width: 300px;
 }
 
 .commands .column {
@@ -23,7 +29,7 @@
 
 .home-page .commands .p-datatable {
 	font-family: "Future Rot";
-	font-size: 1.1rem;
+	font-size: 1.2rem;
 	-webkit-text-stroke: 1px black;
 }
 

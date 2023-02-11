@@ -51,22 +51,39 @@ export default function HomePage() {
 								IP: <div className="f4">51.83.217.86:29800</div>
 							</div>
 						</div>
-						<div className="column positioned-vertically"></div>
+						<div className="column positioned-vertically">
+							<div
+								className="centered-text"
+								style={{ paddingTop: "50%", display: "inline-block" }}
+							>
+								You can download all the custom maps installed on the server
+								<a
+									style={{
+										display: "inline-block",
+										marginLeft: "10px",
+										textDecoration: "none",
+										color: "white",
+										WebkitTextStroke: " 3px red",
+									}}
+									href="https://steamcommunity.com/sharedfiles/filedetails/?id=2542824628"
+								>
+									HERE
+								</a>
+							</div>
+						</div>
 						<div className="column positioned-vertically">
 							<div className="commands">
-								<div className="card">
-									<DataTable
-										value={commands}
-										responsiveLayout="scroll"
-										style={{
-											backgroundColor: "transparent",
-											background: "transparent",
-										}}
-									>
-										<Column field="command" header="Command"></Column>
-										<Column field="description" header="Description"></Column>
-									</DataTable>
-								</div>
+								<DataTable
+									value={commands}
+									responsiveLayout="scroll"
+									style={{
+										backgroundColor: "transparent",
+										background: "transparent",
+									}}
+								>
+									<Column field="command" header="Command"></Column>
+									<Column field="description" header="Description"></Column>
+								</DataTable>
 							</div>
 						</div>
 					</div>

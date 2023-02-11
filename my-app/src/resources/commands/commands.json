@@ -1,6 +1,6 @@
 [
   {
-    "command":"!r , !nr",
+    "command":"!r, !nr",
     "description": "Sets your ready status"
   },
   {
@@ -12,7 +12,7 @@
 	  "description": "Calls a voting to switch <nick> to spectators"
   },
   {
-	  "command": "!hats , !hat",
+	  "command": "!hats, !hat",
 	  "description": "(VIP) Opens a menu with wearable hats"
   },
   {
@@ -20,7 +20,7 @@
 	  "description": "Calls a voting to set certain tank and witch spawn points (in percentages)"
   },
   {
-	  "command": "!health , !bonus",
+	  "command": "!health, !bonus",
 	  "description": "Shows current expected point bonus"
   },
   {
@@ -28,7 +28,7 @@
 	"description": "Shows point bonus rules for actual map"
   },
   {
-	  "command": "!tank , !boss",
+	  "command": "!tank, !boss",
 	  "description": "Shows current tank and witch spawn points (in percentages)"
   },
   {
@@ -40,7 +40,7 @@
 	  "description": "Shows your current statistics (damage done to SI, CI, teammates)"
   },
   {
-	  "command": "!spotmarker , SHIFT+E",
+	  "command": "!spotmarker, SHIFT+E",
 	  "description": "Marks a spot on the map, visible to your teammates"
   },
   {
