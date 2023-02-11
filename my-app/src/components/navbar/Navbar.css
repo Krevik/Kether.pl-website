@@ -10,3 +10,12 @@
 	margin-right: 10px;
 	margin-left: 10px;
 }
+
+.p-tabmenu {
+	-webkit-text-stroke: 0.1px black;
+	font-family: "Future Rot";
+	font-size: 1rem;
+	font-weight: 600;
+	display: flex;
+	justify-content: center;
+}

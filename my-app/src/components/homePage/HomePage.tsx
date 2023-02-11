@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import commandsFileLoc from "../../resources/commands/commands.json";
-import { read } from "fs";
 
 type Command = {
 	command: string;
@@ -20,7 +19,7 @@ export default function HomePage() {
 	useEffect(() => {
 		const localCommands: Command[] = [];
 		//@ts-ignore
-		commandsFileLoc.map((readCommand) => {
+		commandsFileLoc.forEach((readCommand) => {
 			localCommands.push(readCommand);
 		});
 		setCommands(localCommands);
