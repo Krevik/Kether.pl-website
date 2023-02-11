@@ -1,0 +1,14 @@
+[
+  {
+    "command":"!r , !nr",
+    "description": "Sets your ready status"
+  },
+  {
+    "command": "!s",
+    "description": "Switches you to spectator's team"
+  },
+  {
+	  "command": "!vts <nick>",
+	  "description": "Calls a vote to switch <nick> to spectators"
+  }
+]

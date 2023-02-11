@@ -1,15 +1,42 @@
 .home-page {
 	height: 100%;
 	width: 100%;
+	min-width: 1000px;
+	overflow-x: auto;
 }
 
 .column {
 	float: left;
-	width: 33.33%;
+	width: 33%;
 }
 
 .row:after {
 	content: "";
 	display: table;
 	clear: both;
+}
+
+.commands .column {
+	float: left;
+	width: 50%;
+}
+
+.home-page .commands .p-datatable {
+	font-family: "Future Rot";
+	font-size: 1.1rem;
+	-webkit-text-stroke: 1px black;
+}
+
+.home-page .commands .p-datatable .p-datatable-tbody > tr {
+	background: transparent;
+	border: none;
+}
+
+.home-page .commands .p-datatable .p-datatable-thead > tr > th {
+	background: transparent;
+	border: none;
+}
+
+.home-page .commands .p-datatable .p-datatable-tbody > tr > td {
+	border: none;
 }

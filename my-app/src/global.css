@@ -18,12 +18,8 @@
 	font-display: swap;
 }
 
-.center-vertically {
+.positioned-vertically {
 	padding-top: 5%;
-}
-
-.margined-top {
-	margin-top: 20px;
 }
 
 .centered-text {
@@ -38,11 +34,27 @@
 .centered {
 	display: flex;
 	justify-content: center;
+	align-self: center;
 }
 
 .centered-text .f4 {
-	margin-top: 2px;
+	display: flex;
 	margin-left: 5px;
 	font-size: 1.6rem;
+	font-weight: 400;
+	align-self: center;
+}
+
+.font2 {
+	display: flex;
+	margin-left: 5px;
+	font-size: 1rem;
+	font-weight: 400;
+}
+
+.font3 {
+	display: flex;
+	margin-left: 5px;
+	font-size: 1.3rem;
 	font-weight: 400;
 }

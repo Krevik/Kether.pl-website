@@ -1,12 +1,30 @@
 import "./HomePage.css";
 import backgroundImage from "../../resources/backgrounds/background_1.jpg";
 import { useEffect, useState } from "react";
+import { DataTable } from "primereact/datatable";
+import { Column } from "primereact/column";
+import commandsFileLoc from "../../resources/commands/commands.json";
+import { read } from "fs";
+
+type Command = {
+	command: string;
+	description: string;
+};
 
 export default function HomePage() {
-	const [commands, setCommands] = useState<string[]>();
+	const [commands, setCommands] = useState<Command[]>([
+		{ command: "!r , !nr", description: "Sets your ready status" },
+	]);
 
 	//load commands from file
-	useEffect(() => {}, []);
+	useEffect(() => {
+		const localCommands: Command[] = [];
+		//@ts-ignore
+		commandsFileLoc.map((readCommand) => {
+			localCommands.push(readCommand);
+		});
+		setCommands(localCommands);
+	}, []);
 
 	return (
 		<div className="home-page">
@@ -16,14 +34,15 @@ export default function HomePage() {
 					style={{ backgroundImage: `url(${backgroundImage})` }}
 				>
 					<div className="row">
-						<div className="column margined-top center-vertically">
+						<div className="column positioned-vertically">
 							<div className="centered-text">Kether.pl Competitive 108T</div>
 							<div className="centered">
 								<img
 									alt="Server Tracker"
 									style={{
 										display: "block",
-										width: "30vw",
+										height: "102px",
+										width: "450px",
 										marginTop: "10px",
 										marginBottom: "10px",
 									}}
@@ -34,10 +53,23 @@ export default function HomePage() {
 								IP: <div className="f4">51.83.217.86:29800</div>
 							</div>
 						</div>
-						<div className="column margined-top center-vertically"></div>
-						<div className="column margined-top center-vertically">
-							<div className="centered-text">Standard user commands:</div>
-							<123
+						<div className="column positioned-vertically"></div>
+						<div className="column positioned-vertically">
+							<div className="commands">
+								<div className="card">
+									<DataTable
+										value={commands}
+										responsiveLayout="scroll"
+										style={{
+											backgroundColor: "transparent",
+											background: "transparent",
+										}}
+									>
+										<Column field="command" header="Command"></Column>
+										<Column field="description" header="Description"></Column>
+									</DataTable>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
