@@ -1,0 +1,8 @@
+.footer-text {
+	-webkit-text-stroke: 0.1px red;
+	font-family: "Future Rot";
+	font-size: 2rem;
+	font-weight: 600;
+	display: flex;
+	justify-content: center;
+}

@@ -1,0 +1,12 @@
+.p-tabmenu-nav {
+	list-style-type: none;
+	flex-wrap: nowrap;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+
+.p-tabmenu .p-tabmenu-nav .p-tabmenuitem {
+	margin-right: 10px;
+	margin-left: 10px;
+}
