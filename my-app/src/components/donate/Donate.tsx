@@ -8,7 +8,7 @@ export default function Donate() {
 	const [donateAmountPrzelewy24, setDonateAmountPrzelewy24] =
 		useState<number>(10);
 	const [donateAmountPSC, setDonateAmountPSC] = useState<number>(10);
-
+	const [donateAmountPaypal, setDonateAmountPaypal] = useState<number>(10);
 	return (
 		<div className="donate">
 			<div className="card" style={{ height: "100%", width: "100%" }}>
@@ -19,6 +19,7 @@ export default function Donate() {
 					<div
 						className="centered-text"
 						style={{
+							maxHeight: "176px",
 							width: "80%",
 							margin: "auto",
 							marginTop: "1%",
@@ -34,11 +35,17 @@ export default function Donate() {
 					</div>
 					<div
 						className="row"
-						style={{ width: "100%", height: "40%", paddingTop: "200px" }}
+						style={{
+							width: "100%",
+							height: "40%",
+							paddingTop: "200px",
+							display: "flex",
+							justifyContent: "center",
+						}}
 					>
-						<div className="column">
+						<div className="column" style={{ minWidth: "402px" }}>
 							<form
-								style={{ border: "solid 2px white" }}
+								style={{ border: "solid 2px white", height: "101px" }}
 								action="https://liveserver.pl/pay.php?method=online"
 								method="post"
 								target="_blank"
@@ -74,9 +81,9 @@ export default function Donate() {
 								</div>
 							</form>
 						</div>
-						<div className="column">
+						<div className="column" style={{ minWidth: "402px" }}>
 							<form
-								style={{ border: "solid 2px white" }}
+								style={{ border: "solid 2px white", height: "101px" }}
 								action="https://liveserver.pl/pay.php?method=psc"
 								method="post"
 								target="_blank"
@@ -113,9 +120,71 @@ export default function Donate() {
 							</form>
 						</div>
 					</div>
-					<div className="row" style={{ width: "100%", height: "40%" }}>
-						<div className="column"></div>
-						<div className="column"></div>
+
+					<div
+						className="row"
+						style={{
+							width: "100%",
+							height: "40%",
+							display: "flex",
+							justifyContent: "center",
+						}}
+					>
+						<div className="column" style={{ minWidth: "402px" }}>
+							<form
+								style={{ border: "solid 2px white", height: "101px" }}
+								action="https://liveserver.pl/pay.php?method=paypal"
+								method="post"
+								target="_blank"
+							>
+								<input type="hidden" name="lvs_client_id" value="26606" />
+								<input type="hidden" name="api" />
+								<div
+									className="centered-text"
+									style={{
+										fontSize: "2rem",
+									}}
+								>
+									Paypal
+								</div>
+								<div style={{ display: "flex", justifyContent: "center" }}>
+									<InputNumber
+										inputId="stacked"
+										value={donateAmountPaypal}
+										onValueChange={(event) =>
+											setDonateAmountPaypal(event.value || 10)
+										}
+										showButtons
+										min={1}
+										mode="currency"
+										currency="PLN"
+									/>
+									<input
+										type="hidden"
+										name="lvs_o_amount"
+										value={donateAmountPaypal}
+									/>
+									<input type="submit" name="lvs_o_submit" value="Wyślij" />
+								</div>
+							</form>
+						</div>
+						<div
+							className="column"
+							style={{
+								minWidth: "402px",
+								border: "solid 2px white",
+								height: "101px",
+							}}
+						>
+							<div
+								className="centered-text"
+								style={{
+									fontSize: "2rem",
+								}}
+							>
+								Other
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
