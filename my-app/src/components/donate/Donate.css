@@ -1,4 +1,28 @@
 .donate {
-	width: 100%;
 	height: 100%;
+	width: 100%;
+	min-width: 1400px;
+	min-height: 1100px;
+	background-position: center;
+	background-size: cover;
+}
+
+.donate .card {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+}
+
+.donate .payment-method {
+	margin: auto;
+	border: solid 5px wheat;
+	border-radius: 250px;
+	height: 80px;
+	width: 50%;
+	min-width: 500px;
+}
+
+.donate .p-inputnumber {
+	margin-right: 10px;
 }

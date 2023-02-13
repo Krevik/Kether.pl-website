@@ -10,8 +10,18 @@ type Command = {
 	description: string;
 };
 
+type ServerInfo = {
+	name: string;
+	players: number;
+	status: number;
+	map: string;
+	maxplayers: number;
+	password: number;
+};
+
 export default function HomePage() {
 	const [commands, setCommands] = useState<Command[]>([]);
+	const [serverInfo, setServerInfo] = useState<ServerInfo>();
 
 	//load commands from file
 	useEffect(() => {
@@ -22,69 +32,79 @@ export default function HomePage() {
 		setCommands(localCommands);
 	}, []);
 
+	//load server info
+	useEffect(() => {
+		fetch(
+			"https://rec.liveserver.pl/api?channel=get_server_info&return_method=json",
+			{
+				method: "POST",
+				headers: {
+					Accept:
+						"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
+					"Content-Type": "application/x-www-form-urlencoded",
+				},
+				body: new URLSearchParams({
+					client_id: "26606",
+					pin: "635577095f13a5c85545c4e6690d8878",
+					server_id: "24044",
+				}),
+				mode: "no-cors",
+			}
+		).then((response) => {
+			console.log(JSON.stringify(response));
+			setServerInfo(response as unknown as ServerInfo);
+		});
+	}, []);
+
 	return (
-		<div className="home-page">
-			<div className="card" style={{ height: "100%", width: "100%" }}>
+		<div
+			className="home-page"
+			style={{
+				backgroundImage: `url(${backgroundImage})`,
+			}}
+		>
+			<div className="card">
 				<div
-					className="background-image"
-					style={{ backgroundImage: `url(${backgroundImage})` }}
+					className="section"
+					style={{ paddingLeft: "var(--standardPadding)" }}
 				>
-					<div className="row">
-						<div className="column positioned-vertically">
-							<div className="centered-text">Kether.pl Competitive 108T</div>
-							<div className="centered">
-								<img
-									alt="Server Tracker"
-									style={{
-										display: "block",
-										height: "102px",
-										width: "450px",
-										marginTop: "10px",
-										marginBottom: "10px",
-									}}
-									src="https://liveserver.pl/tracker.php?serviceid=24044"
-								/>
-							</div>
-							<div className="centered-text ">
-								IP: <div className="f4">51.83.217.86:29800</div>
-							</div>
-						</div>
-						<div className="column positioned-vertically">
-							<div
-								className="centered-text"
-								style={{ paddingTop: "50%", display: "inline-block" }}
-							>
-								You can download all the custom maps installed on the server
-								<a
-									style={{
-										display: "inline-block",
-										marginLeft: "10px",
-										textDecoration: "none",
-										color: "white",
-										WebkitTextStroke: " 3px red",
-									}}
-									href="https://steamcommunity.com/sharedfiles/filedetails/?id=2542824628"
-								>
-									HERE
-								</a>
-							</div>
-						</div>
-						<div className="column positioned-vertically">
-							<div className="commands">
-								<DataTable
-									value={commands}
-									responsiveLayout="scroll"
-									style={{
-										backgroundColor: "transparent",
-										background: "transparent",
-									}}
-								>
-									<Column field="command" header="Command"></Column>
-									<Column field="description" header="Description"></Column>
-								</DataTable>
-							</div>
-						</div>
+					<div className="centered-text">Kether.pl Competitive 108T</div>
+					<div className="centered-text">IP: 51.83.217.86:29800</div>
+				</div>
+
+				<div className="section">
+					<div className="centered-text">
+						You can download all the custom maps installed on the server
+						<a
+							style={{
+								display: "inline-block",
+								marginLeft: "10px",
+								textDecoration: "none",
+								color: "white",
+								WebkitTextStroke: " 3px red",
+							}}
+							href="https://steamcommunity.com/sharedfiles/filedetails/?id=2542824628"
+						>
+							HERE
+						</a>
 					</div>
+				</div>
+
+				<div
+					className="section"
+					style={{ paddingRight: "var(--standardPadding)" }}
+				>
+					<DataTable
+						value={commands}
+						responsiveLayout="scroll"
+						style={{
+							backgroundColor: "transparent",
+							background: "transparent",
+						}}
+					>
+						<Column field="command" header="Command"></Column>
+						<Column field="description" header="Description"></Column>
+					</DataTable>
 				</div>
 			</div>
 		</div>

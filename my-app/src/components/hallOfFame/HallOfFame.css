@@ -1,20 +1,30 @@
 .hall-of-fame {
 	width: 100%;
 	height: 100%;
+	min-width: 1400px;
+	min-height: 1100px;
+	background-position: center;
+	background-size: cover;
+}
+
+.hall-of-fame .card {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
 }
 
 .hall-of-fame .p-datatable {
+	width: 90%;
+	background-color: transparent;
+	background: transparent;
+	padding-top: 20px;
+	margin: auto;
 	font-family: "Future Rot";
 	font-size: 1.2rem;
 	-webkit-text-stroke: 1px black;
 }
 
 .hall-of-fame .p-datatable .p-datatable-tbody > tr {
-	background: transparent;
-	border: none;
-}
-
-.hall-of-fame .p-datatable .p-datatable-thead > tr > th {
 	background: transparent;
 	border: none;
 }

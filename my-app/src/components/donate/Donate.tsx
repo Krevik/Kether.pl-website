@@ -9,183 +9,62 @@ export default function Donate() {
 		useState<number>(10);
 	const [donateAmountPSC, setDonateAmountPSC] = useState<number>(10);
 	const [donateAmountPaypal, setDonateAmountPaypal] = useState<number>(10);
-	return (
-		<div className="donate">
-			<div className="card" style={{ height: "100%", width: "100%" }}>
-				<div
-					className="background-image"
-					style={{ backgroundImage: `url(${backgroundImage})` }}
-				>
-					<div
-						className="centered-text"
-						style={{
-							maxHeight: "176px",
-							width: "80%",
-							margin: "auto",
-							marginTop: "1%",
-							fontSize: "3rem",
-							position: "absolute",
-							left: "50%",
-							transform: "translate(-50%, 0)",
-							msTransform: "translate(-50%, 0)",
-						}}
-					>
-						You like the server or just want access to vip commands? Support us
-						by making a donate!
-					</div>
-					<div
-						className="row"
-						style={{
-							width: "100%",
-							height: "40%",
-							paddingTop: "200px",
-							display: "flex",
-							justifyContent: "center",
-						}}
-					>
-						<div className="column" style={{ minWidth: "402px" }}>
-							<form
-								style={{ border: "solid 2px white", height: "101px" }}
-								action="https://liveserver.pl/pay.php?method=online"
-								method="post"
-								target="_blank"
-							>
-								<input type="hidden" name="lvs_client_id" value="26606" />
-								<input type="hidden" name="api" />
-								<div
-									className="centered-text"
-									style={{
-										fontSize: "2rem",
-									}}
-								>
-									Przelewy Online
-								</div>
-								<div style={{ display: "flex", justifyContent: "center" }}>
-									<InputNumber
-										inputId="stacked"
-										value={donateAmountPrzelewy24}
-										onValueChange={(event) =>
-											setDonateAmountPrzelewy24(event.value || 10)
-										}
-										min={1}
-										showButtons
-										mode="currency"
-										currency="PLN"
-									/>
-									<input
-										type="hidden"
-										name="lvs_o_amount"
-										value={donateAmountPrzelewy24}
-									/>
-									<input type="submit" name="lvs_o_submit" value="Wyślij" />
-								</div>
-							</form>
-						</div>
-						<div className="column" style={{ minWidth: "402px" }}>
-							<form
-								style={{ border: "solid 2px white", height: "101px" }}
-								action="https://liveserver.pl/pay.php?method=psc"
-								method="post"
-								target="_blank"
-							>
-								<input type="hidden" name="lvs_client_id" value="26606" />
-								<input type="hidden" name="api" />
-								<div
-									className="centered-text"
-									style={{
-										fontSize: "2rem",
-									}}
-								>
-									PSC
-								</div>
-								<div style={{ display: "flex", justifyContent: "center" }}>
-									<InputNumber
-										inputId="stacked"
-										value={donateAmountPSC}
-										onValueChange={(event) =>
-											setDonateAmountPSC(event.value || 10)
-										}
-										showButtons
-										min={1}
-										mode="currency"
-										currency="PLN"
-									/>
-									<input
-										type="hidden"
-										name="lvs_o_amount"
-										value={donateAmountPSC}
-									/>
-									<input type="submit" name="lvs_o_submit" value="Wyślij" />
-								</div>
-							</form>
-						</div>
-					</div>
 
-					<div
-						className="row"
-						style={{
-							width: "100%",
-							height: "40%",
-							display: "flex",
-							justifyContent: "center",
-						}}
-					>
-						<div className="column" style={{ minWidth: "402px" }}>
-							<form
-								style={{ border: "solid 2px white", height: "101px" }}
-								action="https://liveserver.pl/pay.php?method=paypal"
-								method="post"
-								target="_blank"
-							>
-								<input type="hidden" name="lvs_client_id" value="26606" />
-								<input type="hidden" name="api" />
-								<div
-									className="centered-text"
-									style={{
-										fontSize: "2rem",
-									}}
-								>
-									Paypal
-								</div>
-								<div style={{ display: "flex", justifyContent: "center" }}>
-									<InputNumber
-										inputId="stacked"
-										value={donateAmountPaypal}
-										onValueChange={(event) =>
-											setDonateAmountPaypal(event.value || 10)
-										}
-										showButtons
-										min={1}
-										mode="currency"
-										currency="PLN"
-									/>
-									<input
-										type="hidden"
-										name="lvs_o_amount"
-										value={donateAmountPaypal}
-									/>
-									<input type="submit" name="lvs_o_submit" value="Wyślij" />
-								</div>
-							</form>
-						</div>
-						<div
-							className="column"
-							style={{
-								minWidth: "402px",
-								border: "solid 2px white",
-								height: "101px",
-							}}
+	const client_id = 26606;
+
+	return (
+		<div
+			className="donate"
+			style={{ backgroundImage: `url(${backgroundImage})` }}
+		>
+			<div className="card">
+				<div className="centered-text" style={{ height: "10%" }}>
+					You like the server or just want access to vip commands? Support us by
+					making a donate!
+				</div>
+
+				<div className="payment-method">
+					<div className="centered-text">
+						Przelewy 24
+						<form
+							action="https://liveserver.pl/pay.php?method=online"
+							method="post"
+							target="_blank"
 						>
-							<div
-								className="centered-text"
-								style={{
-									fontSize: "2rem",
-								}}
-							>
-								Other
-							</div>
-						</div>
+							<input type="hidden" name="lvs_client_id" value={client_id} />
+							<input type="hidden" name="api" />
+							<input
+								type="hidden"
+								name="lvs_o_amount"
+								value={donateAmountPrzelewy24}
+							/>
+
+							<InputNumber
+								value={donateAmountPrzelewy24}
+								onValueChange={(e) =>
+									setDonateAmountPrzelewy24(e.value! | donateAmountPrzelewy24)
+								}
+								incrementButtonIcon="pi pi-plus"
+								decrementButtonIcon="pi pi-minus"
+								showButtons
+								mode="currency"
+								min={0}
+								currency="PLN"
+							/>
+							<Button>
+								<input type="submit" name="lvs_o_submit" value="Wyślij" />
+							</Button>
+						</form>
 					</div>
+				</div>
+				<div className="payment-method">
+					<div className="centered-text">PSC</div>
+				</div>
+				<div className="payment-method">
+					<div className="centered-text">Paypal</div>
+				</div>
+				<div className="payment-method">
+					<div className="centered-text">Other</div>
 				</div>
 			</div>
 		</div>
