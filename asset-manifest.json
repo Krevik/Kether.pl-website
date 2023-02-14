@@ -1,27 +1,27 @@
 {
   "files": {
-    "main.css": "/kether.pl/static/css/main.2cff29c9.css",
-    "main.js": "/kether.pl/static/js/main.0518a377.js",
-    "static/media/background_1.jpg": "/kether.pl/static/media/background_1.bbbbf33c0f3cf7222559.jpg",
-    "static/media/background_3.jpg": "/kether.pl/static/media/background_3.4e932a7e40bb7c3fc904.jpg",
-    "static/media/background_4.jpg": "/kether.pl/static/media/background_4.afd7ff29b91152c81d22.jpg",
-    "static/media/primeicons.svg": "/kether.pl/static/media/primeicons.e1441b135b3ca9ad643c.svg",
-    "static/media/primeicons.eot": "/kether.pl/static/media/primeicons.d44157bdfa026dc877af.eot",
-    "static/media/primeicons.woff": "/kether.pl/static/media/primeicons.10d3152104f2208ac82a.woff",
-    "static/media/primeicons.ttf": "/kether.pl/static/media/primeicons.ea5358601d0a3fd6670b.ttf",
-    "static/media/FutureRot.svg": "/kether.pl/static/media/FutureRot.08d5c1ab5a213d027d18.svg",
-    "static/media/background_2.jpg": "/kether.pl/static/media/background_2.ff9f534c27a70665cc60.jpg",
-    "static/media/primeicons.woff2": "/kether.pl/static/media/primeicons.78172950b335ccdb94e2.woff2",
-    "static/media/FutureRot.eot": "/kether.pl/static/media/FutureRot.c78701827e6c52a09ab6.eot",
-    "static/media/FutureRot.ttf": "/kether.pl/static/media/FutureRot.dabafa940db6a7076da0.ttf",
-    "static/media/FutureRot.woff": "/kether.pl/static/media/FutureRot.f067340e382f9f3cd894.woff",
-    "static/media/FutureRot.woff2": "/kether.pl/static/media/FutureRot.8d63b100cb8153f603e8.woff2",
-    "index.html": "/kether.pl/index.html",
-    "main.2cff29c9.css.map": "/kether.pl/static/css/main.2cff29c9.css.map",
-    "main.0518a377.js.map": "/kether.pl/static/js/main.0518a377.js.map"
+    "main.css": "/static/css/main.878ac10b.css",
+    "main.js": "/static/js/main.125c22bf.js",
+    "static/media/background_1.jpg": "/static/media/background_1.bbbbf33c0f3cf7222559.jpg",
+    "static/media/background_3.jpg": "/static/media/background_3.4e932a7e40bb7c3fc904.jpg",
+    "static/media/background_4.jpg": "/static/media/background_4.afd7ff29b91152c81d22.jpg",
+    "static/media/primeicons.svg": "/static/media/primeicons.e1441b135b3ca9ad643c.svg",
+    "static/media/primeicons.eot": "/static/media/primeicons.d44157bdfa026dc877af.eot",
+    "static/media/primeicons.woff": "/static/media/primeicons.10d3152104f2208ac82a.woff",
+    "static/media/primeicons.ttf": "/static/media/primeicons.ea5358601d0a3fd6670b.ttf",
+    "static/media/FutureRot.svg": "/static/media/FutureRot.08d5c1ab5a213d027d18.svg",
+    "static/media/background_2.jpg": "/static/media/background_2.ff9f534c27a70665cc60.jpg",
+    "static/media/primeicons.woff2": "/static/media/primeicons.78172950b335ccdb94e2.woff2",
+    "static/media/FutureRot.eot": "/static/media/FutureRot.c78701827e6c52a09ab6.eot",
+    "static/media/FutureRot.ttf": "/static/media/FutureRot.dabafa940db6a7076da0.ttf",
+    "static/media/FutureRot.woff": "/static/media/FutureRot.f067340e382f9f3cd894.woff",
+    "static/media/FutureRot.woff2": "/static/media/FutureRot.8d63b100cb8153f603e8.woff2",
+    "index.html": "/index.html",
+    "main.878ac10b.css.map": "/static/css/main.878ac10b.css.map",
+    "main.125c22bf.js.map": "/static/js/main.125c22bf.js.map"
   },
   "entrypoints": [
-    "static/css/main.2cff29c9.css",
-    "static/js/main.0518a377.js"
+    "static/css/main.878ac10b.css",
+    "static/js/main.125c22bf.js"
   ]
 }
