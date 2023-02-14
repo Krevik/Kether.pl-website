@@ -57,14 +57,94 @@ export default function Donate() {
 						</form>
 					</div>
 				</div>
+
 				<div className="payment-method">
-					<div className="centered-text">PSC</div>
+					<div className="centered-text">
+						PSC
+						<form
+							action="https://liveserver.pl/pay.php?method=psc"
+							method="post"
+							target="_blank"
+						>
+							<input type="hidden" name="lvs_client_id" value={client_id} />
+							<input type="hidden" name="api" />
+							<input
+								type="hidden"
+								name="lvs_o_amount"
+								value={donateAmountPSC}
+							/>
+
+							<InputNumber
+								value={donateAmountPSC}
+								onValueChange={(e) =>
+									setDonateAmountPSC(e.value! | donateAmountPSC)
+								}
+								incrementButtonIcon="pi pi-plus"
+								decrementButtonIcon="pi pi-minus"
+								showButtons
+								mode="currency"
+								min={0}
+								currency="PLN"
+							/>
+							<Button>
+								<input type="submit" name="lvs_o_submit" value="Wyślij" />
+							</Button>
+						</form>
+					</div>
 				</div>
+
 				<div className="payment-method">
-					<div className="centered-text">Paypal</div>
+					<div className="centered-text">
+						Paypal
+						<form
+							action="https://liveserver.pl/pay.php?method=paypal"
+							method="post"
+							target="_blank"
+						>
+							<input type="hidden" name="lvs_client_id" value={client_id} />
+							<input type="hidden" name="api" />
+							<input
+								type="hidden"
+								name="lvs_o_amount"
+								value={donateAmountPaypal}
+							/>
+
+							<InputNumber
+								value={donateAmountPaypal}
+								onValueChange={(e) =>
+									setDonateAmountPaypal(e.value! | donateAmountPaypal)
+								}
+								incrementButtonIcon="pi pi-plus"
+								decrementButtonIcon="pi pi-minus"
+								showButtons
+								mode="currency"
+								min={0}
+								currency="PLN"
+							/>
+							<Button>
+								<input type="submit" name="lvs_o_submit" value="Wyślij" />
+							</Button>
+						</form>
+					</div>
 				</div>
-				<div className="payment-method">
-					<div className="centered-text">Other</div>
+
+				<div className="payment-method" style={{ height: "230px" }}>
+					<div className="centered-text">
+						Other
+						<div className="font1">Revolut: @krevik </div>
+						<div className="font1">
+							Bank: (PLN only) 74 1140 2004 0000 3702 7618 0386
+						</div>
+						<div className="font1">
+							Crypto BSC: 0xE59FfC3689af47fC501Ce84A2F1cf3C435a67869
+						</div>
+						<div className="font1">
+							Crypto BTC: bc1quyf34l6xk9s4z7xd5gvwk07fxtlhqz3q75az53
+						</div>
+						<div className="font1">
+							Crypto Polygon: 0xE59FfC3689af47fC501Ce84A2F1cf3C435a67869
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

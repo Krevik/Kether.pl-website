@@ -50,10 +50,12 @@ export default function HomePage() {
 				}),
 				mode: "no-cors",
 			}
-		).then((response) => {
-			console.log(JSON.stringify(response));
-			setServerInfo(response as unknown as ServerInfo);
-		});
+		)
+			.then((response) => response.json())
+			.then((response) => {
+				console.log(response);
+				setServerInfo(response as unknown as ServerInfo);
+			});
 	}, []);
 
 	return (

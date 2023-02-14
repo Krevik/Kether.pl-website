@@ -26,3 +26,8 @@
 .donate .p-inputnumber {
 	margin-right: 10px;
 }
+
+.donate input[type="submit" i] {
+	background-color: transparent;
+	border: none;
+}
