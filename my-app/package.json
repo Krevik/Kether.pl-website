@@ -1,7 +1,8 @@
 {
-	"name": "my-app",
+	"name": "kether.pl",
 	"version": "0.1.0",
 	"private": true,
+	"homepage": "https://krevik.github.io/kether.pl",
 	"dependencies": {
 		"@reduxjs/toolkit": "^1.9.2",
 		"@testing-library/jest-dom": "^5.16.5",
@@ -11,6 +12,7 @@
 		"@types/node": "^16.18.12",
 		"@types/react": "^18.0.27",
 		"@types/react-dom": "^18.0.10",
+		"gh-pages": "^5.0.0",
 		"prettier": "^2.8.4",
 		"primereact": "^9.0.0-rc.1",
 		"react": "^18.2.0",
@@ -24,7 +26,9 @@
 		"start": "react-scripts start",
 		"build": "react-scripts build",
 		"test": "react-scripts test",
-		"eject": "react-scripts eject"
+		"eject": "react-scripts eject",
+		"predeploy": "npm run build",
+		"deploy": "gh-pages -d build"
 	},
 	"eslintConfig": {
 		"extends": [
