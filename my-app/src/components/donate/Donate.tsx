@@ -128,7 +128,10 @@ export default function Donate() {
 					</div>
 				</div>
 
-				<div className="payment-method" style={{ height: "230px" }}>
+				<div
+					className="payment-method"
+					style={{ height: "auto", display: "block", overflow: "auto" }}
+				>
 					<div className="centered-text">
 						Other
 						<div className="font1">Revolut: @krevik </div>
