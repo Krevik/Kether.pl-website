@@ -6,8 +6,9 @@ import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import Home from "./components/landingPage/Home";
 import { Provider } from "react-redux";
-import { appStore } from "./redux/store";
+import { appStore, persistedAppStore } from "./redux/store";
 import "./global.css";
+import { PersistGate } from "redux-persist/integration/react";
 
 const root = ReactDOM.createRoot(
 	document.getElementById("root") as HTMLElement
@@ -15,7 +16,9 @@ const root = ReactDOM.createRoot(
 root.render(
 	<React.StrictMode>
 		<Provider store={appStore}>
-			<Home />
+			<PersistGate loading={null} persistor={persistedAppStore}>
+				<Home />
+			</PersistGate>
 		</Provider>
 	</React.StrictMode>
 );

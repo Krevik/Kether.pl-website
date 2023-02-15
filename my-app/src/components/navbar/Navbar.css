@@ -1,3 +1,8 @@
+.navigation-menu {
+	display: flex;
+	justify-content: center;
+}
+
 .p-tabmenu-nav {
 	list-style-type: none;
 	flex-wrap: nowrap;
@@ -18,4 +23,9 @@
 	font-weight: 600;
 	display: flex;
 	justify-content: center;
+}
+
+.steam-login-button .p-button {
+	background: transparent;
+	border: none;
 }
