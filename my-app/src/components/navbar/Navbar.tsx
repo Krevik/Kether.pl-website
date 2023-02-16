@@ -4,7 +4,7 @@ import { useSelector } from "react-redux/es/exports";
 import { AppState, appStore } from "../../redux/store";
 import { navbarActions } from "../../redux/slices/navbarSlice";
 import { TabType } from "./models/TabModels";
-import { steamAuthService } from "../../services/steamAuthService";
+import { steamAPIService } from "../../services/steamAPIService";
 import SteamLoginButton from "../steamLoginButton/SteamLoginButton";
 
 interface TabItem {
@@ -17,8 +17,6 @@ export default function Navbar() {
 	const activeTabIndex = useSelector(
 		(state: AppState) => state.navbarReducer.activeTabIndex
 	);
-
-	steamAuthService.useSteamAuthService();
 
 	const tabs: TabItem[] = [
 		{

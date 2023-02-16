@@ -75,7 +75,10 @@ export default function HomePage() {
 				</div>
 
 				<div className="section">
-					<div className="centered-text">
+					<div
+						className="centered-text"
+						style={{ transform: "translate(0%, 250%)" }}
+					>
 						You can download all the custom maps installed on the server
 						<a
 							style={{

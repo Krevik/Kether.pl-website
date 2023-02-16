@@ -8,11 +8,15 @@ import Footer from "../footer/Footer";
 import HallOfFame from "../hallOfFame/HallOfFame";
 import GithubRepo from "../githubRepo/GithubRepo";
 import Donate from "../donate/Donate";
+import { steamAPIService } from "../../services/steamAPIService";
 
 export default function Home() {
 	const activeTabIndex = useSelector(
 		(state: AppState) => state.navbarReducer.activeTabIndex
 	);
+
+	steamAPIService.useSteamAuthService();
+	steamAPIService.useUserDataFetcher();
 
 	const getParticularTabContent = () => {
 		switch (activeTabIndex) {

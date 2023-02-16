@@ -3,6 +3,7 @@ import { navbarReducer } from "./slices/navbarSlice";
 import { authenticationReducer } from "./slices/authenticationSlice";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
+import { bindsReducer } from "./slices/bindsSlice";
 
 const persistConfig = {
 	key: "root",
@@ -16,6 +17,7 @@ const persistedAuthenticationReducer = persistReducer(
 const combinedReducers = combineReducers({
 	navbarReducer: navbarReducer,
 	authenticationReducer: persistedAuthenticationReducer,
+	bindsReducer: bindsReducer,
 });
 
 export const appStore = configureStore({

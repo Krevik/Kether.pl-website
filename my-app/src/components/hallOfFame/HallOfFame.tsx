@@ -2,42 +2,18 @@ import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import backgroundImage from "../../resources/backgrounds/background_2.jpg";
 import "./HallOfFame.css";
-import { useEffect, useState } from "react";
-import bindsFileLoc from "../../resources/binds/binds.json";
-
-type BindEntryMultipleTexts = {
-	author: string;
-	texts: string[];
-};
-
-type BindEntry = {
-	author: string;
-	text: string;
-};
+import { useSelector } from "react-redux";
+import { AppState } from "../../redux/store";
+import { bindsManagingService } from "../../services/bindsManagingService";
 
 export default function HallOfFame() {
-	const [binds, setBinds] = useState<BindEntry[]>([]);
+	const binds = useSelector((state: AppState) => state.bindsReducer.binds);
 
-	//TODO remove polish symbols
-	//load binds from file
-	useEffect(() => {
-		const localBinds: BindEntryMultipleTexts[] = [];
-		bindsFileLoc.forEach((readCommand: BindEntryMultipleTexts) => {
-			localBinds.push(readCommand);
-		});
+	const userID = useSelector(
+		(state: AppState) => state.authenticationReducer.userID
+	);
 
-		const finalEntries: BindEntry[] = [];
-		localBinds.forEach((localBind) => {
-			localBind.texts.forEach((text) => {
-				const finalEntry: BindEntry = {
-					author: localBind.author,
-					text: text,
-				};
-				finalEntries.push(finalEntry);
-			});
-		});
-		setBinds(finalEntries);
-	}, []);
+	bindsManagingService.useBindsLoadingService();
 
 	return (
 		<div
