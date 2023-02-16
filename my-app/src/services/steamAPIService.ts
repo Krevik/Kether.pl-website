@@ -47,6 +47,7 @@ export const steamAPIService = {
 				axios
 					.get(fetchURL, {
 						headers: {
+							Accept: "application/json",
 							"Content-Type":
 								"application/x-www-form-urlencoded; charset=UTF-8",
 						},
