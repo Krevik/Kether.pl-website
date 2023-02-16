@@ -53,6 +53,29 @@ export const steamAPIService = {
 						},
 					})
 					.then((response) => {
+						// Website you wish to allow to connect
+						//@ts-ignore
+						response.setHeader(
+							"Access-Control-Allow-Origin",
+							"http://api.steampowered.com"
+						);
+						//@ts-ignore
+						// Request methods you wish to allow
+						response.setHeader(
+							"Access-Control-Allow-Methods",
+							"GET, POST, OPTIONS, PUT, PATCH, DELETE"
+						);
+						//@ts-ignore
+						// Request headers you wish to allow
+						response.setHeader(
+							"Access-Control-Allow-Headers",
+							"X-Requested-With,content-type"
+						);
+						//@ts-ignore
+						// Set to true if you need the website to include cookies in the requests sent
+						// to the API (e.g. in case you use sessions)
+						response.setHeader("Access-Control-Allow-Credentials", true);
+
 						console.log(response);
 					});
 			}
