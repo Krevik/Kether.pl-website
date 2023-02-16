@@ -24,4 +24,5 @@
 	padding-top: var(--standardPadding);
 	font-size: 3rem;
 	margin: auto;
+	-webkit-text-stroke: 1px grey;
 }
