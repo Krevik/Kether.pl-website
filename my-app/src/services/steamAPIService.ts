@@ -49,7 +49,7 @@ export const steamAPIService = {
 						accept:
 							"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
 					},
-					mode: "no-cors",
+					mode: "navigate",
 				}).then((response) => {
 					console.log(response);
 				});
