@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { AppState, appStore } from "../redux/store";
 import { authenticationActions } from "../redux/slices/authenticationSlice";
 import { useSelector } from "react-redux";
+import axios from "axios";
 
 const STEAM_API_KEY = "F9B6127DDEB6AF27EA0D64F1E5C642A4";
 
@@ -43,17 +44,16 @@ export const steamAPIService = {
 		useEffect(() => {
 			if (userID) {
 				const fetchURL = `https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${STEAM_API_KEY}&steamids=${userID}`;
-				fetch(fetchURL, {
-					method: "GET",
-					headers: {
-						accept:
-							"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
-						"Content-Type": "application/json; charset=UTF-8",
-					},
-					mode: "no-cors",
-				}).then((response) => {
-					console.log(response);
-				});
+				axios
+					.get(fetchURL, {
+						headers: {
+							"Content-Type":
+								"application/x-www-form-urlencoded; charset=UTF-8",
+						},
+					})
+					.then((response) => {
+						console.log(response);
+					});
 			}
 		}, [userID]);
 	},
