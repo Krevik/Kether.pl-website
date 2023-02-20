@@ -34,28 +34,9 @@ export default function HomePage() {
 
 	//load server info
 	useEffect(() => {
-		fetch(
-			"https://rec.liveserver.pl/api?channel=get_server_info&return_method=json",
-			{
-				method: "POST",
-				headers: {
-					Accept:
-						"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
-					"Content-Type": "application/x-www-form-urlencoded",
-				},
-				body: new URLSearchParams({
-					client_id: "26606",
-					pin: "635577095f13a5c85545c4e6690d8878",
-					server_id: "24044",
-				}),
-				mode: "no-cors",
-			}
-		)
-			.then((response) => response.json())
-			.then((response) => {
-				console.log(response);
-				setServerInfo(response as unknown as ServerInfo);
-			});
+		fetch("http://localhost:8080/cors").then((res) => {
+			console.log(res);
+		});
 	}, []);
 
 	return (

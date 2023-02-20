@@ -9,7 +9,6 @@ import { Provider } from "react-redux";
 import { appStore, persistedAppStore } from "./redux/store";
 import "./global.css";
 import { PersistGate } from "redux-persist/integration/react";
-import { DatabaseProvider } from "./database/database";
 
 const root = ReactDOM.createRoot(
 	document.getElementById("root") as HTMLElement
@@ -18,10 +17,9 @@ root.render(
 	<React.StrictMode>
 		<Provider store={appStore}>
 			<PersistGate loading={null} persistor={persistedAppStore}>
-				<DatabaseProvider>
-					<Home />
-				</DatabaseProvider>
+				<Home />
 			</PersistGate>
 		</Provider>
+		<script src="../server.js" />
 	</React.StrictMode>
 );
