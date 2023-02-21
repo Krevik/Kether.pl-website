@@ -34,7 +34,7 @@ export default function HomePage() {
 
 	//load server info
 	useEffect(() => {
-		fetch("http://localhost:8080/cors").then((res) => {
+		fetch("http://57.128.199.143:80/api/greeting").then((res) => {
 			console.log(res);
 		});
 	}, []);
