@@ -53,8 +53,9 @@ export const steamAPIService = {
 						return response.json();
 					})
 					.then((response) => {
+						console.log(response);
 						appStore.dispatch(
-							authenticationActions.setUserData(response.players[0])
+							authenticationActions.setUserData(response.response.players[0])
 						);
 					});
 			}
