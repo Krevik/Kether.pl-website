@@ -36,7 +36,6 @@ export default function HomePage() {
 	useEffect(() => {
 		fetch("http://57.128.199.143:3001/api/serverInfo", {
 			method: "post",
-			referrerPolicy: "unsafe-url",
 			headers: {
 				"Access-Control-Allow-Origin": "*",
 			},

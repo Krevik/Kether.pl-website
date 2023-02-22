@@ -44,7 +44,6 @@ export const steamAPIService = {
 		useEffect(() => {
 			if (userID) {
 				fetch("http://57.128.199.143:3001/api/steamUserData", {
-					referrerPolicy: "unsafe-url",
 					method: "post",
 					body: new URLSearchParams({
 						userID: `${userID}`,
