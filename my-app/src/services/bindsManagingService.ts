@@ -1,12 +1,32 @@
 import { useEffect } from "react";
-import { BindEntryMultipleTexts, BindEntry } from "../models/bindsModels";
+import {
+	BindEntryMultipleTexts,
+	BindEntry,
+	BindVotingEntry,
+} from "../models/bindsModels";
 import bindsFileLoc from "../resources/binds/binds.json";
-import { appStore } from "../redux/store";
+import { AppState, appStore } from "../redux/store";
 import { bindsActions } from "../redux/slices/bindsSlice";
+import { useSelector } from "react-redux";
 
 export const bindsManagingService = {
-	useBindsVotingSystem: () => {},
-	voteForBind: () => {},
+	useBindVotingService: (
+		votingEntry: BindVotingEntry,
+		votedBind: BindEntry
+	) => {
+		const binds = useSelector((state: AppState) => state.bindsReducer.binds);
+		for (let x = 0; x < binds.length; x++) {
+			if (votedBind.text === binds[x].text) {
+				binds[x].bindVotingEntries = [
+					...binds[x].bindVotingEntries,
+					votingEntry,
+				];
+			}
+		}
+
+		// const newRawData = JSON.stringify(binds);
+		// fs.writeFileSync("../database/items.json", newRaw);
+	},
 	useBindsLoadingService: () => {
 		useEffect(() => {
 			const localBinds: BindEntryMultipleTexts[] = [];
@@ -20,6 +40,7 @@ export const bindsManagingService = {
 					const finalEntry: BindEntry = {
 						author: localBind.author,
 						text: text,
+						bindVotingEntries: [],
 					};
 					finalEntries.push(finalEntry);
 				});
