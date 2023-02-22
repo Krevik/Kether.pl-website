@@ -40,8 +40,9 @@ export default function HomePage() {
 				"Content-Security-Policy": "upgrade-insecure-requests",
 			},
 		}).then((res) => {
-			console.log("response: " + res);
-			console.log("stringified res: " + JSON.stringify(res));
+			console.log("response text: " + res.text);
+			//@ts-ignore
+			console.log("stringified res: " + JSON.parse(res));
 			//@ts-ignore
 			console.log("parsed JSON: " + JSON.parse(res.body));
 			//@ts-ignore
