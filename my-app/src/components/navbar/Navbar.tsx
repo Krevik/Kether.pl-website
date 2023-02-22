@@ -4,7 +4,6 @@ import { useSelector } from "react-redux/es/exports";
 import { AppState, appStore } from "../../redux/store";
 import { navbarActions } from "../../redux/slices/navbarSlice";
 import { TabType } from "./models/TabModels";
-import { steamAPIService } from "../../services/steamAPIService";
 import SteamLoginButton from "../steamLoginButton/SteamLoginButton";
 
 interface TabItem {
