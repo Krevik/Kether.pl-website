@@ -48,7 +48,15 @@ export const steamAPIService = {
 					body: new URLSearchParams({
 						userID: `${userID}`,
 					}),
-				});
+				})
+					.then((response) => {
+						return response.json();
+					})
+					.then((response) => {
+						appStore.dispatch(
+							authenticationActions.setUserData(response.players[0])
+						);
+					});
 			}
 		}, [userID]);
 	},

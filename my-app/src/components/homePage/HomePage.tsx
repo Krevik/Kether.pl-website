@@ -13,7 +13,7 @@ type Command = {
 type ServerInfo = {
 	name: string;
 	players: number;
-	status: number;
+	status: string;
 	map: string;
 	maxplayers: number;
 };
@@ -33,7 +33,7 @@ export default function HomePage() {
 
 	//load server info
 	useEffect(() => {
-		fetch("https://57.128.199.143:3001/api/serverInfo", {
+		fetch(`https://57.128.199.143:3001/api/serverInfo`, {
 			method: "post",
 			headers: {
 				"Access-Control-Allow-Origin": "*",
@@ -44,7 +44,6 @@ export default function HomePage() {
 				return response.json();
 			})
 			.then((response) => {
-				console.log(response);
 				setServerInfo(response);
 			});
 	}, []);
@@ -65,11 +64,11 @@ export default function HomePage() {
 					<div className="centered-text">IP: 51.83.217.86:29800</div>
 					<div className="centered-text">
 						Players: {serverInfo?.players}/{serverInfo?.maxplayers}
-					</div>{" "}
+					</div>
 					<div className="centered-text">
-						Status: {serverInfo?.status === 1 ? "Up" : "Down"}
-					</div>{" "}
-					<div className="centered-text">Map: {serverInfo?.map}</div>{" "}
+						Status: {serverInfo?.status === "1" ? "Online" : "Offline"}
+					</div>
+					<div className="centered-text">Map: {serverInfo?.map}</div>
 				</div>
 
 				<div className="section">

@@ -1,8 +1,19 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+export type SteamUserDetails = {
+	personaname: string;
+	profileurl: string;
+	avatar: string;
+	avatarmedium: string;
+	avatarfull: string;
+	realname: string;
+	loccountrycode: string;
+	steamid: string;
+};
+
 interface authenticationSliceProps {
 	userID?: string;
-	userData?: string;
+	userData?: SteamUserDetails;
 }
 
 const initialState: authenticationSliceProps = {
@@ -20,7 +31,7 @@ const authenticationSlice = createSlice({
 				state.userData = undefined;
 			}
 		},
-		setUserData(state, action: PayloadAction<string>) {
+		setUserData(state, action: PayloadAction<SteamUserDetails>) {
 			state.userData = action.payload;
 		},
 	},

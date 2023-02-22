@@ -18,6 +18,10 @@ export default function Navbar() {
 		(state: AppState) => state.navbarReducer.activeTabIndex
 	);
 
+	const userData = useSelector(
+		(state: AppState) => state.authenticationReducer.userData
+	);
+
 	const tabs: TabItem[] = [
 		{
 			tabType: TabType.HOME,
@@ -44,6 +48,9 @@ export default function Navbar() {
 	return (
 		<div className="card">
 			<div className="navigation-menu">
+				<div className="user-details">
+					<div className="card">SteamID: {userData?.realname}</div>
+				</div>
 				<TabMenu
 					model={tabs}
 					activeIndex={activeTabIndex}
