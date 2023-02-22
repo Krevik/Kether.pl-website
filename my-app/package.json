@@ -3,7 +3,6 @@
 	"version": "0.1.0",
 	"private": true,
 	"homepage": "https://krevik.github.io/",
-	"proxy": "http://57.128.199.143:3001",
 	"dependencies": {
 		"@reduxjs/toolkit": "^1.9.2",
 		"@testing-library/jest-dom": "^5.16.5",

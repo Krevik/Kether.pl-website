@@ -34,7 +34,12 @@ export default function HomePage() {
 
 	//load server info
 	useEffect(() => {
-		fetch("/api/serverInfo").then((res) => {
+		fetch("http://57.128.199.143:3001/api/serverInfo", {
+			method: "post",
+			headers: {
+				"Access-Control-Allow-Origin": "*",
+			},
+		}).then((res) => {
 			console.log(res);
 		});
 	}, []);
