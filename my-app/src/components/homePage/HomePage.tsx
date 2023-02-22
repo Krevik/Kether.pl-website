@@ -66,7 +66,9 @@ export default function HomePage() {
 					<div className="centered-text">
 						Players: {serverInfo?.players}/{serverInfo?.maxplayers}
 					</div>{" "}
-					<div className="centered-text">Status: {serverInfo?.status}</div>{" "}
+					<div className="centered-text">
+						Status: {serverInfo?.status === 1 ? "Up" : "Down"}
+					</div>{" "}
 					<div className="centered-text">Map: {serverInfo?.map}</div>{" "}
 				</div>
 
