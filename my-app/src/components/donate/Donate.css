@@ -25,6 +25,9 @@
 
 .donate .p-inputnumber {
 	margin-right: 10px;
+}
+
+.donate .p-inputnumber input {
 	font-weight: 800;
 }
 
