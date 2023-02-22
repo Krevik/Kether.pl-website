@@ -16,7 +16,6 @@ type ServerInfo = {
 	status: number;
 	map: string;
 	maxplayers: number;
-	password: number;
 };
 
 export default function HomePage() {
@@ -57,8 +56,13 @@ export default function HomePage() {
 					className="section"
 					style={{ paddingLeft: "var(--standardPadding)" }}
 				>
-					<div className="centered-text">Kether.pl Competitive 108T</div>
+					<div className="centered-text">Name: {serverInfo?.name}</div>
 					<div className="centered-text">IP: 51.83.217.86:29800</div>
+					<div className="centered-text">
+						Players: {serverInfo?.players}/{serverInfo?.maxplayers}
+					</div>{" "}
+					<div className="centered-text">Status: {serverInfo?.status}</div>{" "}
+					<div className="centered-text">Map: {serverInfo?.map}</div>{" "}
 				</div>
 
 				<div className="section">
