@@ -3,6 +3,10 @@
 	justify-content: center;
 }
 
+.navigation-menu .user-details span {
+	display: block;
+}
+
 .p-tabmenu-nav {
 	list-style-type: none;
 	flex-wrap: nowrap;

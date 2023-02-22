@@ -48,9 +48,15 @@ export default function Navbar() {
 	return (
 		<div className="card">
 			<div className="navigation-menu">
-				<div className="user-details">
-					<div className="card">SteamID: {userData?.realname}</div>
-				</div>
+				{userData && (
+					<div className="user-details">
+						<img alt="user-avatar" src={userData?.avatar} />
+						<div className="card">
+							<span>SteamID: {userData?.steamid}</span>
+							<span>User Name: {userData?.personaname}</span>
+						</div>
+					</div>
+				)}
 				<TabMenu
 					model={tabs}
 					activeIndex={activeTabIndex}
