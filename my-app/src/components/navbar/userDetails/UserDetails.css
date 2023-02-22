@@ -1,0 +1,16 @@
+.user-details {
+	display: inline-block;
+}
+
+.user-details img {
+	display: inline-block;
+}
+
+.user-details .card {
+	display: inline-block;
+}
+
+.navigation-menu .user-details span {
+	font-family: "Future Rot";
+	display: block;
+}

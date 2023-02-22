@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { AppState } from "../../../redux/store";
-import { JsxElement } from "typescript";
+import "./UserDetails.css";
 
 export default function UserDetails() {
 	const userData = useSelector(
