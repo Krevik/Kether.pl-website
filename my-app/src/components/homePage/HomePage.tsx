@@ -34,7 +34,7 @@ export default function HomePage() {
 
 	//load server info
 	useEffect(() => {
-		fetch("http://57.128.199.143:3001/api/greeting").then((res) => {
+		fetch("/api/serverInfo").then((res) => {
 			console.log(res);
 		});
 	}, []);

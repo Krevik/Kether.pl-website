@@ -43,13 +43,16 @@ export const steamAPIService = {
 
 		useEffect(() => {
 			if (userID) {
-				const fetchURL = `https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${STEAM_API_KEY}&steamids=${userID}`;
+				const fetchURL = `/api/steamUserData`;
 				axios
-					.get(fetchURL, {
+					.post(fetchURL, {
 						headers: {
 							Accept: "application/json",
 							"Content-Type":
 								"application/x-www-form-urlencoded; charset=UTF-8",
+						},
+						body: {
+							userID: `${userID}`,
 						},
 					})
 					.then((response) => {
