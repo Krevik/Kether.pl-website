@@ -40,13 +40,12 @@ export default function HomePage() {
 				"Content-Security-Policy": "upgrade-insecure-requests",
 			},
 		}).then((res) => {
-			console.log("response text: " + JSON.stringify(res.text));
+			console.log("response json: " + JSON.stringify(res.json()));
+
 			//@ts-ignore
-			console.log("stringified res: " + JSON.parse(res));
+			console.log("response: " + JSON.stringify(res));
 			//@ts-ignore
-			console.log("parsed JSON: " + JSON.parse(res.body));
-			//@ts-ignore
-			setServerInfo(JSON.parse(res.text) as ServerInfo);
+			setServerInfo(res.json() as ServerInfo);
 		});
 	}, []);
 
