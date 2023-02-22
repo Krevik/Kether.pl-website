@@ -43,21 +43,12 @@ export const steamAPIService = {
 
 		useEffect(() => {
 			if (userID) {
-				const fetchURL = `/api/steamUserData`;
-				axios
-					.post(fetchURL, {
-						headers: {
-							Accept: "application/json",
-							"Content-Type":
-								"application/x-www-form-urlencoded; charset=UTF-8",
-						},
-						body: {
-							userID: `${userID}`,
-						},
-					})
-					.then((response) => {
-						console.log(response);
-					});
+				fetch("/api/steamUserData", {
+					method: "post",
+					body: new URLSearchParams({
+						userID: `${userID}`,
+					}),
+				});
 			}
 		}, [userID]);
 	},
