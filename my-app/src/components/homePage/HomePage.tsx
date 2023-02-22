@@ -41,7 +41,7 @@ export default function HomePage() {
 				"Content-Security-Policy": "upgrade-insecure-requests",
 			},
 		}).then((res) => {
-			console.log(res);
+			setServerInfo(res as unknown as ServerInfo);
 		});
 	}, []);
 

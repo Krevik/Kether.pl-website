@@ -2,9 +2,6 @@ import { useEffect } from "react";
 import { AppState, appStore } from "../redux/store";
 import { authenticationActions } from "../redux/slices/authenticationSlice";
 import { useSelector } from "react-redux";
-import axios from "axios";
-
-const STEAM_API_KEY = "F9B6127DDEB6AF27EA0D64F1E5C642A4";
 
 export const steamAPIService = {
 	useSteamAuthService: () => {
