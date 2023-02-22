@@ -39,13 +39,23 @@ export default function HomePage() {
 				"Access-Control-Allow-Origin": "*",
 				"Content-Security-Policy": "upgrade-insecure-requests",
 			},
-		}).then((res) => {
-			console.log("response json: " + JSON.stringify(res.json()));
-
+		}).then((response) => {
+			console.log(response);
+			console.log(JSON.stringify(response));
 			//@ts-ignore
-			console.log("response: " + JSON.stringify(res));
+			console.log(JSON.parse(response));
+			console.log(response.body);
+			console.log(JSON.stringify(response.body));
 			//@ts-ignore
-			setServerInfo(res.json() as ServerInfo);
+			console.log(JSON.parse(response.body));
+			console.log(response.text);
+			console.log(JSON.stringify(response.text));
+			//@ts-ignore
+			console.log(JSON.parse(response.text));
+			console.log(response.json());
+			console.log(JSON.stringify(response.json()));
+			//@ts-ignore
+			console.log(JSON.parse(response.json()));
 		});
 	}, []);
 
