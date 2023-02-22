@@ -2,8 +2,31 @@ import { useEffect } from "react";
 import { AppState, appStore } from "../redux/store";
 import { authenticationActions } from "../redux/slices/authenticationSlice";
 import { useSelector } from "react-redux";
+import adminsFileLoc from "../resources/admins/admins.json";
+import { Admin } from "../models/adminModels";
 
 export const steamAPIService = {
+	useAdminDetectionService: () => {
+		const userData = useSelector(
+			(state: AppState) => state.authenticationReducer.userData
+		);
+		useEffect(() => {
+			const admins: Admin[] = [];
+			adminsFileLoc.forEach((readCommand: Admin) => {
+				admins.push(readCommand);
+			});
+
+			let verifiedAsAdmin = false;
+			for (let x = 0; x < admins.length; x++) {
+				const adminEntry: Admin = admins[x];
+				if (adminEntry.steamID === userData?.steamid) {
+					verifiedAsAdmin = true;
+					break;
+				}
+			}
+			appStore.dispatch(authenticationActions.setIsAdmin(verifiedAsAdmin));
+		}, []);
+	},
 	useSteamAuthService: () => {
 		useEffect(() => {
 			if (window.location.href.includes("openid")) {

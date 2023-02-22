@@ -3,6 +3,9 @@ import { AppState } from "../../../redux/store";
 import "./UserDetails.css";
 
 export default function UserDetails() {
+	const isAdmin = useSelector(
+		(state: AppState) => state.authenticationReducer.isAdmin
+	);
 	const userData = useSelector(
 		(state: AppState) => state.authenticationReducer.userData
 	);
@@ -13,6 +16,7 @@ export default function UserDetails() {
 			<div className="card">
 				<span>SteamID: {userData?.steamid}</span>
 				<span>User Name: {userData?.personaname}</span>
+				{isAdmin && <span>I Am an admin!</span>}
 			</div>
 		</div>
 	) : (

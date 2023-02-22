@@ -13,11 +13,13 @@ export type SteamUserDetails = {
 
 interface authenticationSliceProps {
 	userID?: string;
+	isAdmin: boolean;
 	userData?: SteamUserDetails;
 }
 
 const initialState: authenticationSliceProps = {
 	userID: undefined,
+	isAdmin: false,
 	userData: undefined,
 };
 
@@ -25,10 +27,14 @@ const authenticationSlice = createSlice({
 	name: "authenticationSlice",
 	initialState: initialState,
 	reducers: {
+		setIsAdmin(state, action: PayloadAction<boolean>) {
+			state.isAdmin = action.payload;
+		},
 		setUserID(state, action: PayloadAction<string | undefined>) {
 			state.userID = action.payload;
 			if (!action.payload) {
 				state.userData = undefined;
+				state.isAdmin = false;
 			}
 		},
 		setUserData(state, action: PayloadAction<SteamUserDetails>) {

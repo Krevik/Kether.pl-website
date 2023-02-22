@@ -5,6 +5,8 @@ import { appStore } from "../redux/store";
 import { bindsActions } from "../redux/slices/bindsSlice";
 
 export const bindsManagingService = {
+	useBindsVotingSystem: () => {},
+	voteForBind: () => {},
 	useBindsLoadingService: () => {
 		useEffect(() => {
 			const localBinds: BindEntryMultipleTexts[] = [];

@@ -15,6 +15,7 @@ export default function Home() {
 		(state: AppState) => state.navbarReducer.activeTabIndex
 	);
 
+	steamAPIService.useAdminDetectionService();
 	steamAPIService.useSteamAuthService();
 	steamAPIService.useUserDataFetcher();
 
