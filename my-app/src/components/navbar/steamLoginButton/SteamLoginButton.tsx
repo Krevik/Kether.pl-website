@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
 import "./SteamLoginButton.css";
 import { Button } from "primereact/button";
-import { AppState, appStore } from "../../redux/store";
-import { authenticationActions } from "../../redux/slices/authenticationSlice";
+import { AppState, appStore } from "../../../redux/store";
+import { authenticationActions } from "../../../redux/slices/authenticationSlice";
 
 const HOST_URL = "http://kether.pl";
 

@@ -4,7 +4,8 @@ import { useSelector } from "react-redux/es/exports";
 import { AppState, appStore } from "../../redux/store";
 import { navbarActions } from "../../redux/slices/navbarSlice";
 import { TabType } from "./models/TabModels";
-import SteamLoginButton from "../steamLoginButton/SteamLoginButton";
+import SteamLoginButton from "./steamLoginButton/SteamLoginButton";
+import UserDetails from "./userDetails/UserDetails";
 
 interface TabItem {
 	tabType: TabType;
@@ -15,10 +16,6 @@ interface TabItem {
 export default function Navbar() {
 	const activeTabIndex = useSelector(
 		(state: AppState) => state.navbarReducer.activeTabIndex
-	);
-
-	const userData = useSelector(
-		(state: AppState) => state.authenticationReducer.userData
 	);
 
 	const tabs: TabItem[] = [
@@ -47,15 +44,7 @@ export default function Navbar() {
 	return (
 		<div className="card">
 			<div className="navigation-menu">
-				{userData && (
-					<div className="user-details">
-						<img alt="user-avatar" src={userData?.avatar} />
-						<div className="card">
-							<span>SteamID: {userData?.steamid}</span>
-							<span>User Name: {userData?.personaname}</span>
-						</div>
-					</div>
-				)}
+				<UserDetails />
 				<TabMenu
 					model={tabs}
 					activeIndex={activeTabIndex}

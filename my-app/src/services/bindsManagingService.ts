@@ -25,4 +25,5 @@ export const bindsManagingService = {
 			appStore.dispatch(bindsActions.setBinds(finalEntries));
 		}, []);
 	},
+	addNewBind: (bind: BindEntry) => {},
 };
