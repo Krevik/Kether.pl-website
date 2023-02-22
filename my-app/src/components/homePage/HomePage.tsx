@@ -46,7 +46,7 @@ export default function HomePage() {
 			//@ts-ignore
 			console.log("parsed JSON: " + JSON.parse(res.body));
 			//@ts-ignore
-			setServerInfo(JSON.parse(res.body) as unknown as ServerInfo);
+			setServerInfo(JSON.parse(res.text) as ServerInfo);
 		});
 	}, []);
 
