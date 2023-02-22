@@ -33,7 +33,7 @@ export default function HomePage() {
 
 	//load server info
 	useEffect(() => {
-		fetch(`api/serverInfo`, {
+		fetch(`https://57.128.199.143:3001/api/serverInfo`, {
 			method: "post",
 			headers: {
 				"Access-Control-Allow-Origin": "*",
