@@ -45,6 +45,9 @@ export const steamAPIService = {
 			if (userID) {
 				fetch("http://57.128.199.143:3001/api/steamUserData", {
 					method: "post",
+					headers: {
+						"Content-Security-Policy": "upgrade-insecure-requests",
+					},
 					body: new URLSearchParams({
 						userID: `${userID}`,
 					}),

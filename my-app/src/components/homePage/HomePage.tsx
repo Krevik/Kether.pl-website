@@ -38,6 +38,7 @@ export default function HomePage() {
 			method: "post",
 			headers: {
 				"Access-Control-Allow-Origin": "*",
+				"Content-Security-Policy": "upgrade-insecure-requests",
 			},
 		}).then((res) => {
 			console.log(res);
