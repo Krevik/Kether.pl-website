@@ -65,9 +65,6 @@ export const steamAPIService = {
 			if (userID) {
 				fetch("https://kether-api.click/api/steamUserData", {
 					method: "post",
-					headers: {
-						"Content-Security-Policy": "upgrade-insecure-requests",
-					},
 					body: new URLSearchParams({
 						userID: `${userID}`,
 					}),
