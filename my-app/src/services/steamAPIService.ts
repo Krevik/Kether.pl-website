@@ -63,7 +63,7 @@ export const steamAPIService = {
 
 		useEffect(() => {
 			if (userID) {
-				fetch("api/steamUserData", {
+				fetch("https://kether-api.click/api/steamUserData", {
 					method: "post",
 					// headers: {
 					// 	"Content-Security-Policy": "upgrade-insecure-requests",
