@@ -17,7 +17,7 @@ export default function UserDetails() {
 				{userData.realname && <span>Hello, {userData.realname}</span>}
 				<span>SteamID: {userData?.steamid}</span>
 				<span>User Name: {userData?.personaname}</span>
-				{isAdmin && <span>I Am an admin!</span>}
+				{isAdmin && <span style={{ color: "indianred" }}>I Am an admin!</span>}
 			</div>
 		</div>
 	) : (
