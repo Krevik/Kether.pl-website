@@ -44,6 +44,7 @@ export default function Navbar() {
 	return (
 		<div className="card">
 			<div className="navigation-menu">
+				<SteamLoginButton />
 				<UserDetails />
 				<TabMenu
 					model={tabs}
@@ -54,7 +55,6 @@ export default function Navbar() {
 						)
 					}
 				></TabMenu>
-				<SteamLoginButton />
 			</div>
 		</div>
 	);
