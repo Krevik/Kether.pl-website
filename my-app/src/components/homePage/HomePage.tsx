@@ -33,7 +33,7 @@ export default function HomePage() {
 
 	//load server info
 	useEffect(() => {
-		fetch(`https://57.128.199.143:3001/api/serverInfo`, {
+		fetch(`https://kether-api.click/api/serverInfo`, {
 			method: "post",
 			headers: {
 				"Access-Control-Allow-Origin": "*",
