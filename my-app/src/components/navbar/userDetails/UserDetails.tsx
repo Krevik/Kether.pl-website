@@ -14,6 +14,7 @@ export default function UserDetails() {
 		<div className="user-details">
 			<img alt="user-avatar" src={userData?.avatar} />
 			<div className="card">
+				{userData.realname && <span>Hello, {userData.realname}</span>}
 				<span>SteamID: {userData?.steamid}</span>
 				<span>User Name: {userData?.personaname}</span>
 				{isAdmin && <span>I Am an admin!</span>}

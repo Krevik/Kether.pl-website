@@ -23,9 +23,6 @@ export const bindsManagingService = {
 				];
 			}
 		}
-
-		// const newRawData = JSON.stringify(binds);
-		// fs.writeFileSync("../database/items.json", newRaw);
 	},
 	useBindsLoadingService: () => {
 		useEffect(() => {
