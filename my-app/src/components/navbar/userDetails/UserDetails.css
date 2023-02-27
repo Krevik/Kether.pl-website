@@ -4,6 +4,8 @@
 
 .user-details img {
 	display: inline-block;
+	width: 64px;
+	height: 64px;
 }
 
 .user-details .card {

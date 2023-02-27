@@ -12,7 +12,7 @@ export default function UserDetails() {
 
 	return userData ? (
 		<div className="user-details">
-			<img alt="user-avatar" src={userData?.avatar} />
+			<img alt="user-avatar" src={userData?.avatarmedium} />
 			<div className="card">
 				{userData.realname && <span>Hello, {userData.realname}</span>}
 				<span>SteamID: {userData?.steamid}</span>
