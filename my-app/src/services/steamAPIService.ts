@@ -105,9 +105,6 @@ export const steamAPIService = {
 							//L4D2 appid = 550
 							if (game.appid === 550) {
 								userDataActions.setGamesData({ ownsLeft4Dead2: true });
-								console.log(
-									"L4D2 game info was found for the current logged user."
-								);
 								break;
 							}
 						}
