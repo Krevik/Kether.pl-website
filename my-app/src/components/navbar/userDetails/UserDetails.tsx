@@ -4,10 +4,10 @@ import "./UserDetails.css";
 
 export default function UserDetails() {
 	const isAdmin = useSelector(
-		(state: AppState) => state.authenticationReducer.isAdmin
+		(state: AppState) => state.userDataReducer.isAdmin
 	);
 	const userData = useSelector(
-		(state: AppState) => state.authenticationReducer.userData
+		(state: AppState) => state.userDataReducer.userData
 	);
 
 	return userData ? (

@@ -2,14 +2,12 @@ import { useSelector } from "react-redux";
 import "./SteamLoginButton.css";
 import { Button } from "primereact/button";
 import { AppState, appStore } from "../../../redux/store";
-import { authenticationActions } from "../../../redux/slices/authenticationSlice";
+import { userDataActions } from "../../../redux/slices/userDataSlice";
 
 const HOST_URL = "http://kether.pl";
 
 export default function SteamLoginButton() {
-	const userID = useSelector(
-		(state: AppState) => state.authenticationReducer.userID
-	);
+	const userID = useSelector((state: AppState) => state.userDataReducer.userID);
 
 	return !userID ? (
 		<div className="steam-login-button">
@@ -43,7 +41,7 @@ export default function SteamLoginButton() {
 	) : (
 		<Button
 			onClick={() => {
-				appStore.dispatch(authenticationActions.setUserID(undefined));
+				appStore.dispatch(userDataActions.setUserID(undefined));
 			}}
 			type="submit"
 		>

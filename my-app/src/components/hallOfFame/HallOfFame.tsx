@@ -9,9 +9,7 @@ import { bindsManagingService } from "../../services/bindsManagingService";
 export default function HallOfFame() {
 	const binds = useSelector((state: AppState) => state.bindsReducer.binds);
 
-	const userID = useSelector(
-		(state: AppState) => state.authenticationReducer.userID
-	);
+	const userID = useSelector((state: AppState) => state.userDataReducer.userID);
 
 	bindsManagingService.useBindsLoadingService();
 

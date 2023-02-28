@@ -25,25 +25,44 @@ export const bindsManagingService = {
 		}
 	},
 	useBindsLoadingService: () => {
-		useEffect(() => {
-			const localBinds: BindEntryMultipleTexts[] = [];
-			bindsFileLoc.forEach((readCommand: BindEntryMultipleTexts) => {
-				localBinds.push(readCommand);
-			});
-
-			const finalEntries: BindEntry[] = [];
-			localBinds.forEach((localBind) => {
-				localBind.texts.forEach((text) => {
-					const finalEntry: BindEntry = {
-						author: localBind.author,
-						text: text,
-						bindVotingEntries: [],
-					};
-					finalEntries.push(finalEntry);
-				});
-			});
-			appStore.dispatch(bindsActions.setBinds(finalEntries));
-		}, []);
+		//useLocalFileBindsLoader();
+		useServerBindsLoader();
 	},
 	addNewBind: (bind: BindEntry) => {},
+};
+
+const useServerBindsLoader = () => {
+	useEffect(() => {
+		fetch("https://kether-api.click/api/getBinds", {
+			method: "get",
+		})
+			.then((response) => {
+				return response.json();
+			})
+			.then((response) => {
+				appStore.dispatch(bindsActions.setBinds(response));
+			});
+	}, []);
+};
+
+const useLocalFileBindsLoader = () => {
+	useEffect(() => {
+		const localBinds: BindEntryMultipleTexts[] = [];
+		bindsFileLoc.forEach((readCommand: BindEntryMultipleTexts) => {
+			localBinds.push(readCommand);
+		});
+
+		const finalEntries: BindEntry[] = [];
+		localBinds.forEach((localBind) => {
+			localBind.texts.forEach((text) => {
+				const finalEntry: BindEntry = {
+					author: localBind.author,
+					text: text,
+					bindVotingEntries: [],
+				};
+				finalEntries.push(finalEntry);
+			});
+		});
+		appStore.dispatch(bindsActions.setBinds(finalEntries));
+	}, []);
 };

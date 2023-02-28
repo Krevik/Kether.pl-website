@@ -1,6 +1,6 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { navbarReducer } from "./slices/navbarSlice";
-import { authenticationReducer } from "./slices/authenticationSlice";
+import { userDataReducer } from "./slices/userDataSlice";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
 import { bindsReducer } from "./slices/bindsSlice";
@@ -9,14 +9,11 @@ const persistConfig = {
 	key: "root",
 	storage,
 };
-const persistedAuthenticationReducer = persistReducer(
-	persistConfig,
-	authenticationReducer
-);
+const persistedUserDataReducer = persistReducer(persistConfig, userDataReducer);
 
 const combinedReducers = combineReducers({
 	navbarReducer: navbarReducer,
-	authenticationReducer: persistedAuthenticationReducer,
+	userDataReducer: persistedUserDataReducer,
 	bindsReducer: bindsReducer,
 });
 

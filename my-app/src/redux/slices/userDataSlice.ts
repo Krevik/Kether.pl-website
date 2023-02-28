@@ -11,20 +11,26 @@ export type SteamUserDetails = {
 	steamid: string;
 };
 
-interface authenticationSliceProps {
+export type GamesInfo = {
+	ownsLeft4Dead2: boolean;
+};
+
+interface userDataSliceProps {
 	userID?: string;
 	isAdmin: boolean;
 	userData?: SteamUserDetails;
+	gamesData?: GamesInfo;
 }
 
-const initialState: authenticationSliceProps = {
+const initialState: userDataSliceProps = {
 	userID: undefined,
 	isAdmin: false,
 	userData: undefined,
+	gamesData: undefined,
 };
 
-const authenticationSlice = createSlice({
-	name: "authenticationSlice",
+const userDataSlice = createSlice({
+	name: "userDataSlice",
 	initialState: initialState,
 	reducers: {
 		setIsAdmin(state, action: PayloadAction<boolean>) {
@@ -35,13 +41,17 @@ const authenticationSlice = createSlice({
 			if (!action.payload) {
 				state.userData = undefined;
 				state.isAdmin = false;
+				state.gamesData = undefined;
 			}
 		},
 		setUserData(state, action: PayloadAction<SteamUserDetails>) {
 			state.userData = action.payload;
 		},
+		setGamesData(state, action: PayloadAction<GamesInfo>) {
+			state.gamesData = action.payload;
+		},
 	},
 });
 
-export const authenticationActions = authenticationSlice.actions;
-export const authenticationReducer = authenticationSlice.reducer;
+export const userDataActions = userDataSlice.actions;
+export const userDataReducer = userDataSlice.reducer;

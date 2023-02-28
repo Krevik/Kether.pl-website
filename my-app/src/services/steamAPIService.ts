@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { AppState, appStore } from "../redux/store";
-import { authenticationActions } from "../redux/slices/authenticationSlice";
+import { userDataActions } from "../redux/slices/userDataSlice";
 import { useSelector } from "react-redux";
 import adminsFileLoc from "../resources/admins/admins.json";
 import { Admin } from "../models/adminModels";
@@ -8,7 +8,7 @@ import { Admin } from "../models/adminModels";
 export const steamAPIService = {
 	useAdminDetectionService: () => {
 		const userData = useSelector(
-			(state: AppState) => state.authenticationReducer.userData
+			(state: AppState) => state.userDataReducer.userData
 		);
 		useEffect(() => {
 			const admins: Admin[] = [];
@@ -24,7 +24,7 @@ export const steamAPIService = {
 					break;
 				}
 			}
-			appStore.dispatch(authenticationActions.setIsAdmin(verifiedAsAdmin));
+			appStore.dispatch(userDataActions.setIsAdmin(verifiedAsAdmin));
 		}, []);
 	},
 	useSteamAuthService: () => {
@@ -51,23 +51,20 @@ export const steamAPIService = {
 				};
 
 				const userId = getUserId(urlObj);
-				userId && appStore.dispatch(authenticationActions.setUserID(userId));
+				userId && appStore.dispatch(userDataActions.setUserID(userId));
 				window.location.href = "/";
 			}
 		}, []);
 	},
 	useUserDataFetcher: () => {
 		const userID = useSelector(
-			(state: AppState) => state.authenticationReducer.userID
+			(state: AppState) => state.userDataReducer.userID
 		);
 
 		useEffect(() => {
 			if (userID) {
 				fetch("https://kether-api.click/api/steamUserData", {
 					method: "post",
-					// headers: {
-					// 	"Content-Security-Policy": "upgrade-insecure-requests",
-					// },
 					body: new URLSearchParams({
 						userID: `${userID}`,
 					}),
@@ -77,10 +74,45 @@ export const steamAPIService = {
 					})
 					.then((response) => {
 						appStore.dispatch(
-							authenticationActions.setUserData(response.response.players[0])
+							userDataActions.setUserData(response.response.players[0])
 						);
 					});
 			}
 		}, [userID]);
+	},
+	useOwnedGamesFetcher: () => {
+		const userID = useSelector(
+			(state: AppState) => state.userDataReducer.userID
+		);
+
+		useEffect(() => {
+			if (userID) {
+				fetch("https://kether-api.click/api/steam/games", {
+					method: "post",
+					body: new URLSearchParams({
+						userID: `${userID}`,
+					}),
+				})
+					.then((response) => {
+						return response.json();
+					})
+					.then((response) => {
+						const games: [
+							{ name: string; appid: number; playtime_forever: number }
+						] = response.response.games;
+
+						for (let game of games) {
+							//L4D2 appid = 550
+							if (game.appid === 550) {
+								userDataActions.setGamesData({ ownsLeft4Dead2: true });
+								console.log(
+									"L4D2 game info was found for the current logged user."
+								);
+								break;
+							}
+						}
+					});
+			}
+		}, []);
 	},
 };
