@@ -18,6 +18,7 @@ export default function Home() {
 	steamAPIService.useAdminDetectionService();
 	steamAPIService.useSteamAuthService();
 	steamAPIService.useUserDataFetcher();
+	steamAPIService.useOwnedGamesFetcher();
 
 	const getParticularTabContent = () => {
 		switch (activeTabIndex) {
