@@ -1,9 +1,5 @@
 import { useEffect } from "react";
-import {
-	BindEntryMultipleTexts,
-	BindEntry,
-	BindVotingEntry,
-} from "../models/bindsModels";
+import { BindEntry, BindVotingEntry } from "../models/bindsModels";
 import bindsFileLoc from "../resources/binds/binds.json";
 import { AppState, appStore } from "../redux/store";
 import { bindsActions } from "../redux/slices/bindsSlice";
@@ -25,7 +21,6 @@ export const bindsManagingService = {
 		}
 	},
 	useBindsLoadingService: () => {
-		//useLocalFileBindsLoader();
 		useServerBindsLoader();
 	},
 	addNewBind: (bind: BindEntry) => {},
@@ -42,27 +37,5 @@ const useServerBindsLoader = () => {
 			.then((response) => {
 				appStore.dispatch(bindsActions.setBinds(response));
 			});
-	}, []);
-};
-
-const useLocalFileBindsLoader = () => {
-	useEffect(() => {
-		const localBinds: BindEntryMultipleTexts[] = [];
-		bindsFileLoc.forEach((readCommand: BindEntryMultipleTexts) => {
-			localBinds.push(readCommand);
-		});
-
-		const finalEntries: BindEntry[] = [];
-		localBinds.forEach((localBind) => {
-			localBind.texts.forEach((text) => {
-				const finalEntry: BindEntry = {
-					author: localBind.author,
-					text: text,
-					bindVotingEntries: [],
-				};
-				finalEntries.push(finalEntry);
-			});
-		});
-		appStore.dispatch(bindsActions.setBinds(finalEntries));
 	}, []);
 };

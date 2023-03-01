@@ -1,8 +1,3 @@
-export type BindEntryMultipleTexts = {
-	author: string;
-	texts: string[];
-};
-
 export enum BindVotingType {
 	UP = "Upvote",
 	DOWN = "Downvote",
@@ -14,6 +9,7 @@ export type BindVotingEntry = {
 };
 
 export type BindEntry = {
+	id: number;
 	author: string;
 	text: string;
 	bindVotingEntries: BindVotingEntry[];

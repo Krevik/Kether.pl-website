@@ -10,6 +10,9 @@ export default function HallOfFame() {
 	const binds = useSelector((state: AppState) => state.bindsReducer.binds);
 
 	const userID = useSelector((state: AppState) => state.userDataReducer.userID);
+	const isAdmin: boolean = useSelector(
+		(state: AppState) => state.userDataReducer.isAdmin
+	);
 
 	bindsManagingService.useBindsLoadingService();
 
@@ -20,6 +23,7 @@ export default function HallOfFame() {
 		>
 			<div className="card">
 				<DataTable value={binds} scrollable={true}>
+					{isAdmin && <Column field="id" header="database ID"></Column>}
 					<Column field="author" header="Author"></Column>
 					<Column field="text" header="Text"></Column>
 				</DataTable>

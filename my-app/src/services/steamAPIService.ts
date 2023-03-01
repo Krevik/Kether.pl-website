@@ -25,7 +25,7 @@ export const steamAPIService = {
 				}
 			}
 			appStore.dispatch(userDataActions.setIsAdmin(verifiedAsAdmin));
-		}, []);
+		}, [userData]);
 	},
 	useSteamAuthService: () => {
 		useEffect(() => {
