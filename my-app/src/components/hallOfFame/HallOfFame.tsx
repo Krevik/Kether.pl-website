@@ -38,9 +38,11 @@ export default function HallOfFame() {
 					icon="pi pi-pencil"
 					className="p-button-rounded p-button-success mr-2"
 					onClick={() => {
+						console.log(rowData);
+						setEditingBindID(rowData.id);
 						setEditBindDialogVisibility(true);
 						setBindAuthor(rowData.author);
-						setEditingBindID(rowData.id);
+						setBindText(rowData.text);
 					}}
 				/>
 				<Button
