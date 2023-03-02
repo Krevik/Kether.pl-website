@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { BindEntry, BindVotingEntry } from "../models/bindsModels";
-import bindsFileLoc from "../resources/binds/binds.json";
 import { AppState, appStore } from "../redux/store";
 import { bindsActions } from "../redux/slices/bindsSlice";
 import { useSelector } from "react-redux";
@@ -36,14 +35,38 @@ export const bindsManagingService = {
 				appStore.dispatch(bindsActions.setBinds(response));
 			});
 	},
-	addNewBind: (bind: BindEntry) => {},
+	addNewBind: (bind: BindEntry) => {
+		fetch("https://kether-api.click/api/binds/addBind", {
+			method: "post",
+			body: new URLSearchParams({
+				author: bind.author,
+				text: bind.text,
+			}),
+		})
+			.then((response) => {
+				response.json().then((jsonedResponse) => {
+					bindsManagingService.reloadBinds();
+				});
+			})
+			.catch((error) => {
+				console.log("Couldn't delete bind: " + error);
+			});
+	},
 	deleteBind: (bind: BindEntry) => {
-		return fetch("https://kether-api.click/api/binds/deleteBind", {
+		fetch("https://kether-api.click/api/binds/deleteBind", {
 			method: "post",
 			body: new URLSearchParams({
 				id: `${bind.id}`,
 			}),
-		});
+		})
+			.then((response) => {
+				response.json().then((jsonedResponse) => {
+					bindsManagingService.reloadBinds();
+				});
+			})
+			.catch((error) => {
+				console.log("Couldn't delete bind: " + error);
+			});
 	},
 };
 
