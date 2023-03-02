@@ -127,7 +127,10 @@ export default function HallOfFame() {
 					label="Cancel"
 					icon="pi pi-times"
 					className="p-button-text"
-					onClick={(e) => setEditBindDialogVisibility(false)}
+					onClick={() => {
+						editingBindID.current = -1;
+						setEditBindDialogVisibility(false);
+					}}
 				/>
 				<Button
 					label="Update"
