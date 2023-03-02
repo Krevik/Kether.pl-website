@@ -4,7 +4,7 @@ import { Button } from "primereact/button";
 import { AppState, appStore } from "../../../redux/store";
 import { userDataActions } from "../../../redux/slices/userDataSlice";
 
-const HOST_URL = "http://kether.pl";
+const HOST_URL = "https://kether.pl";
 
 export default function SteamLoginButton() {
 	const userID = useSelector((state: AppState) => state.userDataReducer.userID);
