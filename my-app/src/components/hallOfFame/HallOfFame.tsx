@@ -40,7 +40,26 @@ export default function HallOfFame() {
 					icon="pi pi-trash"
 					className="p-button-rounded p-button-warning"
 					onClick={() => {
-						bindsManagingService.deleteBind(rowData);
+						bindsManagingService
+							.deleteBind(rowData)
+							.then((deletedBind) => {
+								toast.current!.show({
+									severity: "success",
+									summary: "Successful",
+									detail: `Successfully deleted bind: ${deletedBind}`,
+									life: 3000,
+								});
+								setNewBindDialogVisibility(false);
+								setBindText("");
+							})
+							.catch((error) => {
+								toast.current!.show({
+									severity: "error",
+									summary: "Failed",
+									detail: `Couldn't delete the bind: ${error}`,
+									life: 3000,
+								});
+							});
 					}}
 				/>
 			</>
@@ -66,14 +85,15 @@ export default function HallOfFame() {
 					} as BindEntry;
 					bindsManagingService
 						.addNewBind(newBind)
-						.then((result) => {
+						.then(() => {
 							toast.current!.show({
 								severity: "success",
 								summary: "Successful",
-								detail: `Successfully added new bind: ${result}`,
+								detail: `Successfully added new bind`,
 								life: 3000,
 							});
 							setNewBindDialogVisibility(false);
+							setBindText("");
 						})
 						.catch((error) => {
 							toast.current!.show({

@@ -52,19 +52,24 @@ export const bindsManagingService = {
 		});
 	},
 	deleteBind: (bind: BindEntry) => {
-		fetch("https://kether-api.click/api/binds/deleteBind", {
+		return fetch("https://kether-api.click/api/binds/deleteBind", {
 			method: "post",
 			body: new URLSearchParams({
 				id: `${bind.id}`,
 			}),
 		})
 			.then((response) => {
-				response.json().then((jsonedResponse) => {
-					bindsManagingService.reloadBinds();
-				});
+				if (response.ok) {
+					response.json().then((jsonedResponse) => {
+						bindsManagingService.reloadBinds();
+						return jsonedResponse;
+					});
+				} else {
+					throw new Error("Couldn't delete bind");
+				}
 			})
 			.catch((error) => {
-				console.log("Couldn't delete bind: " + error);
+				return error;
 			});
 	},
 };

@@ -14,6 +14,10 @@
 	flex-direction: column;
 }
 
+.hall-of-fame .p-toolbar {
+	width: 100%;
+}
+
 .hall-of-fame .p-datatable {
 	width: 90%;
 	background-color: transparent;
