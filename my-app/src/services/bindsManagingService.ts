@@ -69,7 +69,7 @@ export const bindsManagingService = {
 				}
 			})
 			.catch((error) => {
-				return error;
+				throw new Error(error);
 			});
 	},
 };
