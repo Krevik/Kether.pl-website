@@ -11,6 +11,7 @@ import { useRef, useState } from "react";
 import { Dialog } from "primereact/dialog";
 import { Toast } from "primereact/toast";
 import { InputText } from "primereact/inputtext";
+import { Toolbar } from "primereact/toolbar";
 
 export default function HallOfFame() {
 	const binds = useSelector((state: AppState) => state.bindsReducer.binds);
@@ -69,7 +70,7 @@ export default function HallOfFame() {
 							toast.current!.show({
 								severity: "success",
 								summary: "Successful",
-								detail: `Added new bind: ${JSON.stringify(result)}`,
+								detail: `Successfully added new bind: ${result}`,
 								life: 3000,
 							});
 							setNewBindDialogVisibility(false);
@@ -86,6 +87,14 @@ export default function HallOfFame() {
 			/>
 		</>
 	);
+
+	const addNewBindButton = () => {
+		return (
+			<Button onClick={(e) => setNewBindDialogVisibility(true)}>
+				Add new bind
+			</Button>
+		);
+	};
 
 	return (
 		<div
@@ -113,10 +122,9 @@ export default function HallOfFame() {
 						onChange={(e) => setBindText(e.target.value)}
 					/>
 				</Dialog>
+
 				{isAdmin && (
-					<Button onClick={(e) => setNewBindDialogVisibility(true)}>
-						Add new bind
-					</Button>
+					<Toolbar className="mb-4" left={addNewBindButton()}></Toolbar>
 				)}
 				<DataTable value={binds} scrollable={true}>
 					{isAdmin && (

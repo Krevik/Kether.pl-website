@@ -45,8 +45,7 @@ export const bindsManagingService = {
 		}).then(async (response) => {
 			if (response.ok) {
 				bindsManagingService.reloadBinds();
-				const responseJSONED = await response.json();
-				return responseJSONED;
+				return response.json();
 			} else {
 				throw new Error("Couldn't add the bind");
 			}
