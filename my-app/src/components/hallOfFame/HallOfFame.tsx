@@ -176,6 +176,8 @@ export default function HallOfFame() {
 				label="New Bind"
 				icon="pi pi-plus"
 				className="p-button-success mr-2"
+				data-toggle="tooltip"
+				title="Adds new bind"
 				onClick={(e) => setNewBindDialogVisibility(true)}
 			></Button>
 		);

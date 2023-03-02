@@ -14,7 +14,7 @@
 	flex-direction: column;
 }
 
-.hall-of-fame .card .p-toolbar .p-component .mb-4 {
+.hall-of-fame .card .p-toolbar {
 	width: 100%;
 }
 
