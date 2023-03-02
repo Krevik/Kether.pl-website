@@ -45,9 +45,7 @@ export const bindsManagingService = {
 		})
 			.then((response) => {
 				if (response.status === 200) {
-					response.json().then((jsonedResponse) => {
-						bindsManagingService.reloadBinds();
-					});
+					bindsManagingService.reloadBinds();
 				}
 			})
 			.catch((error) => {
