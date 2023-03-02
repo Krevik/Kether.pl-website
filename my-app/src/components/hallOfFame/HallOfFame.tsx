@@ -100,7 +100,7 @@ export default function HallOfFame() {
 								detail: `Successfully added new bind`,
 								life: 3000,
 							});
-							setNewBindDialogVisibility(false);
+							setEditBindDialogVisibility(false);
 							setBindText("");
 						})
 						.catch((error) => {
