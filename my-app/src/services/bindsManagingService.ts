@@ -62,10 +62,33 @@ export const bindsManagingService = {
 				if (response.ok) {
 					response.json().then((jsonedResponse) => {
 						bindsManagingService.reloadBinds();
-						return jsonedResponse;
+						return jsonedResponse.message;
 					});
 				} else {
 					throw new Error("Couldn't delete bind");
+				}
+			})
+			.catch((error) => {
+				throw new Error(error);
+			});
+	},
+	updateBind: (newBindData: BindEntry) => {
+		return fetch("https://kether-api.click/api/binds/updateBind", {
+			method: "post",
+			body: new URLSearchParams({
+				id: `${newBindData.id}`,
+				author: `${newBindData.author}`,
+				text: `${newBindData.text}`,
+			}),
+		})
+			.then((response) => {
+				if (response.ok) {
+					response.json().then((jsonedResponse) => {
+						bindsManagingService.reloadBinds();
+						return jsonedResponse.message;
+					});
+				} else {
+					throw new Error("Couldn't update bind");
 				}
 			})
 			.catch((error) => {

@@ -21,7 +21,10 @@ export default function HallOfFame() {
 	);
 
 	const [newBindDialogVisibility, setNewBindDialogVisibility] = useState(false);
+	const [editBindDialogVisibility, setEditBindDialogVisibility] =
+		useState(false);
 	const [bindAuthor, setBindAuthor] = useState("");
+	const [editingBindID, setEditingBindID] = useState(-1);
 	const [bindText, setBindText] = useState("");
 
 	const toast = useRef<Toast>(null);
@@ -34,7 +37,11 @@ export default function HallOfFame() {
 				<Button
 					icon="pi pi-pencil"
 					className="p-button-rounded p-button-success mr-2"
-					onClick={() => console.log(rowData)}
+					onClick={() => {
+						setEditBindDialogVisibility(true);
+						setBindAuthor(rowData.author);
+						setEditingBindID(rowData.id);
+					}}
 				/>
 				<Button
 					icon="pi pi-trash"
@@ -108,6 +115,58 @@ export default function HallOfFame() {
 		</>
 	);
 
+	const editBindDialogFooter = (originalBindData: BindEntry) => {
+		return (
+			<>
+				<Button
+					label="Cancel"
+					icon="pi pi-times"
+					className="p-button-text"
+					onClick={(e) => setEditBindDialogVisibility(false)}
+				/>
+				<Button
+					label="Update"
+					icon="pi pi-check"
+					className="p-button-text"
+					onClick={() => {
+						const newBindData = {
+							author: bindAuthor,
+							text: bindText,
+						} as BindEntry;
+						if (editingBindID === -1) {
+							toast.current!.show({
+								severity: "error",
+								summary: "Failed",
+								detail: `Something went wrong`,
+								life: 3000,
+							});
+						}
+						bindsManagingService
+							.updateBind(newBindData)
+							.then(() => {
+								toast.current!.show({
+									severity: "success",
+									summary: "Successful",
+									detail: `Successfully updated the bind`,
+									life: 3000,
+								});
+								setNewBindDialogVisibility(false);
+								setEditingBindID(-1);
+							})
+							.catch((error) => {
+								toast.current!.show({
+									severity: "error",
+									summary: "Failed",
+									detail: `Couldn't update the bind: ${error}`,
+									life: 3000,
+								});
+							});
+					}}
+				/>
+			</>
+		);
+	};
+
 	const addNewBindButton = () => {
 		return (
 			<Button
@@ -119,6 +178,54 @@ export default function HallOfFame() {
 		);
 	};
 
+	const addNewBindDialog = () => {
+		return (
+			<Dialog
+				visible={newBindDialogVisibility}
+				header="Add new Bind"
+				modal
+				className="p-fluid"
+				footer={newBindDialogFooter}
+				onHide={() => setNewBindDialogVisibility(false)}
+			>
+				<h5>Author</h5>
+				<InputText
+					value={bindAuthor}
+					onChange={(e) => setBindAuthor(e.target.value)}
+				/>
+				<h5>Text</h5>
+				<InputText
+					value={bindText}
+					onChange={(e) => setBindText(e.target.value)}
+				/>
+			</Dialog>
+		);
+	};
+
+	const editBindDialog = (originalBindData: BindEntry) => {
+		return (
+			<Dialog
+				visible={editBindDialogVisibility}
+				header="Edit Bind"
+				modal
+				className="p-fluid"
+				footer={editBindDialogFooter(originalBindData)}
+				onHide={() => setEditBindDialogVisibility(false)}
+			>
+				<h5>Author</h5>
+				<InputText
+					value={bindAuthor}
+					onChange={(e) => setBindAuthor(e.target.value)}
+				/>
+				<h5>Text</h5>
+				<InputText
+					value={bindText}
+					onChange={(e) => setBindText(e.target.value)}
+				/>
+			</Dialog>
+		);
+	};
+
 	return (
 		<div
 			className="hall-of-fame"
@@ -126,26 +233,8 @@ export default function HallOfFame() {
 		>
 			<div className="card">
 				<Toast ref={toast} />
-				<Dialog
-					visible={newBindDialogVisibility}
-					header="Add new Bind"
-					modal
-					className="p-fluid"
-					footer={newBindDialogFooter}
-					onHide={() => setNewBindDialogVisibility(false)}
-				>
-					<h5>Author</h5>
-					<InputText
-						value={bindAuthor}
-						onChange={(e) => setBindAuthor(e.target.value)}
-					/>
-					<h5>Text</h5>
-					<InputText
-						value={bindText}
-						onChange={(e) => setBindText(e.target.value)}
-					/>
-				</Dialog>
-
+				{addNewBindDialog()}
+				{editBindDialog({ id: editingBindID } as BindEntry)}
 				{isAdmin && (
 					<Toolbar className="mb-4" left={addNewBindButton()}></Toolbar>
 				)}
