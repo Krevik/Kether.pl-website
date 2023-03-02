@@ -44,16 +44,17 @@ export const bindsManagingService = {
 			}),
 		})
 			.then(async (response) => {
-				if (response.status === 200) {
+				if (response.ok) {
 					bindsManagingService.reloadBinds();
 					const responseJSONED = await response.json();
 					return responseJSONED;
 				} else {
-					throw new Error("Error adding bind");
+					return response.statusText;
 				}
 			})
 			.catch((error) => {
 				console.log("Couldn't delete bind: " + error);
+				return error;
 			});
 	},
 	deleteBind: (bind: BindEntry) => {

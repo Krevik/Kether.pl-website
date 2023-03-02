@@ -69,7 +69,7 @@ export default function HallOfFame() {
 							toast.current!.show({
 								severity: "success",
 								summary: "Successful",
-								detail: `Added new bind: ${result}`,
+								detail: `Added new bind: ${JSON.stringify(result)}`,
 								life: 3000,
 							});
 							setNewBindDialogVisibility(false);
