@@ -90,9 +90,12 @@ export default function HallOfFame() {
 
 	const addNewBindButton = () => {
 		return (
-			<Button onClick={(e) => setNewBindDialogVisibility(true)}>
-				Add new bind
-			</Button>
+			<Button
+				label="New Bind"
+				icon="pi pi-plus"
+				className="p-button-success mr-2"
+				onClick={(e) => setNewBindDialogVisibility(true)}
+			></Button>
 		);
 	};
 
