@@ -1,10 +1,14 @@
 [
-  {
-    "name":"Krevik",
-    "steamID": "76561198007892926"
-  },
-  {
-	"name":"Ryder",
-	"steamID": "76561198194467977"
-  }
+	{
+		"name": "Krevik",
+		"steamID": "76561198007892926"
+	},
+	{
+		"name": "Ryder",
+		"steamID": "76561198194467977"
+	},
+	{
+		"name": "Agent",
+		"steamID": "76561197992355807"
+	}
 ]
