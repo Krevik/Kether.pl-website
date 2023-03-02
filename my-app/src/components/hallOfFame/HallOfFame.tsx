@@ -35,6 +35,8 @@ export default function HallOfFame() {
 		return (
 			<>
 				<Button
+					data-toggle="tooltip"
+					title="Edits the given bind"
 					icon="pi pi-pencil"
 					className="p-button-rounded p-button-success mr-2"
 					onClick={() => {
@@ -45,6 +47,8 @@ export default function HallOfFame() {
 					}}
 				/>
 				<Button
+					data-toggle="tooltip"
+					title="Deletes the given bind instantly"
 					icon="pi pi-trash"
 					className="p-button-rounded p-button-warning"
 					onClick={() => {
