@@ -49,12 +49,11 @@ export const bindsManagingService = {
 					const responseJSONED = await response.json();
 					return responseJSONED;
 				} else {
-					return response.statusText;
+					throw new Error("Couldn't add the bind");
 				}
 			})
 			.catch((error) => {
-				console.log("Couldn't delete bind: " + error);
-				return error;
+				throw new Error(error);
 			});
 	},
 	deleteBind: (bind: BindEntry) => {
