@@ -42,19 +42,15 @@ export const bindsManagingService = {
 				author: bind.author,
 				text: bind.text,
 			}),
-		})
-			.then(async (response) => {
-				if (response.ok) {
-					bindsManagingService.reloadBinds();
-					const responseJSONED = await response.json();
-					return responseJSONED;
-				} else {
-					throw new Error("Couldn't add the bind");
-				}
-			})
-			.catch((error) => {
-				throw new Error(error);
-			});
+		}).then(async (response) => {
+			if (response.ok) {
+				bindsManagingService.reloadBinds();
+				const responseJSONED = await response.json();
+				return responseJSONED;
+			} else {
+				throw new Error("Couldn't add the bind");
+			}
+		});
 	},
 	deleteBind: (bind: BindEntry) => {
 		fetch("https://kether-api.click/api/binds/deleteBind", {
