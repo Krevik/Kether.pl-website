@@ -40,12 +40,12 @@ export default function SteamLoginButton() {
 		</div>
 	) : (
 		<Button
+			icon="pi pi-sign-out"
+			label="Log out"
 			onClick={() => {
 				appStore.dispatch(userDataActions.setUserID(undefined));
 			}}
 			type="submit"
-		>
-			Log me out
-		</Button>
+		></Button>
 	);
 }
