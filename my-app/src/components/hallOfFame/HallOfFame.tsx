@@ -5,6 +5,7 @@ import "./HallOfFame.css";
 import { useSelector } from "react-redux";
 import { AppState } from "../../redux/store";
 import { bindsManagingService } from "../../services/bindsManagingService";
+import { Button } from "primereact/button";
 
 export default function HallOfFame() {
 	const binds = useSelector((state: AppState) => state.bindsReducer.binds);
@@ -16,6 +17,23 @@ export default function HallOfFame() {
 
 	bindsManagingService.useBindsLoadingService();
 
+	const actionBodyTemplate = (rowData) => {
+		return (
+			<>
+				<Button
+					icon="pi pi-pencil"
+					className="p-button-rounded p-button-success mr-2"
+					onClick={() => console.log(rowData)}
+				/>
+				<Button
+					icon="pi pi-trash"
+					className="p-button-rounded p-button-warning"
+					onClick={() => console.log(rowData)}
+				/>
+			</>
+		);
+	};
+
 	return (
 		<div
 			className="hall-of-fame"
@@ -26,6 +44,9 @@ export default function HallOfFame() {
 					{isAdmin && <Column field="id" header="database ID"></Column>}
 					<Column field="author" header="Author"></Column>
 					<Column field="text" header="Text"></Column>
+					{isAdmin && (
+						<Column header="Actions" body={actionBodyTemplate}></Column>
+					)}
 				</DataTable>
 			</div>
 		</div>
