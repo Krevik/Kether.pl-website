@@ -66,14 +66,19 @@ export default function HallOfFame() {
 					bindsManagingService
 						.addNewBind(newBind)
 						.then((result) => {
-							console.log(result);
-							setNewBindDialogVisibility(false);
-						})
-						.catch((result) => {
 							toast.current!.show({
 								severity: "success",
 								summary: "Successful",
-								detail: "Added new Bind",
+								detail: `Added new bind: ${result}`,
+								life: 3000,
+							});
+							setNewBindDialogVisibility(false);
+						})
+						.catch((error) => {
+							toast.current!.show({
+								severity: "error",
+								summary: "Failed",
+								detail: `Couldn't add the bind: ${error}`,
 								life: 3000,
 							});
 						});
