@@ -43,10 +43,13 @@ export const bindsManagingService = {
 				text: bind.text,
 			}),
 		})
-			.then((response) => {
+			.then(async (response) => {
 				if (response.status === 200) {
 					bindsManagingService.reloadBinds();
-					return response;
+					const responseJSONED = await response.json();
+					return responseJSONED;
+				} else {
+					throw new Error("Error adding bind");
 				}
 			})
 			.catch((error) => {
