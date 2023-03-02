@@ -24,7 +24,7 @@ export default function HallOfFame() {
 	const [editBindDialogVisibility, setEditBindDialogVisibility] =
 		useState(false);
 	const [bindAuthor, setBindAuthor] = useState("");
-	const [editingBindID, setEditingBindID] = useState(-1);
+	const editingBindID = useRef(-1);
 	const [bindText, setBindText] = useState("");
 
 	const toast = useRef<Toast>(null);
@@ -38,7 +38,7 @@ export default function HallOfFame() {
 					icon="pi pi-pencil"
 					className="p-button-rounded p-button-success mr-2"
 					onClick={() => {
-						setEditingBindID(rowData.id);
+						editingBindID.current = rowData.id;
 						setEditBindDialogVisibility(true);
 						setBindAuthor(rowData.author);
 						setBindText(rowData.text);
@@ -116,7 +116,7 @@ export default function HallOfFame() {
 		</>
 	);
 
-	const editBindDialogFooter = (originalBindData: BindEntry) => {
+	const editBindDialogFooter = () => {
 		return (
 			<>
 				<Button
@@ -130,19 +130,20 @@ export default function HallOfFame() {
 					icon="pi pi-check"
 					className="p-button-text"
 					onClick={() => {
-						const newBindData = {
-							author: bindAuthor,
-							text: bindText,
-							id: editingBindID,
-						} as BindEntry;
-						if (editingBindID === -1) {
+						if (editingBindID.current === -1) {
 							toast.current!.show({
 								severity: "error",
 								summary: "Failed",
 								detail: `Something went wrong`,
 								life: 3000,
 							});
+							throw new Error("No update id was found");
 						}
+						const newBindData = {
+							author: bindAuthor,
+							text: bindText,
+							id: editingBindID.current,
+						} as BindEntry;
 						bindsManagingService
 							.updateBind(newBindData)
 							.then(() => {
@@ -153,7 +154,7 @@ export default function HallOfFame() {
 									life: 3000,
 								});
 								setNewBindDialogVisibility(false);
-								setEditingBindID(-1);
+								editingBindID.current = -1;
 							})
 							.catch((error) => {
 								toast.current!.show({
@@ -204,14 +205,14 @@ export default function HallOfFame() {
 		);
 	};
 
-	const editBindDialog = (originalBindData: BindEntry) => {
+	const editBindDialog = () => {
 		return (
 			<Dialog
 				visible={editBindDialogVisibility}
 				header="Edit Bind"
 				modal
 				className="p-fluid"
-				footer={editBindDialogFooter(originalBindData)}
+				footer={editBindDialogFooter()}
 				onHide={() => setEditBindDialogVisibility(false)}
 			>
 				<h5>Author</h5>
@@ -236,7 +237,7 @@ export default function HallOfFame() {
 			<div className="card">
 				<Toast ref={toast} />
 				{addNewBindDialog()}
-				{editBindDialog({ id: editingBindID } as BindEntry)}
+				{editBindDialog()}
 				{isAdmin && (
 					<Toolbar className="mb-4" left={addNewBindButton()}></Toolbar>
 				)}
