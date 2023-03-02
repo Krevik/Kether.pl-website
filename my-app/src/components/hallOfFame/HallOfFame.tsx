@@ -88,6 +88,7 @@ export default function HallOfFame() {
 			style={{ backgroundImage: `url(${backgroundImage})` }}
 		>
 			<div className="card">
+				<Toast ref={toast} />
 				<Dialog
 					visible={newBindDialogVisibility}
 					header="Add new Bind"
