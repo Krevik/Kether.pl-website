@@ -36,7 +36,7 @@ export const bindsManagingService = {
 			});
 	},
 	addNewBind: (bind: BindEntry) => {
-		fetch("https://kether-api.click/api/binds/addBind", {
+		return fetch("https://kether-api.click/api/binds/addBind", {
 			method: "post",
 			body: new URLSearchParams({
 				author: bind.author,

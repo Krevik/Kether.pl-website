@@ -23,7 +23,7 @@ export default function HallOfFame() {
 	const [bindAuthor, setBindAuthor] = useState("");
 	const [bindText, setBindText] = useState("");
 
-	const toast = useRef(null);
+	const toast = useRef<Toast>(null);
 
 	bindsManagingService.useBindsLoadingService();
 
@@ -63,7 +63,20 @@ export default function HallOfFame() {
 						author: bindAuthor,
 						text: bindText,
 					} as BindEntry;
-					bindsManagingService.addNewBind(newBind);
+					bindsManagingService
+						.addNewBind(newBind)
+						.then((result) => {
+							console.log(result);
+							setNewBindDialogVisibility(false);
+						})
+						.catch((result) => {
+							toast.current!.show({
+								severity: "success",
+								summary: "Successful",
+								detail: "Added new Bind",
+								life: 3000,
+							});
+						});
 				}}
 			/>
 		</>
