@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { AppState } from "../../redux/store";
 import { bindsManagingService } from "../../services/bindsManagingService";
 import { Button } from "primereact/button";
+import { BindEntry } from "../../models/bindsModels";
 
 export default function HallOfFame() {
 	const binds = useSelector((state: AppState) => state.bindsReducer.binds);
@@ -17,7 +18,7 @@ export default function HallOfFame() {
 
 	bindsManagingService.useBindsLoadingService();
 
-	const actionBodyTemplate = (rowData) => {
+	const actionBodyTemplate = (rowData: BindEntry) => {
 		return (
 			<>
 				<Button
@@ -28,7 +29,19 @@ export default function HallOfFame() {
 				<Button
 					icon="pi pi-trash"
 					className="p-button-rounded p-button-warning"
-					onClick={() => console.log(rowData)}
+					onClick={() => {
+						bindsManagingService
+							.deleteBind(rowData)
+							.then((response) => {
+								response.json().then((jsonedResponse) => {
+									console.log(jsonedResponse);
+									bindsManagingService.reloadBinds();
+								});
+							})
+							.catch((error) => {
+								console.log("Couldn't delete bind: " + error);
+							});
+					}}
 				/>
 			</>
 		);
@@ -41,9 +54,11 @@ export default function HallOfFame() {
 		>
 			<div className="card">
 				<DataTable value={binds} scrollable={true}>
-					{isAdmin && <Column field="id" header="database ID"></Column>}
-					<Column field="author" header="Author"></Column>
-					<Column field="text" header="Text"></Column>
+					{isAdmin && (
+						<Column field="id" header="database ID" sortable></Column>
+					)}
+					<Column field="author" header="Author" sortable></Column>
+					<Column field="text" header="Text" sortable></Column>
 					{isAdmin && (
 						<Column header="Actions" body={actionBodyTemplate}></Column>
 					)}

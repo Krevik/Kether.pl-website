@@ -23,19 +23,32 @@ export const bindsManagingService = {
 	useBindsLoadingService: () => {
 		useServerBindsLoader();
 	},
-	addNewBind: (bind: BindEntry) => {},
-};
-
-const useServerBindsLoader = () => {
-	useEffect(() => {
+	reloadBinds: () => {
 		fetch("https://kether-api.click/api/getBinds", {
 			method: "get",
 		})
 			.then((response) => {
-				return response.json();
+				if (response.status === 200) {
+					return response.json();
+				}
 			})
 			.then((response) => {
 				appStore.dispatch(bindsActions.setBinds(response));
 			});
+	},
+	addNewBind: (bind: BindEntry) => {},
+	deleteBind: (bind: BindEntry) => {
+		return fetch("https://kether-api.click/api/binds/deleteBind", {
+			method: "post",
+			body: new URLSearchParams({
+				id: `${bind.id}`,
+			}),
+		});
+	},
+};
+
+const useServerBindsLoader = () => {
+	useEffect(() => {
+		bindsManagingService.reloadBinds();
 	}, []);
 };
