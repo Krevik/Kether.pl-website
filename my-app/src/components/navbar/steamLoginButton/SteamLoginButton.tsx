@@ -39,13 +39,15 @@ export default function SteamLoginButton() {
 			</form>
 		</div>
 	) : (
-		<Button
-			icon="pi pi-sign-out"
-			label="Log out"
-			onClick={() => {
-				appStore.dispatch(userDataActions.setUserID(undefined));
-			}}
-			type="submit"
-		></Button>
+		<div className="steam-login-button">
+			<Button
+				icon="pi pi-sign-out"
+				label="Log out"
+				onClick={() => {
+					appStore.dispatch(userDataActions.setUserID(undefined));
+				}}
+				type="submit"
+			></Button>
+		</div>
 	);
 }
