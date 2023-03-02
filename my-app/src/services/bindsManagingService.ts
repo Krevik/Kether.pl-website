@@ -46,6 +46,7 @@ export const bindsManagingService = {
 			.then((response) => {
 				if (response.status === 200) {
 					bindsManagingService.reloadBinds();
+					return response;
 				}
 			})
 			.catch((error) => {
