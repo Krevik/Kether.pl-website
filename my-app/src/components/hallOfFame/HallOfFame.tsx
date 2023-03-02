@@ -100,7 +100,7 @@ export default function HallOfFame() {
 								detail: `Successfully added new bind`,
 								life: 3000,
 							});
-							setEditBindDialogVisibility(false);
+							setNewBindDialogVisibility(false);
 							setBindText("");
 						})
 						.catch((error) => {
@@ -153,7 +153,7 @@ export default function HallOfFame() {
 									detail: `Successfully updated the bind`,
 									life: 3000,
 								});
-								setNewBindDialogVisibility(false);
+								setEditBindDialogVisibility(false);
 								editingBindID.current = -1;
 							})
 							.catch((error) => {
