@@ -44,9 +44,11 @@ export const bindsManagingService = {
 			}),
 		})
 			.then((response) => {
-				response.json().then((jsonedResponse) => {
-					bindsManagingService.reloadBinds();
-				});
+				if (response.status === 200) {
+					response.json().then((jsonedResponse) => {
+						bindsManagingService.reloadBinds();
+					});
+				}
 			})
 			.catch((error) => {
 				console.log("Couldn't delete bind: " + error);
