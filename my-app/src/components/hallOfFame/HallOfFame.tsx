@@ -421,6 +421,15 @@ export default function HallOfFame() {
 		);
 	};
 
+	const mapBinds = (binds: BindEntry[] | BindSuggestionEntry[]) => {
+		return binds.map((bind) => {
+			return {
+				...bind,
+				author: `${bind.author} : `,
+			};
+		});
+	};
+
 	return (
 		<div
 			className="hall-of-fame"
@@ -435,7 +444,7 @@ export default function HallOfFame() {
 
 				<div className="centered-text"> Binds</div>
 				<div className="card">
-					<DataTable value={binds} scrollable={true}>
+					<DataTable value={mapBinds(binds)} scrollable={true}>
 						{isAdmin && (
 							<Column field="id" header="database ID" sortable></Column>
 						)}
@@ -451,7 +460,7 @@ export default function HallOfFame() {
 					<>
 						<div className="centered-text">Bind Suggestions</div>
 						<div className="card">
-							<DataTable value={bindSuggestions} scrollable={true}>
+							<DataTable value={mapBinds(bindSuggestions)} scrollable={true}>
 								<Column field="proposedBy" header="Proposed By"></Column>
 								<Column field="id" header="database ID" sortable></Column>
 								<Column field="author" header="Author" sortable></Column>
