@@ -48,9 +48,38 @@ export default function HallOfFame() {
 			<>
 				<Button
 					data-toggle="tooltip"
+					title="Accepts the given bind"
+					icon="pi pi-check"
+					className="p-button-rounded p-button-success"
+					onClick={() => {
+						bindSuggestionsManagingService
+							.deleteBindSuggestion(rowData)
+							.then((deletedBind) => {
+								toast.current!.show({
+									severity: "success",
+									summary: "Successful",
+									detail: `Successfully deleted bind suggestion: ${deletedBind}`,
+									life: 3000,
+								});
+								setNewBindDialogVisibility(false);
+								setBindText("");
+							})
+							.catch((error) => {
+								toast.current!.show({
+									severity: "error",
+									summary: "Failed",
+									detail: `Couldn't delete bind suggestion: ${error}`,
+									life: 3000,
+								});
+							});
+					}}
+				/>
+
+				<Button
+					data-toggle="tooltip"
 					title="Deletes the given bind suggestion instantly"
-					icon="pi pi-trash"
-					className="p-button-rounded p-button-warning"
+					icon="pi pi-times"
+					className="p-button-rounded p-button-danger"
 					onClick={() => {
 						bindSuggestionsManagingService
 							.deleteBindSuggestion(rowData)

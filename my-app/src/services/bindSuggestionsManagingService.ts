@@ -1,7 +1,6 @@
 import { useEffect } from "react";
-import { BindEntry, BindSuggestionEntry } from "../models/bindsModels";
+import { BindSuggestionEntry } from "../models/bindsModels";
 import { AppState, appStore } from "../redux/store";
-import { bindsActions } from "../redux/slices/bindsSlice";
 import { apiPaths } from "../utils/apiPaths";
 import { bindSuggestionsActions } from "../redux/slices/bindSuggestionsSlice";
 import { useSelector } from "react-redux";
