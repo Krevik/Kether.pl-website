@@ -76,7 +76,7 @@ export default function HallOfFame() {
 					icon="pi pi-check"
 					className="p-button-rounded p-button-success"
 					onClick={() => {
-						const bind = trimBindData(rowData) as BindSuggestionEntry;
+						const bind = trimBindAuthor(rowData) as BindSuggestionEntry;
 						bindsManagingService
 							.addNewBind(bind)
 							.then((addedBind) => {
@@ -136,7 +136,7 @@ export default function HallOfFame() {
 		);
 	};
 
-	const trimBindData = (bind: BindEntry | BindSuggestionEntry) => {
+	const trimBindAuthor = (bind: BindEntry | BindSuggestionEntry) => {
 		return {
 			...bind,
 			author: bind.author.replace(":", "").trim(),
@@ -154,7 +154,7 @@ export default function HallOfFame() {
 					onClick={() => {
 						editingBindID.current = rowData.id;
 						setEditBindDialogVisibility(true);
-						setBindAuthor(trimBindData(rowData).author);
+						setBindAuthor(trimBindAuthor(rowData).author);
 						setBindText(rowData.text);
 					}}
 				/>
