@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { BindEntry, BindSuggestionEntry } from "../models/bindsModels";
+import { BindEntry } from "../models/bindsModels";
 import { AppState, appStore } from "../redux/store";
 import { bindsActions } from "../redux/slices/bindsSlice";
 import { apiPaths } from "../utils/apiPaths";
@@ -22,11 +22,11 @@ export const bindSuggestionsManagingService = {
 					return response.json();
 				}
 			})
-			.then((response: BindSuggestionEntry[]) => {
+			.then((response: BindEntry[]) => {
 				appStore.dispatch(bindSuggestionsActions.setBindSuggestions(response));
 			});
 	},
-	addNewBindSuggestion: (bind: BindSuggestionEntry) => {
+	addNewBindSuggestion: (bind: BindEntry) => {
 		return fetch(
 			`${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BIND_SUGGESTIONS_PATH}/addBind`,
 			{
@@ -34,7 +34,7 @@ export const bindSuggestionsManagingService = {
 				body: new URLSearchParams({
 					author: bind.author,
 					text: bind.text,
-					proposedBy: bind.proposedBy,
+					proposedBy: bind.proposedBy!,
 				}),
 			}
 		).then(async (response) => {
@@ -46,7 +46,7 @@ export const bindSuggestionsManagingService = {
 			}
 		});
 	},
-	deleteBindSuggestion: (bind: BindSuggestionEntry) => {
+	deleteBindSuggestion: (bind: BindEntry) => {
 		return fetch(
 			`${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BIND_SUGGESTIONS_PATH}/deleteBind`,
 			{
@@ -70,7 +70,7 @@ export const bindSuggestionsManagingService = {
 				throw new Error(error);
 			});
 	},
-	updateBindSuggestion: (newBindData: BindSuggestionEntry) => {
+	updateBindSuggestion: (newBindData: BindEntry) => {
 		return fetch(
 			`${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BIND_SUGGESTIONS_PATH}/updateBind`,
 			{

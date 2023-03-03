@@ -18,6 +18,10 @@
 	width: 100%;
 }
 
+.hall-of-fame .card .p-toolbar-group-start .p-toolbar-group-left {
+	gap: 10px;
+}
+
 .hall-of-fame .p-datatable {
 	width: 90%;
 	background-color: transparent;

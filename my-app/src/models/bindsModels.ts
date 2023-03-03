@@ -12,7 +12,6 @@ export type BindEntry = {
 	id: number;
 	author: string;
 	text: string;
+	proposedBy?: string;
 	bindVotingEntries: BindVotingEntry[];
 };
-
-export type BindSuggestionEntry = BindEntry & { proposedBy: string };

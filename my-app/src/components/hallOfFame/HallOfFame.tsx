@@ -6,8 +6,8 @@ import { useSelector } from "react-redux";
 import { AppState } from "../../redux/store";
 import { bindsManagingService } from "../../services/bindsManagingService";
 import { Button } from "primereact/button";
-import { BindEntry, BindSuggestionEntry } from "../../models/bindsModels";
-import { useRef, useState } from "react";
+import { BindEntry } from "../../models/bindsModels";
+import { useEffect, useRef, useState } from "react";
 import { Dialog } from "primereact/dialog";
 import { Toast } from "primereact/toast";
 import { InputText } from "primereact/inputtext";
@@ -149,7 +149,7 @@ export default function HallOfFame() {
 						proposedBy: steamUserData?.personaname,
 						author: bindAuthor,
 						text: bindText,
-					} as BindSuggestionEntry;
+					} as BindEntry;
 					bindSuggestionsManagingService
 						.addNewBindSuggestion(newBind)
 						.then(() => {
@@ -236,7 +236,7 @@ export default function HallOfFame() {
 		return (
 			<>
 				{isAdmin && addNewBindButton()}
-				{addBindSuggestion()}
+				{userID && addBindSuggestion()}
 			</>
 		);
 	};
@@ -350,7 +350,10 @@ export default function HallOfFame() {
 				{addNewBindSuggestionDialog()}
 				{editBindDialog()}
 				<Toolbar className="mb-4" left={getToolbarLeftSide()}></Toolbar>
-				<DataTable value={binds} scrollable={true}>
+				<DataTable
+					value={isAdmin ? binds && bindSuggestions : binds}
+					scrollable={true}
+				>
 					{isAdmin && (
 						<Column field="id" header="database ID" sortable></Column>
 					)}
@@ -360,18 +363,6 @@ export default function HallOfFame() {
 						<Column header="Actions" body={actionBodyTemplate}></Column>
 					)}
 				</DataTable>
-
-				{isAdmin && (
-					<DataTable value={bindSuggestions} scrollable={true}>
-						<Column field="id" header="database ID" sortable></Column>
-						<Column field="author" header="Author" sortable></Column>
-						<Column field="text" header="Text" sortable></Column>
-						<Column field="proposedBy" header="Proposed By" sortable></Column>
-						{/* {isAdmin && (
-							<Column header="Actions" body={actionBodyTemplate}></Column>
-						)} */}
-					</DataTable>
-				)}
 			</div>
 		</div>
 	);
