@@ -34,6 +34,7 @@
 .p-toolbar-group-right,
 .p-toolbar-group-start {
 	gap: 10px;
+	margin: auto;
 }
 
 .hall-of-fame .p-datatable-scrollable .p-datatable-wrapper {
