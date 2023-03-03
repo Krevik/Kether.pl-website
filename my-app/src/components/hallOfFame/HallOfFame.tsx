@@ -350,20 +350,14 @@ export default function HallOfFame() {
 				{addNewBindSuggestionDialog()}
 				{editBindDialog()}
 				<Toolbar className="mb-4" left={getToolbarLeftSide()}></Toolbar>
-				<DataTable
-					value={isAdmin ? binds && bindSuggestions : binds}
-					scrollable={true}
-				>
+				<DataTable value={binds} scrollable={true}>
 					{isAdmin && (
 						<Column field="id" header="database ID" sortable></Column>
 					)}
 					<Column field="author" header="Author" sortable></Column>
 					<Column field="text" header="Text" sortable></Column>
 					{isAdmin && (
-						<>
-							<Column field="proposedBy" header="Proposed By"></Column>
-							<Column header="Actions" body={actionBodyTemplate}></Column>
-						</>
+						<Column header="Actions" body={actionBodyTemplate}></Column>
 					)}
 				</DataTable>
 			</div>
