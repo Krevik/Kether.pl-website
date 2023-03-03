@@ -43,6 +43,7 @@ export default function HallOfFame() {
 	const toast = useRef<Toast>(null);
 
 	useEffect(() => {
+		console.log("Reloading due to merge of binds and binds suggestions");
 		let newFinalBinds = [] as (BindEntry | BindSuggestionEntry)[];
 		newFinalBinds = [...binds, ...bindSuggestions];
 		setAllBindEntries(newFinalBinds);
@@ -366,7 +367,10 @@ export default function HallOfFame() {
 					<Column field="author" header="Author" sortable></Column>
 					<Column field="text" header="Text" sortable></Column>
 					{isAdmin && (
-						<Column header="Actions" body={actionBodyTemplate}></Column>
+						<>
+							<Column field="proposedBy" header="Proposed By" sortable></Column>
+							<Column header="Actions" body={actionBodyTemplate}></Column>
+						</>
 					)}
 				</DataTable>
 			</div>
