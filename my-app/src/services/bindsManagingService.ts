@@ -3,6 +3,7 @@ import { BindEntry, BindVotingEntry } from "../models/bindsModels";
 import { AppState, appStore } from "../redux/store";
 import { bindsActions } from "../redux/slices/bindsSlice";
 import { useSelector } from "react-redux";
+import { apiPaths } from "../utils/apiPaths";
 
 export const bindsManagingService = {
 	useBindVotingService: (
@@ -23,7 +24,7 @@ export const bindsManagingService = {
 		useServerBindsLoader();
 	},
 	reloadBinds: () => {
-		fetch("https://kether-api.click/api/binds/getBinds", {
+		fetch(`${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}/binds/getBinds`, {
 			method: "get",
 		})
 			.then((response) => {
@@ -36,13 +37,16 @@ export const bindsManagingService = {
 			});
 	},
 	addNewBind: (bind: BindEntry) => {
-		return fetch("https://kether-api.click/api/binds/addBind", {
-			method: "post",
-			body: new URLSearchParams({
-				author: bind.author,
-				text: bind.text,
-			}),
-		}).then(async (response) => {
+		return fetch(
+			`${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}/binds/addBind`,
+			{
+				method: "post",
+				body: new URLSearchParams({
+					author: bind.author,
+					text: bind.text,
+				}),
+			}
+		).then(async (response) => {
 			if (response.ok) {
 				bindsManagingService.reloadBinds();
 				return response.json();
@@ -52,12 +56,15 @@ export const bindsManagingService = {
 		});
 	},
 	deleteBind: (bind: BindEntry) => {
-		return fetch("https://kether-api.click/api/binds/deleteBind", {
-			method: "post",
-			body: new URLSearchParams({
-				id: `${bind.id}`,
-			}),
-		})
+		return fetch(
+			`${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}/binds/deleteBind`,
+			{
+				method: "post",
+				body: new URLSearchParams({
+					id: `${bind.id}`,
+				}),
+			}
+		)
 			.then((response) => {
 				if (response.ok) {
 					response.json().then((jsonedResponse) => {
@@ -73,14 +80,17 @@ export const bindsManagingService = {
 			});
 	},
 	updateBind: (newBindData: BindEntry) => {
-		return fetch("https://kether-api.click/api/binds/updateBind", {
-			method: "post",
-			body: new URLSearchParams({
-				id: `${newBindData.id}`,
-				author: `${newBindData.author}`,
-				text: `${newBindData.text}`,
-			}),
-		})
+		return fetch(
+			`${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}/binds/updateBind`,
+			{
+				method: "post",
+				body: new URLSearchParams({
+					id: `${newBindData.id}`,
+					author: `${newBindData.author}`,
+					text: `${newBindData.text}`,
+				}),
+			}
+		)
 			.then((response) => {
 				if (response.ok) {
 					response.json().then((jsonedResponse) => {

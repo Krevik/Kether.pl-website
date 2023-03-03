@@ -4,6 +4,7 @@ import { userDataActions } from "../redux/slices/userDataSlice";
 import { useSelector } from "react-redux";
 import adminsFileLoc from "../resources/admins/admins.json";
 import { Admin } from "../models/adminModels";
+import { apiPaths } from "../utils/apiPaths";
 
 export const steamAPIService = {
 	useAdminDetectionService: () => {
@@ -63,7 +64,7 @@ export const steamAPIService = {
 
 		useEffect(() => {
 			if (userID) {
-				fetch("https://kether-api.click/api/steamUserData", {
+				fetch(`${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}/steamUserData`, {
 					method: "post",
 					body: new URLSearchParams({
 						userID: `${userID}`,
@@ -87,7 +88,7 @@ export const steamAPIService = {
 
 		useEffect(() => {
 			if (userID) {
-				fetch("https://kether-api.click/api/steam/games", {
+				fetch(`${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}/steam/games`, {
 					method: "post",
 					body: new URLSearchParams({
 						userID: `${userID}`,

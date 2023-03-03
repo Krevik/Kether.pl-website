@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import commandsFileLoc from "../../resources/commands/commands.json";
+import { apiPaths } from "../../utils/apiPaths";
 
 type Command = {
 	command: string;
@@ -33,7 +34,7 @@ export default function HomePage() {
 
 	//load server info
 	useEffect(() => {
-		fetch(`https://kether-api.click/api/serverInfo`, {
+		fetch(`${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}/serverInfo`, {
 			method: "post",
 			headers: {
 				"Access-Control-Allow-Origin": "*",
