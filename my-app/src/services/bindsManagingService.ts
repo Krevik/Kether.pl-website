@@ -52,7 +52,9 @@ export const bindsManagingService = {
 		).then(async (response) => {
 			if (response.ok) {
 				bindsManagingService.getBinds();
-				return response.json();
+				return response.json().then((response) => {
+					return response;
+				});
 			} else {
 				throw new Error("Couldn't add the bind");
 			}
