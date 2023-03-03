@@ -352,6 +352,7 @@ export default function HallOfFame() {
 				{editBindDialog()}
 				<Toolbar className="mb-4" left={getToolbarLeftSide()}></Toolbar>
 				<div className="card">
+					<div className="centered-text"> Binds</div>
 					<DataTable value={binds} scrollable={true}>
 						{isAdmin && (
 							<Column field="id" header="database ID" sortable></Column>
@@ -365,6 +366,7 @@ export default function HallOfFame() {
 				</div>
 				{isAdmin && (
 					<div className="card">
+						<div className="centered-text">Bind Suggestions</div>
 						<DataTable value={binds} scrollable={true}>
 							{isAdmin && (
 								<Column field="id" header="database ID" sortable></Column>
