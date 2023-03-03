@@ -339,13 +339,13 @@ export default function HallOfFame() {
 			<>
 				<h5>Author</h5>
 				<InputText
-					keyfilter={/^[a-zA-Z0-9]+$/}
+					keyfilter={/^[a-zA-Z0-9 ]+$/}
 					value={bindAuthor}
 					onChange={(e) => setBindAuthor(e.target.value)}
 				/>
 				<h5>Text</h5>
 				<InputText
-					keyfilter={/^[a-zA-Z0-9]+$/}
+					keyfilter={/^[a-zA-Z0-9 ]+$/}
 					value={bindText}
 					onChange={(e) => setBindText(e.target.value)}
 				/>
