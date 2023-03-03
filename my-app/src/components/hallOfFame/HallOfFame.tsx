@@ -52,23 +52,40 @@ export default function HallOfFame() {
 					icon="pi pi-check"
 					className="p-button-rounded p-button-success"
 					onClick={() => {
-						bindSuggestionsManagingService
-							.deleteBindSuggestion(rowData)
-							.then((deletedBind) => {
+						const bind = rowData;
+						bindsManagingService
+							.addNewBind(bind)
+							.then((addedBind) => {
 								toast.current!.show({
 									severity: "success",
 									summary: "Successful",
-									detail: `Successfully deleted bind suggestion: ${deletedBind}`,
+									detail: `Successfully accepted new bind: ${addedBind}`,
 									life: 3000,
 								});
-								setNewBindDialogVisibility(false);
-								setBindText("");
+								bindSuggestionsManagingService
+									.deleteBindSuggestion(bind)
+									.then((deletedBind) => {
+										toast.current!.show({
+											severity: "success",
+											summary: "Successful",
+											detail: `Successfully deleted bind suggestion: ${deletedBind}`,
+											life: 3000,
+										});
+									})
+									.catch((error) => {
+										toast.current!.show({
+											severity: "error",
+											summary: "Failed",
+											detail: `Couldn't delete bind suggestion: ${error}`,
+											life: 3000,
+										});
+									});
 							})
 							.catch((error) => {
 								toast.current!.show({
 									severity: "error",
 									summary: "Failed",
-									detail: `Couldn't delete bind suggestion: ${error}`,
+									detail: `Couldn't add new bind: ${error}`,
 									life: 3000,
 								});
 							});
