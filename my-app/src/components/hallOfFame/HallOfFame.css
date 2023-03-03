@@ -27,11 +27,7 @@
 	width: 100%;
 }
 
-.hall-of-fame .card .p-toolbar,
-.p-toolbar-group-end,
-.p-toolbar-group-left,
-.p-toolbar-group-right,
-.p-toolbar-group-start {
+.hall-of-fame .card .p-toolbar-group-start .p-toolbar-group-left {
 	gap: 10px;
 	margin: auto;
 }
