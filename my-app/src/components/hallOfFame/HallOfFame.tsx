@@ -351,16 +351,30 @@ export default function HallOfFame() {
 				{addNewBindSuggestionDialog()}
 				{editBindDialog()}
 				<Toolbar className="mb-4" left={getToolbarLeftSide()}></Toolbar>
-				<DataTable value={binds} scrollable={true}>
-					{isAdmin && (
-						<Column field="id" header="database ID" sortable></Column>
-					)}
-					<Column field="author" header="Author" sortable></Column>
-					<Column field="text" header="Text" sortable></Column>
-					{isAdmin && (
-						<Column header="Actions" body={actionBodyTemplate}></Column>
-					)}
-				</DataTable>
+				<div className="card">
+					<DataTable value={binds} scrollable={true}>
+						{isAdmin && (
+							<Column field="id" header="database ID" sortable></Column>
+						)}
+						<Column field="author" header="Author" sortable></Column>
+						<Column field="text" header="Text" sortable></Column>
+						{isAdmin && (
+							<Column header="Actions" body={actionBodyTemplate}></Column>
+						)}
+					</DataTable>
+				</div>
+				<div className="card">
+					<DataTable value={binds} scrollable={true}>
+						{isAdmin && (
+							<Column field="id" header="database ID" sortable></Column>
+						)}
+						<Column field="author" header="Author" sortable></Column>
+						<Column field="text" header="Text" sortable></Column>
+						{isAdmin && (
+							<Column header="Actions" body={actionBodyTemplate}></Column>
+						)}
+					</DataTable>
+				</div>
 			</div>
 		</div>
 	);
