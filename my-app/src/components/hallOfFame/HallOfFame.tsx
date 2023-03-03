@@ -37,17 +37,8 @@ export default function HallOfFame() {
 	const [bindAuthor, setBindAuthor] = useState("");
 	const editingBindID = useRef(-1);
 	const [bindText, setBindText] = useState("");
-	const [allBindEntries, setAllBindEntries] =
-		useState<(BindEntry | BindSuggestionEntry)[]>();
 
 	const toast = useRef<Toast>(null);
-
-	useEffect(() => {
-		console.log("Reloading due to merge of binds and binds suggestions");
-		let newFinalBinds = [] as (BindEntry | BindSuggestionEntry)[];
-		newFinalBinds = [...binds, ...bindSuggestions];
-		setAllBindEntries(newFinalBinds);
-	}, [binds, bindSuggestions]);
 
 	bindsManagingService.useBindsLoadingService();
 	bindSuggestionsManagingService.useBindSuggestionsLoadingService();
@@ -360,17 +351,14 @@ export default function HallOfFame() {
 				{addNewBindSuggestionDialog()}
 				{editBindDialog()}
 				<Toolbar className="mb-4" left={getToolbarLeftSide()}></Toolbar>
-				<DataTable value={allBindEntries} scrollable={true}>
+				<DataTable value={binds} scrollable={true}>
 					{isAdmin && (
 						<Column field="id" header="database ID" sortable></Column>
 					)}
 					<Column field="author" header="Author" sortable></Column>
 					<Column field="text" header="Text" sortable></Column>
 					{isAdmin && (
-						<>
-							<Column field="proposedBy" header="Proposed By" sortable></Column>
-							<Column header="Actions" body={actionBodyTemplate}></Column>
-						</>
+						<Column header="Actions" body={actionBodyTemplate}></Column>
 					)}
 				</DataTable>
 			</div>
