@@ -28,13 +28,17 @@
 }
 
 .hall-of-fame .card .p-toolbar,
-.p-toolbar-group-center,
 .p-toolbar-group-end,
 .p-toolbar-group-left,
 .p-toolbar-group-right,
 .p-toolbar-group-start {
 	gap: 10px;
 	margin: auto;
+}
+
+.hall-of-fame .card .p-toolbar,
+.p-toolbar-group-center {
+	margin: 0;
 }
 
 .hall-of-fame .p-datatable-scrollable .p-datatable-wrapper {
