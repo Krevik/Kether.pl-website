@@ -7,9 +7,9 @@ import { AppState } from "../../redux/store";
 import { bindsManagingService } from "../../services/bindsManagingService";
 import { Button } from "primereact/button";
 import { BindEntry, BindSuggestionEntry } from "../../models/bindsModels";
-import { useEffect, useRef, useState } from "react";
+import { RefObject, useEffect, useRef, useState } from "react";
 import { Dialog } from "primereact/dialog";
-import { Toast } from "primereact/toast";
+import { Toast, ToastMessage } from "primereact/toast";
 import { InputText } from "primereact/inputtext";
 import { Toolbar } from "primereact/toolbar";
 import { bindSuggestionsManagingService } from "../../services/bindSuggestionsManagingService";
@@ -43,6 +43,21 @@ export default function HallOfFame() {
 	bindsManagingService.useBindsLoadingService();
 	bindSuggestionsManagingService.useBindSuggestionsLoadingService();
 
+	const showToastNotification = (
+		toast: RefObject<Toast>,
+		severity: ToastMessage["severity"],
+		summary: ToastMessage["summary"],
+		detail: string,
+		life?: number
+	) => {
+		toast.current!.show({
+			severity: severity,
+			summary: summary,
+			detail: detail,
+			life: life || 3000,
+		});
+	};
+
 	const bindSuggestionBodyTemplate = (rowData: BindSuggestionEntry) => {
 		return (
 			<>
@@ -56,38 +71,38 @@ export default function HallOfFame() {
 						bindsManagingService
 							.addNewBind(bind)
 							.then((addedBind) => {
-								toast.current!.show({
-									severity: "success",
-									summary: "Successful",
-									detail: `Successfully accepted new bind: ${addedBind}`,
-									life: 3000,
-								});
+								showToastNotification(
+									toast,
+									"success",
+									"Successful",
+									`Successfully accepted new bind: ${addedBind}`
+								);
 								bindSuggestionsManagingService
 									.deleteBindSuggestion(bind)
 									.then((deletedBind) => {
-										toast.current!.show({
-											severity: "success",
-											summary: "Successful",
-											detail: `Successfully deleted bind suggestion: ${deletedBind}`,
-											life: 3000,
-										});
+										showToastNotification(
+											toast,
+											"success",
+											"Successful",
+											`Successfully deleted bind suggestion: ${deletedBind}`
+										);
 									})
 									.catch((error) => {
-										toast.current!.show({
-											severity: "error",
-											summary: "Failed",
-											detail: `Couldn't delete bind suggestion: ${error}`,
-											life: 3000,
-										});
+										showToastNotification(
+											toast,
+											"error",
+											"Failed",
+											`Couldn't delete bind suggestion: ${error}`
+										);
 									});
 							})
 							.catch((error) => {
-								toast.current!.show({
-									severity: "error",
-									summary: "Failed",
-									detail: `Couldn't add new bind: ${error}`,
-									life: 3000,
-								});
+								showToastNotification(
+									toast,
+									"error",
+									"Failed",
+									`Couldn't add new bind: ${error}`
+								);
 							});
 					}}
 				/>
@@ -101,22 +116,22 @@ export default function HallOfFame() {
 						bindSuggestionsManagingService
 							.deleteBindSuggestion(rowData)
 							.then((deletedBind) => {
-								toast.current!.show({
-									severity: "success",
-									summary: "Successful",
-									detail: `Successfully deleted bind suggestion: ${deletedBind}`,
-									life: 3000,
-								});
+								showToastNotification(
+									toast,
+									"success",
+									"Successful",
+									`Successfully deleted bind suggestion: ${deletedBind}`
+								);
 								setNewBindDialogVisibility(false);
 								setBindText("");
 							})
 							.catch((error) => {
-								toast.current!.show({
-									severity: "error",
-									summary: "Failed",
-									detail: `Couldn't delete bind suggestion: ${error}`,
-									life: 3000,
-								});
+								showToastNotification(
+									toast,
+									"error",
+									"Failed",
+									`Couldn't delete bind suggestion: ${error}`
+								);
 							});
 					}}
 				/>
@@ -148,22 +163,22 @@ export default function HallOfFame() {
 						bindsManagingService
 							.deleteBind(rowData)
 							.then((deletedBindResponse) => {
-								toast.current!.show({
-									severity: "success",
-									summary: "Successful",
-									detail: `${deletedBindResponse}`,
-									life: 3000,
-								});
+								showToastNotification(
+									toast,
+									"success",
+									"Successful",
+									`${deletedBindResponse}`
+								);
 								setNewBindDialogVisibility(false);
 								setBindText("");
 							})
 							.catch((error) => {
-								toast.current!.show({
-									severity: "error",
-									summary: "Failed",
-									detail: `Couldn't delete the bind: ${error}`,
-									life: 3000,
-								});
+								showToastNotification(
+									toast,
+									"error",
+									"Failed",
+									`Couldn't delete the bind: ${error}`
+								);
 							});
 					}}
 				/>
@@ -191,22 +206,22 @@ export default function HallOfFame() {
 					bindsManagingService
 						.addNewBind(newBind)
 						.then(() => {
-							toast.current!.show({
-								severity: "success",
-								summary: "Successful",
-								detail: `Successfully added new bind`,
-								life: 3000,
-							});
+							showToastNotification(
+								toast,
+								"success",
+								"Successful",
+								`Successfully added new bind`
+							);
 							setNewBindDialogVisibility(false);
 							setBindText("");
 						})
 						.catch((error) => {
-							toast.current!.show({
-								severity: "error",
-								summary: "Failed",
-								detail: `Couldn't add the bind: ${error}`,
-								life: 3000,
-							});
+							showToastNotification(
+								toast,
+								"error",
+								"Failed",
+								`Couldn't add the bind: ${error}`
+							);
 						});
 				}}
 			/>
@@ -235,22 +250,22 @@ export default function HallOfFame() {
 					bindSuggestionsManagingService
 						.addNewBindSuggestion(newBind)
 						.then(() => {
-							toast.current!.show({
-								severity: "success",
-								summary: "Successful",
-								detail: `Successfully suggested new bind`,
-								life: 3000,
-							});
+							showToastNotification(
+								toast,
+								"success",
+								"Successful",
+								`Successfully suggested new bind`
+							);
 							setNewBindSuggestionDialogVisibility(false);
 							setBindText("");
 						})
 						.catch((error) => {
-							toast.current!.show({
-								severity: "error",
-								summary: "Failed",
-								detail: `Couldn't suggest the bind: ${error}`,
-								life: 3000,
-							});
+							showToastNotification(
+								toast,
+								"error",
+								"Failed",
+								`Couldn't suggest the bind: ${error}`
+							);
 						});
 				}}
 			/>
@@ -275,12 +290,12 @@ export default function HallOfFame() {
 					className="p-button-text"
 					onClick={() => {
 						if (editingBindID.current === -1) {
-							toast.current!.show({
-								severity: "error",
-								summary: "Failed",
-								detail: `Something went wrong`,
-								life: 3000,
-							});
+							showToastNotification(
+								toast,
+								"error",
+								"Failed",
+								`Something went wrong`
+							);
 							throw new Error("No update id was found");
 						}
 						const newBindData = {
@@ -291,22 +306,22 @@ export default function HallOfFame() {
 						bindsManagingService
 							.updateBind(newBindData)
 							.then(() => {
-								toast.current!.show({
-									severity: "success",
-									summary: "Successful",
-									detail: `Successfully updated the bind`,
-									life: 3000,
-								});
+								showToastNotification(
+									toast,
+									"success",
+									"Successful",
+									`Successfully updated the bind`
+								);
 								setEditBindDialogVisibility(false);
 								editingBindID.current = -1;
 							})
 							.catch((error) => {
-								toast.current!.show({
-									severity: "error",
-									summary: "Failed",
-									detail: `Couldn't update the bind: ${error}`,
-									life: 3000,
-								});
+								showToastNotification(
+									toast,
+									"error",
+									"Failed",
+									`Couldn't update the bind: ${error}`
+								);
 							});
 					}}
 				/>
@@ -349,16 +364,9 @@ export default function HallOfFame() {
 		);
 	};
 
-	const addNewBindDialog = () => {
+	const dialogBindContent = () => {
 		return (
-			<Dialog
-				visible={newBindDialogVisibility}
-				header="Add new Bind"
-				modal
-				className="p-fluid"
-				footer={newBindDialogFooter}
-				onHide={() => setNewBindDialogVisibility(false)}
-			>
+			<>
 				<h5>Author</h5>
 				<InputText
 					keyfilter={/^[a-zA-Z0-9]+$/}
@@ -371,6 +379,21 @@ export default function HallOfFame() {
 					value={bindText}
 					onChange={(e) => setBindText(e.target.value)}
 				/>
+			</>
+		);
+	};
+
+	const addNewBindDialog = () => {
+		return (
+			<Dialog
+				visible={newBindDialogVisibility}
+				header="Add new Bind"
+				modal
+				className="p-fluid"
+				footer={newBindDialogFooter}
+				onHide={() => setNewBindDialogVisibility(false)}
+			>
+				{dialogBindContent()}
 			</Dialog>
 		);
 	};
@@ -385,18 +408,7 @@ export default function HallOfFame() {
 				footer={newBindSuggestionDialogFooter}
 				onHide={() => setNewBindSuggestionDialogVisibility(false)}
 			>
-				<h5>Author</h5>
-				<InputText
-					keyfilter={/^[a-zA-Z0-9]+$/}
-					value={bindAuthor}
-					onChange={(e) => setBindAuthor(e.target.value)}
-				/>
-				<h5>Text</h5>
-				<InputText
-					keyfilter={/^[a-zA-Z0-9]+$/}
-					value={bindText}
-					onChange={(e) => setBindText(e.target.value)}
-				/>
+				{dialogBindContent()}
 			</Dialog>
 		);
 	};
@@ -411,18 +423,7 @@ export default function HallOfFame() {
 				footer={editBindDialogFooter()}
 				onHide={() => setEditBindDialogVisibility(false)}
 			>
-				<h5>Author</h5>
-				<InputText
-					keyfilter={/^[a-zA-Z0-9]+$/}
-					value={bindAuthor}
-					onChange={(e) => setBindAuthor(e.target.value)}
-				/>
-				<h5>Text</h5>
-				<InputText
-					keyfilter={/^[a-zA-Z0-9]+$/}
-					value={bindText}
-					onChange={(e) => setBindText(e.target.value)}
-				/>
+				{dialogBindContent()}
 			</Dialog>
 		);
 	};
