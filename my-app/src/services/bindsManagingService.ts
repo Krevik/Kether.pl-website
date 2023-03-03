@@ -23,7 +23,7 @@ export const bindsManagingService = {
 		useServerBindsLoader();
 	},
 	reloadBinds: () => {
-		fetch("https://kether-api.click/api/getBinds", {
+		fetch("https://kether-api.click/api/binds/getBinds", {
 			method: "get",
 		})
 			.then((response) => {
