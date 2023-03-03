@@ -361,11 +361,13 @@ export default function HallOfFame() {
 			>
 				<h5>Author</h5>
 				<InputText
+					keyfilter={"int" && "alpha"}
 					value={bindAuthor}
 					onChange={(e) => setBindAuthor(e.target.value)}
 				/>
 				<h5>Text</h5>
 				<InputText
+					keyfilter={"int" && "alpha"}
 					value={bindText}
 					onChange={(e) => setBindText(e.target.value)}
 				/>
@@ -385,11 +387,13 @@ export default function HallOfFame() {
 			>
 				<h5>Author</h5>
 				<InputText
+					keyfilter={"int" && "alpha"}
 					value={bindAuthor}
 					onChange={(e) => setBindAuthor(e.target.value)}
 				/>
 				<h5>Text</h5>
 				<InputText
+					keyfilter={"int" && "alpha"}
 					value={bindText}
 					onChange={(e) => setBindText(e.target.value)}
 				/>
@@ -409,25 +413,18 @@ export default function HallOfFame() {
 			>
 				<h5>Author</h5>
 				<InputText
+					keyfilter={"int" && "alpha"}
 					value={bindAuthor}
 					onChange={(e) => setBindAuthor(e.target.value)}
 				/>
 				<h5>Text</h5>
 				<InputText
+					keyfilter={"int" && "alpha"}
 					value={bindText}
 					onChange={(e) => setBindText(e.target.value)}
 				/>
 			</Dialog>
 		);
-	};
-
-	const mapBinds = (binds: BindEntry[] | BindSuggestionEntry[]) => {
-		return binds.map((bind) => {
-			return {
-				...bind,
-				author: `${bind.author} : `,
-			};
-		});
 	};
 
 	return (
@@ -444,7 +441,7 @@ export default function HallOfFame() {
 
 				<div className="centered-text"> Binds</div>
 				<div className="card">
-					<DataTable value={mapBinds(binds)} scrollable={true}>
+					<DataTable value={binds} scrollable={true}>
 						{isAdmin && (
 							<Column field="id" header="database ID" sortable></Column>
 						)}
@@ -460,7 +457,7 @@ export default function HallOfFame() {
 					<>
 						<div className="centered-text">Bind Suggestions</div>
 						<div className="card">
-							<DataTable value={mapBinds(bindSuggestions)} scrollable={true}>
+							<DataTable value={bindSuggestions} scrollable={true}>
 								<Column field="proposedBy" header="Proposed By"></Column>
 								<Column field="id" header="database ID" sortable></Column>
 								<Column field="author" header="Author" sortable></Column>
