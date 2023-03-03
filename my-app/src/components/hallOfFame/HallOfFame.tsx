@@ -67,7 +67,7 @@ export default function HallOfFame() {
 		});
 	};
 
-	const bindSuggestionBodyTemplate = (rowData: BindSuggestionEntry) => {
+	const bindSuggestionBody = (rowData: BindSuggestionEntry) => {
 		return (
 			<>
 				<Button
@@ -76,7 +76,7 @@ export default function HallOfFame() {
 					icon="pi pi-check"
 					className="p-button-rounded p-button-success"
 					onClick={() => {
-						const bind = rowData;
+						const bind = trimBindData(rowData) as BindSuggestionEntry;
 						bindsManagingService
 							.addNewBind(bind)
 							.then((addedBind) => {
@@ -136,6 +136,13 @@ export default function HallOfFame() {
 		);
 	};
 
+	const trimBindData = (bind: BindEntry | BindSuggestionEntry) => {
+		return {
+			...bind,
+			author: bind.author.replace(":", "").trim(),
+		};
+	};
+
 	const bindActionBodyTemplate = (rowData: BindEntry) => {
 		return (
 			<>
@@ -147,7 +154,7 @@ export default function HallOfFame() {
 					onClick={() => {
 						editingBindID.current = rowData.id;
 						setEditBindDialogVisibility(true);
-						setBindAuthor(rowData.author);
+						setBindAuthor(trimBindData(rowData).author);
 						setBindText(rowData.text);
 					}}
 				/>
@@ -398,6 +405,15 @@ export default function HallOfFame() {
 		);
 	};
 
+	const mapBinds = (binds: BindEntry[] | BindSuggestionEntry[]) => {
+		return binds.map((bind) => {
+			return {
+				...bind,
+				author: `${bind.author} : `,
+			};
+		});
+	};
+
 	return (
 		<div
 			className="hall-of-fame"
@@ -412,7 +428,7 @@ export default function HallOfFame() {
 
 				<div className="centered-text"> Binds</div>
 				<div className="card">
-					<DataTable value={binds} scrollable={true}>
+					<DataTable value={mapBinds(binds)} scrollable={true}>
 						{isAdmin && (
 							<Column field="id" header="database ID" sortable></Column>
 						)}
@@ -428,15 +444,12 @@ export default function HallOfFame() {
 					<>
 						<div className="centered-text">Bind Suggestions</div>
 						<div className="card">
-							<DataTable value={bindSuggestions} scrollable={true}>
+							<DataTable value={mapBinds(bindSuggestions)} scrollable={true}>
 								<Column field="proposedBy" header="Proposed By"></Column>
 								<Column field="id" header="database ID" sortable></Column>
 								<Column field="author" header="Author" sortable></Column>
 								<Column field="text" header="Text" sortable></Column>
-								<Column
-									header="Actions"
-									body={bindSuggestionBodyTemplate}
-								></Column>
+								<Column header="Actions" body={bindSuggestionBody}></Column>
 							</DataTable>
 						</div>
 					</>
