@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { BindEntry } from "../../models/bindsModels";
+import { BindEntry, BindSuggestionEntry } from "../../models/bindsModels";
 
 interface bindsSliceProps {
-	bindSuggestions: BindEntry[];
+	bindSuggestions: BindSuggestionEntry[];
 }
 
 const initialState: bindsSliceProps = {
@@ -13,7 +13,7 @@ const bindSuggestionsSlice = createSlice({
 	name: "bindSuggestions",
 	initialState: initialState,
 	reducers: {
-		setBindSuggestions(state, action: PayloadAction<BindEntry[]>) {
+		setBindSuggestions(state, action: PayloadAction<BindSuggestionEntry[]>) {
 			state.bindSuggestions = action.payload;
 		},
 	},

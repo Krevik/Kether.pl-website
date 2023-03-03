@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { AppState } from "../../redux/store";
 import { bindsManagingService } from "../../services/bindsManagingService";
 import { Button } from "primereact/button";
-import { BindEntry } from "../../models/bindsModels";
+import { BindEntry, BindSuggestionEntry } from "../../models/bindsModels";
 import { useEffect, useRef, useState } from "react";
 import { Dialog } from "primereact/dialog";
 import { Toast } from "primereact/toast";
@@ -37,8 +37,16 @@ export default function HallOfFame() {
 	const [bindAuthor, setBindAuthor] = useState("");
 	const editingBindID = useRef(-1);
 	const [bindText, setBindText] = useState("");
+	const [allBindEntries, setAllBindEntries] =
+		useState<(BindEntry | BindSuggestionEntry)[]>();
 
 	const toast = useRef<Toast>(null);
+
+	useEffect(() => {
+		let newFinalBinds = [] as (BindEntry | BindSuggestionEntry)[];
+		newFinalBinds = [...binds, ...bindSuggestions];
+		setAllBindEntries(newFinalBinds);
+	}, [binds, bindSuggestions]);
 
 	bindsManagingService.useBindsLoadingService();
 	bindSuggestionsManagingService.useBindSuggestionsLoadingService();
@@ -146,10 +154,11 @@ export default function HallOfFame() {
 				className="p-button-text"
 				onClick={() => {
 					const newBind = {
-						proposedBy: steamUserData?.personaname,
+						id: -1,
+						proposedBy: steamUserData!.personaname,
 						author: bindAuthor,
 						text: bindText,
-					} as BindEntry;
+					} as BindSuggestionEntry;
 					bindSuggestionsManagingService
 						.addNewBindSuggestion(newBind)
 						.then(() => {
@@ -350,7 +359,7 @@ export default function HallOfFame() {
 				{addNewBindSuggestionDialog()}
 				{editBindDialog()}
 				<Toolbar className="mb-4" left={getToolbarLeftSide()}></Toolbar>
-				<DataTable value={binds} scrollable={true}>
+				<DataTable value={allBindEntries} scrollable={true}>
 					{isAdmin && (
 						<Column field="id" header="database ID" sortable></Column>
 					)}

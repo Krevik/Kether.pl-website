@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { BindEntry } from "../models/bindsModels";
+import { BindEntry, BindSuggestionEntry } from "../models/bindsModels";
 import { AppState, appStore } from "../redux/store";
 import { bindsActions } from "../redux/slices/bindsSlice";
 import { apiPaths } from "../utils/apiPaths";
@@ -22,11 +22,11 @@ export const bindSuggestionsManagingService = {
 					return response.json();
 				}
 			})
-			.then((response: BindEntry[]) => {
+			.then((response: BindSuggestionEntry[]) => {
 				appStore.dispatch(bindSuggestionsActions.setBindSuggestions(response));
 			});
 	},
-	addNewBindSuggestion: (bind: BindEntry) => {
+	addNewBindSuggestion: (bind: BindSuggestionEntry) => {
 		return fetch(
 			`${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BIND_SUGGESTIONS_PATH}/addBind`,
 			{
@@ -46,7 +46,7 @@ export const bindSuggestionsManagingService = {
 			}
 		});
 	},
-	deleteBindSuggestion: (bind: BindEntry) => {
+	deleteBindSuggestion: (bind: BindSuggestionEntry) => {
 		return fetch(
 			`${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BIND_SUGGESTIONS_PATH}/deleteBind`,
 			{
@@ -70,7 +70,7 @@ export const bindSuggestionsManagingService = {
 				throw new Error(error);
 			});
 	},
-	updateBindSuggestion: (newBindData: BindEntry) => {
+	updateBindSuggestion: (newBindData: BindSuggestionEntry) => {
 		return fetch(
 			`${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BIND_SUGGESTIONS_PATH}/updateBind`,
 			{
