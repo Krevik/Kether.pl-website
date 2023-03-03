@@ -147,11 +147,11 @@ export default function HallOfFame() {
 					onClick={() => {
 						bindsManagingService
 							.deleteBind(rowData)
-							.then((deletedBind) => {
+							.then((deletedBindResponse) => {
 								toast.current!.show({
 									severity: "success",
 									summary: "Successful",
-									detail: `Successfully deleted bind: ${deletedBind}`,
+									detail: `${deletedBindResponse}`,
 									life: 3000,
 								});
 								setNewBindDialogVisibility(false);
