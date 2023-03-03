@@ -43,6 +43,15 @@ export default function HallOfFame() {
 	bindsManagingService.useBindsLoadingService();
 	bindSuggestionsManagingService.useBindSuggestionsLoadingService();
 
+	const notificationManager = {
+		SUCCESS: (toast: RefObject<Toast>, message: string) => {
+			return showToastNotification(toast, "success", "Successful", message);
+		},
+		ERROR: (toast: RefObject<Toast>, message: string) => {
+			return showToastNotification(toast, "error", "Failed", message);
+		},
+	};
+
 	const showToastNotification = (
 		toast: RefObject<Toast>,
 		severity: ToastMessage["severity"],
@@ -71,36 +80,28 @@ export default function HallOfFame() {
 						bindsManagingService
 							.addNewBind(bind)
 							.then((addedBind) => {
-								showToastNotification(
+								notificationManager.SUCCESS(
 									toast,
-									"success",
-									"Successful",
 									`Successfully accepted new bind: ${addedBind}`
 								);
 								bindSuggestionsManagingService
 									.deleteBindSuggestion(bind)
 									.then((deletedBind) => {
-										showToastNotification(
+										notificationManager.SUCCESS(
 											toast,
-											"success",
-											"Successful",
 											`Successfully deleted bind suggestion: ${deletedBind}`
 										);
 									})
 									.catch((error) => {
-										showToastNotification(
+										notificationManager.ERROR(
 											toast,
-											"error",
-											"Failed",
 											`Couldn't delete bind suggestion: ${error}`
 										);
 									});
 							})
 							.catch((error) => {
-								showToastNotification(
+								notificationManager.ERROR(
 									toast,
-									"error",
-									"Failed",
 									`Couldn't add new bind: ${error}`
 								);
 							});
@@ -116,20 +117,16 @@ export default function HallOfFame() {
 						bindSuggestionsManagingService
 							.deleteBindSuggestion(rowData)
 							.then((deletedBind) => {
-								showToastNotification(
+								notificationManager.SUCCESS(
 									toast,
-									"success",
-									"Successful",
 									`Successfully deleted bind suggestion: ${deletedBind}`
 								);
 								setNewBindDialogVisibility(false);
 								setBindText("");
 							})
 							.catch((error) => {
-								showToastNotification(
+								notificationManager.ERROR(
 									toast,
-									"error",
-									"Failed",
 									`Couldn't delete bind suggestion: ${error}`
 								);
 							});
@@ -163,20 +160,13 @@ export default function HallOfFame() {
 						bindsManagingService
 							.deleteBind(rowData)
 							.then((deletedBindResponse) => {
-								showToastNotification(
-									toast,
-									"success",
-									"Successful",
-									`${deletedBindResponse}`
-								);
+								notificationManager.SUCCESS(toast, `${deletedBindResponse}`);
 								setNewBindDialogVisibility(false);
 								setBindText("");
 							})
 							.catch((error) => {
-								showToastNotification(
+								notificationManager.ERROR(
 									toast,
-									"error",
-									"Failed",
 									`Couldn't delete the bind: ${error}`
 								);
 							});
@@ -206,20 +196,13 @@ export default function HallOfFame() {
 					bindsManagingService
 						.addNewBind(newBind)
 						.then(() => {
-							showToastNotification(
-								toast,
-								"success",
-								"Successful",
-								`Successfully added new bind`
-							);
+							notificationManager.SUCCESS(toast, `Successfully added new bind`);
 							setNewBindDialogVisibility(false);
 							setBindText("");
 						})
 						.catch((error) => {
-							showToastNotification(
+							notificationManager.ERROR(
 								toast,
-								"error",
-								"Failed",
 								`Couldn't add the bind: ${error}`
 							);
 						});
@@ -250,20 +233,16 @@ export default function HallOfFame() {
 					bindSuggestionsManagingService
 						.addNewBindSuggestion(newBind)
 						.then(() => {
-							showToastNotification(
+							notificationManager.SUCCESS(
 								toast,
-								"success",
-								"Successful",
 								`Successfully suggested new bind`
 							);
 							setNewBindSuggestionDialogVisibility(false);
 							setBindText("");
 						})
 						.catch((error) => {
-							showToastNotification(
+							notificationManager.ERROR(
 								toast,
-								"error",
-								"Failed",
 								`Couldn't suggest the bind: ${error}`
 							);
 						});
@@ -290,12 +269,7 @@ export default function HallOfFame() {
 					className="p-button-text"
 					onClick={() => {
 						if (editingBindID.current === -1) {
-							showToastNotification(
-								toast,
-								"error",
-								"Failed",
-								`Something went wrong`
-							);
+							notificationManager.ERROR(toast, `Something went wrong`);
 							throw new Error("No update id was found");
 						}
 						const newBindData = {
@@ -306,20 +280,16 @@ export default function HallOfFame() {
 						bindsManagingService
 							.updateBind(newBindData)
 							.then(() => {
-								showToastNotification(
+								notificationManager.SUCCESS(
 									toast,
-									"success",
-									"Successful",
 									`Successfully updated the bind`
 								);
 								setEditBindDialogVisibility(false);
 								editingBindID.current = -1;
 							})
 							.catch((error) => {
-								showToastNotification(
+								notificationManager.ERROR(
 									toast,
-									"error",
-									"Failed",
 									`Couldn't update the bind: ${error}`
 								);
 							});
