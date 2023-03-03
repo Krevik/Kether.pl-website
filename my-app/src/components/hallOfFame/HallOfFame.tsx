@@ -351,8 +351,9 @@ export default function HallOfFame() {
 				{addNewBindSuggestionDialog()}
 				{editBindDialog()}
 				<Toolbar className="mb-4" left={getToolbarLeftSide()}></Toolbar>
+
+				<div className="centered-text"> Binds</div>
 				<div className="card">
-					<div className="centered-text"> Binds</div>
 					<DataTable value={binds} scrollable={true}>
 						{isAdmin && (
 							<Column field="id" header="database ID" sortable></Column>
@@ -364,20 +365,23 @@ export default function HallOfFame() {
 						)}
 					</DataTable>
 				</div>
+
 				{isAdmin && (
-					<div className="card">
+					<>
 						<div className="centered-text">Bind Suggestions</div>
-						<DataTable value={binds} scrollable={true}>
-							{isAdmin && (
-								<Column field="id" header="database ID" sortable></Column>
-							)}
-							<Column field="author" header="Author" sortable></Column>
-							<Column field="text" header="Text" sortable></Column>
-							{isAdmin && (
-								<Column header="Actions" body={actionBodyTemplate}></Column>
-							)}
-						</DataTable>
-					</div>
+						<div className="card">
+							<DataTable value={binds} scrollable={true}>
+								{isAdmin && (
+									<Column field="id" header="database ID" sortable></Column>
+								)}
+								<Column field="author" header="Author" sortable></Column>
+								<Column field="text" header="Text" sortable></Column>
+								{isAdmin && (
+									<Column header="Actions" body={actionBodyTemplate}></Column>
+								)}
+							</DataTable>
+						</div>
+					</>
 				)}
 			</div>
 		</div>

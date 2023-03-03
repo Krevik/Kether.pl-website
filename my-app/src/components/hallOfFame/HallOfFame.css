@@ -19,6 +19,10 @@
 	overflow: auto;
 }
 
+.hall-of-fame .centered-text {
+	margin: auto;
+}
+
 .hall-of-fame .card .p-toolbar {
 	width: 100%;
 }
