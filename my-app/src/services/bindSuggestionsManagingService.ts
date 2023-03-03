@@ -70,32 +70,6 @@ export const bindSuggestionsManagingService = {
 				throw new Error(error);
 			});
 	},
-	updateBindSuggestion: (newBindData: BindSuggestionEntry) => {
-		return fetch(
-			`${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BIND_SUGGESTIONS_PATH}/updateBind`,
-			{
-				method: "post",
-				body: new URLSearchParams({
-					id: `${newBindData.id}`,
-					author: `${newBindData.author}`,
-					text: `${newBindData.text}`,
-				}),
-			}
-		)
-			.then((response) => {
-				if (response.ok) {
-					response.json().then((jsonedResponse) => {
-						bindSuggestionsManagingService.getBindSuggestions();
-						return jsonedResponse.message;
-					});
-				} else {
-					throw new Error("Couldn't update bind suggestion");
-				}
-			})
-			.catch((error) => {
-				throw new Error(error);
-			});
-	},
 };
 
 const useServerBindSuggestionsLoader = () => {

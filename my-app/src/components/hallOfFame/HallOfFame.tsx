@@ -43,7 +43,42 @@ export default function HallOfFame() {
 	bindsManagingService.useBindsLoadingService();
 	bindSuggestionsManagingService.useBindSuggestionsLoadingService();
 
-	const actionBodyTemplate = (rowData: BindEntry) => {
+	const bindSuggestionBodyTemplate = (rowData: BindSuggestionEntry) => {
+		return (
+			<>
+				<Button
+					data-toggle="tooltip"
+					title="Deletes the given bind suggestion instantly"
+					icon="pi pi-trash"
+					className="p-button-rounded p-button-warning"
+					onClick={() => {
+						bindSuggestionsManagingService
+							.deleteBindSuggestion(rowData)
+							.then((deletedBind) => {
+								toast.current!.show({
+									severity: "success",
+									summary: "Successful",
+									detail: `Successfully deleted bind suggestion: ${deletedBind}`,
+									life: 3000,
+								});
+								setNewBindDialogVisibility(false);
+								setBindText("");
+							})
+							.catch((error) => {
+								toast.current!.show({
+									severity: "error",
+									summary: "Failed",
+									detail: `Couldn't delete bind suggestion: ${error}`,
+									life: 3000,
+								});
+							});
+					}}
+				/>
+			</>
+		);
+	};
+
+	const bindActionBodyTemplate = (rowData: BindEntry) => {
 		return (
 			<>
 				<Button
@@ -361,7 +396,7 @@ export default function HallOfFame() {
 						<Column field="author" header="Author" sortable></Column>
 						<Column field="text" header="Text" sortable></Column>
 						{isAdmin && (
-							<Column header="Actions" body={actionBodyTemplate}></Column>
+							<Column header="Actions" body={bindActionBodyTemplate}></Column>
 						)}
 					</DataTable>
 				</div>
@@ -371,14 +406,14 @@ export default function HallOfFame() {
 						<div className="centered-text">Bind Suggestions</div>
 						<div className="card">
 							<DataTable value={binds} scrollable={true}>
-								{isAdmin && (
-									<Column field="id" header="database ID" sortable></Column>
-								)}
+								<Column field="proposedBy" header="Proposed By"></Column>
+								<Column field="id" header="database ID" sortable></Column>
 								<Column field="author" header="Author" sortable></Column>
 								<Column field="text" header="Text" sortable></Column>
-								{isAdmin && (
-									<Column header="Actions" body={actionBodyTemplate}></Column>
-								)}
+								<Column
+									header="Actions"
+									body={bindSuggestionBodyTemplate}
+								></Column>
 							</DataTable>
 						</div>
 					</>
