@@ -242,14 +242,16 @@ export default function HallOfFame() {
 	};
 
 	const addBindSuggestion = () => {
-		<Button
-			label="Suggest Bind"
-			icon="pi pi-plus"
-			className="p-button-success mr-2"
-			data-toggle="tooltip"
-			title="Adds new bind suggestion"
-			onClick={(e) => setNewBindSuggestionDialogVisibility(true)}
-		></Button>;
+		return (
+			<Button
+				label="Suggest Bind"
+				icon="pi pi-plus"
+				className="p-button-success mr-2"
+				data-toggle="tooltip"
+				title="Adds new bind suggestion"
+				onClick={(e) => setNewBindSuggestionDialogVisibility(true)}
+			></Button>
+		);
 	};
 
 	const addNewBindButton = () => {
