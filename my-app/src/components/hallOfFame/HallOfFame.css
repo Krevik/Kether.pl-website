@@ -5,6 +5,8 @@
 	min-height: 1100px;
 	background-position: center;
 	background-size: cover;
+	display: flex;
+	flex-direction: column;
 }
 
 .hall-of-fame .card {
