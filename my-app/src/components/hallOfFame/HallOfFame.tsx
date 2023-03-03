@@ -405,7 +405,7 @@ export default function HallOfFame() {
 					<>
 						<div className="centered-text">Bind Suggestions</div>
 						<div className="card">
-							<DataTable value={binds} scrollable={true}>
+							<DataTable value={bindSuggestions} scrollable={true}>
 								<Column field="proposedBy" header="Proposed By"></Column>
 								<Column field="id" header="database ID" sortable></Column>
 								<Column field="author" header="Author" sortable></Column>
