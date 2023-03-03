@@ -36,6 +36,10 @@
 	gap: 10px;
 }
 
+.hall-of-fame .p-datatable-scrollable .p-datatable-wrapper {
+	overflow: none;
+}
+
 .hall-of-fame .p-datatable {
 	width: 90%;
 	background-color: transparent;
