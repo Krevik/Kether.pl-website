@@ -34,6 +34,7 @@ export const bindSuggestionsManagingService = {
 				body: new URLSearchParams({
 					author: bind.author,
 					text: bind.text,
+					proposedBy: bind.proposedBy,
 				}),
 			}
 		).then(async (response) => {
