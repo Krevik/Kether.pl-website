@@ -72,7 +72,7 @@ export const bindsManagingService = {
 		)
 			.then((response) => {
 				if (response.ok) {
-					response.json().then((jsonedResponse) => {
+					return response.json().then((jsonedResponse) => {
 						bindsManagingService.getBinds();
 						return jsonedResponse.message;
 					});
@@ -98,7 +98,7 @@ export const bindsManagingService = {
 		)
 			.then((response) => {
 				if (response.ok) {
-					response.json().then((jsonedResponse) => {
+					return response.json().then((jsonedResponse) => {
 						bindsManagingService.getBinds();
 						return jsonedResponse.message;
 					});
