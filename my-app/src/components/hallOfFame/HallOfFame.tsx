@@ -360,7 +360,10 @@ export default function HallOfFame() {
 					<Column field="author" header="Author" sortable></Column>
 					<Column field="text" header="Text" sortable></Column>
 					{isAdmin && (
-						<Column header="Actions" body={actionBodyTemplate}></Column>
+						<>
+							<Column field="proposedBy" header="Proposed By"></Column>
+							<Column header="Actions" body={actionBodyTemplate}></Column>
+						</>
 					)}
 				</DataTable>
 			</div>
