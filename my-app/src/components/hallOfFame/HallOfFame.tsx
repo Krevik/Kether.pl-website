@@ -6,21 +6,32 @@ import { useSelector } from "react-redux";
 import { AppState } from "../../redux/store";
 import { bindsManagingService } from "../../services/bindsManagingService";
 import { Button } from "primereact/button";
-import { BindEntry } from "../../models/bindsModels";
+import { BindEntry, BindSuggestionEntry } from "../../models/bindsModels";
 import { useRef, useState } from "react";
 import { Dialog } from "primereact/dialog";
 import { Toast } from "primereact/toast";
 import { InputText } from "primereact/inputtext";
 import { Toolbar } from "primereact/toolbar";
+import { bindSuggestionsManagingService } from "../../services/bindSuggestionsManagingService";
 
 export default function HallOfFame() {
 	const binds = useSelector((state: AppState) => state.bindsReducer.binds);
+	const bindSuggestions = useSelector(
+		(state: AppState) => state.bindSuggestionsReducer.bindSuggestions
+	);
 	const userID = useSelector((state: AppState) => state.userDataReducer.userID);
+	const steamUserData = useSelector(
+		(state: AppState) => state.userDataReducer.userData
+	);
 	const isAdmin: boolean = useSelector(
 		(state: AppState) => state.userDataReducer.isAdmin
 	);
 
 	const [newBindDialogVisibility, setNewBindDialogVisibility] = useState(false);
+	const [
+		newBindSuggestionDialogVisibility,
+		setNewBindSuggestionDialogVisibility,
+	] = useState(false);
 	const [editBindDialogVisibility, setEditBindDialogVisibility] =
 		useState(false);
 	const [bindAuthor, setBindAuthor] = useState("");
@@ -30,6 +41,7 @@ export default function HallOfFame() {
 	const toast = useRef<Toast>(null);
 
 	bindsManagingService.useBindsLoadingService();
+	bindSuggestionsManagingService.useBindSuggestionsLoadingService();
 
 	const actionBodyTemplate = (rowData: BindEntry) => {
 		return (
@@ -120,6 +132,49 @@ export default function HallOfFame() {
 		</>
 	);
 
+	const newBindSuggestionDialogFooter = (
+		<>
+			<Button
+				label="Cancel"
+				icon="pi pi-times"
+				className="p-button-text"
+				onClick={(e) => setNewBindSuggestionDialogVisibility(false)}
+			/>
+			<Button
+				label="Save"
+				icon="pi pi-check"
+				className="p-button-text"
+				onClick={() => {
+					const newBind = {
+						proposedBy: steamUserData?.personaname,
+						author: bindAuthor,
+						text: bindText,
+					} as BindSuggestionEntry;
+					bindSuggestionsManagingService
+						.addNewBindSuggestion(newBind)
+						.then(() => {
+							toast.current!.show({
+								severity: "success",
+								summary: "Successful",
+								detail: `Successfully suggested new bind`,
+								life: 3000,
+							});
+							setNewBindSuggestionDialogVisibility(false);
+							setBindText("");
+						})
+						.catch((error) => {
+							toast.current!.show({
+								severity: "error",
+								summary: "Failed",
+								detail: `Couldn't suggest the bind: ${error}`,
+								life: 3000,
+							});
+						});
+				}}
+			/>
+		</>
+	);
+
 	const editBindDialogFooter = () => {
 		return (
 			<>
@@ -177,6 +232,26 @@ export default function HallOfFame() {
 		);
 	};
 
+	const getToolbarLeftSide = () => {
+		return (
+			<>
+				{isAdmin && addNewBindButton()}
+				{addBindSuggestion()}
+			</>
+		);
+	};
+
+	const addBindSuggestion = () => {
+		<Button
+			label="Suggest Bind"
+			icon="pi pi-plus"
+			className="p-button-success mr-2"
+			data-toggle="tooltip"
+			title="Adds new bind suggestion"
+			onClick={(e) => setNewBindSuggestionDialogVisibility(true)}
+		></Button>;
+	};
+
 	const addNewBindButton = () => {
 		return (
 			<Button
@@ -199,6 +274,30 @@ export default function HallOfFame() {
 				className="p-fluid"
 				footer={newBindDialogFooter}
 				onHide={() => setNewBindDialogVisibility(false)}
+			>
+				<h5>Author</h5>
+				<InputText
+					value={bindAuthor}
+					onChange={(e) => setBindAuthor(e.target.value)}
+				/>
+				<h5>Text</h5>
+				<InputText
+					value={bindText}
+					onChange={(e) => setBindText(e.target.value)}
+				/>
+			</Dialog>
+		);
+	};
+
+	const addNewBindSuggestionDialog = () => {
+		return (
+			<Dialog
+				visible={newBindSuggestionDialogVisibility}
+				header="Suggest new bind"
+				modal
+				className="p-fluid"
+				footer={newBindSuggestionDialogFooter}
+				onHide={() => setNewBindSuggestionDialogVisibility(false)}
 			>
 				<h5>Author</h5>
 				<InputText
@@ -246,10 +345,9 @@ export default function HallOfFame() {
 			<div className="card">
 				<Toast ref={toast} />
 				{addNewBindDialog()}
+				{addNewBindSuggestionDialog()}
 				{editBindDialog()}
-				{isAdmin && (
-					<Toolbar className="mb-4" left={addNewBindButton()}></Toolbar>
-				)}
+				<Toolbar className="mb-4" left={getToolbarLeftSide()}></Toolbar>
 				<DataTable value={binds} scrollable={true}>
 					{isAdmin && (
 						<Column field="id" header="database ID" sortable></Column>
@@ -260,6 +358,18 @@ export default function HallOfFame() {
 						<Column header="Actions" body={actionBodyTemplate}></Column>
 					)}
 				</DataTable>
+
+				{isAdmin && (
+					<DataTable value={bindSuggestions} scrollable={true}>
+						<Column field="id" header="database ID" sortable></Column>
+						<Column field="author" header="Author" sortable></Column>
+						<Column field="text" header="Text" sortable></Column>
+						<Column field="proposedBy" header="Proposed By" sortable></Column>
+						{/* {isAdmin && (
+							<Column header="Actions" body={actionBodyTemplate}></Column>
+						)} */}
+					</DataTable>
+				)}
 			</div>
 		</div>
 	);

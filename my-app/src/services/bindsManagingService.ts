@@ -23,22 +23,25 @@ export const bindsManagingService = {
 	useBindsLoadingService: () => {
 		useServerBindsLoader();
 	},
-	reloadBinds: () => {
-		fetch(`${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}/binds/getBinds`, {
-			method: "get",
-		})
+	getBinds: () => {
+		fetch(
+			`${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BINDS_PATH}/getBinds`,
+			{
+				method: "get",
+			}
+		)
 			.then((response) => {
-				if (response.status === 200) {
+				if (response.ok) {
 					return response.json();
 				}
 			})
-			.then((response) => {
+			.then((response: BindEntry[]) => {
 				appStore.dispatch(bindsActions.setBinds(response));
 			});
 	},
 	addNewBind: (bind: BindEntry) => {
 		return fetch(
-			`${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}/binds/addBind`,
+			`${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BINDS_PATH}/addBind`,
 			{
 				method: "post",
 				body: new URLSearchParams({
@@ -48,7 +51,7 @@ export const bindsManagingService = {
 			}
 		).then(async (response) => {
 			if (response.ok) {
-				bindsManagingService.reloadBinds();
+				bindsManagingService.getBinds();
 				return response.json();
 			} else {
 				throw new Error("Couldn't add the bind");
@@ -57,7 +60,7 @@ export const bindsManagingService = {
 	},
 	deleteBind: (bind: BindEntry) => {
 		return fetch(
-			`${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}/binds/deleteBind`,
+			`${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BINDS_PATH}/deleteBind`,
 			{
 				method: "post",
 				body: new URLSearchParams({
@@ -68,7 +71,7 @@ export const bindsManagingService = {
 			.then((response) => {
 				if (response.ok) {
 					response.json().then((jsonedResponse) => {
-						bindsManagingService.reloadBinds();
+						bindsManagingService.getBinds();
 						return jsonedResponse.message;
 					});
 				} else {
@@ -81,7 +84,7 @@ export const bindsManagingService = {
 	},
 	updateBind: (newBindData: BindEntry) => {
 		return fetch(
-			`${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}/binds/updateBind`,
+			`${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BINDS_PATH}/updateBind`,
 			{
 				method: "post",
 				body: new URLSearchParams({
@@ -94,7 +97,7 @@ export const bindsManagingService = {
 			.then((response) => {
 				if (response.ok) {
 					response.json().then((jsonedResponse) => {
-						bindsManagingService.reloadBinds();
+						bindsManagingService.getBinds();
 						return jsonedResponse.message;
 					});
 				} else {
@@ -109,6 +112,6 @@ export const bindsManagingService = {
 
 const useServerBindsLoader = () => {
 	useEffect(() => {
-		bindsManagingService.reloadBinds();
+		bindsManagingService.getBinds();
 	}, []);
 };
