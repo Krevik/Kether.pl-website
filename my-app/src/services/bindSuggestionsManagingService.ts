@@ -39,7 +39,9 @@ export const bindSuggestionsManagingService = {
 		).then(async (response) => {
 			if (response.ok) {
 				bindSuggestionsManagingService.getBindSuggestions();
-				return response.json();
+				return response.json().then((response) => {
+					return response;
+				});
 			} else {
 				throw new Error("Couldn't add the bind suggestion");
 			}
@@ -57,7 +59,7 @@ export const bindSuggestionsManagingService = {
 		)
 			.then((response) => {
 				if (response.ok) {
-					response.json().then((jsonedResponse) => {
+					return response.json().then((jsonedResponse) => {
 						bindSuggestionsManagingService.getBindSuggestions();
 						return jsonedResponse.message;
 					});
