@@ -64,12 +64,15 @@ export const steamAPIService = {
 
 		useEffect(() => {
 			if (userID) {
-				fetch(`${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}/steamUserData`, {
-					method: "post",
-					body: new URLSearchParams({
-						userID: `${userID}`,
-					}),
-				})
+				fetch(
+					`${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.STEAM_PATH}userData`,
+					{
+						method: "post",
+						body: new URLSearchParams({
+							userID: `${userID}`,
+						}),
+					}
+				)
 					.then((response) => {
 						return response.json();
 					})

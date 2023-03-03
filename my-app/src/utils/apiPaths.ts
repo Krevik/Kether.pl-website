@@ -3,4 +3,5 @@ export const apiPaths = {
 	API_BASE_PATH: `/api`,
 	BINDS_PATH: `/binds`,
 	BIND_SUGGESTIONS_PATH: `/binds/suggestions`,
+	STEAM_PATH: `/steam`,
 };
