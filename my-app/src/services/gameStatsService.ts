@@ -17,13 +17,12 @@ export const gameStatsService = {
 			getStats().then((gameStats) => {
 				appStore.dispatch(gameStatsActions.setGameStats(gameStats));
 			});
+			setTimeout(() => {
+				getStats().then((gameStats) => {
+					appStore.dispatch(gameStatsActions.setGameStats(gameStats));
+				});
+			}, GAME_STATS_REFRESH_TIME_MS);
 		}, []);
-
-		setTimeout(() => {
-			getStats().then((gameStats) => {
-				appStore.dispatch(gameStatsActions.setGameStats(gameStats));
-			});
-		}, GAME_STATS_REFRESH_TIME_MS);
 	},
 
 	useGameStatsDetailer: () => {
