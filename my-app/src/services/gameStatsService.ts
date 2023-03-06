@@ -10,8 +10,6 @@ import {
 } from "../models/gameStatsModels";
 import { SteamUserDetails } from "../redux/slices/userDataSlice";
 
-const GAME_STATS_REFRESH_TIME_MS = 15000;
-
 export const gameStatsService = {
 	useGameStatsLoadingService: () => {
 		const gameStats = useSelector(
@@ -24,11 +22,6 @@ export const gameStatsService = {
 					appStore.dispatch(gameStatsActions.setDetailedGameStats(results));
 				});
 			});
-			setInterval(() => {
-				Promise.all(fetchDetailedGameStatEntries(gameStats)).then((results) => {
-					appStore.dispatch(gameStatsActions.setDetailedGameStats(results));
-				});
-			}, GAME_STATS_REFRESH_TIME_MS);
 		}, []);
 
 		const fetchDetailedGameStatEntries = (
