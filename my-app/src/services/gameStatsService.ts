@@ -38,7 +38,9 @@ export const gameStatsService = {
 		useEffect(() => {
 			if (gameStats) {
 				appStore.dispatch(
-					gameStatsActions.setDetailedGameStats(detailedGameStats)
+					gameStatsActions.setDetailedGameStats(
+						gameStats as DetailedGameStatEntry[]
+					)
 				);
 
 				detailedGameStats.forEach((detailedGameStat) => {
