@@ -32,22 +32,27 @@ export const gameStatsService = {
 		useEffect(() => {
 			console.log("Game Stats were updated");
 
-			const promises: Promise<unknown>[] = [];
+			const promises: Promise<DetailedGameStatEntry>[] = [];
 			gameStats.forEach((gameStat: GameStatEntry) => {
-				const promise = new Promise((resolve, rejects) => {
-					steamAPIService
-						.getUserData(gameStat.SteamID)
-						.then((userData: SteamUserDetails) => {
-							resolve({
-								...gameStat,
-								userData: userData,
+				const promise = new Promise<DetailedGameStatEntry>(
+					(resolve, rejects) => {
+						steamAPIService
+							.getUserData(gameStat.SteamID)
+							.then((userData: SteamUserDetails) => {
+								resolve({
+									...gameStat,
+									userData: userData,
+								});
+							})
+							.catch((error) => {
+								rejects(gameStat);
 							});
-						});
-				});
+					}
+				);
 				promises.push(promise);
 			});
-			Promise.all(promises).then((result) => {
-				console.log(result);
+			Promise.all(promises).then((results) => {
+				appStore.dispatch(gameStatsActions.setDetailedGameStats(results));
 			});
 		}, [gameStats]);
 	},
