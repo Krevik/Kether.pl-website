@@ -31,26 +31,29 @@ export const gameStatsService = {
 			(state: AppState) => state.gameStatsReducer.gameStats
 		);
 
+		const detailedGameStats = useSelector(
+			(state: AppState) => state.gameStatsReducer.gameStatsDetailed
+		);
+
 		useEffect(() => {
-			appStore.dispatch(gameStatsActions.setDetailedGameStats([]));
-			const detailedGameStatEntries: DetailedGameStatEntry[] = [];
-			Promise.all([
-				gameStats.forEach((gameStatEntry) => {
-					steamAPIService
-						.getUserData(gameStatEntry.SteamID)
-						.then((detailedUserData) => {
-							const detailedGameStatEntry: DetailedGameStatEntry = {
-								...gameStatEntry,
-								userData: detailedUserData,
-							};
-							detailedGameStatEntries.push(detailedGameStatEntry);
-						});
-				}),
-			]).then(() => {
+			if (gameStats) {
 				appStore.dispatch(
-					gameStatsActions.setDetailedGameStats(detailedGameStatEntries)
+					gameStatsActions.setDetailedGameStats(detailedGameStats)
 				);
-			});
+
+				detailedGameStats.forEach((detailedGameStat) => {
+					if (!detailedGameStat.userData) {
+						steamAPIService
+							.getUserData(detailedGameStat.SteamID)
+							.then((receivedUserData) => {
+								gameStatsActions.setUserDetailsInDetailedGameStat({
+									gameStatEntry: detailedGameStat,
+									steamUserDetails: receivedUserData,
+								});
+							});
+					}
+				});
+			}
 		}, [gameStats]);
 	},
 };

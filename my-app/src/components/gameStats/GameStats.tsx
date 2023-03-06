@@ -16,6 +16,7 @@ export default function GameStats() {
 	);
 
 	gameStatsService.useGameStatsLoadingService();
+	gameStatsService.useGameStatsDetailer();
 
 	return (
 		<div
@@ -25,7 +26,7 @@ export default function GameStats() {
 			<div className="card">
 				<div className="centered-text"> Game Stats </div>
 				<div className="card">
-					<DataTable value={gameStatsEntries} scrollable={true}>
+					<DataTable value={detailedGameStatsEntries} scrollable={true}>
 						<Column
 							field="userData.personaname"
 							header="Nick"
