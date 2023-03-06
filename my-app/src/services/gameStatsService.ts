@@ -17,7 +17,7 @@ export const gameStatsService = {
 			getStats().then((gameStats) => {
 				appStore.dispatch(gameStatsActions.setGameStats(gameStats));
 			});
-			setTimeout(() => {
+			setInterval(() => {
 				getStats().then((gameStats) => {
 					appStore.dispatch(gameStatsActions.setGameStats(gameStats));
 				});
@@ -42,18 +42,18 @@ export const gameStatsService = {
 					)
 				);
 
-				detailedGameStats.forEach((detailedGameStat) => {
-					if (!detailedGameStat.userData) {
-						steamAPIService
-							.getUserData(detailedGameStat.SteamID)
-							.then((receivedUserData) => {
-								gameStatsActions.setUserDetailsInDetailedGameStat({
-									gameStatEntry: detailedGameStat,
-									steamUserDetails: receivedUserData,
-								});
-							});
-					}
-				});
+				// detailedGameStats.forEach((detailedGameStat) => {
+				// 	if (!detailedGameStat.userData) {
+				// 		steamAPIService
+				// 			.getUserData(detailedGameStat.SteamID)
+				// 			.then((receivedUserData) => {
+				// 				gameStatsActions.setUserDetailsInDetailedGameStat({
+				// 					gameStatEntry: detailedGameStat,
+				// 					steamUserDetails: receivedUserData,
+				// 				});
+				// 			});
+				// 	}
+				// });
 			}
 		}, [gameStats]);
 	},
