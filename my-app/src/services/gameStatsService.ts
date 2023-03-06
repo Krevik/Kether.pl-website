@@ -30,8 +30,6 @@ export const gameStatsService = {
 		}, []);
 
 		useEffect(() => {
-			console.log("Game Stats were updated");
-
 			const promises: Promise<DetailedGameStatEntry>[] = [];
 			gameStats.forEach((gameStat: GameStatEntry) => {
 				const promise = new Promise<DetailedGameStatEntry>(

@@ -26,28 +26,7 @@ const gameStatsSlice = createSlice({
 			state,
 			action: PayloadAction<DetailedGameStatEntry[]>
 		) {
-			state.gameStats = action.payload;
-		},
-		setUserDetailsInDetailedGameStat(
-			state,
-			action: PayloadAction<{
-				steamUserDetails: SteamUserDetails;
-				gameStatEntry: GameStatEntry;
-			}>
-		) {
-			const objectToReplace = state.gameStatsDetailed.find(
-				(arrayItem) =>
-					arrayItem.SteamID === action.payload.gameStatEntry.SteamID
-			);
-			Object.assign(objectToReplace!, {
-				...action.payload.gameStatEntry,
-				userData: action.payload.steamUserDetails,
-			});
-			const updatedArray = state.gameStatsDetailed.filter(
-				(arrayItem) => arrayItem.SteamID != action.payload.gameStatEntry.SteamID
-			);
-			updatedArray.push(objectToReplace!);
-			state.gameStatsDetailed = updatedArray;
+			state.gameStatsDetailed = action.payload;
 		},
 	},
 });
