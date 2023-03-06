@@ -32,7 +32,9 @@ export const gameStatsService = {
 			console.log("Game Stats were updated");
 			appStore.dispatch(
 				gameStatsActions.setDetailedGameStats(
-					gameStats as DetailedGameStatEntry[]
+					gameStats.map((gameStat) => {
+						return { ...gameStat, userData: undefined };
+					})
 				)
 			);
 		}, [gameStats]);

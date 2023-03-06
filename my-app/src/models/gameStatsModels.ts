@@ -12,5 +12,5 @@ export type GameStatEntry = {
 };
 
 export type DetailedGameStatEntry = GameStatEntry & {
-	userData: SteamUserDetails;
+	userData?: SteamUserDetails;
 };

@@ -69,7 +69,6 @@ export const steamAPIService = {
 		useEffect(() => {
 			if (userID) {
 				steamAPIService.getUserData(userID).then((userData) => {
-					console.log(userData);
 					appStore.dispatch(userDataActions.setUserData(userData));
 				});
 			}
