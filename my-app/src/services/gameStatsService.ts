@@ -8,6 +8,7 @@ import {
 	DetailedGameStatEntry,
 	GameStatEntry,
 } from "../models/gameStatsModels";
+import { SteamUserDetails } from "../redux/slices/userDataSlice";
 
 const GAME_STATS_REFRESH_TIME_MS = 15000;
 
@@ -30,13 +31,22 @@ export const gameStatsService = {
 
 		useEffect(() => {
 			console.log("Game Stats were updated");
-			appStore.dispatch(
-				gameStatsActions.setDetailedGameStats(
-					gameStats.map((gameStat) => {
-						return { ...gameStat, userData: undefined };
-					})
-				)
-			);
+			const detailedGameStats: DetailedGameStatEntry[] = [];
+
+			gameStats.forEach((gameStat: GameStatEntry) => {
+				steamAPIService
+					.getUserData(gameStat.SteamID)
+					.then((userData: SteamUserDetails) => {
+						const detailedGameStat: DetailedGameStatEntry = {
+							...gameStat,
+							userData: userData,
+						};
+						detailedGameStats.push(detailedGameStat);
+						appStore.dispatch(
+							gameStatsActions.setDetailedGameStats(detailedGameStats)
+						);
+					});
+			});
 		}, [gameStats]);
 	},
 };
