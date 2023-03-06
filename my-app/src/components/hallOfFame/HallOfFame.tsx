@@ -373,6 +373,7 @@ export default function HallOfFame() {
 		'Ą': 'A', 'Ć': 'C', 'Ę': 'E', 'Ł': 'L', 'Ń': 'N', 'Ó': 'O', 'Ś': 'S', 'Ź': 'Z', 'Ż': 'Z',
 		'ą': 'a', 'ć': 'c', 'ę': 'e', 'ł': 'l', 'ń': 'n', 'ó': 'o', 'ś': 's', 'ź': 'z', 'ż': 'z'
 		};
+		
 		// Normalize text using NFKD, which decomposes characters into base and combining characters
 		const normalizedText = text.normalize('NFKD');
 
@@ -380,7 +381,11 @@ export default function HallOfFame() {
 		const strippedText = normalizedText.replace(/[\u0300-\u036f]/g, '');
 
 		// Replace characters based on the mapping
-		return strippedText.replace(/[^\x00-\x7F]/g, (char) => mapping[char] || char);
+		return strippedText.replace(/[^\x00-\x7F]/g, (char) => mapping[char] || char)
+						   .replace(/[:]/g, '')
+						   .replace(/[;]/g, '__semicolon__')
+						   .replace(/[#]/g, '__hash__')
+						   .replace(/[*]/g, '__asterisk__');
 	}
 	
 	const addNewBindDialog = () => {
@@ -435,6 +440,9 @@ export default function HallOfFame() {
 				author: `${bind.author} : `,
 			};
 		});
+		function displayed(text: string): string{
+					return text.replace('__hash__', '#');
+		};
 	};
 
 	return (
