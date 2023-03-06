@@ -382,10 +382,12 @@ export default function HallOfFame() {
 
 		// Replace characters based on the mapping
 		return strippedText.replace(/[^\x00-\x7F]/g, (char) => mapping[char] || char)
-						   .replace(/[:]/g, '')
-						   .replace(/[;]/g, '__semicolon__')
-						   .replace(/[#]/g, '__hash__')
-						   .replace(/[*]/g, '__asterisk__');
+						   .replace(/[:;#*()]/g, '')
+						   .replace('^', '')
+						   .replace('%', ' procent');
+						   //.replace(/[;]/g, '__semicolon__')
+						   //.replace(/[#]/g, '__hash__')
+						   //.replace(/[*]/g, '__asterisk__');
 	}
 	
 	const addNewBindDialog = () => {
@@ -440,9 +442,6 @@ export default function HallOfFame() {
 				author: `${bind.author} : `,
 			};
 		});
-		function displayed(text: string): string{
-					return text.replace('__hash__', '#');
-		};
 	};
 
 	return (
