@@ -346,20 +346,36 @@ export default function HallOfFame() {
 			<>
 				<h5>Author</h5>
 				<InputText
-					keyfilter={/^[a-zA-Z0-9 ]+$/}
-					value={bindAuthor}
+					value={replaceNonEnglishLatinChars(bindAuthor)}
 					onChange={(e) => setBindAuthor(e.target.value)}
 				/>
 				<h5>Text</h5>
 				<InputText
-					keyfilter={/^[a-zA-Z0-9 ]+$/}
-					value={bindText}
+					value={replaceNonEnglishLatinChars(bindAuthor)}
 					onChange={(e) => setBindText(e.target.value)}
 				/>
 			</>
 		);
 	};
 
+	function replaceNonEnglishLatinChars(text: string): string {
+		const mapping: {[key: string]: string} = {
+		// English equivalents
+		'À': 'A', 'Á': 'A', 'Â': 'A', 'Ã': 'A', 'Ä': 'A', 'Å': 'A', 'Ç': 'C',
+		'È': 'E', 'É': 'E', 'Ê': 'E', 'Ë': 'E', 'Ì': 'I', 'Í': 'I', 'Î': 'I', 'Ï': 'I',
+		'Ñ': 'N', 'Ò': 'O', 'Ô': 'O', 'Õ': 'O', 'Ö': 'O', 'O̧': 'O', 'Ù': 'U',
+		'Ú': 'U', 'Û': 'U', 'Ü': 'U', 'Ý': 'Y', 'à': 'a', 'á': 'a', 'â': 'a', 'ã': 'a',
+		'ä': 'a', 'å': 'a', 'ç': 'c', 'è': 'e', 'é': 'e', 'ê': 'e', 'ë': 'e', 'ì': 'i',
+		'í': 'i', 'î': 'i', 'ï': 'i', 'ñ': 'n', 'ò': 'o', 'ô': 'o', 'õ': 'o',
+		'ö': 'o', 'o̧': 'o', 'ù': 'u', 'ú': 'u', 'û': 'u', 'ü': 'u', 'ý': 'y',
+
+		// Polish equivalents
+		'Ą': 'A', 'Ć': 'C', 'Ę': 'E', 'Ł': 'L', 'Ń': 'N', 'Ó': 'O', 'Ś': 'S', 'Ź': 'Z', 'Ż': 'Z',
+		'ą': 'a', 'ć': 'c', 'ę': 'e', 'ł': 'l', 'ń': 'n', 'ó': 'o', 'ś': 's', 'ź': 'z', 'ż': 'z'
+		};
+	return text.replace(/[^\x00-\x7F]/g, (char) => mapping[char] || char);
+	}
+	
 	const addNewBindDialog = () => {
 		return (
 			<Dialog
