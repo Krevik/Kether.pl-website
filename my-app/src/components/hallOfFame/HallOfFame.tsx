@@ -370,10 +370,17 @@ export default function HallOfFame() {
 		'ö': 'o', 'o̧': 'o', 'ù': 'u', 'ú': 'u', 'û': 'u', 'ü': 'u', 'ý': 'y',
 
 		// Polish equivalents
-		'Ą': 'A', 'Ć': 'C', 'Ę': 'E', 'Ł': 'L', 'Ń': 'N', 'Ó': 'O', 'Ś': 'S', 'Ź': 'Z', 'Ż': 'Z',
-		'ą': 'a', 'ć': 'c', 'ę': 'e', 'ł': 'l', 'ń': 'n', 'ó': 'o', 'ś': 's', 'ź': 'z', 'ż': 'z'
+		'Ą': 'A', 'Ć': 'C', 'Ę': 'E', 'Ł': 'L', 'Ń': 'N', 'Ó': 'O', 'Ś': 'S', 'Ź': 'Z', 'Ż': 'Z',
+		'ą': 'a', 'ć': 'c', 'ę': 'e', 'ł': 'l', 'ń': 'n', 'ó': 'o', 'ś': 's', 'ź': 'z', 'ż': 'z'
 		};
-	return text.replace(/[^\x00-\x7F]/g, (char) => mapping[char] || char);
+		// Normalize text using NFKD, which decomposes characters into base and combining characters
+		const normalizedText = text.normalize('NFKD');
+
+		// Remove any remaining combining characters
+		const strippedText = normalizedText.replace(/[\u0300-\u036f]/g, '');
+
+		// Replace characters based on the mapping
+		return strippedText.replace(/[^\x00-\x7F]/g, (char) => mapping[char] || char);
 	}
 	
 	const addNewBindDialog = () => {
