@@ -30,6 +30,7 @@ export const gameStatsService = {
 		}, []);
 
 		useEffect(() => {
+			appStore.dispatch(gameStatsActions.setDetailedGameStats(gameStats));
 			const promises: Promise<DetailedGameStatEntry>[] = [];
 			gameStats.forEach((gameStat: GameStatEntry) => {
 				const promise = new Promise<DetailedGameStatEntry>(
@@ -50,7 +51,7 @@ export const gameStatsService = {
 				promises.push(promise);
 			});
 			Promise.all(promises).then((results) => {
-				appStore.dispatch(gameStatsActions.setDetailedGameStats(results));
+				// appStore.dispatch(gameStatsActions.setDetailedGameStats(results));
 			});
 		}, [gameStats]);
 	},
