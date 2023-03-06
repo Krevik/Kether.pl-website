@@ -351,7 +351,7 @@ export default function HallOfFame() {
 				/>
 				<h5>Text</h5>
 				<InputText
-					value={replaceNonEnglishLatinChars(bindAuthor)}
+					value={replaceNonEnglishLatinChars(bindText)}
 					onChange={(e) => setBindText(e.target.value)}
 				/>
 			</>
