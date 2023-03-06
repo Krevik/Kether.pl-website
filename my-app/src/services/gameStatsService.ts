@@ -13,6 +13,10 @@ const GAME_STATS_REFRESH_TIME_MS = 15000;
 
 export const gameStatsService = {
 	useGameStatsLoadingService: () => {
+		const gameStats = useSelector(
+			(state: AppState) => state.gameStatsReducer.gameStats
+		);
+
 		useEffect(() => {
 			getStats().then((gameStats) => {
 				appStore.dispatch(gameStatsActions.setGameStats(gameStats));
@@ -23,38 +27,14 @@ export const gameStatsService = {
 				});
 			}, GAME_STATS_REFRESH_TIME_MS);
 		}, []);
-	},
-
-	useGameStatsDetailer: () => {
-		const gameStats = useSelector(
-			(state: AppState) => state.gameStatsReducer.gameStats
-		);
-
-		const detailedGameStats = useSelector(
-			(state: AppState) => state.gameStatsReducer.gameStatsDetailed
-		);
 
 		useEffect(() => {
-			if (gameStats) {
-				appStore.dispatch(
-					gameStatsActions.setDetailedGameStats(
-						gameStats as DetailedGameStatEntry[]
-					)
-				);
-
-				// detailedGameStats.forEach((detailedGameStat) => {
-				// 	if (!detailedGameStat.userData) {
-				// 		steamAPIService
-				// 			.getUserData(detailedGameStat.SteamID)
-				// 			.then((receivedUserData) => {
-				// 				gameStatsActions.setUserDetailsInDetailedGameStat({
-				// 					gameStatEntry: detailedGameStat,
-				// 					steamUserDetails: receivedUserData,
-				// 				});
-				// 			});
-				// 	}
-				// });
-			}
+			console.log("Game Stats were updated");
+			appStore.dispatch(
+				gameStatsActions.setDetailedGameStats(
+					gameStats as DetailedGameStatEntry[]
+				)
+			);
 		}, [gameStats]);
 	},
 };
