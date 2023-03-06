@@ -16,6 +16,7 @@ export default function GameStats() {
 	);
 
 	gameStatsService.useGameStatsLoadingService();
+	gameStatsService.useGameStatsDetailer();
 
 	return (
 		<div
