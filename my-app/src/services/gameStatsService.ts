@@ -30,7 +30,6 @@ export const gameStatsService = {
 		}, []);
 
 		useEffect(() => {
-			appStore.dispatch(gameStatsActions.setDetailedGameStats(gameStats));
 			const promises: Promise<DetailedGameStatEntry>[] = [];
 			gameStats.forEach((gameStat: GameStatEntry) => {
 				const promise = new Promise<DetailedGameStatEntry>(
