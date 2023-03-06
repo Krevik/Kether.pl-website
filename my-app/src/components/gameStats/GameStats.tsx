@@ -22,38 +22,48 @@ export default function GameStats() {
 			className="game-stats"
 			style={{ backgroundImage: `url(${backgroundImage})` }}
 		>
-			<div className="centered-text"> Game Stats </div>
 			<div className="card">
-				<DataTable value={gameStatsEntries} scrollable={true}>
-					<Column field="userData.personaname" header="Nick" sortable></Column>
-					<Column
-						field="Hunter_Skeets"
-						header="Hunter Skeets"
-						sortable
-					></Column>
-					<Column field="Witch_Crowns" header="Witch Crowns" sortable></Column>
-					<Column field="Tongue_Cuts" header="Tongue Cuts" sortable></Column>
-					<Column
-						field="Smoker_Self_Clears"
-						header="Smoker Self Clears"
-						sortable
-					></Column>
-					<Column
-						field="Tank_Rocks_Skeeted"
-						header="Tank Rocks Skeeted"
-						sortable
-					></Column>
-					<Column
-						field="Hunter_High_Pounces_25"
-						header="Hunter High Pounces (25)"
-						sortable
-					></Column>
-					<Column
-						field="Death_Charges"
-						header="Death Charges"
-						sortable
-					></Column>
-				</DataTable>
+				<div className="centered-text"> Game Stats </div>
+				<div className="card">
+					<DataTable value={gameStatsEntries} scrollable={true}>
+						<Column
+							field="userData.personaname"
+							header="Nick"
+							sortable
+						></Column>
+						<Column
+							field="Hunter_Skeets"
+							header="Hunter Skeets"
+							sortable
+						></Column>
+						<Column
+							field="Witch_Crowns"
+							header="Witch Crowns"
+							sortable
+						></Column>
+						<Column field="Tongue_Cuts" header="Tongue Cuts" sortable></Column>
+						<Column
+							field="Smoker_Self_Clears"
+							header="Smoker Self Clears"
+							sortable
+						></Column>
+						<Column
+							field="Tank_Rocks_Skeeted"
+							header="Tank Rocks Skeeted"
+							sortable
+						></Column>
+						<Column
+							field="Hunter_High_Pounces_25"
+							header="Hunter High Pounces (25)"
+							sortable
+						></Column>
+						<Column
+							field="Death_Charges"
+							header="Death Charges"
+							sortable
+						></Column>
+					</DataTable>
+				</div>
 			</div>
 		</div>
 	);
