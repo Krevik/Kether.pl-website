@@ -1,9 +1,10 @@
 {
   "files": {
-    "main.css": "/static/css/main.6de31ff0.css",
-    "main.js": "/static/js/main.60bd9ef4.js",
+    "main.css": "/static/css/main.6525766d.css",
+    "main.js": "/static/js/main.7994b6c5.js",
     "static/media/background_1.jpg": "/static/media/background_1.bbbbf33c0f3cf7222559.jpg",
     "static/media/background_3.jpg": "/static/media/background_3.4e932a7e40bb7c3fc904.jpg",
+    "static/media/background_5.jpg": "/static/media/background_5.4392af6b6496d2563c15.jpg",
     "static/media/background_4.jpg": "/static/media/background_4.afd7ff29b91152c81d22.jpg",
     "static/media/primeicons.svg": "/static/media/primeicons.e1441b135b3ca9ad643c.svg",
     "static/media/primeicons.eot": "/static/media/primeicons.d44157bdfa026dc877af.eot",
@@ -17,11 +18,11 @@
     "static/media/FutureRot.woff": "/static/media/FutureRot.f067340e382f9f3cd894.woff",
     "static/media/FutureRot.woff2": "/static/media/FutureRot.8d63b100cb8153f603e8.woff2",
     "index.html": "/index.html",
-    "main.6de31ff0.css.map": "/static/css/main.6de31ff0.css.map",
-    "main.60bd9ef4.js.map": "/static/js/main.60bd9ef4.js.map"
+    "main.6525766d.css.map": "/static/css/main.6525766d.css.map",
+    "main.7994b6c5.js.map": "/static/js/main.7994b6c5.js.map"
   },
   "entrypoints": [
-    "static/css/main.6de31ff0.css",
-    "static/js/main.60bd9ef4.js"
+    "static/css/main.6525766d.css",
+    "static/js/main.7994b6c5.js"
   ]
 }
