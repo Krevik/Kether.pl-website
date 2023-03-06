@@ -3,7 +3,6 @@ import {
 	GameStatEntry,
 	DetailedGameStatEntry,
 } from "../../models/gameStatsModels";
-import { SteamUserDetails } from "./userDataSlice";
 
 interface gameStatsSliceProps {
 	gameStats: GameStatEntry[];
