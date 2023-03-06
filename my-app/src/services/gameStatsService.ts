@@ -20,16 +20,20 @@ export const gameStatsService = {
 
 		useEffect(() => {
 			getStats().then((gameStats) => {
-				appStore.dispatch(gameStatsActions.setGameStats(gameStats));
+				Promise.all(fetchDetailedGameStatEntries(gameStats)).then((results) => {
+					appStore.dispatch(gameStatsActions.setDetailedGameStats(results));
+				});
 			});
 			setInterval(() => {
-				getStats().then((gameStats) => {
-					appStore.dispatch(gameStatsActions.setGameStats(gameStats));
+				Promise.all(fetchDetailedGameStatEntries(gameStats)).then((results) => {
+					appStore.dispatch(gameStatsActions.setDetailedGameStats(results));
 				});
 			}, GAME_STATS_REFRESH_TIME_MS);
 		}, []);
 
-		useEffect(() => {
+		const fetchDetailedGameStatEntries = (
+			gameStats: GameStatEntry[]
+		): Promise<DetailedGameStatEntry>[] => {
 			const promises: Promise<DetailedGameStatEntry>[] = [];
 			gameStats.forEach((gameStat: GameStatEntry) => {
 				const promise = new Promise<DetailedGameStatEntry>(
@@ -49,10 +53,8 @@ export const gameStatsService = {
 				);
 				promises.push(promise);
 			});
-			Promise.all(promises).then((results) => {
-				// appStore.dispatch(gameStatsActions.setDetailedGameStats(results));
-			});
-		}, [gameStats]);
+			return promises;
+		};
 	},
 };
 
