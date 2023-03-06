@@ -124,7 +124,7 @@ export const steamAPIService = {
 				return response.json();
 			})
 			.then((response) => {
-				return response;
+				return response.response.players[0];
 			});
 	},
 };
