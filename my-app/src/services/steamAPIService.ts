@@ -1,10 +1,14 @@
 import { useEffect } from "react";
 import { AppState, appStore } from "../redux/store";
-import { userDataActions } from "../redux/slices/userDataSlice";
+import {
+	SteamUserDetails,
+	userDataActions,
+} from "../redux/slices/userDataSlice";
 import { useSelector } from "react-redux";
 import adminsFileLoc from "../resources/admins/admins.json";
 import { Admin } from "../models/adminModels";
 import { apiPaths } from "../utils/apiPaths";
+import UserDetails from "../components/navbar/userDetails/UserDetails";
 
 export const steamAPIService = {
 	useAdminDetectionService: () => {
@@ -64,23 +68,9 @@ export const steamAPIService = {
 
 		useEffect(() => {
 			if (userID) {
-				fetch(
-					`${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.STEAM_PATH}/userData`,
-					{
-						method: "post",
-						body: new URLSearchParams({
-							userID: `${userID}`,
-						}),
-					}
-				)
-					.then((response) => {
-						return response.json();
-					})
-					.then((response) => {
-						appStore.dispatch(
-							userDataActions.setUserData(response.response.players[0])
-						);
-					});
+				steamAPIService.getUserData(userID).then((userData) => {
+					appStore.dispatch(userDataActions.setUserData(userData));
+				});
 			}
 		}, [userID]);
 	},
@@ -118,5 +108,22 @@ export const steamAPIService = {
 					});
 			}
 		}, []);
+	},
+	getUserData: (userID: string): Promise<SteamUserDetails> => {
+		return fetch(
+			`${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.STEAM_PATH}/userData`,
+			{
+				method: "post",
+				body: new URLSearchParams({
+					userID: `${userID}`,
+				}),
+			}
+		)
+			.then((response) => {
+				return response.json();
+			})
+			.then((response) => {
+				return response;
+			});
 	},
 };

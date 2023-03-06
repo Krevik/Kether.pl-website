@@ -9,6 +9,7 @@ import HallOfFame from "../hallOfFame/HallOfFame";
 import GithubRepo from "../githubRepo/GithubRepo";
 import Donate from "../donate/Donate";
 import { steamAPIService } from "../../services/steamAPIService";
+import GameStats from "../gameStats/GameStats";
 
 export default function Home() {
 	const activeTabIndex = useSelector(
@@ -26,6 +27,8 @@ export default function Home() {
 				return <HomePage />;
 			case TabType.HALL_OF_FAME:
 				return <HallOfFame />;
+			case TabType.GAME_STATS:
+				return <GameStats />;
 			case TabType.GITHUB:
 				return <GithubRepo />;
 			case TabType.DONATE:

@@ -30,6 +30,11 @@ export default function Navbar() {
 			icon: "pi pi-fw pi-camera",
 		},
 		{
+			tabType: TabType.GAME_STATS,
+			label: "Game Stats",
+			icon: "pi pi-globe",
+		},
+		{
 			tabType: TabType.GITHUB,
 			label: "Github Repo",
 			icon: "pi pi-fw pi-file",

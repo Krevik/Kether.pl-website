@@ -5,6 +5,7 @@ import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
 import { bindsReducer } from "./slices/bindsSlice";
 import { bindSuggestionsReducer } from "./slices/bindSuggestionsSlice";
+import { gameStatsReducer } from "./slices/gameStatsSlice";
 
 const persistConfig = {
 	key: "root",
@@ -17,6 +18,7 @@ const combinedReducers = combineReducers({
 	userDataReducer: persistedUserDataReducer,
 	bindsReducer: bindsReducer,
 	bindSuggestionsReducer: bindSuggestionsReducer,
+	gameStatsReducer: gameStatsReducer,
 });
 
 export const appStore = configureStore({
