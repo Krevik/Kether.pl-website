@@ -43,16 +43,8 @@ export default function GameStats() {
 				<div className="centered-text">Game Stats</div>
 				<div className="card">
 					<DataTable value={gameStats} scrollable={true}>
-						<Column
-							body={getUserAvatarColumnBody}
-							header="Avatar"
-							sortable
-						></Column>
-						<Column
-							body={getUserNicknameColumnBody}
-							header="Nickname"
-							sortable
-						></Column>
+						<Column body={getUserAvatarColumnBody} header="Avatar"></Column>
+						<Column body={getUserNicknameColumnBody} header="Nickname"></Column>
 						<Column
 							field="Hunter_Skeets"
 							header="Hunter Skeets"
