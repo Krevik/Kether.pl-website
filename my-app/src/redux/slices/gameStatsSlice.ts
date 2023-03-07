@@ -1,17 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import {
-	GameStatEntry,
-	DetailedGameStatEntry,
-} from "../../models/gameStatsModels";
+import { GameStatEntry } from "../../models/gameStatsModels";
 
 interface gameStatsSliceProps {
 	gameStats: GameStatEntry[];
-	gameStatsDetailed: DetailedGameStatEntry[];
 }
 
 const initialState: gameStatsSliceProps = {
 	gameStats: [],
-	gameStatsDetailed: [],
 };
 
 const gameStatsSlice = createSlice({
@@ -20,12 +15,6 @@ const gameStatsSlice = createSlice({
 	reducers: {
 		setGameStats(state, action: PayloadAction<GameStatEntry[]>) {
 			state.gameStats = action.payload;
-		},
-		setDetailedGameStats(
-			state,
-			action: PayloadAction<DetailedGameStatEntry[]>
-		) {
-			state.gameStatsDetailed = action.payload;
 		},
 	},
 });

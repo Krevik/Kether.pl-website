@@ -9,8 +9,5 @@ export type GameStatEntry = {
 	Tank_Rocks_Skeeted: number;
 	Hunter_High_Pounces_25: number;
 	Death_Charges: number;
-};
-
-export type DetailedGameStatEntry = GameStatEntry & {
 	userData?: SteamUserDetails;
 };

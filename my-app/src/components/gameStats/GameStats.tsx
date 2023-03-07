@@ -7,12 +7,8 @@ import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 
 export default function GameStats() {
-	const gameStatsEntries = useSelector(
+	const gameStats = useSelector(
 		(state: AppState) => state.gameStatsReducer.gameStats
-	);
-
-	const detailedGameStatsEntries = useSelector(
-		(state: AppState) => state.gameStatsReducer.gameStatsDetailed
 	);
 
 	gameStatsService.useGameStatsLoadingService();
@@ -25,7 +21,7 @@ export default function GameStats() {
 			<div className="card">
 				<div className="centered-text"> Game Stats </div>
 				<div className="card">
-					<DataTable value={detailedGameStatsEntries} scrollable={true}>
+					<DataTable value={gameStats} scrollable={true}>
 						<Column
 							field="userData.personaname"
 							header="Nick"
