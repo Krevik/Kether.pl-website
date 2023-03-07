@@ -56,6 +56,16 @@ export default function GameStats() {
 							sortable
 						></Column>
 						<Column
+							field="Damage_Done_To_Survivors"
+							header="Damage Done To Survs"
+							sortable
+						></Column>
+						<Column
+							field="Damage_Done_To_SI"
+							header="Damage Done to SI"
+							sortable
+						></Column>
+						<Column
 							field="Witch_Crowns"
 							header="Witch Crowns"
 							sortable

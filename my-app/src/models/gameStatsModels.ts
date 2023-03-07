@@ -12,5 +12,7 @@ export type GameStatEntry = {
 	Commons_Killed: number;
 	Friendly_Fire_Done: number;
 	Friendly_Fire_Received: number;
+	Damage_Done_To_Survivors: number;
+	Damage_Done_To_SI: number;
 	userData?: SteamUserDetails;
 };
