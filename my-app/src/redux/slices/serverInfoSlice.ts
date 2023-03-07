@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { ServerInfo } from "../../models/serverInfoModels";
 
 interface serverInfoSliceProps {
-	serverInfo: any;
+	serverInfo?: ServerInfo;
 }
 
 const initialState: serverInfoSliceProps = {
@@ -12,7 +13,7 @@ const serverInfoSlice = createSlice({
 	name: "serverInfoSlice",
 	initialState: initialState,
 	reducers: {
-		setServerInfo(state, action: PayloadAction<any>) {
+		setServerInfo(state, action: PayloadAction<ServerInfo>) {
 			state.serverInfo = action.payload;
 		},
 	},

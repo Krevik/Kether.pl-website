@@ -13,14 +13,6 @@ type Command = {
 	description: string;
 };
 
-type ServerInfo = {
-	name: string;
-	players: number;
-	status: string;
-	map: string;
-	maxplayers: number;
-};
-
 export default function HomePage() {
 	const [commands, setCommands] = useState<Command[]>([]);
 	const serverInfo = useSelector(

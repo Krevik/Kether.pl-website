@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { apiPaths } from "../utils/apiPaths";
 import { appStore } from "../redux/store";
 import { serverInfoActions } from "../redux/slices/serverInfoSlice";
+import { ServerInfo } from "../models/serverInfoModels";
 
 export const serverInfoService = {
 	useServerInfoLoadingService: () => {
@@ -16,8 +17,7 @@ export const serverInfoService = {
 				.then((response) => {
 					return response.json();
 				})
-				.then((response) => {
-					console.log(response);
+				.then((response: ServerInfo) => {
 					appStore.dispatch(serverInfoActions.setServerInfo(response));
 				});
 		}, []);
