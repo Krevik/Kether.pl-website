@@ -4,9 +4,9 @@ import { useEffect, useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import commandsFileLoc from "../../resources/commands/commands.json";
-import { apiPaths } from "../../utils/apiPaths";
 import { useSelector } from "react-redux";
 import { AppState } from "../../redux/store";
+import { serverInfoService } from "../../services/serverInfoService";
 
 type Command = {
 	command: string;
@@ -27,7 +27,7 @@ export default function HomePage() {
 		setCommands(localCommands);
 	}, []);
 
-	//load server info
+	serverInfoService.useServerInfoLoadingService();
 
 	return (
 		<div
