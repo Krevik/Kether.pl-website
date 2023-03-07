@@ -59,6 +59,11 @@ export default function GameStats() {
 							sortable
 						></Column>
 						<Column
+							field="Common_Infected_Killed"
+							header="Commons Killed"
+							sortable
+						></Column>
+						<Column
 							field="Witch_Crowns"
 							header="Witch Crowns"
 							sortable

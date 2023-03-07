@@ -9,5 +9,6 @@ export type GameStatEntry = {
 	Tank_Rocks_Skeeted: number;
 	Hunter_High_Pounces_25: number;
 	Death_Charges: number;
+	Common_Infected_Killed: number;
 	userData?: SteamUserDetails;
 };
