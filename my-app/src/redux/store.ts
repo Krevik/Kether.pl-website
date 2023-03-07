@@ -6,6 +6,7 @@ import { persistReducer, persistStore } from "redux-persist";
 import { bindsReducer } from "./slices/bindsSlice";
 import { bindSuggestionsReducer } from "./slices/bindSuggestionsSlice";
 import { gameStatsReducer } from "./slices/gameStatsSlice";
+import { serverInfoReducer } from "./slices/serverInfoSlice";
 
 const persistConfig = {
 	key: "root",
@@ -19,6 +20,7 @@ const combinedReducers = combineReducers({
 	bindsReducer: bindsReducer,
 	bindSuggestionsReducer: bindSuggestionsReducer,
 	gameStatsReducer: gameStatsReducer,
+	serverInfoReducer: serverInfoReducer,
 });
 
 export const appStore = configureStore({

@@ -5,6 +5,8 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import commandsFileLoc from "../../resources/commands/commands.json";
 import { apiPaths } from "../../utils/apiPaths";
+import { useSelector } from "react-redux";
+import { AppState } from "../../redux/store";
 
 type Command = {
 	command: string;
@@ -21,8 +23,9 @@ type ServerInfo = {
 
 export default function HomePage() {
 	const [commands, setCommands] = useState<Command[]>([]);
-	const [serverInfo, setServerInfo] = useState<ServerInfo>();
-
+	const serverInfo = useSelector(
+		(state: AppState) => state.serverInfoReducer.serverInfo
+	);
 	//load commands from file
 	useEffect(() => {
 		const localCommands: Command[] = [];
@@ -33,21 +36,6 @@ export default function HomePage() {
 	}, []);
 
 	//load server info
-	useEffect(() => {
-		fetch(`${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}/serverInfo`, {
-			method: "post",
-			headers: {
-				"Access-Control-Allow-Origin": "*",
-				"Content-Security-Policy": "upgrade-insecure-requests",
-			},
-		})
-			.then((response) => {
-				return response.json();
-			})
-			.then((response) => {
-				setServerInfo(response);
-			});
-	}, []);
 
 	return (
 		<div
