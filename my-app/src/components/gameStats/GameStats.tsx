@@ -51,7 +51,7 @@ export default function GameStats() {
 							sortable
 						></Column>
 						<Column
-							field="Common_Infected_Killed"
+							field="Commons_Killed"
 							header="Commons Killed"
 							sortable
 						></Column>
