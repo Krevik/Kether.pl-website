@@ -5,6 +5,7 @@ import "./GameStats.css";
 import { AppState } from "../../redux/store";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
+import { GameStatEntry } from "../../models/gameStatsModels";
 
 export default function GameStats() {
 	const gameStats = useSelector(
@@ -13,18 +14,27 @@ export default function GameStats() {
 
 	gameStatsService.useGameStatsLoadingService();
 
+	const getUserDataColumnBody = (rowData: GameStatEntry) => {
+		return (
+			<div className="user-data">
+				<img alt="user-avatar" src={rowData.userData?.avatarmedium} />
+				<div className="nickname">{rowData.userData?.personaname}</div>
+			</div>
+		);
+	};
+
 	return (
 		<div
 			className="game-stats"
 			style={{ backgroundImage: `url(${backgroundImage})` }}
 		>
 			<div className="card">
-				<div className="centered-text"> Game Stats </div>
+				<div className="centered-text">Game Stats</div>
 				<div className="card">
 					<DataTable value={gameStats} scrollable={true}>
 						<Column
-							field="userData.personaname"
-							header="Nick"
+							body={getUserDataColumnBody}
+							header="Real User Data"
 							sortable
 						></Column>
 						<Column
