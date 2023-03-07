@@ -9,10 +9,6 @@ const REFRESH_INTERVAL_MS = 15000;
 
 export const gameStatsService = {
 	useGameStatsLoadingService: () => {
-		const gameStats = useSelector(
-			(state: AppState) => state.gameStatsReducer.gameStats
-		);
-
 		const loadStats = () => {
 			getStats().then((gameStats) => {
 				appStore.dispatch(gameStatsActions.setGameStats(gameStats));
