@@ -42,3 +42,8 @@
 	background: transparent;
 	border: none;
 }
+
+.game-stats .user-data img {
+	width: 32px;
+	height: 32px;
+}

@@ -18,7 +18,6 @@ export default function GameStats() {
 		return (
 			<div className="user-data">
 				<img alt="user-avatar" src={rowData.userData?.avatarmedium} />
-				<div className="nickname">{rowData.userData?.personaname}</div>
 			</div>
 		);
 	};
@@ -34,7 +33,12 @@ export default function GameStats() {
 					<DataTable value={gameStats} scrollable={true}>
 						<Column
 							body={getUserDataColumnBody}
-							header="Real User Data"
+							header="Avatar"
+							sortable
+						></Column>
+						<Column
+							field="userData.personaname"
+							header="Nickname"
 							sortable
 						></Column>
 						<Column
