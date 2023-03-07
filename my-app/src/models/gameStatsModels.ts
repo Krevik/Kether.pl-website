@@ -10,5 +10,7 @@ export type GameStatEntry = {
 	Hunter_High_Pounces_25: number;
 	Death_Charges: number;
 	Common_Infected_Killed: number;
+	Friendly_Fire_Done: number;
+	Friendly_Fire_Received: number;
 	userData?: SteamUserDetails;
 };

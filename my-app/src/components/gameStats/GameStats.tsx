@@ -89,6 +89,16 @@ export default function GameStats() {
 							header="Death Charges"
 							sortable
 						></Column>
+						<Column
+							field="Friendly_Fire_Done"
+							header="Friendly Fire Done"
+							sortable
+						></Column>
+						<Column
+							field="Friendly_Fire_Received"
+							header="Friendly Fire Received"
+							sortable
+						></Column>
 					</DataTable>
 				</div>
 			</div>
