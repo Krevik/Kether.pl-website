@@ -14,10 +14,22 @@ export default function GameStats() {
 
 	gameStatsService.useGameStatsLoadingService();
 
-	const getUserDataColumnBody = (rowData: GameStatEntry) => {
+	const getUserAvatarColumnBody = (rowData: GameStatEntry) => {
 		return (
 			<div className="user-data">
 				<img alt="user-avatar" src={rowData.userData?.avatarmedium} />
+			</div>
+		);
+	};
+
+	const getUserNicknameColumnBody = (rowData: GameStatEntry) => {
+		return (
+			<div className="user-data">
+				<div className="user-nickname">
+					<a href={rowData.userData?.profileurl}>
+						{rowData.userData?.personaname}
+					</a>
+				</div>
 			</div>
 		);
 	};
@@ -32,12 +44,12 @@ export default function GameStats() {
 				<div className="card">
 					<DataTable value={gameStats} scrollable={true}>
 						<Column
-							body={getUserDataColumnBody}
+							body={getUserAvatarColumnBody}
 							header="Avatar"
 							sortable
 						></Column>
 						<Column
-							field="userData.personaname"
+							body={getUserNicknameColumnBody}
 							header="Nickname"
 							sortable
 						></Column>
