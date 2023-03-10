@@ -38,11 +38,6 @@ export const gameStatsService = {
 			return () => {
 				clearInterval(refreshInterval);
 			};
-		}, []);
-
-		useEffect(() => {
-			loadTotalRecords();
-			loadStats();
 		}, [lazyParams]);
 	},
 };

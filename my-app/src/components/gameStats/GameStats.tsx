@@ -4,7 +4,7 @@ import { gameStatsService } from "../../services/gameStatsService";
 import "./GameStats.css";
 import { AppState } from "../../redux/store";
 import { Column } from "primereact/column";
-import { DataTable } from "primereact/datatable";
+import { DataTable, DataTableStateEvent } from "primereact/datatable";
 import {
 	GameStatEntry,
 	GameStatLazyLoadingParams,
@@ -18,10 +18,6 @@ export default function GameStats() {
 	const gameStats = useSelector(
 		(state: AppState) => state.gameStatsReducer.gameStats
 	);
-
-	useEffect(() => {
-		console.log(`total Records: ${totalRecords}`);
-	}, [totalRecords]);
 
 	const [lazyParams, setLazyParams] = useState<GameStatLazyLoadingParams>({
 		first: 0,
