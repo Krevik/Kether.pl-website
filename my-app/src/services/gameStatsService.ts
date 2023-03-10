@@ -13,15 +13,19 @@ export const gameStatsService = {
 	useGameStatsLoadingService: (lazyParams: GameStatLazyLoadingParams) => {
 		const loadStats = () => {
 			getStats(lazyParams).then((gameStats) => {
-				appStore.dispatch(gameStatsActions.setGameStats(gameStats));
+				if (gameStats) {
+					appStore.dispatch(gameStatsActions.setGameStats(gameStats));
+				}
 			});
 		};
 
 		const loadTotalRecords = () => {
 			getTotalRecords(lazyParams).then((response) => {
-				appStore.dispatch(
-					gameStatsActions.setTotalRecords(response.TOTAL_RECORDS)
-				);
+				if (response.TOTAL_RECORDS) {
+					appStore.dispatch(
+						gameStatsActions.setTotalRecords(response.TOTAL_RECORDS)
+					);
+				}
 			});
 		};
 
