@@ -9,7 +9,7 @@ import {
 	GameStatEntry,
 	GameStatLazyLoadingParams,
 } from "../../models/gameStatsModels";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function GameStats() {
 	const totalRecords = useSelector(
@@ -18,6 +18,10 @@ export default function GameStats() {
 	const gameStats = useSelector(
 		(state: AppState) => state.gameStatsReducer.gameStats
 	);
+
+	useEffect(() => {
+		console.log(`total Records: ${totalRecords}`);
+	}, [totalRecords]);
 
 	const [lazyParams, setLazyParams] = useState<GameStatLazyLoadingParams>({
 		first: 0,
