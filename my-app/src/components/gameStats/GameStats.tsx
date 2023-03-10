@@ -5,14 +5,29 @@ import "./GameStats.css";
 import { AppState } from "../../redux/store";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
-import { GameStatEntry } from "../../models/gameStatsModels";
+import {
+	GameStatEntry,
+	GameStatLazyLoadingParams,
+} from "../../models/gameStatsModels";
+import { useState } from "react";
 
 export default function GameStats() {
+	const totalRecords = useSelector(
+		(state: AppState) => state.gameStatsReducer.totalRecords
+	);
 	const gameStats = useSelector(
 		(state: AppState) => state.gameStatsReducer.gameStats
 	);
 
-	gameStatsService.useGameStatsLoadingService();
+	const [lazyParams, setLazyParams] = useState<GameStatLazyLoadingParams>({
+		first: 0,
+		rows: 10,
+		page: 1,
+		sortField: null,
+		sortOrder: null,
+	});
+
+	gameStatsService.useGameStatsLoadingService(lazyParams);
 
 	const getUserAvatarColumnBody = (rowData: GameStatEntry) => {
 		return (
@@ -34,6 +49,14 @@ export default function GameStats() {
 		);
 	};
 
+	const onPage = (event) => {
+		setLazyParams(event);
+	};
+
+	const onSort = (event) => {
+		setLazyParams(event);
+	};
+
 	return (
 		<div
 			className="game-stats"
@@ -42,64 +65,53 @@ export default function GameStats() {
 			<div className="card">
 				<div className="centered-text">Game Stats</div>
 				<div className="card">
-					<DataTable value={gameStats} scrollable={true}>
+					<DataTable
+						paginator
+						lazy
+						value={gameStats}
+						scrollable={true}
+						first={lazyParams.first}
+						rows={10}
+						totalRecords={totalRecords}
+						onPage={onPage}
+						//onSort={onSort}
+						//sortField={lazyParams.sortField}
+						//sortOrder={lazyParams.sortOrder}
+					>
 						<Column body={getUserAvatarColumnBody} header="Avatar"></Column>
 						<Column body={getUserNicknameColumnBody} header="Nickname"></Column>
-						<Column
-							field="Hunter_Skeets"
-							header="Hunter Skeets"
-							sortable
-						></Column>
-						<Column
-							field="Commons_Killed"
-							header="Commons Killed"
-							sortable
-						></Column>
+						<Column field="Hunter_Skeets" header="Hunter Skeets"></Column>
+						<Column field="Commons_Killed" header="Commons Killed"></Column>
 						<Column
 							field="Damage_Done_To_Survivors"
 							header="Damage Done To Survs"
-							sortable
 						></Column>
 						<Column
 							field="Damage_Done_To_SI"
 							header="Damage Done to SI"
-							sortable
 						></Column>
-						<Column
-							field="Witch_Crowns"
-							header="Witch Crowns"
-							sortable
-						></Column>
-						<Column field="Tongue_Cuts" header="Tongue Cuts" sortable></Column>
+						<Column field="Witch_Crowns" header="Witch Crowns"></Column>
+						<Column field="Tongue_Cuts" header="Tongue Cuts"></Column>
 						<Column
 							field="Smoker_Self_Clears"
 							header="Smoker Self Clears"
-							sortable
 						></Column>
 						<Column
 							field="Tank_Rocks_Skeeted"
 							header="Tank Rocks Skeeted"
-							sortable
 						></Column>
 						<Column
 							field="Hunter_High_Pounces_25"
 							header="Hunter High Pounces (25)"
-							sortable
 						></Column>
-						<Column
-							field="Death_Charges"
-							header="Death Charges"
-							sortable
-						></Column>
+						<Column field="Death_Charges" header="Death Charges"></Column>
 						<Column
 							field="Friendly_Fire_Done"
 							header="Friendly Fire Done"
-							sortable
 						></Column>
 						<Column
 							field="Friendly_Fire_Received"
 							header="Friendly Fire Received"
-							sortable
 						></Column>
 					</DataTable>
 				</div>

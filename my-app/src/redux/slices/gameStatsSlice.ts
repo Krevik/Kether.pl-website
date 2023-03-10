@@ -3,10 +3,12 @@ import { GameStatEntry } from "../../models/gameStatsModels";
 
 interface gameStatsSliceProps {
 	gameStats: GameStatEntry[];
+	totalRecords: number;
 }
 
 const initialState: gameStatsSliceProps = {
 	gameStats: [],
+	totalRecords: 0,
 };
 
 const gameStatsSlice = createSlice({
@@ -15,6 +17,9 @@ const gameStatsSlice = createSlice({
 	reducers: {
 		setGameStats(state, action: PayloadAction<GameStatEntry[]>) {
 			state.gameStats = action.payload;
+		},
+		setTotalRecords(state, action: PayloadAction<number>) {
+			state.totalRecords = action.payload;
 		},
 	},
 });

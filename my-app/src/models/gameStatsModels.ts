@@ -16,3 +16,11 @@ export type GameStatEntry = {
 	Damage_Done_To_SI: number;
 	userData?: SteamUserDetails;
 };
+
+export type GameStatLazyLoadingParams = {
+	first: 0;
+	rows: 10;
+	page: 1;
+	sortField: null;
+	sortOrder: null;
+};
