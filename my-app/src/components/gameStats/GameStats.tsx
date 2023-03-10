@@ -23,7 +23,7 @@ export default function GameStats() {
 	const [lazyParams, setLazyParams] = useState<GameStatLazyLoadingParams>({
 		first: 0,
 		rows: 10,
-		page: 1,
+		page: 0,
 		sortField: null,
 		sortOrder: null,
 	});
