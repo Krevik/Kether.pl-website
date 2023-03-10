@@ -76,7 +76,7 @@ const getTotalRecords = (
 				return response.json();
 			}
 		})
-		.then((response: { TOTAL_RECORDS: number }) => {
-			return response;
+		.then((response: { TOTAL_RECORDS: number }[]) => {
+			return response[0];
 		});
 };
