@@ -10,11 +10,15 @@ import {
 const REFRESH_INTERVAL_MS = 15000;
 
 export const gameStatsService = {
-	useGameStatsLoadingService: (lazyParams: GameStatLazyLoadingParams) => {
+	useGameStatsLoadingService: (
+		lazyParams: GameStatLazyLoadingParams,
+		setLoading: (isLoading: boolean) => void
+	) => {
 		const loadStats = () => {
 			getStats(lazyParams).then((gameStats) => {
 				if (gameStats) {
 					appStore.dispatch(gameStatsActions.setGameStats(gameStats));
+					setLoading(false);
 				}
 			});
 		};
@@ -30,6 +34,7 @@ export const gameStatsService = {
 		};
 
 		useEffect(() => {
+			setLoading(true);
 			loadTotalRecords();
 			loadStats();
 			const refreshInterval = setInterval(() => {

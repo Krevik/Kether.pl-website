@@ -18,6 +18,7 @@ export default function GameStats() {
 	const gameStats = useSelector(
 		(state: AppState) => state.gameStatsReducer.gameStats
 	);
+	const [loading, setLoading] = useState(false);
 
 	const [lazyParams, setLazyParams] = useState<GameStatLazyLoadingParams>({
 		first: 0,
@@ -27,7 +28,7 @@ export default function GameStats() {
 		sortOrder: null,
 	});
 
-	gameStatsService.useGameStatsLoadingService(lazyParams);
+	gameStatsService.useGameStatsLoadingService(lazyParams, setLoading);
 
 	const getUserAvatarColumnBody = (rowData: GameStatEntry) => {
 		return (
@@ -74,6 +75,7 @@ export default function GameStats() {
 						rows={10}
 						totalRecords={totalRecords}
 						onPage={onPage}
+						loading={loading}
 						//onSort={onSort}
 						//sortField={lazyParams.sortField}
 						//sortOrder={lazyParams.sortOrder}
