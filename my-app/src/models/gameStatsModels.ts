@@ -18,9 +18,9 @@ export type GameStatEntry = {
 };
 
 export type GameStatLazyLoadingParams = {
-	first: 0;
-	rows: 10;
-	page: 1;
+	first: number;
+	rows: number;
+	page: number;
 	sortField: null;
 	sortOrder: null;
 };
