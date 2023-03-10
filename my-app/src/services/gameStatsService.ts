@@ -66,7 +66,7 @@ const getTotalRecords = (
 	lazyParams: GameStatLazyLoadingParams
 ): Promise<{ TOTAL_RECORDS: number }> => {
 	return fetch(
-		`${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.LIVE_SERVER_PATH}/countRecords?first=${lazyParams.first}&rows=${lazyParams.rows}&page=${lazyParams.page}&sortField=${lazyParams.sortField}&sortOrder=${lazyParams.sortOrder}`,
+		`${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.LIVE_SERVER_PATH}/gameStats/countRecords?first=${lazyParams.first}&rows=${lazyParams.rows}&page=${lazyParams.page}&sortField=${lazyParams.sortField}&sortOrder=${lazyParams.sortOrder}`,
 		{
 			method: "get",
 		}
