@@ -47,7 +47,7 @@ const getStats = (
 	lazyParams: GameStatLazyLoadingParams
 ): Promise<GameStatEntry[]> => {
 	return fetch(
-		`${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.LIVE_SERVER_PATH}/gameStats?first=${lazyParams.first}&rows=${lazyParams.rows}&page=${lazyParams.page}&sortField=${lazyParams.sortField}&sortOrder=${lazyParams.sortOrder}`,
+		`${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.LIVE_SERVER_PATH}/gameStats?first=${lazyParams.first}&pageSize=${lazyParams.rows}&page=${lazyParams.page}&sortField=${lazyParams.sortField}&sortOrder=${lazyParams.sortOrder}`,
 		{
 			method: "get",
 		}
