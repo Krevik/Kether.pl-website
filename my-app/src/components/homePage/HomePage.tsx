@@ -7,6 +7,7 @@ import commandsFileLoc from "../../resources/commands/commands.json";
 import { useSelector } from "react-redux";
 import { AppState } from "../../redux/store";
 import { serverInfoService } from "../../services/serverInfoService";
+import { Button } from "primereact/button";
 
 type Command = {
 	command: string;
@@ -50,6 +51,18 @@ export default function HomePage() {
 						Status: {serverInfo?.status === "1" ? "Online" : "Offline"}
 					</div>
 					<div className="centered-text">Map: {serverInfo?.map}</div>
+					<div className="centered-text">
+						{serverInfo &&
+							serverInfo.players &&
+							Number(serverInfo.players) > 0 && (
+								<Button
+									label="Join game"
+									onClick={() => {
+										window.location.href = "steam://connect/51.83.217.86:29800";
+									}}
+								></Button>
+							)}
+					</div>
 				</div>
 
 				<div className="section">
