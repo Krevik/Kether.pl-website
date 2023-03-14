@@ -1,17 +1,16 @@
-import "./Home.css";
 import Navbar from "../navbar/Navbar";
 import { useSelector } from "react-redux";
 import { AppState } from "../../redux/store";
 import { TabType } from "../navbar/models/TabModels";
-import HomePage from "../homePage/HomePage";
-import Footer from "../footer/Footer";
-import HallOfFame from "../hallOfFame/HallOfFame";
-import GithubRepo from "../githubRepo/GithubRepo";
-import Donate from "../donate/Donate";
+import HomePage from "../HomePage/HomePage";
+import Footer from "../Footer/Footer";
+import HallOfFame from "../HallOfFame/HallOfFame";
+import GithubRepo from "../GithubRepo/GithubRepo";
+import Donate from "../Donate/Donate";
 import { steamAPIService } from "../../services/steamAPIService";
-import GameStats from "../gameStats/GameStats";
+import GameStats from "../GameStats/GameStats";
 
-export default function Home() {
+export default function KetherApplication() {
 	const activeTabIndex = useSelector(
 		(state: AppState) => state.navbarReducer.activeTabIndex
 	);

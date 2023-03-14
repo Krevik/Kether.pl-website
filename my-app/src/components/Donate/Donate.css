@@ -1,23 +1,17 @@
 .donate {
-	height: 100%;
-	width: 100%;
-	min-width: 1400px;
-	min-height: 1100px;
+	gap: 50px;
 	background-position: center;
 	background-size: cover;
-}
-
-.donate .card {
-	height: 100%;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-evenly;
+	height: 100%;
 }
 
 .donate .payment-method {
 	margin: auto;
 	border: solid 5px wheat;
-	border-radius: 250px;
+	border-radius: 50px;
 	height: 80px;
 	width: 50%;
 	min-width: 500px;
