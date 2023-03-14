@@ -8,13 +8,13 @@ import { bindsManagingService } from '../../services/bindsManagingService';
 import { Button } from 'primereact/button';
 import { BindEntry, BindSuggestionEntry } from '../../models/bindsModels';
 import { useRef, useState } from 'react';
-import { Dialog } from 'primereact/dialog';
 import { Toast } from 'primereact/toast';
 import { Toolbar } from 'primereact/toolbar';
 import { bindSuggestionsManagingService } from '../../services/bindSuggestionsManagingService';
 import { notificationManager } from '../../utils/notificationManager';
-import EditBindDialog from './Dialog/EditBindDialog';
-import DialogBindContent from './Dialog/DialogBindContent';
+import EditBindDialog from './Dialogues/EditBindDialog';
+import AddNewBindDialog from './Dialogues/AddNewBindDialog';
+import AddNewBindSuggestionDialog from './Dialogues/AddNewBindSuggestionDalog';
 
 export default function HallOfFame() {
     const binds = useSelector((state: AppState) => state.bindsReducer.binds);
@@ -24,9 +24,7 @@ export default function HallOfFame() {
     const userID = useSelector(
         (state: AppState) => state.userDataReducer.userID
     );
-    const steamUserData = useSelector(
-        (state: AppState) => state.userDataReducer.userData
-    );
+
     const isAdmin: boolean = useSelector(
         (state: AppState) => state.userDataReducer.isAdmin
     );
@@ -161,84 +159,6 @@ export default function HallOfFame() {
         );
     };
 
-    const newBindDialogFooter = (
-        <>
-            <Button
-                label="Cancel"
-                icon="pi pi-times"
-                className="p-button-text"
-                onClick={(e) => setNewBindDialogVisibility(false)}
-            />
-            <Button
-                label="Save"
-                icon="pi pi-check"
-                className="p-button-text"
-                onClick={() => {
-                    const newBind = {
-                        author: bindAuthor,
-                        text: bindText,
-                    } as BindEntry;
-                    bindsManagingService
-                        .addNewBind(newBind)
-                        .then(() => {
-                            notificationManager.SUCCESS(
-                                toast,
-                                `Successfully added new bind`
-                            );
-                            setNewBindDialogVisibility(false);
-                            setBindText('');
-                        })
-                        .catch((error) => {
-                            notificationManager.ERROR(
-                                toast,
-                                `Couldn't add the bind: ${error}`
-                            );
-                        });
-                }}
-            />
-        </>
-    );
-
-    const newBindSuggestionDialogFooter = (
-        <>
-            <Button
-                label="Cancel"
-                icon="pi pi-times"
-                className="p-button-text"
-                onClick={(e) => setNewBindSuggestionDialogVisibility(false)}
-            />
-            <Button
-                label="Save"
-                icon="pi pi-check"
-                className="p-button-text"
-                onClick={() => {
-                    const newBind = {
-                        id: -1,
-                        proposedBy: steamUserData!.personaname,
-                        author: bindAuthor,
-                        text: bindText,
-                    } as BindSuggestionEntry;
-                    bindSuggestionsManagingService
-                        .addNewBindSuggestion(newBind)
-                        .then(() => {
-                            notificationManager.SUCCESS(
-                                toast,
-                                `Successfully suggested new bind`
-                            );
-                            setNewBindSuggestionDialogVisibility(false);
-                            setBindText('');
-                        })
-                        .catch((error) => {
-                            notificationManager.ERROR(
-                                toast,
-                                `Couldn't suggest the bind: ${error}`
-                            );
-                        });
-                }}
-            />
-        </>
-    );
-
     const getToolbarLeftSide = () => {
         return (
             <>
@@ -249,7 +169,7 @@ export default function HallOfFame() {
                         className="p-button-success mr-2"
                         data-toggle="tooltip"
                         title="Adds new bind"
-                        onClick={(e) => setNewBindDialogVisibility(true)}
+                        onClick={() => setNewBindDialogVisibility(true)}
                     ></Button>
                 )}
                 {userID && (
@@ -259,52 +179,12 @@ export default function HallOfFame() {
                         className="p-button-success mr-2"
                         data-toggle="tooltip"
                         title="Adds new bind suggestion"
-                        onClick={(e) =>
+                        onClick={() =>
                             setNewBindSuggestionDialogVisibility(true)
                         }
                     ></Button>
                 )}
             </>
-        );
-    };
-
-    const addNewBindDialog = () => {
-        return (
-            <Dialog
-                visible={newBindDialogVisibility}
-                header="Add new Bind"
-                modal
-                className="p-fluid"
-                footer={newBindDialogFooter}
-                onHide={() => setNewBindDialogVisibility(false)}
-            >
-                <DialogBindContent
-                    setBindText={setBindText}
-                    bindText={bindText}
-                    setBindAuthor={setBindAuthor}
-                    bindAuthor={bindAuthor}
-                />
-            </Dialog>
-        );
-    };
-
-    const addNewBindSuggestionDialog = () => {
-        return (
-            <Dialog
-                visible={newBindSuggestionDialogVisibility}
-                header="Suggest new bind"
-                modal
-                className="p-fluid"
-                footer={newBindSuggestionDialogFooter}
-                onHide={() => setNewBindSuggestionDialogVisibility(false)}
-            >
-                <DialogBindContent
-                    setBindText={setBindText}
-                    bindText={bindText}
-                    setBindAuthor={setBindAuthor}
-                    bindAuthor={bindAuthor}
-                />
-            </Dialog>
         );
     };
 
@@ -324,8 +204,27 @@ export default function HallOfFame() {
         >
             <div className="card">
                 <Toast ref={toast} />
-                {addNewBindDialog()}
-                {addNewBindSuggestionDialog()}
+
+                <AddNewBindDialog
+                    setBindText={setBindText}
+                    bindText={bindText}
+                    setBindAuthor={setBindAuthor}
+                    bindAuthor={bindAuthor}
+                    isDialogVisible={newBindDialogVisibility}
+                    setDialogVisibility={setNewBindDialogVisibility}
+                    notificationToast={toast}
+                />
+
+                <AddNewBindSuggestionDialog
+                    setBindText={setBindText}
+                    bindText={bindText}
+                    setBindAuthor={setBindAuthor}
+                    bindAuthor={bindAuthor}
+                    bindEditingIdRef={editingBindID}
+                    isDialogVisible={newBindSuggestionDialogVisibility}
+                    setDialogVisibility={setNewBindSuggestionDialogVisibility}
+                    notificationToast={toast}
+                />
 
                 <EditBindDialog
                     setBindText={setBindText}
@@ -338,7 +237,10 @@ export default function HallOfFame() {
                     notificationToast={toast}
                 />
 
-                <Toolbar className="mb-4" left={getToolbarLeftSide()}></Toolbar>
+                <Toolbar
+                    className="mb-4"
+                    start={getToolbarLeftSide()}
+                ></Toolbar>
 
                 <div className="centered-text"> Binds</div>
                 <div className="card">
