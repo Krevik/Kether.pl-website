@@ -22,17 +22,13 @@ export default function ServerInfoSection() {
             </span>
             <span>Map: {serverInfo?.map}</span>
             <span>
-                {serverInfo &&
-                    serverInfo.players &&
-                    Number(serverInfo.players) > 0 && (
-                        <Button
-                            label="Join game"
-                            onClick={() => {
-                                window.location.href =
-                                    'steam://connect/51.83.217.86:29800';
-                            }}
-                        ></Button>
-                    )}
+                <Button
+                    label="Join game"
+                    onClick={() => {
+                        window.location.href =
+                            'steam://connect/51.83.217.86:29800';
+                    }}
+                ></Button>
             </span>
         </div>
     );
