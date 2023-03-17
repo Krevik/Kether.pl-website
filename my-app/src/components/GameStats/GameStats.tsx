@@ -4,14 +4,17 @@ import { gameStatsService } from '../../services/gameStatsService';
 import './GameStats.css';
 import { AppState } from '../../redux/store';
 import { Column } from 'primereact/column';
-import { DataTable, DataTableStateEvent } from 'primereact/datatable';
+import { DataTable } from 'primereact/datatable';
 import {
     GameStatEntry,
     GameStatLazyLoadingParams,
 } from '../../models/gameStatsModels';
 import { useEffect, useState } from 'react';
+import { InputText } from 'primereact/inputtext';
 
 export default function GameStats() {
+    const [searchValue, setSearchValue] = useState('');
+
     const totalRecords = useSelector(
         (state: AppState) => state.gameStatsReducer.totalRecords
     );
@@ -40,6 +43,15 @@ export default function GameStats() {
         );
     };
 
+    useEffect(()=>{
+        const searchTimeout = setTimeout(()=>{
+            setLazyParams({...lazyParams, query: searchValue})
+        },400)
+        return ()=>{
+            clearTimeout(searchTimeout);
+        }
+    }, [searchValue])
+
     const onPage = (event) => {
         setLazyParams({ ...lazyParams, ...event });
     };
@@ -56,6 +68,10 @@ export default function GameStats() {
             <div className="card">
                 <div className="centered-text">Game Stats</div>
                 <div className="card">
+                    <span className="p-input-icon-left">
+                    <i className="pi pi-search" />
+                    <InputText value={searchValue} onChange={(e) => setSearchValue(e.target.value)} placeholder="Search" />
+                </span>
                     <DataTable
                         paginator
                         lazy
