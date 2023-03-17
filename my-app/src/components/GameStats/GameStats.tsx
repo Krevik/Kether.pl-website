@@ -45,7 +45,7 @@ export default function GameStats() {
     };
 
     const onSort = (event) => {
-        setLazyParams({ ...lazyParams, ...event });
+        setLazyParams({ ...lazyParams, ...event, sortOrder:~lazyParams.sortOrder });
     };
 
     return (
@@ -79,41 +79,50 @@ export default function GameStats() {
                         <Column
                             field="Commons_Killed"
                             header="Commons Killed"
+                            sortable
                         />
                         <Column
                             field="Damage_Done_To_Survivors"
                             header="Damage Done To Survs"
+                            sortable
                         />
                         <Column
                             field="Damage_Done_To_SI"
                             header="Damage Done to SI"
+                            sortable
                         />
-                        <Column field="Witch_Crowns" header="Witch Crowns" />
-                        <Column field="Tongue_Cuts" header="Tongue Cuts" />
+                        <Column field="Witch_Crowns" header="Witch Crowns" sortable />
+                        <Column field="Tongue_Cuts" header="Tongue Cuts" sortable />
                         <Column
                             field="Smoker_Self_Clears"
                             header="Smoker Self Clears"
+                            sortable
                         />
                         <Column
                             field="Tank_Rocks_Skeeted"
                             header="Tank Rocks Skeeted"
+                            sortable
                         />
                         <Column
                             field="Hunter_High_Pounces_25"
                             header="Hunter High Pounces (25)"
+                            sortable
                         />
-                        <Column field="Death_Charges" header="Death Charges" />
+                        <Column field="Death_Charges" header="Death Charges" sortable />
                         <Column
                             field="Friendly_Fire_Done"
                             header="Friendly Fire Done"
+                            sortable
                         />
                         <Column
                             field="Friendly_Fire_Received"
                             header="Friendly Fire Received"
+                            sortable
                         />
                         <Column
                             field={'Damage_Done_To_Tanks'}
                             header={'Dmg done to tanks'}
+                            sortable
                         />
                     </DataTable>
                 </div>
