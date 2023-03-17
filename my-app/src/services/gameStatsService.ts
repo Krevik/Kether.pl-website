@@ -15,7 +15,7 @@ export const gameStatsService = {
 		setLoading: (isLoading: boolean) => void
 	) => {
 		const loadStats = () => {
-			getStats(lazyParams).then((gameStats) => {
+			getStats(lazyParams).then((gameStats: GameStatEntry[]) => {
 				if (gameStats) {
 					appStore.dispatch(gameStatsActions.setGameStats(gameStats));
 					setLoading(false);
