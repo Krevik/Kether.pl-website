@@ -45,7 +45,7 @@ export default function GameStats() {
     };
 
     const onSort = (event) => {
-        setLazyParams({ ...lazyParams, ...event, sortOrder:~lazyParams.sortOrder });
+        setLazyParams({ ...lazyParams, ...event, sortOrder:~lazyParams.sortOrder! });
     };
 
     return (
