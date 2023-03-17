@@ -23,7 +23,7 @@
 }
 
 .game-stats .p-datatable-scrollable .p-datatable-wrapper {
-	overflow: none;
+	overflow: auto;
 }
 
 .game-stats .p-datatable {
@@ -42,8 +42,8 @@
 }
 
 .game-stats .user-data img {
-	width: 100%;
-	height: 100%;
+	width: 64px;
+	height: 64px;
 }
 
 .game-stats .user-data .user-nickname a {
