@@ -33,7 +33,7 @@ export default function GameStats() {
     const getUserAvatarColumnBody = (rowData: GameStatEntry) => {
         return (
             <div className="user-data">
-                <img alt="user-avatar" src={rowData.userData?.avatarmedium} />
+                <img alt="user-avatar" src={rowData.avatarMediumSrc} />
             </div>
         );
     };
@@ -42,9 +42,7 @@ export default function GameStats() {
         return (
             <div className="user-data">
                 <div className="user-nickname">
-                    <a
-                    // href={rowData.userData?.profileurl}
-                    >
+                    <a href={rowData.profileUrl}>
                         {rowData.LastKnownSteamName}
                     </a>
                 </div>

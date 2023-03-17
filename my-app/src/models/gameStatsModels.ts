@@ -17,6 +17,8 @@ export type GameStatEntry = {
     Damage_Done_To_SI: number;
     Damage_Done_To_Tanks: number;
     userData?: SteamUserDetails;
+    profileUrl: string;
+    avatarMediumSrc: string;
 };
 
 export type GameStatLazyLoadingParams = {
