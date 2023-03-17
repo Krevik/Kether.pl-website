@@ -25,6 +25,7 @@ export type GameStatLazyLoadingParams = {
     first: number;
     rows: number;
     page: number;
-    sortField: null;
-    sortOrder: null;
+    sortField?: string;
+    sortOrder?: number;
+    query?: string;
 };

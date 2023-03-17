@@ -24,8 +24,9 @@ export default function GameStats() {
         first: 0,
         rows: 10,
         page: 0,
-        sortField: null,
-        sortOrder: null,
+        sortField: undefined,
+        sortOrder: 0,
+        query: undefined,
     });
 
     gameStatsService.useGameStatsLoadingService(lazyParams, setLoading);
@@ -40,11 +41,11 @@ export default function GameStats() {
     };
 
     const onPage = (event) => {
-        setLazyParams(event);
+        setLazyParams({ ...lazyParams, ...event });
     };
 
     const onSort = (event) => {
-        setLazyParams(event);
+        setLazyParams({ ...lazyParams, ...event });
     };
 
     return (
@@ -65,12 +66,16 @@ export default function GameStats() {
                         totalRecords={totalRecords}
                         onPage={onPage}
                         loading={loading}
-                        //onSort={onSort}
+                        onSort={onSort}
                         //sortField={lazyParams.sortField}
                         //sortOrder={lazyParams.sortOrder}
                     >
                         <Column body={getPlayerColumnBody} header="Player" />
-                        <Column field="Hunter_Skeets" header="Hunter Skeets" />
+                        <Column
+                            field="Hunter_Skeets"
+                            header="Hunter Skeets"
+                            sortable
+                        />
                         <Column
                             field="Commons_Killed"
                             header="Commons Killed"
