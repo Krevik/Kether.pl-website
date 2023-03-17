@@ -2,6 +2,7 @@ import { SteamUserDetails } from '../redux/slices/userDataSlice';
 
 export type GameStatEntry = {
     SteamID: string;
+    LastKnownSteamName: string;
     Hunter_Skeets: number;
     Witch_Crowns: number;
     Tongue_Cuts: number;
