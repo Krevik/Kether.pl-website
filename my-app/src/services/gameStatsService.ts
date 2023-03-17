@@ -51,7 +51,7 @@ const getStats = (
     lazyParams: GameStatLazyLoadingParams
 ): Promise<GameStatEntry[]> => {
     return fetch(
-        `${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.LIVE_SERVER_PATH}/gameStats/partial?first=${lazyParams.first}&pageSize=${lazyParams.rows}&page=${lazyParams.page}&sortField=${lazyParams.sortField}&sortOrder=${lazyParams.sortOrder}`,
+        `${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.LIVE_SERVER_PATH}/gameStats/partial?first=${lazyParams.first}&pageSize=${lazyParams.rows}&page=${lazyParams.page}&sortField=${lazyParams.sortField}&sortOrder=${lazyParams.sortOrder}&query=${lazyParams.query}`,
         {
             method: 'get',
         }
@@ -70,7 +70,7 @@ const getTotalRecords = (
     lazyParams: GameStatLazyLoadingParams
 ): Promise<{ TOTAL_RECORDS: number }> => {
     return fetch(
-        `${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.LIVE_SERVER_PATH}/gameStats/totalRecords?first=${lazyParams.first}&rows=${lazyParams.rows}&page=${lazyParams.page}&sortField=${lazyParams.sortField}&sortOrder=${lazyParams.sortOrder}`,
+        `${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.LIVE_SERVER_PATH}/gameStats/totalRecords?first=${lazyParams.first}&rows=${lazyParams.rows}&page=${lazyParams.page}&sortField=${lazyParams.sortField}&sortOrder=${lazyParams.sortOrder}&query=${lazyParams.query}`,
         {
             method: 'get',
         }
