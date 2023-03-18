@@ -57,7 +57,7 @@ export default function GameStats() {
     }, [searchValue]);
 
     const onPage = (event: DataTablePageEvent) => {
-        setLazyParams({ ...lazyParams, page: event.page! });
+        setLazyParams({ ...lazyParams, page: event.page!, first: event.first });
     };
 
     const onSort = (event: DataTableSortEvent) => {
