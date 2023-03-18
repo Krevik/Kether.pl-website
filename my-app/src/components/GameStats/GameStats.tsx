@@ -64,7 +64,7 @@ export default function GameStats() {
         setLazyParams({
             ...lazyParams,
             ...event,
-            sortOrder: ~lazyParams.sortOrder!,
+            sortOrder: Number(!Boolean(lazyParams.sortOrder)),
         });
     };
 
