@@ -4,7 +4,11 @@ import { gameStatsService } from '../../services/gameStatsService';
 import './GameStats.css';
 import { AppState } from '../../redux/store';
 import { Column } from 'primereact/column';
-import { DataTable } from 'primereact/datatable';
+import {
+    DataTable,
+    DataTablePageEvent,
+    DataTableSortEvent,
+} from 'primereact/datatable';
 import {
     GameStatEntry,
     GameStatLazyLoadingParams,
@@ -43,21 +47,25 @@ export default function GameStats() {
         );
     };
 
-    useEffect(()=>{
-        const searchTimeout = setTimeout(()=>{
-            setLazyParams({...lazyParams, query: searchValue})
-        },400)
-        return ()=>{
+    useEffect(() => {
+        const searchTimeout = setTimeout(() => {
+            setLazyParams({ ...lazyParams, query: searchValue });
+        }, 400);
+        return () => {
             clearTimeout(searchTimeout);
-        }
-    }, [searchValue])
+        };
+    }, [searchValue]);
 
-    const onPage = (event) => {
-        setLazyParams({ ...lazyParams, ...event });
+    const onPage = (event: DataTablePageEvent) => {
+        setLazyParams({ ...lazyParams, page: event.page! });
     };
 
-    const onSort = (event) => {
-        setLazyParams({ ...lazyParams, ...event, sortOrder:~lazyParams.sortOrder! });
+    const onSort = (event: DataTableSortEvent) => {
+        setLazyParams({
+            ...lazyParams,
+            ...event,
+            sortOrder: ~lazyParams.sortOrder!,
+        });
     };
 
     return (
@@ -69,9 +77,13 @@ export default function GameStats() {
                 <div className="centered-text">Game Stats</div>
                 <div className="card">
                     <span className="p-input-icon-left">
-                    <i className="pi pi-search" />
-                    <InputText value={searchValue} onChange={(e) => setSearchValue(e.target.value)} placeholder="Search" />
-                </span>
+                        <i className="pi pi-search" />
+                        <InputText
+                            value={searchValue}
+                            onChange={(e) => setSearchValue(e.target.value)}
+                            placeholder="Search"
+                        />
+                    </span>
                     <DataTable
                         paginator
                         lazy
@@ -107,8 +119,16 @@ export default function GameStats() {
                             header="Damage Done to SI"
                             sortable
                         />
-                        <Column field="Witch_Crowns" header="Witch Crowns" sortable />
-                        <Column field="Tongue_Cuts" header="Tongue Cuts" sortable />
+                        <Column
+                            field="Witch_Crowns"
+                            header="Witch Crowns"
+                            sortable
+                        />
+                        <Column
+                            field="Tongue_Cuts"
+                            header="Tongue Cuts"
+                            sortable
+                        />
                         <Column
                             field="Smoker_Self_Clears"
                             header="Smoker Self Clears"
@@ -124,7 +144,11 @@ export default function GameStats() {
                             header="Hunter High Pounces (25)"
                             sortable
                         />
-                        <Column field="Death_Charges" header="Death Charges" sortable />
+                        <Column
+                            field="Death_Charges"
+                            header="Death Charges"
+                            sortable
+                        />
                         <Column
                             field="Friendly_Fire_Done"
                             header="Friendly Fire Done"

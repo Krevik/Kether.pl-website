@@ -7,7 +7,7 @@ import {
     GameStatLazyLoadingParams,
 } from '../models/gameStatsModels';
 
-const REFRESH_INTERVAL_MS = 15000;
+const REFRESH_INTERVAL_MS = 30000;
 
 export const gameStatsService = {
     useGameStatsLoadingService: (
