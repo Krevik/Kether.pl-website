@@ -32,7 +32,7 @@ export default function GameStats() {
         rows: 10,
         page: 0,
         sortField: 'Commons_Killed',
-        sortOrder: 0,
+        sortOrder: 1,
         query: undefined,
     });
 
