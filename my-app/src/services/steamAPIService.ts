@@ -8,7 +8,6 @@ import { useSelector } from "react-redux";
 import adminsFileLoc from "../resources/admins/admins.json";
 import { Admin } from "../models/adminModels";
 import { apiPaths } from "../utils/apiPaths";
-import UserDetails from "../components/navbar/userDetails/UserDetails";
 
 export const steamAPIService = {
 	useAdminDetectionService: () => {
@@ -94,16 +93,8 @@ export const steamAPIService = {
 						return response.json();
 					})
 					.then((response) => {
-						const games: [
-							{ name: string; appid: number; playtime_forever: number }
-						] = response.response.games;
-
-						for (let game of games) {
-							//L4D2 appid = 550
-							if (game.appid === 550) {
-								userDataActions.setGamesData({ ownsLeft4Dead2: true });
-								break;
-							}
+						if(response.ownsLeft4Dead2 === true){
+							userDataActions.setGamesData({ ownsLeft4Dead2: true });
 						}
 					});
 			}
