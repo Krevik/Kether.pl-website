@@ -20,6 +20,7 @@ export default function KetherApplication() {
 	steamAPIService.useUserDataFetcher();
 	steamAPIService.useOwnedGamesFetcher();
 
+
 	const getParticularTabContent = () => {
 		switch (activeTabIndex) {
 			case TabType.HOME:

@@ -1,12 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ServerInfo } from "../../models/serverInfoModels";
+import { ServerInfo, SteamServerInfo } from '../../models/serverInfoModels';
 
 interface serverInfoSliceProps {
 	serverInfo?: ServerInfo;
+	steamServerInfo?: SteamServerInfo;
 }
 
 const initialState: serverInfoSliceProps = {
 	serverInfo: undefined,
+	steamServerInfo: undefined,
 };
 
 const serverInfoSlice = createSlice({
@@ -16,6 +18,9 @@ const serverInfoSlice = createSlice({
 		setServerInfo(state, action: PayloadAction<ServerInfo>) {
 			state.serverInfo = action.payload;
 		},
+		setSteamServerInfo(state, action: PayloadAction<SteamServerInfo>){
+			state.steamServerInfo = action.payload;
+		}
 	},
 });
 

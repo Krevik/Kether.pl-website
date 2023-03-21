@@ -1,3 +1,10 @@
+type SteamPlayerServerData = {
+	index: number;
+	name: string;
+	score: number;
+	duration: number;
+}
+
 export type ServerInfo = {
 	map: string;
 	maxplayers: string;
@@ -6,3 +13,8 @@ export type ServerInfo = {
 	players: string;
 	status: string;
 };
+
+export type SteamServerInfo = {
+	playerCount: number;
+	players: SteamPlayerServerData[]
+}
