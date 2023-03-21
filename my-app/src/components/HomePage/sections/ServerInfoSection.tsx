@@ -73,8 +73,8 @@ export default function ServerInfoSection() {
                             'steam://connect/51.83.217.86:29800';
                     }}
                 ></Button>
-                {drawPlayerListIfNotEmpty()}
             </span>
+            <span>{drawPlayerListIfNotEmpty()}</span>
         </div>
     );
 }
