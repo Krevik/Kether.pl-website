@@ -39,7 +39,7 @@ export default function ServerInfoSection() {
 
     const getPlayerGameTimeColumnBody = (rowData: SteamPlayerServerData) => {
         return (
-            <span>{Number(getFormattedGamePlayTime(rowData.duration))}</span>
+            <span>{getFormattedGamePlayTime(rowData.duration)}</span>
         );
     };
 
