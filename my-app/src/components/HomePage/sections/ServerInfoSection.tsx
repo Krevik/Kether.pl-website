@@ -5,6 +5,8 @@ import { serverInfoService } from '../../../services/serverInfoService';
 import { steamServerInfoService } from '../../../services/steamServerInfoService';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
+import { GameStatEntry } from '../../../models/gameStatsModels';
+import { SteamPlayerServerData } from '../../../models/serverInfoModels';
 
 export default function ServerInfoSection() {
     const serverInfo = useSelector(
@@ -16,13 +18,19 @@ export default function ServerInfoSection() {
     serverInfoService.useServerInfoLoadingService();
     steamServerInfoService.useSteamServerInfoLoadingService();
 
+    const getPlayerGameTimeColumnBody = (rowData: SteamPlayerServerData) => {
+        return (
+            <span>{Number(rowData.duration.toFixed(0))}</span>
+        );
+    };
+
     const drawPlayerListIfNotEmpty = () => {
         if(steamServerInfo && steamServerInfo.playerCount > 0){
             return (<div className={"player-list-table"}><DataTable value={steamServerInfo.players} scrollable={true} >
                 <Column field={"index"} header={"ID"}/>
                 <Column field={"name"} header={"Nickname"}/>
                 <Column field={"score"} header={"Score"}/>
-                <Column field={"duration"} header={"Duration"}/>
+                <Column body={getPlayerGameTimeColumnBody} header={"Duration"}/>
             </DataTable></div>)
         }
         return <></>;

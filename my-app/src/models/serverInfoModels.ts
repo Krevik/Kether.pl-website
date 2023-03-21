@@ -1,4 +1,4 @@
-type SteamPlayerServerData = {
+export type SteamPlayerServerData = {
 	index: number;
 	name: string;
 	score: number;
