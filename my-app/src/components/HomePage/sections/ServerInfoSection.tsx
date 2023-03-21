@@ -18,12 +18,12 @@ export default function ServerInfoSection() {
 
     const drawPlayerListIfNotEmpty = () => {
         if(steamServerInfo && steamServerInfo.playerCount > 0){
-            return (<DataTable value={steamServerInfo.players} scrollable={true} >
+            return (<div className={"player-list-table"}><DataTable value={steamServerInfo.players} scrollable={true} >
                 <Column field={"index"} header={"ID"}/>
                 <Column field={"name"} header={"Nickname"}/>
                 <Column field={"score"} header={"Score"}/>
                 <Column field={"duration"} header={"Duration"}/>
-            </DataTable>)
+            </DataTable></div>)
         }
         return <></>;
     }

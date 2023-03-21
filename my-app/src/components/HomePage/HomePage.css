@@ -43,3 +43,7 @@
 .home-page button {
 	background: greenyellow;
 }
+
+.player-list-table .p-datatable-scrollable .p-datatable-wrapper span {
+	font-size: 1rem;
+}
