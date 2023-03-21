@@ -18,16 +18,34 @@ export default function ServerInfoSection() {
     serverInfoService.useServerInfoLoadingService();
     steamServerInfoService.useSteamServerInfoLoadingService();
 
+    function getFormattedGamePlayTime(duration: number): string {
+        // Hours, minutes and seconds
+        const hrs = ~~(duration / 3600);
+        const mins = ~~((duration % 3600) / 60);
+        const secs = ~~duration % 60;
+
+        // Output like "1:01" or "4:03:59" or "123:03:59"
+        let ret = "";
+
+        if (hrs > 0) {
+            ret += "" + hrs + ":" + (mins < 10 ? "0" : "");
+        }
+
+        ret += "" + mins + ":" + (secs < 10 ? "0" : "");
+        ret += "" + secs;
+
+        return ret;
+    }
+
     const getPlayerGameTimeColumnBody = (rowData: SteamPlayerServerData) => {
         return (
-            <span>{Number(rowData.duration.toFixed(0))}</span>
+            <span>{Number(getFormattedGamePlayTime(rowData.duration))}</span>
         );
     };
 
     const drawPlayerListIfNotEmpty = () => {
         if(steamServerInfo && steamServerInfo.playerCount > 0){
             return (<div className={"player-list-table"}><DataTable value={steamServerInfo.players} scrollable={true} >
-                <Column field={"index"} header={"ID"}/>
                 <Column field={"name"} header={"Nickname"}/>
                 <Column field={"score"} header={"Score"}/>
                 <Column body={getPlayerGameTimeColumnBody} header={"Duration"}/>
