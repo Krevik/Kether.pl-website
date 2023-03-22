@@ -92,6 +92,7 @@ export default function GameStats() {
                         lazy
                         value={gameStats}
                         scrollable={true}
+                        scrollHeight="flex"
                         first={lazyParams.first}
                         rows={10}
                         totalRecords={totalRecords}

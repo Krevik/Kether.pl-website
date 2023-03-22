@@ -244,7 +244,11 @@ export default function HallOfFame() {
 
                 <div className="centered-text"> Binds</div>
                 <div className="card">
-                    <DataTable value={mapBinds(binds)} scrollable={true}>
+                    <DataTable
+                        value={mapBinds(binds)}
+                        scrollable={true}
+                        scrollHeight="flex"
+                    >
                         {isAdmin && (
                             <Column
                                 field="id"
@@ -274,6 +278,7 @@ export default function HallOfFame() {
                             <DataTable
                                 value={mapBinds(bindSuggestions)}
                                 scrollable={true}
+                                scrollHeight="flex"
                             >
                                 <Column
                                     field="proposedBy"
