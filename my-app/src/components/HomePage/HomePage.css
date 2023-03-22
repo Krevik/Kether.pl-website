@@ -44,6 +44,10 @@
 	background: greenyellow;
 }
 
+.player-list-table {
+	backdrop-filter: blur(10px);
+}
+
 .player-list-table .p-datatable-scrollable .p-datatable-wrapper span {
 	font-size: 1rem;
 }
