@@ -45,11 +45,25 @@ export default function ServerInfoSection() {
 
     const drawPlayerListIfNotEmpty = () => {
         if(steamServerInfo && steamServerInfo.playerCount > 0){
-            return (<div className={"player-list-table"}><DataTable value={steamServerInfo.players} removableSort sortMode="multiple" scrollable={true} >
-                <Column field={"name"} header={"Nickname"} sortable/>
-                <Column field={"score"} header={"Score"} sortable/>
-                <Column body={getPlayerGameTimeColumnBody} header={"Duration"} sortable/>
-            </DataTable></div>)
+            return (<div className={"player-list-table"}>
+                <DataTable value={steamServerInfo.players} removableSort sortMode="multiple" scrollable={true}>
+                    <Column 
+                        field={"name"}
+                        header={"Nickname"}
+                        sortable
+                    />
+                    <Column 
+                        field={"score"}
+                        header={"Score"}
+                        sortable
+                    />
+                    <Column 
+                        body={getPlayerGameTimeColumnBody}
+                        header={"Duration"}
+                        sortable
+                    />
+                </DataTable>
+            </div>)
         }
         return <></>;
     }
