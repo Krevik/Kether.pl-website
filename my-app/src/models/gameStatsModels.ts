@@ -19,6 +19,7 @@ export type GameStatEntry = {
     userData?: SteamUserDetails;
     profileUrl: string;
     avatarMediumSrc: string;
+    Gameplay_Time: number;
 };
 
 export type GameStatLazyLoadingParams = {

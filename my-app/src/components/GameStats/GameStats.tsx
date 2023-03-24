@@ -3,7 +3,7 @@ import backgroundImage from '../../resources/backgrounds/background_5.jpg';
 import { gameStatsService } from '../../services/gameStatsService';
 import './GameStats.css';
 import { AppState } from '../../redux/store';
-import { Column } from 'primereact/column';
+import { Column, ColumnProps } from 'primereact/column';
 import {
     DataTable,
     DataTablePageEvent,
@@ -71,6 +71,22 @@ export default function GameStats() {
         });
     };
 
+    function secondsToHms(d) {
+        d = Number(d);
+        var h = Math.floor(d / 3600);
+        var m = Math.floor((d % 3600) / 60);
+        var s = Math.floor((d % 3600) % 60);
+
+        var hDisplay = h > 0 ? h + (h == 1 ? ' hour, ' : ' hours, ') : '';
+        var mDisplay = m > 0 ? m + (m == 1 ? ' minute, ' : ' minutes, ') : '';
+        var sDisplay = s > 0 ? s + (s == 1 ? ' second' : ' seconds') : '';
+        return hDisplay + mDisplay + sDisplay;
+    }
+
+    const gameplay_TimeColumnBody = (rowData: GameStatEntry) => {
+        return secondsToHms(rowData.Gameplay_Time);
+    };
+
     return (
         <div
             className="game-stats"
@@ -99,8 +115,6 @@ export default function GameStats() {
                         onPage={onPage}
                         loading={loading}
                         onSort={onSort}
-                        //sortField={lazyParams.sortField}
-                        //sortOrder={lazyParams.sortOrder}
                     >
                         <Column body={getPlayerColumnBody} header="Player" />
                         <Column
@@ -166,6 +180,11 @@ export default function GameStats() {
                         <Column
                             field={'Damage_Done_To_Tanks'}
                             header={'Dmg done to tanks'}
+                            sortable
+                        />
+                        <Column
+                            body={gameplay_TimeColumnBody}
+                            header={'Gameplay Time'}
                             sortable
                         />
                     </DataTable>
