@@ -33,7 +33,7 @@
 	margin: auto;
 	font-size: 0.8rem;
 	backdrop-filter: blur(10px);
-	text-stroke: 4px gray;
+	-webkit-text-stroke: 1px gray;
 }
 
 .game-stats .p-datatable .p-datatable-tbody > tr {
