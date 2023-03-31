@@ -1,28 +1,30 @@
 .navigation-menu {
 	display: flex;
 	justify-content: center;
-}
-
-.p-tabmenu-nav {
-	list-style-type: none;
-	flex-wrap: nowrap;
-	flex-direction: row;
-	justify-content: center;
-	align-items: center;
-}
-
-.p-tabmenu .p-tabmenu-nav .p-tabmenuitem {
-	margin-right: 10px;
-	margin-left: 10px;
-}
-
-.p-tabmenu {
-	-webkit-text-stroke: 0.1px black;
+	gap: var(--standardGap);
 	font-family: "Future Rot";
-	font-size: 1rem;
-	font-weight: 600;
-	display: flex;
-	justify-content: center;
+}
+
+.navigation-menu .p-button {
+	font-family: "Future Rot";
+	background: rgb(77,79,78);
+	background: linear-gradient(90deg, rgba(77,79,78,0.8463760504201681) 0%, rgba(61,56,60,0.6530987394957983) 50%, rgba(73,73,74,0.8435749299719888) 100%);
+	color: #d3e0e3;
+	-webkit-text-stroke: 1px #e01220;
+	border: 2px #383535 solid;
+	transition: all 0.5s;
+}
+
+.navigation-menu .p-button:enabled:hover, .p-button:not(button):not(a):not(.p-disabled):hover {
+	color: #d3e0e3;
+	transform: translateY(5px);
+	background: rgb(77,79,78);
+	border: 2px #383535 solid;
+	-webkit-box-shadow: inset 0px 0px 5px #c1c1c1;
+	-moz-box-shadow: inset 0px 0px 5px #c1c1c1;
+	box-shadow: inset 0px 0px 5px #c1c1c1;
+	outline: none;
+	background: linear-gradient(90deg, rgba(77,79,78,0.8463760504201681) 0%, rgba(61,56,60,0.6530987394957983) 50%, rgba(73,73,74,0.8435749299719888) 100%);
 }
 
 .steam-login-button .p-button {

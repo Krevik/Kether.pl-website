@@ -5,7 +5,6 @@ import { serverInfoService } from '../../../services/serverInfoService';
 import { steamServerInfoService } from '../../../services/steamServerInfoService';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import { GameStatEntry } from '../../../models/gameStatsModels';
 import { SteamPlayerServerData } from '../../../models/serverInfoModels';
 
 export default function ServerInfoSection() {
@@ -13,7 +12,9 @@ export default function ServerInfoSection() {
         (state: AppState) => state.serverInfoReducer.serverInfo
     );
 
-    const steamServerInfo = useSelector((state: AppState) => state.serverInfoReducer.steamServerInfo);
+    const steamServerInfo = useSelector(
+        (state: AppState) => state.serverInfoReducer.steamServerInfo
+    );
 
     serverInfoService.useServerInfoLoadingService();
     steamServerInfoService.useSteamServerInfoLoadingService();
@@ -25,48 +26,45 @@ export default function ServerInfoSection() {
         const secs = ~~duration % 60;
 
         // Output like "1:01" or "4:03:59" or "123:03:59"
-        let ret = "";
+        let ret = '';
 
         if (hrs > 0) {
-            ret += "" + hrs + ":" + (mins < 10 ? "0" : "");
+            ret += '' + hrs + ':' + (mins < 10 ? '0' : '');
         }
 
-        ret += "" + mins + ":" + (secs < 10 ? "0" : "");
-        ret += "" + secs;
+        ret += '' + mins + ':' + (secs < 10 ? '0' : '');
+        ret += '' + secs;
 
         return ret;
     }
 
     const getPlayerGameTimeColumnBody = (rowData: SteamPlayerServerData) => {
-        return (
-            <span>{getFormattedGamePlayTime(rowData.duration)}</span>
-        );
+        return <span>{getFormattedGamePlayTime(rowData.duration)}</span>;
     };
 
     const drawPlayerListIfNotEmpty = () => {
-        if(steamServerInfo && steamServerInfo.playerCount > 0){
-            return (<div className={"player-list-table"}>
-                <DataTable value={steamServerInfo.players} removableSort sortMode="multiple" scrollable={true}>
-                    <Column 
-                        field={"name"}
-                        header={"Nickname"}
-                        sortable
-                    />
-                    <Column 
-                        field={"score"}
-                        header={"Score"}
-                        sortable
-                    />
-                    <Column 
-                        body={getPlayerGameTimeColumnBody}
-                        header={"Duration"}
-                        sortable
-                    />
-                </DataTable>
-            </div>)
+        if (steamServerInfo && steamServerInfo.playerCount > 0) {
+            return (
+                <div className={'player-list-table'}>
+                    <DataTable
+                        value={steamServerInfo.players}
+                        removableSort
+                        sortMode="multiple"
+                        scrollable={true}
+                    >
+                        <Column field={'name'} header={'Nickname'} sortable />
+                        <Column field={'score'} header={'Score'} sortable />
+                        <Column
+                            body={getPlayerGameTimeColumnBody}
+                            header={'Duration'}
+                            sortable
+                        />
+                    </DataTable>
+                </div>
+            );
         }
         return <></>;
-    }
+    };
 
     return (
         <div className="section">

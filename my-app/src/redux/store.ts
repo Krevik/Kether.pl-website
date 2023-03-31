@@ -1,5 +1,4 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import { navbarReducer } from "./slices/navbarSlice";
 import { userDataReducer } from "./slices/userDataSlice";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
@@ -15,7 +14,6 @@ const persistConfig = {
 const persistedUserDataReducer = persistReducer(persistConfig, userDataReducer);
 
 const combinedReducers = combineReducers({
-	navbarReducer: navbarReducer,
 	userDataReducer: persistedUserDataReducer,
 	bindsReducer: bindsReducer,
 	bindSuggestionsReducer: bindSuggestionsReducer,

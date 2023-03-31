@@ -60,6 +60,7 @@
 		]
 	},
 	"devDependencies": {
+		"react-router-dom": "^6.10.0",
 		"shx": "^0.3.4"
 	},
 	"prettier": {

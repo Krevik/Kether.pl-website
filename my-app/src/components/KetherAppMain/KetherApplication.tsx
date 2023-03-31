@@ -1,48 +1,49 @@
-import Navbar from "../navbar/Navbar";
-import { useSelector } from "react-redux";
-import { AppState } from "../../redux/store";
-import { TabType } from "../navbar/models/TabModels";
-import HomePage from "../HomePage/HomePage";
-import Footer from "../Footer/Footer";
-import HallOfFame from "../HallOfFame/HallOfFame";
-import GithubRepo from "../GithubRepo/GithubRepo";
-import Donate from "../Donate/Donate";
-import { steamAPIService } from "../../services/steamAPIService";
-import GameStats from "../GameStats/GameStats";
+import Navbar from '../navbar/Navbar';
+import HomePage from '../HomePage/HomePage';
+import Footer from '../Footer/Footer';
+import HallOfFame from '../HallOfFame/HallOfFame';
+import GithubRepo from '../GithubRepo/GithubRepo';
+import Donate from '../Donate/Donate';
+import { steamAPIService } from '../../services/steamAPIService';
+import GameStats from '../GameStats/GameStats';
+import {
+    BrowserRouter,
+    createBrowserRouter,
+    createRoutesFromElements,
+    Route,
+    Router,
+    RouterProvider,
+    Routes,
+} from 'react-router-dom';
+import { pagePaths } from '../../utils/pagePaths';
+import HallOfFameSuggestions from '../HallOfFame/HallOfFameSuggestions';
 
 export default function KetherApplication() {
-	const activeTabIndex = useSelector(
-		(state: AppState) => state.navbarReducer.activeTabIndex
-	);
+    steamAPIService.useAdminDetectionService();
+    steamAPIService.useSteamAuthService();
+    steamAPIService.useUserDataFetcher();
+    steamAPIService.useOwnedGamesFetcher();
 
-	steamAPIService.useAdminDetectionService();
-	steamAPIService.useSteamAuthService();
-	steamAPIService.useUserDataFetcher();
-	steamAPIService.useOwnedGamesFetcher();
+    const router = createBrowserRouter(
+        createRoutesFromElements(
+            <>
+                <Route path="/" element={<HomePage />} />
+                <Route path={pagePaths.HOME_PAGE} element={<HomePage />} />
+                <Route path={pagePaths.HALL_OF_FAME} element={<HallOfFame />} />
+                <Route
+                    path={pagePaths.HALL_OF_FAME_SUGGESTIONS}
+                    element={<HallOfFameSuggestions />}
+                />
+                <Route path={pagePaths.GAME_STATS} element={<GameStats />} />
+                <Route path={pagePaths.GITHUB} element={<GithubRepo />} />
+                <Route path={pagePaths.DONATE} element={<Donate />} />
+            </>
+        )
+    );
 
-
-	const getParticularTabContent = () => {
-		switch (activeTabIndex) {
-			case TabType.HOME:
-				return <HomePage />;
-			case TabType.HALL_OF_FAME:
-				return <HallOfFame />;
-			case TabType.GAME_STATS:
-				return <GameStats />;
-			case TabType.GITHUB:
-				return <GithubRepo />;
-			case TabType.DONATE:
-				return <Donate />;
-			default:
-				return <div>In progress</div>;
-		}
-	};
-
-	return (
-		<>
-			<Navbar />
-			{getParticularTabContent()}
-			<Footer />
-		</>
-	);
+    return (
+        <>
+            <RouterProvider router={router} />
+        </>
+    );
 }

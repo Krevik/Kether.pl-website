@@ -1,66 +1,66 @@
-import "./Navbar.css";
-import { TabMenu } from "primereact/tabmenu";
-import { useSelector } from "react-redux/es/exports";
-import { AppState, appStore } from "../../redux/store";
-import { navbarActions } from "../../redux/slices/navbarSlice";
-import { TabType } from "./models/TabModels";
-import SteamLoginButton from "./steamLoginButton/SteamLoginButton";
-import UserDetails from "./userDetails/UserDetails";
+import './Navbar.css';
+import SteamLoginButton from './steamLoginButton/SteamLoginButton';
+import UserDetails from './userDetails/UserDetails';
+import { Button } from 'primereact/button';
+import { useNavigate } from 'react-router-dom';
+import { pagePaths } from '../../utils/pagePaths';
 
 interface TabItem {
-	tabType: TabType;
-	label: string;
-	icon: string;
+    label: string;
+    targetPage: string;
 }
 
 export default function Navbar() {
-	const activeTabIndex = useSelector(
-		(state: AppState) => state.navbarReducer.activeTabIndex
-	);
+    const navigate = useNavigate();
 
-	const tabs: TabItem[] = [
-		{
-			tabType: TabType.HOME,
-			label: "Home",
-			icon: "pi pi-fw pi-home",
-		},
-		{
-			tabType: TabType.HALL_OF_FAME,
-			label: "Hall of Fame",
-			icon: "pi pi-fw pi-camera",
-		},
-		{
-			tabType: TabType.GAME_STATS,
-			label: "Game Stats",
-			icon: "pi pi-globe",
-		},
-		{
-			tabType: TabType.GITHUB,
-			label: "Github Repo",
-			icon: "pi pi-fw pi-file",
-		},
-		{
-			tabType: TabType.DONATE,
-			label: "Donate",
-			icon: "pi pi-fw pi-credit-card",
-		},
-	];
+    const tabs: TabItem[] = [
+        {
+            label: 'Home',
+            targetPage: pagePaths.HOME_PAGE,
+        },
+        {
+            label: 'Hall of Fame',
+            targetPage: pagePaths.HALL_OF_FAME,
+        },
+        {
+            label: 'Hall of Fame Suggestions',
+            targetPage: pagePaths.HALL_OF_FAME_SUGGESTIONS,
+        },
+        {
+            label: 'Game Stats',
+            targetPage: pagePaths.GAME_STATS,
+        },
+        {
+            label: 'Github Repo',
+            targetPage: pagePaths.GITHUB,
+        },
+        {
+            label: 'Donate',
+            targetPage: pagePaths.DONATE,
+        },
+    ];
 
-	return (
-		<div className="card">
-			<div className="navigation-menu">
-				<SteamLoginButton />
-				<UserDetails />
-				<TabMenu
-					model={tabs}
-					activeIndex={activeTabIndex}
-					onTabChange={(event) =>
-						appStore.dispatch(
-							navbarActions.setActiveTabIndex(tabs[event.index].tabType)
-						)
-					}
-				></TabMenu>
-			</div>
-		</div>
-	);
+    const getNavigationButtons = () => {
+        return tabs.map((tab) => {
+            return (
+                <Button
+                    onClick={() => {
+                        navigate(`../${tab.targetPage}`);
+                    }}
+                >
+                    {tab.label}
+                </Button>
+            );
+        });
+    };
+
+    return (
+        <div className="card">
+            <div className="navigation-menu">
+                <SteamLoginButton />
+                <UserDetails />
+                {getNavigationButtons()}
+            </div>
+        </div>
+    );
 }
