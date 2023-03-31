@@ -45,60 +45,62 @@ export default function HallOfFameSuggestions() {
 
     const bindSuggestionBody = (rowData: BindSuggestionEntry) => {
         return (
-            <>
-                <Button
-                    data-toggle="tooltip"
-                    title="Accepts the given bind"
-                    icon="pi pi-check"
-                    className="p-button-rounded p-button-success"
-                    onClick={() => {
-                        const bind = trimBindAuthor(
-                            rowData
-                        ) as BindSuggestionEntry;
-                        bindsManagingService
-                            .addNewBind(bind)
-                            .then((addedBind) => {
-                                notificationManager.SUCCESS(
-                                    toast,
-                                    `Successfully accepted new bind: ${addedBind}`
-                                );
-                                bindSuggestionsManagingService.deleteBindSuggestion(
-                                    bind
-                                );
-                            })
-                            .catch((error) => {
-                                notificationManager.ERROR(
-                                    toast,
-                                    `Couldn't add new bind: ${error}`
-                                );
-                            });
-                    }}
-                />
+            isAdmin && (
+                <>
+                    <Button
+                        data-toggle="tooltip"
+                        title="Accepts the given bind"
+                        icon="pi pi-check"
+                        className="p-button-rounded p-button-success"
+                        onClick={() => {
+                            const bind = trimBindAuthor(
+                                rowData
+                            ) as BindSuggestionEntry;
+                            bindsManagingService
+                                .addNewBind(bind)
+                                .then((addedBind) => {
+                                    notificationManager.SUCCESS(
+                                        toast,
+                                        `Successfully accepted new bind: ${addedBind}`
+                                    );
+                                    bindSuggestionsManagingService.deleteBindSuggestion(
+                                        bind
+                                    );
+                                })
+                                .catch((error) => {
+                                    notificationManager.ERROR(
+                                        toast,
+                                        `Couldn't add new bind: ${error}`
+                                    );
+                                });
+                        }}
+                    />
 
-                <Button
-                    data-toggle="tooltip"
-                    title="Deletes the given bind suggestion instantly"
-                    icon="pi pi-times"
-                    className="p-button-rounded p-button-danger"
-                    onClick={() => {
-                        bindSuggestionsManagingService
-                            .deleteBindSuggestion(rowData)
-                            .then((deletedBind) => {
-                                notificationManager.SUCCESS(
-                                    toast,
-                                    `Successfully deleted bind suggestion: ${deletedBind}`
-                                );
-                                setBindText('');
-                            })
-                            .catch((error) => {
-                                notificationManager.ERROR(
-                                    toast,
-                                    `Couldn't delete bind suggestion: ${error}`
-                                );
-                            });
-                    }}
-                />
-            </>
+                    <Button
+                        data-toggle="tooltip"
+                        title="Deletes the given bind suggestion instantly"
+                        icon="pi pi-times"
+                        className="p-button-rounded p-button-danger"
+                        onClick={() => {
+                            bindSuggestionsManagingService
+                                .deleteBindSuggestion(rowData)
+                                .then((deletedBind) => {
+                                    notificationManager.SUCCESS(
+                                        toast,
+                                        `Successfully deleted bind suggestion: ${deletedBind}`
+                                    );
+                                    setBindText('');
+                                })
+                                .catch((error) => {
+                                    notificationManager.ERROR(
+                                        toast,
+                                        `Couldn't delete bind suggestion: ${error}`
+                                    );
+                                });
+                        }}
+                    />
+                </>
+            )
         );
     };
 
