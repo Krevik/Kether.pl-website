@@ -41,13 +41,17 @@
 }
 
 .game-stats .user-data img {
-	width: 64px;
-	height: 64px;
+	width: 32px;
+	height: 32px;
 }
 
 .game-stats .user-data {
 	display: flex;
 	flex-direction: column;
+}
+
+.game-stats .user-data a {
+	text-decoration: none;
 }
 
 .game-stats .user-data .user-nickname a {

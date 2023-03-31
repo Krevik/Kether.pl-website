@@ -1,5 +1,5 @@
 .user-details {
-	display: inline-block;
+	display: flex;
 }
 
 .user-details img {
