@@ -33,32 +33,35 @@ export const steamAPIService = {
     },
     useSteamAuthService: () => {
         useEffect(() => {
-            if (window.location.href.includes('openid')) {
-                const search = window.location.search.substring(1);
+            setTimeout(() => {
+                if (window.location.href.includes('openid')) {
+                    const search = window.location.search.substring(1);
 
-                const urlObj = JSON.parse(
-                    '{"' +
-                        decodeURI(search)
-                            .replace(/"/g, '\\"')
-                            .replace(/&/g, '","')
-                            .replace(/=/g, '":"') +
-                        '"}'
-                );
-                console.log(JSON.stringify(urlObj));
-                const getUserId = (response) => {
-                    const str = response['openid.claimed_id'];
-                    const res = decodeURIComponent(str);
-                    const propsArr = res.split('/');
-                    console.log(propsArr);
+                    const urlObj = JSON.parse(
+                        '{"' +
+                            decodeURI(search)
+                                .replace(/"/g, '\\"')
+                                .replace(/&/g, '","')
+                                .replace(/=/g, '":"') +
+                            '"}'
+                    );
+                    console.log(JSON.stringify(urlObj));
+                    const getUserId = (response) => {
+                        const str = response['openid.claimed_id'];
+                        const res = decodeURIComponent(str);
+                        const propsArr = res.split('/');
+                        console.log(propsArr);
 
-                    return propsArr[propsArr.length - 1];
-                };
+                        return propsArr[propsArr.length - 1];
+                    };
 
-                const userId = getUserId(urlObj);
-                console.log(JSON.stringify(userId));
-                userId && appStore.dispatch(userDataActions.setUserID(userId));
-                window.location.href = '/';
-            }
+                    const userId = getUserId(urlObj);
+                    console.log(JSON.stringify(userId));
+                    userId &&
+                        appStore.dispatch(userDataActions.setUserID(userId));
+                    window.location.href = '/';
+                }
+            }, 500);
         }, []);
     },
     useUserDataFetcher: () => {
