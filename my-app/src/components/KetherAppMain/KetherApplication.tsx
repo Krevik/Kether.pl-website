@@ -15,7 +15,7 @@ import HallOfFameSuggestions from '../HallOfFame/HallOfFameSuggestions';
 
 export default function KetherApplication() {
     steamAPIService.useAdminDetectionService();
-    //steamAPIService.useSteamAuthService();
+    steamAPIService.useSteamAuthService();
     steamAPIService.useUserDataFetcher();
     steamAPIService.useOwnedGamesFetcher();
 
