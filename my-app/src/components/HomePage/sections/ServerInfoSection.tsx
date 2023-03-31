@@ -57,7 +57,6 @@ export default function ServerInfoSection() {
                         <Column
                             body={getPlayerGameTimeColumnBody}
                             header={'Duration'}
-                            sortable
                         />
                     </DataTable>
                 </div>

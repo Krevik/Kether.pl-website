@@ -1,19 +1,14 @@
-import Navbar from '../navbar/Navbar';
 import HomePage from '../HomePage/HomePage';
-import Footer from '../Footer/Footer';
 import HallOfFame from '../HallOfFame/HallOfFame';
 import GithubRepo from '../GithubRepo/GithubRepo';
 import Donate from '../Donate/Donate';
 import { steamAPIService } from '../../services/steamAPIService';
 import GameStats from '../GameStats/GameStats';
 import {
-    BrowserRouter,
     createBrowserRouter,
     createRoutesFromElements,
     Route,
-    Router,
     RouterProvider,
-    Routes,
 } from 'react-router-dom';
 import { pagePaths } from '../../utils/pagePaths';
 import HallOfFameSuggestions from '../HallOfFame/HallOfFameSuggestions';
