@@ -1,22 +1,25 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { BindEntry, BindSuggestionEntry } from "../../models/bindsModels";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { BindSuggestionEntry } from '../../models/bindsModels';
 
 interface bindsSliceProps {
-	bindSuggestions: BindSuggestionEntry[];
+    bindSuggestions: BindSuggestionEntry[];
 }
 
 const initialState: bindsSliceProps = {
-	bindSuggestions: [],
+    bindSuggestions: [],
 };
 
 const bindSuggestionsSlice = createSlice({
-	name: "bindSuggestions",
-	initialState: initialState,
-	reducers: {
-		setBindSuggestions(state, action: PayloadAction<BindSuggestionEntry[]>) {
-			state.bindSuggestions = action.payload;
-		},
-	},
+    name: 'bindSuggestions',
+    initialState: initialState,
+    reducers: {
+        setBindSuggestions(
+            state,
+            action: PayloadAction<BindSuggestionEntry[]>
+        ) {
+            state.bindSuggestions = action.payload;
+        },
+    },
 });
 
 export const bindSuggestionsActions = bindSuggestionsSlice.actions;

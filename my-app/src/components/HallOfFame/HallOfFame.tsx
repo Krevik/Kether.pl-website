@@ -19,10 +19,6 @@ import Footer from '../Footer/Footer';
 export default function HallOfFame() {
     const binds = useSelector((state: AppState) => state.bindsReducer.binds);
 
-    const userID = useSelector(
-        (state: AppState) => state.userDataReducer.userID
-    );
-
     const isAdmin: boolean = useSelector(
         (state: AppState) => state.userDataReducer.isAdmin
     );

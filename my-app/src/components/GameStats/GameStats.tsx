@@ -3,7 +3,7 @@ import backgroundImage from '../../resources/backgrounds/background_5.jpg';
 import { gameStatsService } from '../../services/gameStatsService';
 import './GameStats.css';
 import { AppState } from '../../redux/store';
-import { Column, ColumnProps } from 'primereact/column';
+import { Column } from 'primereact/column';
 import {
     DataTable,
     DataTablePageEvent,
