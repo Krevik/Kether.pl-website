@@ -45,7 +45,6 @@ export const steamAPIService = {
                                 .replace(/=/g, '":"') +
                             '"}'
                     );
-                    console.log(JSON.stringify(urlObj));
                     const getUserId = (response) => {
                         const str = response['openid.claimed_id'];
                         const res = decodeURIComponent(str);
@@ -56,7 +55,6 @@ export const steamAPIService = {
                     };
 
                     const userId = getUserId(urlObj);
-                    console.log(JSON.stringify(userId));
                     userId &&
                         appStore.dispatch(userDataActions.setUserID(userId));
                     window.location.href = '/';
