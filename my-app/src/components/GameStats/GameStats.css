@@ -27,7 +27,6 @@
 }
 
 .game-stats .p-datatable {
-	background-color: transparent;
 	background: transparent;
 	padding-top: 10px;
 	margin: auto;
@@ -37,6 +36,8 @@
 }
 
 .game-stats .p-datatable .p-datatable-tbody > tr {
+	font-size: large;
+	-webkit-text-stroke: 1px white;
 	background: transparent;
 	border: none;
 }
