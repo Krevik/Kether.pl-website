@@ -25,6 +25,7 @@
 	box-shadow: inset 0px 0px 5px #c1c1c1;
 	outline: none;
 	background: linear-gradient(90deg, rgba(77,79,78,0.8463760504201681) 0%, rgba(61,56,60,0.6530987394957983) 50%, rgba(73,73,74,0.8435749299719888) 100%);
+	scale: 0.9;
 }
 
 .steam-login-button .p-button {
