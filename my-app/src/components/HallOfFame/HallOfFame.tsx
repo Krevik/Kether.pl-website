@@ -119,6 +119,8 @@ export default function HallOfFame() {
     };
 
     const bindVotingBodyTemplate = (rowData: BindEntry) => {
+        const selfBindVote: BindVotingType | undefined =
+            rowData.votingData?.selfVote;
         return (
             <>
                 <Button
