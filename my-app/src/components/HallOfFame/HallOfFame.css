@@ -57,3 +57,9 @@
 	background: transparent;
 	border: none;
 }
+
+.hall-of-fame .p-datatable-tbody .voting {
+	display: flex;
+	flex-wrap: nowrap;
+	gap: var(--standardGap);
+}

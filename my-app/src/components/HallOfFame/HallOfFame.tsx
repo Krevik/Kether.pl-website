@@ -229,6 +229,7 @@ export default function HallOfFame() {
                             ></Column>
                             {userID && userData && userData.steamid && (
                                 <Column
+                                    className="voting"
                                     header="Voting"
                                     body={bindVotingBodyTemplate}
                                 ></Column>
