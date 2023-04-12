@@ -121,10 +121,13 @@ export default function HallOfFame() {
     const bindVotingBodyTemplate = (rowData: BindEntry) => {
         const selfBindVote: BindVotingType | undefined =
             rowData.votingData?.selfVote;
+        const selfVoteStylingClassName = selfBindVote ? 'self-voted' : '';
+        const voteUpButtonStyling = `vote-up-button ${selfVoteStylingClassName}`;
+        const voteDownButtonStyling = `vote-down-button ${selfVoteStylingClassName}`;
         return (
             <>
                 <Button
-                    className="vote-up-button"
+                    className={voteUpButtonStyling}
                     icon="pi pi-thumbs-up"
                     onClick={() => {
                         handleVote(BindVotingType.UPVOTE, rowData);
@@ -133,7 +136,7 @@ export default function HallOfFame() {
                     {rowData.votingData?.Upvotes || 0}
                 </Button>
                 <Button
-                    className="vote-down-button"
+                    className={voteDownButtonStyling}
                     icon="pi pi-thumbs-down"
                     onClick={() => {
                         handleVote(BindVotingType.DOWNVOTE, rowData);

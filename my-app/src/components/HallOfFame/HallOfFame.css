@@ -64,9 +64,17 @@
 	gap: var(--standardGap);
 }
 
+.hall-of-fame [class*="p-button"] {
+	transition: all 0.5s;
+}
+
 .hall-of-fame [class*="vote-up-button"] {
 	background: green;
 	border: none;
+}
+
+.hall-of-fame [class*="self-voted"]{
+	box-shadow: inset 1px 1px 20px #333;
 }
 
 .hall-of-fame [class*="vote-down-button"] {
