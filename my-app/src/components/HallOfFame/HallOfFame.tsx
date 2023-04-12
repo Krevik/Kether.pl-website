@@ -109,9 +109,11 @@ export default function HallOfFame() {
         bindsManagingService
             .setVote(voteData)
             .then((response) => {
+                console.log(response);
                 notificationManager.SUCCESS(toast, JSON.stringify(response));
             })
             .catch((error) => {
+                console.log(error);
                 notificationManager.ERROR(toast, error);
             });
     };
