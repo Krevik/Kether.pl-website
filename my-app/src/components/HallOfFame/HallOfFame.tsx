@@ -99,7 +99,11 @@ export default function HallOfFame() {
         );
     };
 
-    const handleVote = (voteIn: BindVotingType, rowData: BindEntry) => {
+    const handleVote = (
+        voteIn: BindVotingType,
+        rowData: BindEntry,
+        deleteVote?: boolean
+    ) => {
         const voteData: BindVote = {
             voterSteamID: userData?.steamid,
             votedBindID: rowData.id.toString(),
@@ -107,7 +111,7 @@ export default function HallOfFame() {
         };
         voteData.id = rowData.votingData?.id || undefined;
         bindsManagingService
-            .setVote(voteData)
+            .setVote(voteData, deleteVote)
             .then((response) => {
                 console.log(response);
                 notificationManager.SUCCESS(toast, response);
@@ -137,7 +141,12 @@ export default function HallOfFame() {
                     className={voteUpButtonStyling}
                     icon="pi pi-thumbs-up"
                     onClick={() => {
-                        handleVote(BindVotingType.UPVOTE, rowData);
+                        handleVote(
+                            BindVotingType.UPVOTE,
+                            rowData,
+                            selfBindVote &&
+                                selfBindVote === BindVotingType.UPVOTE
+                        );
                     }}
                 >
                     {rowData.votingData?.Upvotes || 0}
@@ -146,7 +155,12 @@ export default function HallOfFame() {
                     className={voteDownButtonStyling}
                     icon="pi pi-thumbs-down"
                     onClick={() => {
-                        handleVote(BindVotingType.DOWNVOTE, rowData);
+                        handleVote(
+                            BindVotingType.DOWNVOTE,
+                            rowData,
+                            selfBindVote &&
+                                selfBindVote === BindVotingType.DOWNVOTE
+                        );
                     }}
                 >
                     {rowData.votingData?.Downvotes || 0}

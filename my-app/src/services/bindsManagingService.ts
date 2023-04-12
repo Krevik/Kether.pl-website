@@ -100,27 +100,44 @@ export const bindsManagingService = {
                 });
             });
     },
-    setVote: (votingData: BindVote): Promise<string> => {
+    setVote: (votingData: BindVote, undoVote?: boolean): Promise<string> => {
         const urlSearchParams = new URLSearchParams({
             voterSteamID: votingData.voterSteamID!,
             votedBindID: votingData.votedBindID!,
             vote: votingData.vote!,
         });
         votingData.id && urlSearchParams.set('id', votingData.id.toString());
-        return fetch(
-            `${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BINDS_PATH}/vote`,
-            {
-                method: 'post',
-                body: urlSearchParams,
-            }
-        )
-            .then((response) => {
-                bindsManagingService.getBinds(votingData.voterSteamID);
-                return response.text();
-            })
-            .catch((error) => {
-                throw new Error(error);
-            });
+        if (!undoVote) {
+            return fetch(
+                `${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BINDS_PATH}/vote`,
+                {
+                    method: 'post',
+                    body: urlSearchParams,
+                }
+            )
+                .then((response) => {
+                    bindsManagingService.getBinds(votingData.voterSteamID);
+                    return response.text();
+                })
+                .catch((error) => {
+                    throw new Error(error);
+                });
+        } else {
+            return fetch(
+                `${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BINDS_PATH}/vote/delete`,
+                {
+                    method: 'post',
+                    body: urlSearchParams,
+                }
+            )
+                .then((response) => {
+                    bindsManagingService.getBinds(votingData.voterSteamID);
+                    return response.text();
+                })
+                .catch((error) => {
+                    throw new Error(error);
+                });
+        }
     },
     deleteVote: (votingData: BindVote) => {
         return;
