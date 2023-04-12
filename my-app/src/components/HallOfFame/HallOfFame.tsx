@@ -124,7 +124,7 @@ export default function HallOfFame() {
         return (
             <>
                 <Button
-                    className="vote-up"
+                    className="vote-up-button"
                     icon="pi pi-thumbs-up"
                     onClick={() => {
                         handleVote(BindVotingType.UPVOTE, rowData);
@@ -133,7 +133,7 @@ export default function HallOfFame() {
                     {rowData.votingData?.Upvotes || 0}
                 </Button>
                 <Button
-                    className="vote-down"
+                    className="vote-down-button"
                     icon="pi pi-thumbs-down"
                     onClick={() => {
                         handleVote(BindVotingType.DOWNVOTE, rowData);
