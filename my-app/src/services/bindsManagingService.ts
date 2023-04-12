@@ -115,6 +115,7 @@ export const bindsManagingService = {
             }
         )
             .then((response) => {
+                bindsManagingService.getBinds(votingData.voterSteamID);
                 return response.text();
             })
             .catch((error) => {
