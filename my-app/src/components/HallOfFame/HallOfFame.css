@@ -64,12 +64,12 @@
 	gap: var(--standardGap);
 }
 
-.hall-of-fame .p-button .vote-up {
+.hall-of-fame .vote-up-button {
 	background: green;
 	border: none;
 }
 
-.hall-of-fame .p-button .vote-down {
+.hall-of-fame .vote-down-button {
 	background: red;
 	border: none;
 }
