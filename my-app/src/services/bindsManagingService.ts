@@ -100,7 +100,7 @@ export const bindsManagingService = {
                 });
             });
     },
-    setVote: (votingData: BindVote) => {
+    setVote: (votingData: BindVote): Promise<string> => {
         const urlSearchParams = new URLSearchParams({
             voterSteamID: votingData.voterSteamID!,
             votedBindID: votingData.votedBindID!,
@@ -115,7 +115,7 @@ export const bindsManagingService = {
             }
         )
             .then((response) => {
-                return response;
+                return response.text();
             })
             .catch((error) => {
                 throw new Error(error);
