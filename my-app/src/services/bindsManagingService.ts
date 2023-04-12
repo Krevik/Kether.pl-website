@@ -115,9 +115,7 @@ export const bindsManagingService = {
             }
         )
             .then((response) => {
-                return response.json().then((jsonedResponse) => {
-                    return jsonedResponse;
-                });
+                return response;
             })
             .catch((error) => {
                 throw new Error(error);
