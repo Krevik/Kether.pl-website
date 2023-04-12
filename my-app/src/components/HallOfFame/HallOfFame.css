@@ -63,3 +63,13 @@
 	flex-wrap: nowrap;
 	gap: var(--standardGap);
 }
+
+.hall-of-fame .p-button .vote-up {
+	background: green;
+	border: none;
+}
+
+.hall-of-fame .p-button .vote-down {
+	background: red;
+	border: none;
+}
