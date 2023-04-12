@@ -5,15 +5,16 @@ import {
     BindVote,
     BindVotingType,
 } from '../models/bindsModels';
-import { appStore } from '../redux/store';
+import { AppState, appStore } from '../redux/store';
 import { bindsActions } from '../redux/slices/bindsSlice';
 import { apiPaths } from '../utils/apiPaths';
+import { useSelector } from 'react-redux';
 
 export const bindsManagingService = {
-    useBindsLoadingService: () => {
-        useServerBindsLoader();
+    useBindsLoadingService: (steamUserID?: string) => {
+        useServerBindsLoader(steamUserID);
     },
-    getBinds: () => {
+    getBinds: (userSteamID?: string) => {
         fetch(
             `${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BINDS_PATH}/getBinds`,
             {
@@ -27,6 +28,13 @@ export const bindsManagingService = {
             })
             .then((bindEntries: BindEntry[]) => {
                 getRawBindVotings().then((bindVotings: BindVote[]) => {
+                    let selfBindVotes: BindVote[] = [];
+                    if (userSteamID) {
+                        selfBindVotes = bindVotings.filter(
+                            (testBind) => testBind.voterSteamID === userSteamID
+                        );
+                    }
+
                     const mappedBindVotings: AttachedBindVoteData[] = [];
                     bindVotings &&
                         bindVotings.length > 0 &&
@@ -44,11 +52,13 @@ export const bindsManagingService = {
                                     testBindVote.attachedBindID ===
                                     Number(rawBindVoting.votedBindID)
                             );
+
                             if (existingVotingData) {
                                 upVote && existingVotingData.Upvotes++;
                                 downVote && existingVotingData.Downvotes++;
                             } else {
                                 const newVotingData: AttachedBindVoteData = {
+                                    id: Number(rawBindVoting.votedBindID),
                                     attachedBindID: Number(
                                         rawBindVoting.votedBindID
                                     ),
@@ -58,6 +68,7 @@ export const bindsManagingService = {
                                 mappedBindVotings.push(newVotingData);
                             }
                         });
+
                     mappedBindVotings.forEach(
                         (mappedBindVoting: AttachedBindVoteData) => {
                             const bindEntryToAttachTo = bindEntries.find(
@@ -71,11 +82,51 @@ export const bindsManagingService = {
                             }
                         }
                     );
+
+                    userSteamID &&
+                        selfBindVotes.forEach((selfBindVote) => {
+                            const existingBind = bindEntries.find(
+                                (bindEntry) =>
+                                    bindEntry.id ===
+                                    Number(selfBindVote.votedBindID)
+                            );
+                            if (existingBind) {
+                                existingBind.votingData!.selfVote =
+                                    selfBindVote.vote;
+                            }
+                        });
+
                     appStore.dispatch(bindsActions.setBinds(bindEntries));
                 });
             });
     },
-    addNewBind: (bind: BindEntry) => {
+    setVote: (votingData: BindVote) => {
+        const urlSearchParams = new URLSearchParams({
+            voterSteamID: votingData.voterSteamID!,
+            votedBindID: votingData.votedBindID!,
+            vote: votingData.vote!,
+        });
+        votingData.id && urlSearchParams.set('id', votingData.id.toString());
+        return fetch(
+            `${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BINDS_PATH}/vote`,
+            {
+                method: 'post',
+                body: urlSearchParams,
+            }
+        )
+            .then((response) => {
+                return response.json().then((jsonedResponse) => {
+                    return jsonedResponse;
+                });
+            })
+            .catch((error) => {
+                throw new Error(error);
+            });
+    },
+    deleteVote: (votingData: BindVote) => {
+        return;
+    },
+    addNewBind: (bind: BindEntry, steamUserID?: string) => {
         return fetch(
             `${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BINDS_PATH}/addBind`,
             {
@@ -87,7 +138,7 @@ export const bindsManagingService = {
             }
         ).then(async (response) => {
             if (response.ok) {
-                bindsManagingService.getBinds();
+                bindsManagingService.getBinds(steamUserID);
                 return response.json().then((response) => {
                     return response;
                 });
@@ -96,7 +147,7 @@ export const bindsManagingService = {
             }
         });
     },
-    deleteBind: (bind: BindEntry) => {
+    deleteBind: (bind: BindEntry, steamUserID?: string) => {
         return fetch(
             `${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BINDS_PATH}/deleteBind`,
             {
@@ -109,7 +160,7 @@ export const bindsManagingService = {
             .then((response) => {
                 if (response.ok) {
                     return response.json().then((jsonedResponse) => {
-                        bindsManagingService.getBinds();
+                        bindsManagingService.getBinds(steamUserID);
                         return jsonedResponse.message;
                     });
                 } else {
@@ -120,7 +171,7 @@ export const bindsManagingService = {
                 throw new Error(error);
             });
     },
-    updateBind: (newBindData: BindEntry) => {
+    updateBind: (newBindData: BindEntry, steamUserID?: string) => {
         return fetch(
             `${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BINDS_PATH}/updateBind`,
             {
@@ -135,7 +186,7 @@ export const bindsManagingService = {
             .then((response) => {
                 if (response.ok) {
                     return response.json().then((jsonedResponse) => {
-                        bindsManagingService.getBinds();
+                        bindsManagingService.getBinds(steamUserID);
                         return jsonedResponse.message;
                     });
                 } else {
@@ -165,8 +216,14 @@ const getRawBindVotings = (): Promise<BindVote[]> => {
         });
 };
 
-const useServerBindsLoader = () => {
+const useServerBindsLoader = (steamUserID?: string) => {
+    const userData = useSelector(
+        (state: AppState) => state.userDataReducer.userData
+    );
     useEffect(() => {
-        bindsManagingService.getBinds();
+        bindsManagingService.getBinds(steamUserID);
     }, []);
+    useEffect(() => {
+        bindsManagingService.getBinds(steamUserID);
+    }, [userData]);
 };

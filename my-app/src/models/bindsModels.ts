@@ -1,7 +1,9 @@
 export type AttachedBindVoteData = {
+    id?: number;
     attachedBindID: number;
     Upvotes: number;
     Downvotes: number;
+    selfVote?: BindVotingType;
 };
 
 export type BindVote = {

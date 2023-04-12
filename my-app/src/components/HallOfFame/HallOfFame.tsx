@@ -6,7 +6,12 @@ import { useSelector } from 'react-redux';
 import { AppState } from '../../redux/store';
 import { bindsManagingService } from '../../services/bindsManagingService';
 import { Button } from 'primereact/button';
-import { BindEntry, BindSuggestionEntry } from '../../models/bindsModels';
+import {
+    BindEntry,
+    BindSuggestionEntry,
+    BindVote,
+    BindVotingType,
+} from '../../models/bindsModels';
 import { useRef, useState } from 'react';
 import { Toast } from 'primereact/toast';
 import { Toolbar } from 'primereact/toolbar';
@@ -22,6 +27,12 @@ export default function HallOfFame() {
     const isAdmin: boolean = useSelector(
         (state: AppState) => state.userDataReducer.isAdmin
     );
+    const userData = useSelector(
+        (state: AppState) => state.userDataReducer.userData
+    );
+    const userID = useSelector(
+        (state: AppState) => state.userDataReducer.userID
+    );
 
     const [newBindDialogVisibility, setNewBindDialogVisibility] =
         useState(false);
@@ -36,7 +47,7 @@ export default function HallOfFame() {
 
     const toast = useRef<Toast>(null);
 
-    bindsManagingService.useBindsLoadingService();
+    bindsManagingService.useBindsLoadingService(userData?.steamid);
 
     const trimBindAuthor = (bind: BindEntry | BindSuggestionEntry) => {
         return {
@@ -67,7 +78,7 @@ export default function HallOfFame() {
                     className="p-button-rounded p-button-warning"
                     onClick={() => {
                         bindsManagingService
-                            .deleteBind(rowData)
+                            .deleteBind(rowData, userData?.steamid)
                             .then((deletedBindResponse) => {
                                 notificationManager.SUCCESS(
                                     toast,
@@ -84,6 +95,46 @@ export default function HallOfFame() {
                             });
                     }}
                 />
+            </>
+        );
+    };
+
+    const handleVote = (voteIn: BindVotingType, rowData: BindEntry) => {
+        const voteData: BindVote = {
+            voterSteamID: userData?.steamid,
+            votedBindID: rowData.id.toString(),
+            vote: voteIn,
+        };
+        voteData.id = rowData.votingData?.id || undefined;
+        bindsManagingService
+            .setVote(voteData)
+            .then((response) => {
+                notificationManager.SUCCESS(toast, response);
+            })
+            .catch((error) => {
+                notificationManager.ERROR(toast, error);
+            });
+    };
+
+    const bindVotingBodyTemplate = (rowData: BindEntry) => {
+        return (
+            <>
+                <Button
+                    icon="pi pi-thumbs-up"
+                    onClick={() => {
+                        handleVote(BindVotingType.UPVOTE, rowData);
+                    }}
+                >
+                    {rowData.votingData?.Upvotes || 0}
+                </Button>
+                <Button
+                    icon="pi pi-thumbs-down"
+                    onClick={() => {
+                        handleVote(BindVotingType.DOWNVOTE, rowData);
+                    }}
+                >
+                    {rowData.votingData?.Downvotes || 0}
+                </Button>
             </>
         );
     };
@@ -174,6 +225,12 @@ export default function HallOfFame() {
                                 header="Text"
                                 sortable
                             ></Column>
+                            {userID && userData && userData.steamid && (
+                                <Column
+                                    header="Voting"
+                                    body={bindVotingBodyTemplate}
+                                ></Column>
+                            )}
                             {isAdmin && (
                                 <Column
                                     header="Actions"

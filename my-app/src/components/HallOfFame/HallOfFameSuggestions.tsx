@@ -24,7 +24,9 @@ export default function HallOfFameSuggestions() {
     const userID = useSelector(
         (state: AppState) => state.userDataReducer.userID
     );
-
+    const userData = useSelector(
+        (state: AppState) => state.userDataReducer.userData
+    );
     const isAdmin: boolean = useSelector(
         (state: AppState) => state.userDataReducer.isAdmin
     );
@@ -57,7 +59,7 @@ export default function HallOfFameSuggestions() {
                                 rowData
                             ) as BindSuggestionEntry;
                             bindsManagingService
-                                .addNewBind(bind)
+                                .addNewBind(bind, userData?.steamid)
                                 .then((addedBind) => {
                                     notificationManager.SUCCESS(
                                         toast,
