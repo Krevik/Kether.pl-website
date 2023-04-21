@@ -69,8 +69,18 @@
 }
 
 .hall-of-fame [class*="vote-up-button"] {
-	background: green;
+	background: rgb(0, 220, 0);
 	border: none;
+}
+
+/* No blue colour on pointer's hover */
+.hall-of-fame [class*="vote-up-button"]:hover {
+	background: forestgreen;
+}
+
+/* When you click and hold the button, and move the cursor away still holding the button */
+.hall-of-fame [class*="vote-up-button"]:active:focus {
+	background: forestgreen;
 }
 
 .hall-of-fame [class*="self-voted"]{
@@ -78,6 +88,14 @@
 }
 
 .hall-of-fame [class*="vote-down-button"] {
-	background: red;
+	background: rgb(220, 0, 0);
 	border: none;
+}
+
+.hall-of-fame [class*="vote-down-button"]:hover {
+	background: rgb(139, 34, 34);
+}
+
+.hall-of-fame [class*="vote-down-button"]:active:focus {
+	background: rgb(139, 34, 34);
 }
