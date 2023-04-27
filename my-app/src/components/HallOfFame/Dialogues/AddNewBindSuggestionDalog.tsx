@@ -40,13 +40,12 @@ export default function AddNewBindSuggestionDialog(
                 className="p-button-text"
                 onClick={() => {
                     const newBind = {
-                        id: -1,
                         proposedBy: steamUserData!.personaname,
                         author: props.bindAuthor,
                         text: props.bindText,
                     } as BindSuggestionEntry;
                     bindSuggestionsManagingService
-                        .addNewBindSuggestion(newBind)
+                        .addBindSuggestion(newBind)
                         .then(() => {
                             notificationManager.SUCCESS(
                                 props.notificationToast,

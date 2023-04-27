@@ -6,19 +6,12 @@ import { userDataActions } from '../../../redux/slices/userDataSlice';
 import { useEffect } from 'react';
 
 const HOST_URL = 'https://kether.pl';
+const DEV_HOST_URL = 'http://localhost:3000';
 
 export default function SteamLoginButton() {
     const userID = useSelector(
         (state: AppState) => state.userDataReducer.userID
     );
-    const userData = useSelector(
-        (state: AppState) => state.userDataReducer.userData
-    );
-
-    useEffect(() => {
-        console.log(`user ID: ${JSON.stringify(userID)}`);
-        console.log(`user Data: ${JSON.stringify(userData)}`);
-    }, [userID, userData]);
 
     return !userID ? (
         <div className="steam-login-button">
@@ -42,8 +35,12 @@ export default function SteamLoginButton() {
                     value="http://specs.openid.net/auth/2.0"
                 />
                 <input type="hidden" name="openid.mode" value="checkid_setup" />
-                <input type="hidden" name="openid.realm" value={HOST_URL} />
-                <input type="hidden" name="openid.return_to" value={HOST_URL} />
+                <input type="hidden" name="openid.realm" value={DEV_HOST_URL} />
+                <input
+                    type="hidden"
+                    name="openid.return_to"
+                    value={DEV_HOST_URL}
+                />
                 <Button type="submit">
                     <img
                         alt="Steam login button img"

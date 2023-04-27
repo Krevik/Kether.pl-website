@@ -46,63 +46,64 @@ export default function HallOfFameSuggestions() {
     bindSuggestionsManagingService.useBindSuggestionsLoadingService();
 
     const bindSuggestionBody = (rowData: BindSuggestionEntry) => {
+        if (!isAdmin) {
+            return <></>;
+        }
         return (
-            isAdmin && (
-                <>
-                    <Button
-                        data-toggle="tooltip"
-                        title="Accepts the given bind"
-                        icon="pi pi-check"
-                        className="p-button-rounded p-button-success"
-                        onClick={() => {
-                            const bind = trimBindAuthor(
-                                rowData
-                            ) as BindSuggestionEntry;
-                            bindsManagingService
-                                .addNewBind(bind, userData?.steamid)
-                                .then((addedBind) => {
-                                    notificationManager.SUCCESS(
-                                        toast,
-                                        `Successfully accepted new bind: ${addedBind}`
-                                    );
-                                    bindSuggestionsManagingService.deleteBindSuggestion(
-                                        bind
-                                    );
-                                })
-                                .catch((error) => {
-                                    notificationManager.ERROR(
-                                        toast,
-                                        `Couldn't add new bind: ${error}`
-                                    );
-                                });
-                        }}
-                    />
+            <>
+                <Button
+                    data-toggle="tooltip"
+                    title="Accepts the given bind"
+                    icon="pi pi-check"
+                    className="p-button-rounded p-button-success"
+                    onClick={() => {
+                        const bind = trimBindAuthor(
+                            rowData
+                        ) as BindSuggestionEntry;
+                        bindsManagingService
+                            .addNewBind(bind.author, bind.text)
+                            .then(() => {
+                                notificationManager.SUCCESS(
+                                    toast,
+                                    `Successfully accepted new bind`
+                                );
+                                bindSuggestionsManagingService.deleteBindSuggestion(
+                                    bind.id!
+                                );
+                            })
+                            .catch((error) => {
+                                notificationManager.ERROR(
+                                    toast,
+                                    `Couldn't add new bind: ${error}`
+                                );
+                            });
+                    }}
+                />
 
-                    <Button
-                        data-toggle="tooltip"
-                        title="Deletes the given bind suggestion instantly"
-                        icon="pi pi-times"
-                        className="p-button-rounded p-button-danger"
-                        onClick={() => {
-                            bindSuggestionsManagingService
-                                .deleteBindSuggestion(rowData)
-                                .then((deletedBind) => {
-                                    notificationManager.SUCCESS(
-                                        toast,
-                                        `Successfully deleted bind suggestion: ${deletedBind}`
-                                    );
-                                    setBindText('');
-                                })
-                                .catch((error) => {
-                                    notificationManager.ERROR(
-                                        toast,
-                                        `Couldn't delete bind suggestion: ${error}`
-                                    );
-                                });
-                        }}
-                    />
-                </>
-            )
+                <Button
+                    data-toggle="tooltip"
+                    title="Deletes the given bind suggestion instantly"
+                    icon="pi pi-times"
+                    className="p-button-rounded p-button-danger"
+                    onClick={() => {
+                        bindSuggestionsManagingService
+                            .deleteBindSuggestion(rowData.id!)
+                            .then((deletedBind) => {
+                                notificationManager.SUCCESS(
+                                    toast,
+                                    `Successfully deleted bind suggestion`
+                                );
+                                setBindText('');
+                            })
+                            .catch((error) => {
+                                notificationManager.ERROR(
+                                    toast,
+                                    `Couldn't delete bind suggestion: ${error}`
+                                );
+                            });
+                    }}
+                />
+            </>
         );
     };
 
@@ -133,7 +134,7 @@ export default function HallOfFameSuggestions() {
     };
 
     const mapBinds = (binds: BindEntry[] | BindSuggestionEntry[]) => {
-        return binds.map((bind) => {
+        return binds?.map((bind) => {
             return {
                 ...bind,
                 author: `${bind.author} : `,
@@ -196,10 +197,12 @@ export default function HallOfFameSuggestions() {
                                     header="Text"
                                     sortable
                                 ></Column>
-                                <Column
-                                    header="Actions"
-                                    body={bindSuggestionBody}
-                                ></Column>
+                                {isAdmin && (
+                                    <Column
+                                        header="Actions"
+                                        body={bindSuggestionBody}
+                                    ></Column>
+                                )}
                             </DataTable>
                         </div>
                     </>

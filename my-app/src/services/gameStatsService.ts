@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { gameStatsActions } from '../redux/slices/gameStatsSlice';
 import { appStore } from '../redux/store';
-import { apiPaths } from '../utils/apiPaths';
 import {
     GameStatEntry,
     GameStatLazyLoadingParams,
@@ -50,37 +49,39 @@ export const gameStatsService = {
 const getStats = (
     lazyParams: GameStatLazyLoadingParams
 ): Promise<GameStatEntry[]> => {
-    return fetch(
-        `${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.LIVE_SERVER_PATH}/gameStats/partial?first=${lazyParams.first}&pageSize=${lazyParams.rows}&page=${lazyParams.page}&sortField=${lazyParams.sortField}&sortOrder=${lazyParams.sortOrder}&query=${lazyParams.query}`,
-        {
-            method: 'get',
-        }
-    )
-        .then((response) => {
-            if (response.ok) {
-                return response.json();
-            }
-        })
-        .then((response: GameStatEntry[]) => {
-            return response;
-        });
+    // return fetch(
+    //     `${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.LIVE_SERVER_PATH}/gameStats/partial?first=${lazyParams.first}&pageSize=${lazyParams.rows}&page=${lazyParams.page}&sortField=${lazyParams.sortField}&sortOrder=${lazyParams.sortOrder}&query=${lazyParams.query}`,
+    //     {
+    //         method: 'get',
+    //     }
+    // )
+    //     .then((response) => {
+    //         if (response.ok) {
+    //             return response.json();
+    //         }
+    //     })
+    //     .then((response: GameStatEntry[]) => {
+    //         return response;
+    //     });
+    return Promise.resolve([]);
 };
 
 const getTotalRecords = (
     lazyParams: GameStatLazyLoadingParams
 ): Promise<{ TOTAL_RECORDS: number }> => {
-    return fetch(
-        `${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.LIVE_SERVER_PATH}/gameStats/totalRecords?first=${lazyParams.first}&rows=${lazyParams.rows}&page=${lazyParams.page}&sortField=${lazyParams.sortField}&sortOrder=${lazyParams.sortOrder}&query=${lazyParams.query}`,
-        {
-            method: 'get',
-        }
-    )
-        .then((response) => {
-            if (response.ok) {
-                return response.json();
-            }
-        })
-        .then((response: { TOTAL_RECORDS: number }[]) => {
-            return response[0];
-        });
+    // return fetch(
+    //     `${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.LIVE_SERVER_PATH}/gameStats/totalRecords?first=${lazyParams.first}&rows=${lazyParams.rows}&page=${lazyParams.page}&sortField=${lazyParams.sortField}&sortOrder=${lazyParams.sortOrder}&query=${lazyParams.query}`,
+    //     {
+    //         method: 'get',
+    //     }
+    // )
+    //     .then((response) => {
+    //         if (response.ok) {
+    //             return response.json();
+    //         }
+    //     })
+    //     .then((response: { TOTAL_RECORDS: number }[]) => {
+    //         return response[0];
+    //     });
+    return Promise.resolve({ TOTAL_RECORDS: 0 });
 };

@@ -1,85 +1,57 @@
-import { useEffect } from "react";
-import { BindSuggestionEntry } from "../models/bindsModels";
-import { AppState, appStore } from "../redux/store";
-import { apiPaths } from "../utils/apiPaths";
-import { bindSuggestionsActions } from "../redux/slices/bindSuggestionsSlice";
-import { useSelector } from "react-redux";
+import { useEffect } from 'react';
+import { BindSuggestionEntry } from '../models/bindsModels';
+import { appStore } from '../redux/store';
+import { apiPaths } from '../utils/apiPaths';
+import { bindSuggestionsActions } from '../redux/slices/bindSuggestionsSlice';
+import { networkingUtils } from '../utils/networkingUtils';
 
 export const bindSuggestionsManagingService = {
-	useBindSuggestionsLoadingService: () => {
-		useServerBindSuggestionsLoader();
-	},
-	getBindSuggestions: () => {
-		fetch(
-			`${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BIND_SUGGESTIONS_PATH}/getBinds`,
-			{
-				method: "get",
-			}
-		)
-			.then((response) => {
-				if (response.ok) {
-					return response.json();
-				}
-			})
-			.then((response: BindSuggestionEntry[]) => {
-				appStore.dispatch(bindSuggestionsActions.setBindSuggestions(response));
-			});
-	},
-	addNewBindSuggestion: (bind: BindSuggestionEntry) => {
-		return fetch(
-			`${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BIND_SUGGESTIONS_PATH}/addBind`,
-			{
-				method: "post",
-				body: new URLSearchParams({
-					author: bind.author,
-					text: bind.text,
-					proposedBy: bind.proposedBy!,
-				}),
-			}
-		).then(async (response) => {
-			if (response.ok) {
-				bindSuggestionsManagingService.getBindSuggestions();
-				return response.json().then((response) => {
-					return response;
-				});
-			} else {
-				throw new Error("Couldn't add the bind suggestion");
-			}
-		});
-	},
-	deleteBindSuggestion: (bind: BindSuggestionEntry) => {
-		return fetch(
-			`${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BIND_SUGGESTIONS_PATH}/deleteBind`,
-			{
-				method: "post",
-				body: new URLSearchParams({
-					id: `${bind.id}`,
-				}),
-			}
-		)
-			.then((response) => {
-				if (response.ok) {
-					return response.json().then((jsonedResponse) => {
-						bindSuggestionsManagingService.getBindSuggestions();
-						return jsonedResponse.message;
-					});
-				} else {
-					throw new Error("Couldn't delete bind suggestion");
-				}
-			})
-			.catch((error) => {
-				throw new Error(error);
-			});
-	},
+    useBindSuggestionsLoadingService: () => {
+        useServerBindSuggestionsLoader();
+    },
+    getBindSuggestions: async () => {
+        const fetchUrl = `${apiPaths.DOMAIN_LOCAL_API}/bindSuggestions/GetBindSuggestions`;
+        const bindSuggestions = await networkingUtils.doFetch<
+            BindSuggestionEntry[]
+        >(fetchUrl, 'get');
+        if (bindSuggestions.data) {
+            appStore.dispatch(
+                bindSuggestionsActions.setBindSuggestions(bindSuggestions.data)
+            );
+        }
+        if (bindSuggestions.error) {
+            throw bindSuggestions.error;
+        }
+    },
+    addBindSuggestion: async (bind: {
+        author: string;
+        text: string;
+        proposedBy: string;
+    }) => {
+        const fetchUrl = `${apiPaths.DOMAIN_LOCAL_API}/bindSuggestions/AddBindSuggestion`;
+        const addResult = await networkingUtils.doFetch(fetchUrl, 'post', bind);
+        if (addResult.data) {
+            bindSuggestionsManagingService.getBindSuggestions();
+            return addResult.data;
+        }
+        if (addResult.error) {
+            throw addResult.error;
+        }
+    },
+    deleteBindSuggestion: async (bindId: number) => {
+        const fetchUrl = `${apiPaths.DOMAIN_LOCAL_API}/bindSuggestions/DeleteBindSuggestion/${bindId}`;
+        const deleteResult = await networkingUtils.doFetch(fetchUrl, 'delete');
+        if (!deleteResult.error) {
+            bindSuggestionsManagingService.getBindSuggestions();
+            return true;
+        } else {
+            throw deleteResult.error;
+        }
+    },
 };
 
 const useServerBindSuggestionsLoader = () => {
-	const isAdmin = useSelector(
-		(state: AppState) => state.userDataReducer.isAdmin
-	);
-	useEffect(() => {
-		if (isAdmin) {
-			bindSuggestionsManagingService.getBindSuggestions();
-		}
-	}, []);
+    useEffect(() => {
+        bindSuggestionsManagingService.getBindSuggestions();
+    }, []);
 };

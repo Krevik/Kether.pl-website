@@ -9,7 +9,6 @@ import { Button } from 'primereact/button';
 import {
     BindEntry,
     BindSuggestionEntry,
-    BindVote,
     BindVotingType,
 } from '../../models/bindsModels';
 import { useRef, useState } from 'react';
@@ -20,6 +19,8 @@ import EditBindDialog from './Dialogues/EditBindDialog';
 import AddNewBindDialog from './Dialogues/AddNewBindDialog';
 import Navbar from '../navbar/Navbar';
 import Footer from '../Footer/Footer';
+import { bindsVotingService } from '../../services/bindsVotingService';
+import { bindVotesUtils } from '../../utils/bindVotesUtils';
 
 export default function HallOfFame() {
     const binds = useSelector((state: AppState) => state.bindsReducer.binds);
@@ -32,6 +33,12 @@ export default function HallOfFame() {
     );
     const userID = useSelector(
         (state: AppState) => state.userDataReducer.userID
+    );
+    const mappedBindsVotingData = useSelector(
+        (state: AppState) => state.bindVotesReducer.mappedBindVotes
+    );
+    const bindsVotingData = useSelector(
+        (state: AppState) => state.bindVotesReducer.votes
     );
 
     const [newBindDialogVisibility, setNewBindDialogVisibility] =
@@ -47,8 +54,8 @@ export default function HallOfFame() {
 
     const toast = useRef<Toast>(null);
 
-    bindsManagingService.useBindsLoadingService(userData?.steamid);
-
+    bindsManagingService.useBindsLoadingService();
+    bindsVotingService.useVotesLoadingService();
     const trimBindAuthor = (bind: BindEntry | BindSuggestionEntry) => {
         return {
             ...bind,
@@ -65,7 +72,7 @@ export default function HallOfFame() {
                     icon="pi pi-pencil"
                     className="p-button-rounded p-button-success mr-2"
                     onClick={() => {
-                        editingBindID.current = rowData.id;
+                        editingBindID.current = rowData.id!;
                         setEditBindDialogVisibility(true);
                         setBindAuthor(trimBindAuthor(rowData).author);
                         setBindText(rowData.text);
@@ -78,20 +85,14 @@ export default function HallOfFame() {
                     className="p-button-rounded p-button-warning"
                     onClick={() => {
                         bindsManagingService
-                            .deleteBind(rowData, userData?.steamid)
-                            .then((deletedBindResponse) => {
+                            .deleteBind(rowData.id!)
+                            .then(() => {
                                 notificationManager.SUCCESS(
                                     toast,
-                                    `${deletedBindResponse}`
+                                    `Successfully deleted bind`
                                 );
                                 setNewBindDialogVisibility(false);
                                 setBindText('');
-                            })
-                            .catch((error) => {
-                                notificationManager.ERROR(
-                                    toast,
-                                    `Couldn't delete the bind: ${error}`
-                                );
                             });
                     }}
                 />
@@ -102,39 +103,46 @@ export default function HallOfFame() {
     const handleVote = (
         voteIn: BindVotingType,
         rowData: BindEntry,
-        deleteVote?: boolean
+        deleteVote: boolean
     ) => {
-        const voteData: BindVote = {
-            voterSteamID: userData?.steamid,
-            votedBindID: rowData.id.toString(),
-            vote: voteIn,
-        };
-        voteData.id = rowData.votingData?.id || undefined;
-        bindsManagingService
-            .setVote(voteData, deleteVote)
-            .then((response) => {
-                console.log(response);
-                notificationManager.SUCCESS(toast, response);
-            })
-            .catch((error) => {
-                console.log(error);
-                notificationManager.ERROR(toast, error);
-            });
+        bindsVotingService.setVote(
+            userData?.steamid,
+            rowData.id!,
+            voteIn,
+            deleteVote
+        );
     };
 
     const bindVotingBodyTemplate = (rowData: BindEntry) => {
-        const selfBindVote: BindVotingType | undefined =
-            rowData.votingData?.selfVote;
-        const selfVoteUpStylingClassName =
-            selfBindVote && selfBindVote === BindVotingType.UPVOTE
-                ? 'self-voted'
-                : '';
-        const selfVoteDownStylingClassName =
-            selfBindVote && selfBindVote === BindVotingType.DOWNVOTE
-                ? 'self-voted'
-                : '';
+        const isSelfUpVoted = bindVotesUtils.isSelfVoted(
+            rowData.id!,
+            bindsVotingData,
+            userData?.steamid,
+            BindVotingType.Upvote
+        );
+        const isSelfDownVoted = bindVotesUtils.isSelfVoted(
+            rowData.id!,
+            bindsVotingData,
+            userData?.steamid,
+            BindVotingType.Downvote
+        );
+        const selfVoteUpStylingClassName = isSelfUpVoted ? 'self-voted' : '';
+        const selfVoteDownStylingClassName = isSelfDownVoted
+            ? 'self-voted'
+            : '';
         const voteUpButtonStyling = `vote-up-button ${selfVoteUpStylingClassName}`;
         const voteDownButtonStyling = `vote-down-button ${selfVoteDownStylingClassName}`;
+        const upVotes = bindVotesUtils.countVotesForBind(
+            rowData.id!,
+            mappedBindsVotingData,
+            BindVotingType.Upvote
+        );
+        const downVotes = bindVotesUtils.countVotesForBind(
+            rowData.id!,
+            mappedBindsVotingData,
+            BindVotingType.Downvote
+        );
+
         return (
             <>
                 <Button
@@ -142,28 +150,26 @@ export default function HallOfFame() {
                     icon="pi pi-thumbs-up"
                     onClick={() => {
                         handleVote(
-                            BindVotingType.UPVOTE,
+                            BindVotingType.Upvote,
                             rowData,
-                            selfBindVote &&
-                                selfBindVote === BindVotingType.UPVOTE
+                            isSelfUpVoted
                         );
                     }}
                 >
-                    {rowData.votingData?.Upvotes || 0}
+                    {upVotes}
                 </Button>
                 <Button
                     className={voteDownButtonStyling}
                     icon="pi pi-thumbs-down"
                     onClick={() => {
                         handleVote(
-                            BindVotingType.DOWNVOTE,
+                            BindVotingType.Downvote,
                             rowData,
-                            selfBindVote &&
-                                selfBindVote === BindVotingType.DOWNVOTE
+                            isSelfDownVoted
                         );
                     }}
                 >
-                    {rowData.votingData?.Downvotes || 0}
+                    {downVotes}
                 </Button>
             </>
         );

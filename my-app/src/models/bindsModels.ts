@@ -1,28 +1,32 @@
-export type AttachedBindVoteData = {
-    id?: number;
-    attachedBindID: number;
-    Upvotes: number;
-    Downvotes: number;
-    selfVote?: BindVotingType;
-};
-
-export type BindVote = {
-    id?: number;
-    voterSteamID?: string;
-    votedBindID?: string;
-    vote?: BindVotingType;
-};
-
 export enum BindVotingType {
-    UPVOTE = 'Upvote',
-    DOWNVOTE = 'Downvote',
+    Upvote,
+    Downvote,
 }
 
-export type BindEntry = {
+export type BindVotingEntry = {
     id: number;
-    author: string;
-    text: string;
-    votingData?: AttachedBindVoteData;
+    votedBindId: number;
+    voterSteamId: string;
+    vote: BindVotingType;
 };
 
-export type BindSuggestionEntry = BindEntry & { proposedBy: string };
+export type BindEntry = {
+    id?: number;
+    author: string;
+    text: string;
+};
+
+export type BindSuggestionEntry = {
+    id?: number;
+    author: string;
+    text: string;
+    proposedBy: string;
+};
+
+export type MappedBindVote = {
+    bindId: number;
+    Upvotes: number;
+    Downvotes: number;
+    isSelfUpVoted: boolean;
+    isSelfDownVoted: boolean;
+};

@@ -28,16 +28,16 @@ export const steamServerInfoService = {
 };
 
 const getSteamServerInfo = () => {
-    fetch(
-        `${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.STEAM_PATH}/serverInfo`,
-        {
-            method: 'get',
-        }
-    )
-        .then((response) => {
-            return response.json();
-        })
-        .then((response: SteamServerInfo) => {
-            appStore.dispatch(serverInfoActions.setSteamServerInfo(response));
-        });
+    // fetch(
+    //     `${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.STEAM_PATH}/serverInfo`,
+    //     {
+    //         method: 'get',
+    //     }
+    // )
+    //     .then((response) => {
+    //         return response.json();
+    //     })
+    //     .then((response: SteamServerInfo) => {
+    //         appStore.dispatch(serverInfoActions.setSteamServerInfo(response));
+    //     });
 };

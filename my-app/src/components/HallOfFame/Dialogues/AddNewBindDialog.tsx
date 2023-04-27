@@ -31,12 +31,8 @@ export default function AddNewBindDialog(props: AddNewBindDialogProps) {
                 icon="pi pi-check"
                 className="p-button-text"
                 onClick={() => {
-                    const newBind = {
-                        author: props.bindAuthor,
-                        text: props.bindText,
-                    } as BindEntry;
                     bindsManagingService
-                        .addNewBind(newBind)
+                        .addNewBind(props.bindAuthor, props.bindText)
                         .then(() => {
                             notificationManager.SUCCESS(
                                 props.notificationToast,
