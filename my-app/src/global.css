@@ -1,7 +1,7 @@
 :root {
 	--standardPadding: 20px;
 	--standard-font-weight-arabica: 700;
-	--standardGap: 15px;
+	--standardGap: 0.5rem;
 }
 
 @font-face {

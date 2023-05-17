@@ -3,15 +3,18 @@
 	justify-content: center;
 	gap: var(--standardGap);
 	font-family: "Future Rot";
+	align-items: center;
 }
 
 .navigation-menu .p-button {
 	font-family: "Future Rot";
-	background: rgb(77,79,78);
-	background: linear-gradient(90deg, rgba(77,79,78,0.8463760504201681) 0%, rgba(61,56,60,0.6530987394957983) 50%, rgba(73,73,74,0.8435749299719888) 100%);
-	color: #d3e0e3;
-	-webkit-text-stroke: 1px #e01220;
-	border: 2px #383535 solid;
+	overflow: inherit;
+	border: 0.2rem solid;
+	border-radius: 10rem;
+	border-color: red;
+	color: white;
+	background-color: #3B3B3B;
+	height: 3rem;
 	transition: all 0.5s;
 }
 

@@ -1,9 +1,11 @@
-import { useEffect } from 'react';
-import { apiPaths } from '../utils/apiPaths';
+import { MutableRefObject, useEffect, useRef } from 'react';
+import { API_PATHS } from '../utils/apiPaths';
 import { AppState, appStore } from '../redux/store';
 import { serverInfoActions } from '../redux/slices/serverInfoSlice';
-import { SteamServerInfo } from '../models/serverInfoModels';
+import { ServerInfo, SteamServerInfo } from '../models/serverInfoModels';
 import { useSelector } from 'react-redux';
+import axios from 'axios';
+import { areObjectsEqual } from '../utils/utils';
 
 const REFRESH_INTERVAL_MS = 5000;
 export const steamServerInfoService = {
@@ -11,14 +13,18 @@ export const steamServerInfoService = {
         const steamServerInfo = useSelector(
             (state: AppState) => state.serverInfoReducer.steamServerInfo
         );
+        const isLoading = useRef(false);
 
         useEffect(() => {
             if (!steamServerInfo) {
-                getSteamServerInfo();
+                if (!isLoading.current) {
+                    refreshServerInfo(steamServerInfo, isLoading);
+                }
             }
-
             const refreshDataInterval = setInterval(() => {
-                getSteamServerInfo();
+                if (!isLoading.current) {
+                    refreshServerInfo(steamServerInfo, isLoading);
+                }
             }, REFRESH_INTERVAL_MS);
             return () => {
                 clearInterval(refreshDataInterval);
@@ -27,17 +33,23 @@ export const steamServerInfoService = {
     },
 };
 
-const getSteamServerInfo = () => {
-    fetch(
-        `${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.STEAM_PATH}/serverInfo`,
-        {
-            method: 'get',
-        }
-    )
+const refreshServerInfo = (
+    actualServerInfo: SteamServerInfo | undefined,
+    isLoading: MutableRefObject<boolean>
+) => {
+    isLoading.current = true;
+    return axios
+        .get(API_PATHS.SERVER_INFO_STEAM)
         .then((response) => {
-            return response.json();
+            const newServerInfo: SteamServerInfo =
+                response.data as SteamServerInfo;
+            if (!areObjectsEqual(actualServerInfo, newServerInfo)) {
+                appStore.dispatch(
+                    serverInfoActions.setSteamServerInfo(newServerInfo)
+                );
+            }
         })
-        .then((response: SteamServerInfo) => {
-            appStore.dispatch(serverInfoActions.setSteamServerInfo(response));
+        .finally(() => {
+            isLoading.current = false;
         });
 };
