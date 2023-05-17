@@ -27,11 +27,10 @@
 }
 
 .game-stats .p-datatable {
-	background: transparent;
 	padding-top: 10px;
 	margin: auto;
 	font-size: 0.8rem;
-	backdrop-filter: blur(10px);
+	background: radial-gradient( #000 0%, #222E3A 100%);
 	-webkit-text-stroke: 1px gray;
 }
 
