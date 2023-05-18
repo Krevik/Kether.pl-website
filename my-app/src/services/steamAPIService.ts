@@ -49,7 +49,6 @@ export const steamAPIService = {
                         const str = response['openid.claimed_id'];
                         const res = decodeURIComponent(str);
                         const propsArr = res.split('/');
-                        console.log(propsArr);
 
                         return propsArr[propsArr.length - 1];
                     };

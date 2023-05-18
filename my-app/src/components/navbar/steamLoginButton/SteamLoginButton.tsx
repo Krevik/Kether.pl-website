@@ -11,14 +11,6 @@ export default function SteamLoginButton() {
     const userID = useSelector(
         (state: AppState) => state.userDataReducer.userID
     );
-    const userData = useSelector(
-        (state: AppState) => state.userDataReducer.userData
-    );
-
-    useEffect(() => {
-        console.log(`user ID: ${JSON.stringify(userID)}`);
-        console.log(`user Data: ${JSON.stringify(userData)}`);
-    }, [userID, userData]);
 
     return !userID ? (
         <div className="steam-login-button">

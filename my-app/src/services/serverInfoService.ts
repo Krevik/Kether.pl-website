@@ -42,10 +42,12 @@ const refreshServerInfo = (
         .get(API_PATHS.SERVER_INFO_LIVESERVER)
         .then((response) => {
             const newServerInfo: ServerInfo = response.data as ServerInfo;
-            if (!areObjectsEqual(actualServerInfo, newServerInfo)) {
-                appStore.dispatch(
-                    serverInfoActions.setServerInfo(newServerInfo)
-                );
+            if (newServerInfo && newServerInfo.status) {
+                if (!areObjectsEqual(actualServerInfo, newServerInfo)) {
+                    appStore.dispatch(
+                        serverInfoActions.setServerInfo(newServerInfo)
+                    );
+                }
             }
         })
         .finally(() => {
