@@ -43,12 +43,10 @@ const refreshServerInfo = (
         .then((response) => {
             const newServerInfo: SteamServerInfo =
                 response.data as SteamServerInfo;
-            if (newServerInfo) {
-                if (!areObjectsEqual(actualServerInfo, newServerInfo)) {
-                    appStore.dispatch(
-                        serverInfoActions.setSteamServerInfo(newServerInfo)
-                    );
-                }
+            if (!areObjectsEqual(newServerInfo, actualServerInfo)) {
+                appStore.dispatch(
+                    serverInfoActions.setSteamServerInfo(newServerInfo)
+                );
             }
         })
         .finally(() => {
