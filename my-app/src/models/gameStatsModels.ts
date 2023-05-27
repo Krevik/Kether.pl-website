@@ -20,6 +20,10 @@ export type GameStatEntry = {
     profileUrl: string;
     avatarMediumSrc: string;
     Gameplay_Time: number;
+    Commons_Killed_Per_Round_Average?: number;
+    Hunters_Skeeted_Per_Round_Average?: number;
+    Damage_Done_To_SI_Per_Round_Average?: number;
+    Friendly_Fire_Done_Per_Round_Average?: number;
 };
 
 export type GameStatLazyLoadingParams = {

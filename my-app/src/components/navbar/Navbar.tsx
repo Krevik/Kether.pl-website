@@ -44,6 +44,7 @@ export default function Navbar() {
         return tabs.map((tab) => {
             return (
                 <Button
+                    key={tab.label.toString()}
                     onClick={() => {
                         navigate(`../${tab.targetPage}`);
                     }}

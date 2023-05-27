@@ -15,22 +15,30 @@ export const gameStatsService = {
         setLoading: (isLoading: boolean) => void
     ) => {
         const loadStats = () => {
-            getStats(lazyParams).then((gameStats: GameStatEntry[]) => {
-                if (gameStats) {
-                    appStore.dispatch(gameStatsActions.setGameStats(gameStats));
-                    setLoading(false);
-                }
-            });
+            if (lazyParams) {
+                getStats(lazyParams).then((gameStats: GameStatEntry[]) => {
+                    if (gameStats) {
+                        appStore.dispatch(
+                            gameStatsActions.setGameStats(gameStats)
+                        );
+                        setLoading(false);
+                    }
+                });
+            }
         };
 
         const loadTotalRecords = () => {
-            getTotalRecords(lazyParams).then((response) => {
-                if (response.TOTAL_RECORDS) {
-                    appStore.dispatch(
-                        gameStatsActions.setTotalRecords(response.TOTAL_RECORDS)
-                    );
-                }
-            });
+            if (lazyParams) {
+                getTotalRecords(lazyParams).then((response) => {
+                    if (response.TOTAL_RECORDS) {
+                        appStore.dispatch(
+                            gameStatsActions.setTotalRecords(
+                                response.TOTAL_RECORDS
+                            )
+                        );
+                    }
+                });
+            }
         };
 
         useEffect(() => {

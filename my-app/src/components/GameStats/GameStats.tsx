@@ -13,10 +13,11 @@ import {
     GameStatEntry,
     GameStatLazyLoadingParams,
 } from '../../models/gameStatsModels';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { InputText } from 'primereact/inputtext';
 import Navbar from '../navbar/Navbar';
 import Footer from '../Footer/Footer';
+import { Accordion, AccordionTab } from 'primereact/accordion';
 
 export default function GameStats() {
     const [searchValue, setSearchValue] = useState('');
@@ -40,12 +41,103 @@ export default function GameStats() {
 
     gameStatsService.useGameStatsLoadingService(lazyParams, setLoading);
 
-    const getPlayerColumnBody = (rowData: GameStatEntry) => {
+    const calculateOverallScore = (rowData: GameStatEntry) => {
+        let totalScore = 0;
+        totalScore =
+            (rowData.Commons_Killed_Per_Round_Average ?? 0) +
+            (rowData.Hunters_Skeeted_Per_Round_Average ?? 0) +
+            (rowData.Damage_Done_To_SI_Per_Round_Average ?? 0) / 200 -
+            (rowData.Friendly_Fire_Done_Per_Round_Average ?? 0) / 10;
+        return totalScore.toFixed(2);
+    };
+    const playerEntryHeader = (rowData: GameStatEntry) => {
         return (
             <div className="user-data">
                 <img alt="user-avatar" src={rowData.avatarMediumSrc} />
-                <a href={rowData.profileUrl}>{rowData.LastKnownSteamName}</a>
+                <span
+                // href={rowData.profileUrl}
+                >
+                    {rowData.LastKnownSteamName}
+                </span>
+                <div className={'accordion-header-data'}>
+                    Overall Score: {calculateOverallScore(rowData)}
+                </div>
             </div>
+        );
+    };
+
+    const getPlayerColumnBody = (rowData: GameStatEntry) => {
+        return (
+            <Accordion activeIndex={-1}>
+                <AccordionTab header={playerEntryHeader(rowData)}>
+                    <div className="accordion-column">
+                        Survivor Stats
+                        <div>
+                            Total commons killed: {rowData.Commons_Killed}
+                        </div>
+                        <div>
+                            Average common kills (per round)*:{' '}
+                            {rowData.Commons_Killed_Per_Round_Average?.toFixed(
+                                2
+                            )}
+                        </div>
+                        <div>Hunter skeets: {rowData.Hunter_Skeets}</div>
+                        <div>
+                            Average hunter skeets (per round)*:{' '}
+                            {rowData.Hunters_Skeeted_Per_Round_Average?.toFixed(
+                                2
+                            )}
+                        </div>
+                        <div>
+                            Damage done to SI: {rowData.Damage_Done_To_SI}
+                        </div>
+                        <div>
+                            Average SI damage (per round)*:{' '}
+                            {rowData.Damage_Done_To_SI_Per_Round_Average?.toFixed(
+                                2
+                            )}
+                        </div>
+                        <div>
+                            Damage done to tanks: {rowData.Damage_Done_To_Tanks}
+                        </div>
+                        <div>Witch crowns: {rowData.Witch_Crowns}</div>
+                        <div>Tongue cuts: {rowData.Tongue_Cuts}</div>
+                        <div>
+                            Smoker self-clears: {rowData.Smoker_Self_Clears}
+                        </div>
+                        <div>
+                            Tank rocks skeeted: {rowData.Tank_Rocks_Skeeted}
+                        </div>
+                        <div>FF dmg: {rowData.Friendly_Fire_Done}</div>
+                        <div>
+                            Average FF (per round)*:{' '}
+                            {rowData.Friendly_Fire_Done_Per_Round_Average?.toFixed(
+                                2
+                            )}
+                        </div>
+                        <div>
+                            Friendly fire received:{' '}
+                            {rowData.Friendly_Fire_Received}
+                        </div>
+                    </div>
+                    <div className="accordion-column">
+                        Special Infected Stats
+                        <div>Death charges: {rowData.Death_Charges}</div>
+                        <div>Hunter 25's: {rowData.Hunter_High_Pounces_25}</div>
+                        <div>
+                            Total Damage done to survivors:{' '}
+                            {rowData.Damage_Done_To_Survivors}
+                        </div>
+                    </div>
+                    <div className="accordion-column">
+                        Overall Stats
+                        <div>
+                            Gameplay time: {secondsToHms(rowData.Gameplay_Time)}
+                        </div>
+                    </div>
+                    * - counts for overall score
+                </AccordionTab>
+            </Accordion>
         );
     };
 
@@ -123,75 +215,6 @@ export default function GameStats() {
                             <Column
                                 body={getPlayerColumnBody}
                                 header="Player"
-                            />
-                            <Column
-                                field="Hunter_Skeets"
-                                header="Hunter Skeets"
-                                sortable
-                            />
-                            <Column
-                                field="Commons_Killed"
-                                header="Commons Killed"
-                                sortable
-                            />
-                            <Column
-                                field="Damage_Done_To_Survivors"
-                                header="Damage Done To Survs"
-                                sortable
-                            />
-                            <Column
-                                field="Damage_Done_To_SI"
-                                header="Damage Done to SI"
-                                sortable
-                            />
-                            <Column
-                                field="Witch_Crowns"
-                                header="Witch Crowns"
-                                sortable
-                            />
-                            <Column
-                                field="Tongue_Cuts"
-                                header="Tongue Cuts"
-                                sortable
-                            />
-                            <Column
-                                field="Smoker_Self_Clears"
-                                header="Smoker Self Clears"
-                                sortable
-                            />
-                            <Column
-                                field="Tank_Rocks_Skeeted"
-                                header="Tank Rocks Skeeted"
-                                sortable
-                            />
-                            <Column
-                                field="Hunter_High_Pounces_25"
-                                header="Hunter High Pounces (25)"
-                                sortable
-                            />
-                            <Column
-                                field="Death_Charges"
-                                header="Death Charges"
-                                sortable
-                            />
-                            <Column
-                                field="Friendly_Fire_Done"
-                                header="Friendly Fire Done"
-                                sortable
-                            />
-                            <Column
-                                field="Friendly_Fire_Received"
-                                header="Friendly Fire Received"
-                                sortable
-                            />
-                            <Column
-                                field={'Damage_Done_To_Tanks'}
-                                header={'Dmg done to tanks'}
-                                sortable
-                            />
-                            <Column
-                                body={gameplay_TimeColumnBody}
-                                header={'Gameplay Time'}
                             />
                         </DataTable>
                     </div>

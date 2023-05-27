@@ -32,6 +32,7 @@
 	font-size: 0.8rem;
 	background: radial-gradient( #000 0%, #222E3A 100%);
 	-webkit-text-stroke: 1px gray;
+	width: 98%
 }
 
 .game-stats .p-datatable .p-datatable-tbody > tr {
@@ -48,13 +49,37 @@
 
 .game-stats .user-data {
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 }
 
-.game-stats .user-data a {
+.game-stats .user-data span {
+	text-decoration: none;
+	margin: auto;
+	font-size: 1.3rem;
+}
+
+.game-stats .user-data .user-nickname span {
 	text-decoration: none;
 }
 
-.game-stats .user-data .user-nickname a {
-	text-decoration: none;
+.game-stats .p-accordion-content {
+	display: flex;
+	flex-direction: row;
+	gap: 1rem;
+}
+
+.game-stats .p-input-icon-left {
+	margin: auto auto 0.5rem;
+}
+
+.game-stats .accordion-column {
+	font-size: 1.3rem;
+}
+
+.game-stats .accordion-column >div {
+	font-size: 0.8rem;
+}
+
+.game-stats .accordion-header-data {
+	margin: auto 2rem;
 }
