@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.70da2acc.css",
-    "main.js": "/static/js/main.a10c3103.js",
+    "main.css": "/static/css/main.c27fb37e.css",
+    "main.js": "/static/js/main.69a10d98.js",
     "static/media/background_1.jpg": "/static/media/background_1.bbbbf33c0f3cf7222559.jpg",
     "static/media/background_3.jpg": "/static/media/background_3.4e932a7e40bb7c3fc904.jpg",
     "static/media/background_4.jpg": "/static/media/background_4.afd7ff29b91152c81d22.jpg",
@@ -18,11 +18,11 @@
     "static/media/FutureRot.woff": "/static/media/FutureRot.f067340e382f9f3cd894.woff",
     "static/media/FutureRot.woff2": "/static/media/FutureRot.8d63b100cb8153f603e8.woff2",
     "index.html": "/index.html",
-    "main.70da2acc.css.map": "/static/css/main.70da2acc.css.map",
-    "main.a10c3103.js.map": "/static/js/main.a10c3103.js.map"
+    "main.c27fb37e.css.map": "/static/css/main.c27fb37e.css.map",
+    "main.69a10d98.js.map": "/static/js/main.69a10d98.js.map"
   },
   "entrypoints": [
-    "static/css/main.70da2acc.css",
-    "static/js/main.a10c3103.js"
+    "static/css/main.c27fb37e.css",
+    "static/js/main.69a10d98.js"
   ]
 }
