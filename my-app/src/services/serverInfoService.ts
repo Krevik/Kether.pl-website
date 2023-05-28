@@ -5,7 +5,6 @@ import { serverInfoActions } from '../redux/slices/serverInfoSlice';
 import { ServerInfo } from '../models/serverInfoModels';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
-import { areObjectsEqual } from '../utils/utils';
 
 const REFRESH_INTERVAL_MS = 5000;
 export const serverInfoService = {
