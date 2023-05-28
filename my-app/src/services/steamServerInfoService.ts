@@ -2,7 +2,7 @@ import { MutableRefObject, useEffect, useRef } from 'react';
 import { API_PATHS } from '../utils/apiPaths';
 import { AppState, appStore } from '../redux/store';
 import { serverInfoActions } from '../redux/slices/serverInfoSlice';
-import { ServerInfo, SteamServerInfo } from '../models/serverInfoModels';
+import { SteamServerInfo } from '../models/serverInfoModels';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { areObjectsEqual } from '../utils/utils';

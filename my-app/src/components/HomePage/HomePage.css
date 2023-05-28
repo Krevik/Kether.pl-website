@@ -4,10 +4,11 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: baseline;
+	min-width: 900px
 }
 
 .section {
-	width: 33.3333334%;
+	width: 33.3%;
 	display:flex;
 	flex-direction: column;
 	text-align: center;
@@ -50,8 +51,4 @@
 
 .player-list-table .p-datatable-scrollable .p-datatable-wrapper span {
 	font-size: 1rem;
-}
-
-[class*='section']{
-	font-size: 0.5rem;
 }

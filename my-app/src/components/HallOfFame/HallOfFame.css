@@ -1,12 +1,10 @@
 .hall-of-fame {
 	width: 100%;
-	min-width: 1400px;
-	min-height: 880px;
 	background-position: center;
 	background-size: cover;
 	display: flex;
 	flex-direction: column;
-	max-height: 100vh;
+	height: 100vh;
 }
 
 .hall-of-fame .card {
@@ -38,7 +36,7 @@
 }
 
 .hall-of-fame .p-datatable-scrollable .p-datatable-wrapper {
-	overflow: none;
+	overflow: auto;
 }
 
 .hall-of-fame .p-datatable {

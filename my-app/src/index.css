@@ -23,7 +23,6 @@ body {
 }
 
 #root {
-	min-width: 1200px;
 	height: 100%;
 	width: 100%;
 }
