@@ -66,7 +66,7 @@ export default function ServerInfoSection() {
     };
 
     return (
-        <div className="section">
+        <div className="section future-rot">
             <span>Name: {serverInfo?.name}</span>
             <span>IP: 51.83.217.86:29800</span>
             <span>

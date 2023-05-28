@@ -36,3 +36,7 @@
 	font-size: 1.4rem;
 	font-weight: 400;
 }
+
+[class*="future-rot"] {
+	font-family: "Future Rot"
+}
