@@ -52,3 +52,8 @@
 .player-list-table .p-datatable-scrollable .p-datatable-wrapper span {
 	font-size: 1rem;
 }
+
+.section span .p-button-label .p-c {
+	font-size: 1rem;
+	font-family: sans-serif;
+}
