@@ -1,28 +1,30 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import { userDataReducer } from "./slices/userDataSlice";
-import storage from "redux-persist/lib/storage";
-import { persistReducer, persistStore } from "redux-persist";
-import { bindsReducer } from "./slices/bindsSlice";
-import { bindSuggestionsReducer } from "./slices/bindSuggestionsSlice";
-import { gameStatsReducer } from "./slices/gameStatsSlice";
-import { serverInfoReducer } from "./slices/serverInfoSlice";
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { userDataReducer } from './slices/userDataSlice';
+import storage from 'redux-persist/lib/storage';
+import { persistReducer, persistStore } from 'redux-persist';
+import { bindsReducer } from './slices/bindsSlice';
+import { bindSuggestionsReducer } from './slices/bindSuggestionsSlice';
+import { gameStatsReducer } from './slices/gameStatsSlice';
+import { serverInfoReducer } from './slices/serverInfoSlice';
+import { commandsReducer } from './slices/commandsSlice';
 
 const persistConfig = {
-	key: "root",
-	storage,
+    key: 'root',
+    storage,
 };
 const persistedUserDataReducer = persistReducer(persistConfig, userDataReducer);
 
 const combinedReducers = combineReducers({
-	userDataReducer: persistedUserDataReducer,
-	bindsReducer: bindsReducer,
-	bindSuggestionsReducer: bindSuggestionsReducer,
-	gameStatsReducer: gameStatsReducer,
-	serverInfoReducer: serverInfoReducer,
+    userDataReducer: persistedUserDataReducer,
+    bindsReducer: bindsReducer,
+    commandsReducer: commandsReducer,
+    bindSuggestionsReducer: bindSuggestionsReducer,
+    gameStatsReducer: gameStatsReducer,
+    serverInfoReducer: serverInfoReducer,
 });
 
 export const appStore = configureStore({
-	reducer: combinedReducers,
+    reducer: combinedReducers,
 });
 
 export const persistedAppStore = persistStore(appStore);

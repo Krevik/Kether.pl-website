@@ -99,3 +99,8 @@
 .hall-of-fame [class*="vote-down-button"]:active:focus {
 	background: rgb(139, 34, 34);
 }
+
+.p-dialog {
+	height: 80%;
+	width: 80%;
+}

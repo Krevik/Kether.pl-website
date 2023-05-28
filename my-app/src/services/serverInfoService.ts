@@ -42,11 +42,7 @@ const refreshServerInfo = (
         .get(API_PATHS.SERVER_INFO_LIVESERVER)
         .then((response) => {
             const newServerInfo: ServerInfo = response.data as ServerInfo;
-            if (!areObjectsEqual(newServerInfo, actualServerInfo)) {
-                appStore.dispatch(
-                    serverInfoActions.setServerInfo(newServerInfo)
-                );
-            }
+            appStore.dispatch(serverInfoActions.setServerInfo(newServerInfo));
         })
         .finally(() => {
             isLoading.current = false;

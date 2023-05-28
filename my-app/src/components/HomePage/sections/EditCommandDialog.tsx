@@ -1,0 +1,89 @@
+import { Dialog } from 'primereact/dialog';
+import { Button } from 'primereact/button';
+import { BindEntry } from '../../../models/bindsModels';
+import { bindsManagingService } from '../../../services/bindsManagingService';
+import { notificationManager } from '../../../utils/notificationManager';
+import { MutableRefObject, RefObject } from 'react';
+import { Toast } from 'primereact/toast';
+import { CommandEntry } from '../../../models/commandModels';
+import { commandsManagingService } from '../../../services/commandsManagingService';
+import DialogBindContent from '../../HallOfFame/Dialogues/DialogBindContent';
+import DialogCommandContent from './DialogCommandContent';
+
+type EditCommandDialogProps = {
+    isDialogVisible: boolean;
+    setDialogVisibility: (visible: boolean) => void;
+    command: string;
+    commandDescription: string;
+    setCommand: (author: string) => void;
+    setCommandDescription: (text: string) => void;
+    notificationToast: RefObject<Toast>;
+    commandEditingIdRef: MutableRefObject<Number>;
+};
+
+export default function EditCommandDialog(props: EditCommandDialogProps) {
+    const editCommandDialogFooter = () => {
+        return (
+            <>
+                <Button
+                    label="Cancel"
+                    icon="pi pi-times"
+                    className="p-button-text"
+                    onClick={() => {
+                        props.commandEditingIdRef.current = -1;
+                        props.setDialogVisibility(false);
+                    }}
+                />
+
+                <Button
+                    label="Update"
+                    icon="pi pi-check"
+                    className="p-button-text"
+                    onClick={() => {
+                        const newCommandData = {
+                            command: props.command,
+                            description: props.commandDescription,
+                            id: props.commandEditingIdRef.current,
+                        } as CommandEntry;
+                        commandsManagingService
+                            .updateCommand(newCommandData)
+                            .then(() => {
+                                notificationManager.SUCCESS(
+                                    props.notificationToast,
+                                    `Successfully updated the command`
+                                );
+                                props.setDialogVisibility(false);
+                                props.commandEditingIdRef.current = -1;
+                            })
+                            .catch((error) => {
+                                notificationManager.ERROR(
+                                    props.notificationToast,
+                                    `Couldn't update the command: ${error.message}`
+                                );
+                            });
+                    }}
+                />
+            </>
+        );
+    };
+
+    return (
+        <Dialog
+            visible={props.isDialogVisible}
+            header="Edit Command"
+            modal
+            className="p-fluid"
+            footer={editCommandDialogFooter()}
+            onHide={() => {
+                props.setDialogVisibility(false);
+            }}
+        >
+            <DialogCommandContent
+                command={props.command}
+                commandDescription={props.commandDescription}
+                setCommand={props.setCommand}
+                setCommandDescription={props.setCommandDescription}
+            />
+        </Dialog>
+    );
+}
