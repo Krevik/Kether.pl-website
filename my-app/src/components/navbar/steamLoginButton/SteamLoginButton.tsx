@@ -3,7 +3,6 @@ import './SteamLoginButton.css';
 import { Button } from 'primereact/button';
 import { AppState, appStore } from '../../../redux/store';
 import { userDataActions } from '../../../redux/slices/userDataSlice';
-import { useEffect } from 'react';
 
 const HOST_URL = 'https://kether.pl';
 

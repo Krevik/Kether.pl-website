@@ -1,4 +1,4 @@
-const isDevelopmentMode = false;
+const isDevelopmentMode = true;
 export const apiPaths = {
     API_DOMAIN: isDevelopmentMode
         ? `http://localhost:3001`

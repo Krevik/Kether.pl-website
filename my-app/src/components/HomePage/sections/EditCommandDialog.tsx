@@ -1,13 +1,10 @@
 import { Dialog } from 'primereact/dialog';
 import { Button } from 'primereact/button';
-import { BindEntry } from '../../../models/bindsModels';
-import { bindsManagingService } from '../../../services/bindsManagingService';
 import { notificationManager } from '../../../utils/notificationManager';
 import { MutableRefObject, RefObject } from 'react';
 import { Toast } from 'primereact/toast';
 import { CommandEntry } from '../../../models/commandModels';
 import { commandsManagingService } from '../../../services/commandsManagingService';
-import DialogBindContent from '../../HallOfFame/Dialogues/DialogBindContent';
 import DialogCommandContent from './DialogCommandContent';
 
 type EditCommandDialogProps = {

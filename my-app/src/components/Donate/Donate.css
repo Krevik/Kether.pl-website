@@ -1,11 +1,13 @@
 .donate {
-	gap: 50px;
+	width: 100%;
 	background-position: center;
 	background-size: cover;
 	display: flex;
 	flex-direction: column;
+	height: 100vh;
 	justify-content: space-evenly;
-	height: 100%;
+	min-width: 950px;
+	min-height: 600px;
 }
 
 .donate .payment-method {

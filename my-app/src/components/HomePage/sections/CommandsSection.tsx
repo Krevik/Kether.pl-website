@@ -10,7 +10,6 @@ import { notificationManager } from '../../../utils/notificationManager';
 import { Toast } from 'primereact/toast';
 import EditCommandDialog from './EditCommandDialog';
 import { Toolbar } from 'primereact/toolbar';
-import AddNewBindDialog from '../../HallOfFame/Dialogues/AddNewBindDialog';
 import AddNewCommandDialog from './AddNewCommandDialog';
 
 export default function CommandsSection() {
