@@ -34,22 +34,13 @@ export default function GameStats() {
         first: 0,
         rows: 10,
         page: 0,
-        sortField: 'Commons_Killed',
+        sortField: 'Total_Score',
         sortOrder: 1,
         query: undefined,
     });
 
     gameStatsService.useGameStatsLoadingService(lazyParams, setLoading);
 
-    const calculateOverallScore = (rowData: GameStatEntry) => {
-        let totalScore = 0;
-        totalScore =
-            (rowData.Commons_Killed_Per_Round_Average ?? 0) +
-            (rowData.Hunters_Skeeted_Per_Round_Average ?? 0) +
-            (rowData.Damage_Done_To_SI_Per_Round_Average ?? 0) / 200 -
-            (rowData.Friendly_Fire_Done_Per_Round_Average ?? 0) / 10;
-        return totalScore.toFixed(2);
-    };
     const playerEntryHeader = (rowData: GameStatEntry) => {
         return (
             <div className="user-data">
@@ -60,7 +51,7 @@ export default function GameStats() {
                     {rowData.LastKnownSteamName}
                 </span>
                 <div className={'accordion-header-data'}>
-                    Overall Score: {calculateOverallScore(rowData)}
+                    Overall Score: {rowData.Total_Score}
                 </div>
             </div>
         );
