@@ -110,6 +110,12 @@ export default function GameStats() {
                             Friendly fire received:{' '}
                             {rowData.Friendly_Fire_Received}
                         </div>
+                        <div>
+                            Average friendly recovers (per round)*:{' '}
+                            {rowData.Friendly_Recovers_Per_Round_Average?.toFixed(
+                                2
+                            )}
+                        </div>
                     </div>
                     <div className="accordion-column">
                         Special Infected Stats

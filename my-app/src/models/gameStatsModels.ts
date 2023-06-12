@@ -24,6 +24,7 @@ export type GameStatEntry = {
     Hunters_Skeeted_Per_Round_Average?: number;
     Damage_Done_To_SI_Per_Round_Average?: number;
     Friendly_Fire_Done_Per_Round_Average?: number;
+    Friendly_Recovers_Per_Round_Average?: number;
     Total_Score?: number;
 };
 
