@@ -51,13 +51,17 @@
 }
 
 .game-stats .user-data span {
+	margin: auto auto auto 1rem;
 	text-decoration: none;
-	margin: auto;
 	font-size: 1.3rem;
 }
 
 .game-stats .user-data .user-nickname span {
 	text-decoration: none;
+}
+
+.game-stats .p-accordion-header-text {
+	width: 100%;
 }
 
 .game-stats .p-accordion-content {
@@ -79,7 +83,7 @@
 }
 
 .game-stats .accordion-header-data {
-	margin: auto 2rem;
+	margin: auto 0 auto 2rem;
 }
 
 .game-stats .p-accordion .p-accordion-header-link {
