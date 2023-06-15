@@ -1,16 +1,20 @@
-import './Navbar.css';
+import styles from './Navbar.module.css';
 import SteamLoginButton from './steamLoginButton/SteamLoginButton';
 import UserDetails from './userDetails/UserDetails';
 import { Button } from 'primereact/button';
 import { useNavigate } from 'react-router-dom';
 import { pagePaths } from '../../utils/pagePaths';
-
 interface TabItem {
     label: string;
     targetPage: string;
 }
 
-export default function Navbar() {
+export type NavbarProps = {
+    isMenuShown: boolean;
+    setIsMenuShown: (boolean) => void;
+};
+
+export default function Navbar(props: NavbarProps) {
     const navigate = useNavigate();
 
     const tabs: TabItem[] = [
@@ -43,25 +47,49 @@ export default function Navbar() {
     const getNavigationButtons = () => {
         return tabs.map((tab) => {
             return (
-                <Button
+                <button
+                    className={styles.navigationButton}
                     key={tab.label.toString()}
                     onClick={() => {
                         navigate(`../${tab.targetPage}`);
                     }}
                 >
                     {tab.label}
-                </Button>
+                </button>
             );
         });
     };
 
-    return (
-        <div className="card">
-            <div className="navigation-menu">
+    const hideMenuButton = () => {
+        return (
+            <Button
+                className={styles.openHideMenuButton}
+                icon={
+                    props.isMenuShown
+                        ? 'pi-angle-double-up'
+                        : 'pi-angle-double-down'
+                }
+                onClick={() => props.setIsMenuShown(!props.isMenuShown)}
+            />
+        );
+    };
+
+    const navigationInternalContent = () => {
+        return (
+            <>
                 <SteamLoginButton />
                 <UserDetails />
                 {getNavigationButtons()}
+            </>
+        );
+    };
+
+    return (
+        <div className={styles.navigationMenuContainer}>
+            <div className={styles.navigationMenu}>
+                {props.isMenuShown && navigationInternalContent()}
             </div>
+            {hideMenuButton()}
         </div>
     );
 }

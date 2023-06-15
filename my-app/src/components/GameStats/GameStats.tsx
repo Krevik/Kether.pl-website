@@ -15,9 +15,9 @@ import {
 } from '../../models/gameStatsModels';
 import { useEffect, useMemo, useState } from 'react';
 import { InputText } from 'primereact/inputtext';
-import Navbar from '../navbar/Navbar';
-import Footer from '../Footer/Footer';
 import { Accordion, AccordionTab } from 'primereact/accordion';
+import { PageWithBackground } from '../PageLayout/PageBackground/PageWithBackground';
+import { BACKGROUNDS } from '../PageLayout/PageBackground/backgrounds';
 
 export default function GameStats() {
     const [searchValue, setSearchValue] = useState('');
@@ -179,12 +179,8 @@ export default function GameStats() {
     };
 
     return (
-        <>
-            <Navbar />
-            <div
-                className="game-stats"
-                style={{ backgroundImage: `url(${backgroundImage})` }}
-            >
+        <PageWithBackground imageUrl={BACKGROUNDS.BACKGROUND_3}>
+            <div className="game-stats">
                 <div className="card">
                     <div className="centered-text">Game Stats</div>
                     <div className="card">
@@ -217,7 +213,6 @@ export default function GameStats() {
                     </div>
                 </div>
             </div>
-            <Footer />
-        </>
+        </PageWithBackground>
     );
 }

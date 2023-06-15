@@ -29,6 +29,7 @@
 		"react-scripts": "5.0.1",
 		"redux-persist": "^6.0.0",
 		"stream-browserify": "^3.0.0",
+		"typed-css-modules": "^0.7.2",
 		"typescript": "^4.9.5",
 		"url": "^0.11.0",
 		"util": "^0.12.5"
@@ -62,7 +63,8 @@
 	},
 	"devDependencies": {
 		"react-router-dom": "^6.10.0",
-		"shx": "^0.3.4"
+		"shx": "^0.3.4",
+		"typescript-plugin-css-modules": "^5.0.1"
 	},
 	"prettier": {
 		"trailingComma": "es5",

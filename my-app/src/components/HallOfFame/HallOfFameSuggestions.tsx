@@ -13,8 +13,8 @@ import { Toolbar } from 'primereact/toolbar';
 import { bindSuggestionsManagingService } from '../../services/bindSuggestionsManagingService';
 import { notificationManager } from '../../utils/notificationManager';
 import AddNewBindSuggestionDialog from './Dialogues/AddNewBindSuggestionDalog';
-import Navbar from '../navbar/Navbar';
-import Footer from '../Footer/Footer';
+import { PageWithBackground } from '../PageLayout/PageBackground/PageWithBackground';
+import { BACKGROUNDS } from '../PageLayout/PageBackground/backgrounds';
 
 export default function HallOfFameSuggestions() {
     const bindSuggestions = useSelector(
@@ -142,12 +142,8 @@ export default function HallOfFameSuggestions() {
     };
 
     return (
-        <>
-            <Navbar />
-            <div
-                className="hall-of-fame-suggestions"
-                style={{ backgroundImage: `url(${backgroundImage})` }}
-            >
+        <PageWithBackground imageUrl={BACKGROUNDS.BACKGROUND_2}>
+            <div className="hall-of-fame-suggestions">
                 <div className="card">
                     <Toast ref={toast} />
 
@@ -205,7 +201,6 @@ export default function HallOfFameSuggestions() {
                     </>
                 </div>
             </div>
-            <Footer />
-        </>
+        </PageWithBackground>
     );
 }

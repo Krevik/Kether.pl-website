@@ -1,6 +1,4 @@
 .home-page {
-	background-position: center;
-	background-size: cover;
 	display: flex;
 	justify-content: space-between;
 	align-items: baseline;

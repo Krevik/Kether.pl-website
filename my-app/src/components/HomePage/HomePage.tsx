@@ -1,24 +1,16 @@
 import './HomePage.css';
-import backgroundImage from '../../resources/backgrounds/background_1.jpg';
 import ServerInfoSection from './sections/ServerInfoSection';
 import CommandsSection from './sections/CommandsSection';
-import Navbar from '../navbar/Navbar';
-import Footer from '../Footer/Footer';
+import { PageWithBackground } from '../PageLayout/PageBackground/PageWithBackground';
+import { BACKGROUNDS } from '../PageLayout/PageBackground/backgrounds';
 
 export default function HomePage() {
     return (
-        <>
-            <Navbar />
-            <div
-                className="home-page"
-                style={{
-                    backgroundImage: `url(${backgroundImage})`,
-                }}
-            >
+        <PageWithBackground imageUrl={BACKGROUNDS.BACKGROUND_1}>
+            <div className="home-page">
                 <ServerInfoSection />
                 <CommandsSection />
             </div>
-            <Footer />
-        </>
+        </PageWithBackground>
     );
 }

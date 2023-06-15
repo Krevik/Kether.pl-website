@@ -1,16 +1,12 @@
-import backgroundImage from "../../resources/backgrounds/background_3.jpg";
-import "./GithubRepo.css";
-import Navbar from '../navbar/Navbar';
-import Footer from '../Footer/Footer';
+import backgroundImage from '../../resources/backgrounds/background_3.jpg';
+import './GithubRepo.css';
+import { PageWithBackground } from '../PageLayout/PageBackground/PageWithBackground';
+import { BACKGROUNDS } from '../PageLayout/PageBackground/backgrounds';
 
 export default function GithubRepo() {
-	return (
-        <>
-            <Navbar />
-            <div
-                className="github-repo"
-                style={{ backgroundImage: `url(${backgroundImage})` }}
-            >
+    return (
+        <PageWithBackground imageUrl={BACKGROUNDS.BACKGROUND_4}>
+            <div className="github-repo">
                 <div className="card">
                     <div className="centered-text">
                         You can find our server files{' '}
@@ -20,7 +16,6 @@ export default function GithubRepo() {
                     </div>
                 </div>
             </div>
-            <Footer />
-        </>
+        </PageWithBackground>
     );
 }

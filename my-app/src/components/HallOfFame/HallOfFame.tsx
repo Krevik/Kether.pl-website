@@ -1,6 +1,5 @@
 import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
-import backgroundImage from '../../resources/backgrounds/background_2.jpg';
 import './HallOfFame.css';
 import { useSelector } from 'react-redux';
 import { AppState } from '../../redux/store';
@@ -18,8 +17,8 @@ import { Toolbar } from 'primereact/toolbar';
 import { notificationManager } from '../../utils/notificationManager';
 import EditBindDialog from './Dialogues/EditBindDialog';
 import AddNewBindDialog from './Dialogues/AddNewBindDialog';
-import Navbar from '../navbar/Navbar';
-import Footer from '../Footer/Footer';
+import { PageWithBackground } from '../PageLayout/PageBackground/PageWithBackground';
+import { BACKGROUNDS } from '../PageLayout/PageBackground/backgrounds';
 
 export default function HallOfFame() {
     const binds = useSelector((state: AppState) => state.bindsReducer.binds);
@@ -194,15 +193,10 @@ export default function HallOfFame() {
     };
 
     return (
-        <>
-            <Navbar />
-            <div
-                className="hall-of-fame"
-                style={{ backgroundImage: `url(${backgroundImage})` }}
-            >
+        <PageWithBackground imageUrl={BACKGROUNDS.BACKGROUND_2}>
+            <div className="hall-of-fame">
                 <div className="card">
                     <Toast ref={toast} />
-
                     <AddNewBindDialog
                         setBindText={setBindText}
                         bindText={bindText}
@@ -270,7 +264,6 @@ export default function HallOfFame() {
                     </div>
                 </div>
             </div>
-            <Footer />
-        </>
+        </PageWithBackground>
     );
 }
