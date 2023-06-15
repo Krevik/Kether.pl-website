@@ -9,7 +9,8 @@
 }
 
 .user-details .card {
-	display: inline-block;
+	display: flex;
+	flex-direction: column;
 }
 
 .navigation-menu .user-details span {
