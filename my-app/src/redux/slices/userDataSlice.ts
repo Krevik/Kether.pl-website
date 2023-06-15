@@ -24,8 +24,10 @@ interface userDataSliceProps {
 }
 
 const initialState: userDataSliceProps = {
-    userID: '76561198007892926',
-    isAdmin: true,
+    // userID: '76561198007892926',
+    // isAdmin: true,
+    userID: undefined,
+    isAdmin: false,
     userData: undefined,
     gamesData: undefined,
 };
