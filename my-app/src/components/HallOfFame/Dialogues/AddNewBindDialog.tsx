@@ -14,7 +14,6 @@ type AddNewBindDialogProps = {
     bindText: string;
     setBindAuthor: (author: string) => void;
     setBindText: (text: string) => void;
-    notificationToast: RefObject<Toast>;
 };
 
 export default function AddNewBindDialog(props: AddNewBindDialogProps) {
@@ -39,7 +38,6 @@ export default function AddNewBindDialog(props: AddNewBindDialogProps) {
                         .addNewBind(newBind)
                         .then(() => {
                             notificationManager.SUCCESS(
-                                props.notificationToast,
                                 `Successfully added new bind`
                             );
                             props.setDialogVisibility(false);
@@ -47,7 +45,6 @@ export default function AddNewBindDialog(props: AddNewBindDialogProps) {
                         })
                         .catch((error) => {
                             notificationManager.ERROR(
-                                props.notificationToast,
                                 `Couldn't add the bind: ${error}`
                             );
                         });

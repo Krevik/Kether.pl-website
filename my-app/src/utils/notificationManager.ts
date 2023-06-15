@@ -1,26 +1,24 @@
-import { RefObject } from 'react';
-import { Toast, ToastMessage } from 'primereact/toast';
+import { appStore } from '../redux/store';
+import {
+    Notification,
+    notificationsActions,
+} from '../redux/slices/notificationsSlice';
 
 export const notificationManager = {
-    SUCCESS: (toast: RefObject<Toast>, message: string) => {
-        return showToastNotification(toast, 'success', 'Successful', message);
+    SUCCESS: (message: string) => {
+        const notification: Notification = {
+            type: 'success',
+            title: 'Success',
+            message: message,
+        };
+        appStore.dispatch(notificationsActions.addNotification(notification));
     },
-    ERROR: (toast: RefObject<Toast>, message: string) => {
-        return showToastNotification(toast, 'error', 'Failed', message);
+    ERROR: (message: string) => {
+        const notification: Notification = {
+            type: 'error',
+            title: 'Fail',
+            message: message,
+        };
+        appStore.dispatch(notificationsActions.addNotification(notification));
     },
-};
-
-const showToastNotification = (
-    toast: RefObject<Toast>,
-    severity: ToastMessage['severity'],
-    summary: ToastMessage['summary'],
-    detail: string,
-    life?: number
-) => {
-    toast.current!.show({
-        severity: severity,
-        summary: summary,
-        detail: detail,
-        life: life || 3000,
-    });
 };

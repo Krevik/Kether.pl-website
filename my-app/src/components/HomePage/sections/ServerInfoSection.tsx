@@ -67,21 +67,6 @@ export default function ServerInfoSection() {
 
     return (
         <div className="section future-rot">
-            <span className="centered-text">
-                You can download all the custom maps installed on the server
-                <a
-                    style={{
-                        display: 'inline-block',
-                        marginLeft: '10px',
-                        textDecoration: 'none',
-                        color: 'white',
-                        WebkitTextStroke: ' 3px red',
-                    }}
-                    href="https://steamcommunity.com/sharedfiles/filedetails/?id=2542824628"
-                >
-                    HERE
-                </a>
-            </span>
             <span>Name: {serverInfo?.name}</span>
             <span>IP: 51.83.217.86:29800</span>
             <span>
@@ -101,6 +86,21 @@ export default function ServerInfoSection() {
                 ></Button>
             </span>
             <span>{drawPlayerListIfNotEmpty()}</span>
+            <span className="centered-text">
+                You can download all the custom maps installed on the server
+                <a
+                    style={{
+                        display: 'inline-block',
+                        marginLeft: '10px',
+                        textDecoration: 'none',
+                        color: 'white',
+                        WebkitTextStroke: ' 3px red',
+                    }}
+                    href="https://steamcommunity.com/sharedfiles/filedetails/?id=2542824628"
+                >
+                    HERE
+                </a>
+            </span>
         </div>
     );
 }

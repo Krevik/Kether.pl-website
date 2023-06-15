@@ -16,7 +16,6 @@ type AddNewBindSuggestionDialogProps = {
     bindText: string;
     setBindAuthor: (author: string) => void;
     setBindText: (text: string) => void;
-    notificationToast: RefObject<Toast>;
     bindEditingIdRef: MutableRefObject<Number>;
 };
 
@@ -49,7 +48,6 @@ export default function AddNewBindSuggestionDialog(
                         .addNewBindSuggestion(newBind)
                         .then(() => {
                             notificationManager.SUCCESS(
-                                props.notificationToast,
                                 `Successfully suggested new bind`
                             );
                             props.setDialogVisibility(false);
@@ -57,7 +55,6 @@ export default function AddNewBindSuggestionDialog(
                         })
                         .catch((error) => {
                             notificationManager.ERROR(
-                                props.notificationToast,
                                 `Couldn't suggest the bind: ${error}`
                             );
                         });

@@ -44,8 +44,6 @@ export default function HallOfFame() {
 
     const [bindText, setBindText] = useState('');
 
-    const toast = useRef<Toast>(null);
-
     bindsManagingService.useBindsLoadingService(userData?.steamid);
 
     const trimBindAuthor = (bind: BindEntry | BindSuggestionEntry) => {
@@ -80,7 +78,6 @@ export default function HallOfFame() {
                             .deleteBind(rowData, userData?.steamid)
                             .then((deletedBindResponse) => {
                                 notificationManager.SUCCESS(
-                                    toast,
                                     `${deletedBindResponse}`
                                 );
                                 setNewBindDialogVisibility(false);
@@ -88,7 +85,6 @@ export default function HallOfFame() {
                             })
                             .catch((error) => {
                                 notificationManager.ERROR(
-                                    toast,
                                     `Couldn't delete the bind: ${error}`
                                 );
                             });
@@ -112,10 +108,10 @@ export default function HallOfFame() {
         bindsManagingService
             .setVote(voteData, deleteVote)
             .then((response) => {
-                notificationManager.SUCCESS(toast, response);
+                notificationManager.SUCCESS(response);
             })
             .catch((error) => {
-                notificationManager.ERROR(toast, error);
+                notificationManager.ERROR(error);
             });
     };
 
@@ -196,7 +192,6 @@ export default function HallOfFame() {
         <PageWithBackground imageUrl={BACKGROUNDS.BACKGROUND_2}>
             <div className="hall-of-fame">
                 <div className="card">
-                    <Toast ref={toast} />
                     <AddNewBindDialog
                         setBindText={setBindText}
                         bindText={bindText}
@@ -204,7 +199,6 @@ export default function HallOfFame() {
                         bindAuthor={bindAuthor}
                         isDialogVisible={newBindDialogVisibility}
                         setDialogVisibility={setNewBindDialogVisibility}
-                        notificationToast={toast}
                     />
 
                     <EditBindDialog
@@ -215,7 +209,6 @@ export default function HallOfFame() {
                         bindEditingIdRef={editingBindID}
                         isDialogVisible={editBindDialogVisibility}
                         setDialogVisibility={setEditBindDialogVisibility}
-                        notificationToast={toast}
                     />
 
                     <Toolbar

@@ -14,7 +14,6 @@ type EditBindDialogProps = {
     bindText: string;
     setBindAuthor: (author: string) => void;
     setBindText: (text: string) => void;
-    notificationToast: RefObject<Toast>;
     bindEditingIdRef: MutableRefObject<Number>;
 };
 
@@ -46,7 +45,6 @@ export default function EditBindDialog(props: EditBindDialogProps) {
                             .updateBind(newBindData)
                             .then(() => {
                                 notificationManager.SUCCESS(
-                                    props.notificationToast,
                                     `Successfully updated the bind`
                                 );
                                 props.setDialogVisibility(false);
@@ -54,7 +52,6 @@ export default function EditBindDialog(props: EditBindDialogProps) {
                             })
                             .catch((error) => {
                                 notificationManager.ERROR(
-                                    props.notificationToast,
                                     `Couldn't update the bind: ${error}`
                                 );
                             });

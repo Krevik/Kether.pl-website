@@ -41,8 +41,6 @@ export default function HallOfFameSuggestions() {
 
     const [bindText, setBindText] = useState('');
 
-    const toast = useRef<Toast>(null);
-
     bindSuggestionsManagingService.useBindSuggestionsLoadingService();
 
     const bindSuggestionBody = (rowData: BindSuggestionEntry) => {
@@ -62,7 +60,6 @@ export default function HallOfFameSuggestions() {
                                 .addNewBind(bind, userData?.steamid)
                                 .then((addedBind) => {
                                     notificationManager.SUCCESS(
-                                        toast,
                                         `Successfully accepted new bind: ${addedBind}`
                                     );
                                     bindSuggestionsManagingService.deleteBindSuggestion(
@@ -71,7 +68,6 @@ export default function HallOfFameSuggestions() {
                                 })
                                 .catch((error) => {
                                     notificationManager.ERROR(
-                                        toast,
                                         `Couldn't add new bind: ${error}`
                                     );
                                 });
@@ -88,14 +84,12 @@ export default function HallOfFameSuggestions() {
                                 .deleteBindSuggestion(rowData)
                                 .then((deletedBind) => {
                                     notificationManager.SUCCESS(
-                                        toast,
                                         `Successfully deleted bind suggestion: ${deletedBind}`
                                     );
                                     setBindText('');
                                 })
                                 .catch((error) => {
                                     notificationManager.ERROR(
-                                        toast,
                                         `Couldn't delete bind suggestion: ${error}`
                                     );
                                 });
@@ -145,8 +139,6 @@ export default function HallOfFameSuggestions() {
         <PageWithBackground imageUrl={BACKGROUNDS.BACKGROUND_2}>
             <div className="hall-of-fame-suggestions">
                 <div className="card">
-                    <Toast ref={toast} />
-
                     <AddNewBindSuggestionDialog
                         setBindText={setBindText}
                         bindText={bindText}
@@ -157,7 +149,6 @@ export default function HallOfFameSuggestions() {
                         setDialogVisibility={
                             setNewBindSuggestionDialogVisibility
                         }
-                        notificationToast={toast}
                     />
 
                     <Toolbar

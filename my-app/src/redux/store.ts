@@ -7,6 +7,7 @@ import { bindSuggestionsReducer } from './slices/bindSuggestionsSlice';
 import { gameStatsReducer } from './slices/gameStatsSlice';
 import { serverInfoReducer } from './slices/serverInfoSlice';
 import { commandsReducer } from './slices/commandsSlice';
+import { notificationsReducer } from './slices/notificationsSlice';
 
 const persistConfig = {
     key: 'root',
@@ -21,6 +22,7 @@ const combinedReducers = combineReducers({
     bindSuggestionsReducer: bindSuggestionsReducer,
     gameStatsReducer: gameStatsReducer,
     serverInfoReducer: serverInfoReducer,
+    notificationsReducer: notificationsReducer,
 });
 
 export const appStore = configureStore({

@@ -14,7 +14,6 @@ type EditCommandDialogProps = {
     commandDescription: string;
     setCommand: (author: string) => void;
     setCommandDescription: (text: string) => void;
-    notificationToast: RefObject<Toast>;
     commandEditingIdRef: MutableRefObject<Number>;
 };
 
@@ -46,7 +45,6 @@ export default function EditCommandDialog(props: EditCommandDialogProps) {
                             .updateCommand(newCommandData)
                             .then(() => {
                                 notificationManager.SUCCESS(
-                                    props.notificationToast,
                                     `Successfully updated the command`
                                 );
                                 props.setDialogVisibility(false);
@@ -54,7 +52,6 @@ export default function EditCommandDialog(props: EditCommandDialogProps) {
                             })
                             .catch((error) => {
                                 notificationManager.ERROR(
-                                    props.notificationToast,
                                     `Couldn't update the command: ${error.message}`
                                 );
                             });

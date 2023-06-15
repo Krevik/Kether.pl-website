@@ -14,7 +14,6 @@ type AddNewCommandDialogProps = {
     commandDescription: string;
     setCommand: (command: string) => void;
     setCommandDescription: (commandDescription: string) => void;
-    notificationToast: RefObject<Toast>;
 };
 
 export default function AddNewCommandDialog(props: AddNewCommandDialogProps) {
@@ -39,7 +38,6 @@ export default function AddNewCommandDialog(props: AddNewCommandDialogProps) {
                         .addNewCommand(newCommand)
                         .then(() => {
                             notificationManager.SUCCESS(
-                                props.notificationToast,
                                 `Successfully added new command`
                             );
                             props.setDialogVisibility(false);
@@ -47,7 +45,6 @@ export default function AddNewCommandDialog(props: AddNewCommandDialogProps) {
                         })
                         .catch((error) => {
                             notificationManager.ERROR(
-                                props.notificationToast,
                                 `Couldn't add the command: ${error.message}`
                             );
                         });

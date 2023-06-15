@@ -19,7 +19,6 @@ export default function CommandsSection() {
     const commands: CommandEntry[] = useSelector(
         (state: AppState) => state.commandsReducer.commands
     );
-    const toast = useRef<Toast>(null);
     const [commandDescription, setCommandDescription] = useState('');
     const editingCommandID = useRef(-1);
     const [command, setCommand] = useState('');
@@ -56,7 +55,6 @@ export default function CommandsSection() {
                             .deleteCommand(rowData)
                             .then((deletedCommandResponse) => {
                                 notificationManager.SUCCESS(
-                                    toast,
                                     `${deletedCommandResponse}`
                                 );
                                 setNewCommandDialogVisibility(false);
@@ -64,7 +62,6 @@ export default function CommandsSection() {
                             })
                             .catch((error) => {
                                 notificationManager.ERROR(
-                                    toast,
                                     `Couldn't delete the command: ${error}`
                                 );
                             });
@@ -93,7 +90,6 @@ export default function CommandsSection() {
 
     return (
         <div className="section">
-            <Toast ref={toast} />
             <AddNewCommandDialog
                 setCommandDescription={setCommandDescription}
                 commandDescription={commandDescription}
@@ -101,7 +97,6 @@ export default function CommandsSection() {
                 command={command}
                 isDialogVisible={newCommandDialogVisibiilty}
                 setDialogVisibility={setNewCommandDialogVisibility}
-                notificationToast={toast}
             />
             <EditCommandDialog
                 setCommandDescription={setCommandDescription}
@@ -111,7 +106,6 @@ export default function CommandsSection() {
                 commandEditingIdRef={editingCommandID}
                 isDialogVisible={editCommandDialogVisibility}
                 setDialogVisibility={setEditCommandDialogVisibility}
-                notificationToast={toast}
             />
 
             {isAdmin && (
