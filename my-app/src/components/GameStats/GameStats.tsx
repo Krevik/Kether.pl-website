@@ -18,6 +18,7 @@ import { InputText } from 'primereact/inputtext';
 import { Accordion, AccordionTab } from 'primereact/accordion';
 import { PageWithBackground } from '../PageLayout/PageBackground/PageWithBackground';
 import { BACKGROUNDS } from '../PageLayout/PageBackground/backgrounds';
+import { Button } from 'primereact/button';
 
 export default function GameStats() {
     const [searchValue, setSearchValue] = useState('');
@@ -45,11 +46,7 @@ export default function GameStats() {
         return (
             <div className="user-data">
                 <img alt="user-avatar" src={rowData.avatarMediumSrc} />
-                <span
-                // href={rowData.profileUrl}
-                >
-                    {rowData.LastKnownSteamName}
-                </span>
+                <span>{rowData.LastKnownSteamName}</span>
                 <div className={'accordion-header-data'}>
                     Rank: {rowData.Place_In_Rank}
                 </div>
@@ -136,6 +133,13 @@ export default function GameStats() {
                         </div>
                     </div>
                     * - counts for overall score
+                    <Button
+                        onClick={() => {
+                            window.open(rowData.profileUrl, '_blank')!.focus();
+                        }}
+                    >
+                        Jump to profile
+                    </Button>
                 </AccordionTab>
             </Accordion>
         );
