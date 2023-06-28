@@ -26,6 +26,7 @@ export type GameStatEntry = {
     Friendly_Fire_Done_Per_Round_Average?: number;
     Friendly_Recovers_Per_Round_Average?: number;
     Total_Score?: number;
+    Place_In_Rank: number;
 };
 
 export type GameStatLazyLoadingParams = {

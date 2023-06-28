@@ -51,6 +51,9 @@ export default function GameStats() {
                     {rowData.LastKnownSteamName}
                 </span>
                 <div className={'accordion-header-data'}>
+                    Rank: {rowData.Place_In_Rank}
+                </div>
+                <div className={'accordion-header-data'}>
                     Overall Score: {rowData.Total_Score}
                 </div>
             </div>

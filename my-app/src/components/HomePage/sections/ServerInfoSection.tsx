@@ -42,27 +42,24 @@ export default function ServerInfoSection() {
         return <span>{getFormattedGamePlayTime(rowData.duration)}</span>;
     };
 
-    const drawPlayerListIfNotEmpty = () => {
-        if (steamServerInfo && steamServerInfo.playerCount > 0) {
-            return (
-                <div className={'player-list-table'}>
-                    <DataTable
-                        value={steamServerInfo.players}
-                        removableSort
-                        sortMode="multiple"
-                        scrollable={true}
-                    >
-                        <Column field={'name'} header={'Nickname'} sortable />
-                        <Column field={'score'} header={'Score'} sortable />
-                        <Column
-                            body={getPlayerGameTimeColumnBody}
-                            header={'Duration'}
-                        />
-                    </DataTable>
-                </div>
-            );
-        }
-        return <></>;
+    const getPlayerList = () => {
+        return (
+            <div className={'player-list-table'}>
+                <DataTable
+                    value={steamServerInfo!.players}
+                    removableSort
+                    sortMode="multiple"
+                    scrollable={true}
+                >
+                    <Column field={'name'} header={'Nickname'} sortable />
+                    <Column field={'score'} header={'Score'} sortable />
+                    <Column
+                        body={getPlayerGameTimeColumnBody}
+                        header={'Duration'}
+                    />
+                </DataTable>
+            </div>
+        );
     };
 
     return (
@@ -85,7 +82,9 @@ export default function ServerInfoSection() {
                     }}
                 ></Button>
             </span>
-            <span>{drawPlayerListIfNotEmpty()}</span>
+            {steamServerInfo && steamServerInfo.playerCount > 0 && (
+                <span>{getPlayerList()}</span>
+            )}
             <span className="centered-text">
                 You can download all the custom maps installed on the server
                 <a

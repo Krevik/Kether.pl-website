@@ -1,0 +1,7 @@
+.firefly {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background-color: lightblue;
+    box-shadow: 0px 0px 20px 10px #0ff;
+}
