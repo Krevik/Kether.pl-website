@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import adminsFileLoc from '../resources/admins/admins.json';
 import { Admin } from '../models/adminModels';
 import { apiPaths } from '../utils/apiPaths';
+import { API_DOMAIN } from '../utils/envUtils';
 
 export const steamAPIService = {
     useAdminDetectionService: () => {
@@ -82,7 +83,7 @@ export const steamAPIService = {
         useEffect(() => {
             if (userID) {
                 fetch(
-                    `${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.STEAM_PATH}/games`,
+                    `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.STEAM_PATH}/games`,
                     {
                         method: 'post',
                         body: new URLSearchParams({
@@ -105,7 +106,7 @@ export const steamAPIService = {
     },
     getUserData: (userID: string): Promise<SteamUserDetails> => {
         return fetch(
-            `${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.STEAM_PATH}/userData`,
+            `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.STEAM_PATH}/userData`,
             {
                 method: 'post',
                 body: new URLSearchParams({

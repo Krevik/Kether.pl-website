@@ -6,6 +6,7 @@ import { steamServerInfoService } from '../../../services/steamServerInfoService
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { SteamPlayerServerData } from '../../../models/serverInfoModels';
+import { notificationManager } from '../../../utils/notificationManager';
 
 export default function ServerInfoSection() {
     const serverInfo = useSelector(
@@ -65,7 +66,17 @@ export default function ServerInfoSection() {
     return (
         <div className="section future-rot">
             <span>Name: {serverInfo?.name}</span>
-            <span>IP: 51.83.217.86:29800</span>
+            <span>
+                IP: 51.83.217.86:29800{' '}
+                <Button
+                    icon={'pi pi-copy'}
+                    style={{ scale: '0.8', verticalAlign: 'unset' }}
+                    onClick={() => {
+                        navigator.clipboard.writeText('51.83.217.86:29800');
+                        notificationManager.SUCCESS('IP Copied to clipboard');
+                    }}
+                />
+            </span>
             <span>
                 Players: {serverInfo?.players}/{serverInfo?.maxplayers}
             </span>

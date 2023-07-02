@@ -9,6 +9,7 @@ import { AppState, appStore } from '../redux/store';
 import { bindsActions } from '../redux/slices/bindsSlice';
 import { apiPaths } from '../utils/apiPaths';
 import { useSelector } from 'react-redux';
+import { API_DOMAIN } from '../utils/envUtils';
 
 export const bindsManagingService = {
     useBindsLoadingService: (steamUserID?: string) => {
@@ -16,7 +17,7 @@ export const bindsManagingService = {
     },
     getBinds: (userSteamID?: string) => {
         fetch(
-            `${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BINDS_PATH}/getBinds`,
+            `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BINDS_PATH}/getBinds`,
             {
                 method: 'get',
             }
@@ -109,7 +110,7 @@ export const bindsManagingService = {
         votingData.id && urlSearchParams.set('id', votingData.id.toString());
         if (!undoVote) {
             return fetch(
-                `${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BINDS_PATH}/vote`,
+                `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BINDS_PATH}/vote`,
                 {
                     method: 'post',
                     body: urlSearchParams,
@@ -124,7 +125,7 @@ export const bindsManagingService = {
                 });
         } else {
             return fetch(
-                `${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BINDS_PATH}/vote/delete`,
+                `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BINDS_PATH}/vote/delete`,
                 {
                     method: 'post',
                     body: urlSearchParams,
@@ -144,7 +145,7 @@ export const bindsManagingService = {
     },
     addNewBind: (bind: BindEntry, steamUserID?: string) => {
         return fetch(
-            `${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BINDS_PATH}/addBind`,
+            `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BINDS_PATH}/addBind`,
             {
                 method: 'post',
                 body: new URLSearchParams({
@@ -165,7 +166,7 @@ export const bindsManagingService = {
     },
     deleteBind: (bind: BindEntry, steamUserID?: string) => {
         return fetch(
-            `${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BINDS_PATH}/deleteBind`,
+            `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BINDS_PATH}/deleteBind`,
             {
                 method: 'post',
                 body: new URLSearchParams({
@@ -189,7 +190,7 @@ export const bindsManagingService = {
     },
     updateBind: (newBindData: BindEntry, steamUserID?: string) => {
         return fetch(
-            `${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BINDS_PATH}/updateBind`,
+            `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BINDS_PATH}/updateBind`,
             {
                 method: 'post',
                 body: new URLSearchParams({
@@ -217,7 +218,7 @@ export const bindsManagingService = {
 
 const getRawBindVotings = (): Promise<BindVote[]> => {
     return fetch(
-        `${apiPaths.API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BINDS_PATH}/votes`,
+        `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BINDS_PATH}/votes`,
         {
             method: 'get',
         }

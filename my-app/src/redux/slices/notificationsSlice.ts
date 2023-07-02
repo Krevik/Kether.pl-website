@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { CommandEntry } from '../../models/commandModels';
 import { ToastMessage } from 'primereact/toast';
 
 export type Notification = {

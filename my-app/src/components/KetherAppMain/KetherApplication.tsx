@@ -13,7 +13,7 @@ import {
 import { pagePaths } from '../../utils/pagePaths';
 import HallOfFameSuggestions from '../HallOfFame/HallOfFameSuggestions';
 import { PageLayout } from '../PageLayout/PageLayout';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function KetherApplication() {
     steamAPIService.useAdminDetectionService();
