@@ -67,7 +67,7 @@ export default function ServerInfoSection() {
         <div className="section future-rot">
             <span>Name: {serverInfo?.name}</span>
             <span>
-                IP: 51.83.217.86:29800{' '}
+                IP: 51.83.217.86:29800
                 <Button
                     icon={'pi pi-copy'}
                     style={{ scale: '0.8', verticalAlign: 'unset' }}
