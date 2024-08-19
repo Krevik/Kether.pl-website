@@ -6,3 +6,7 @@ footer span {
 	display: flex;
 	justify-content: center;
 }
+
+span.contact {float: right; margin: -1.8% 15px; white-space: pre-wrap; height: 32px; border: none;}
+span.contact button {background-color: transparent; border: none;}
+.pi {width: 24; height: 24; color: #e8e6e3;}
