@@ -1,4 +1,5 @@
 .pageWithBackground {
     background-size: cover;
+    background-repeat: no-repeat;
     flex-grow: 1;
 }

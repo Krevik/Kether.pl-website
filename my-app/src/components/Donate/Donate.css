@@ -5,16 +5,43 @@
 	justify-content: space-evenly;
 	min-width: 950px;
 	min-height: 600px;
+	background-color: rgba(0, 0, 0, 0.15);
+	backdrop-filter: blur(2px);
 }
 
 .donate .payment-method {
 	margin: auto;
-	border: solid 5px wheat;
-	border-radius: 50px;
+	border: solid 4px rgb(52, 56, 58);
+	border-radius: 4px;
 	height: 80px;
 	width: 50%;
 	min-width: 500px;
+	background-color: rgba(0, 0, 0, 0.5);
+	backdrop-filter: blur(2px);
 }
+
+.donate .payment-method .centered-text {
+	font-family: "Montserrat";
+	-webkit-text-stroke: 0px;
+	font-size: 1.6rem;
+}
+
+.donate .payment-method .p-button {
+    background-color: rgb(0, 0, 0);
+    color: #ffffff !important;
+	border: none;
+}
+
+.donate .payment-method .p-button:hover, .p-button:focus {
+	box-shadow: inset 0px 0px 0px 2px rgb(155, 2, 2);
+	transition: all 0s ease-in-out;
+}
+
+/* .donate .payment-method .p-button:hover {
+	box-shadow: inset 0px -5px 0px -2px rgb(155, 2, 2) !important;
+	transition: all 0s ease-in-out;
+}
+*/
 
 .donate .p-inputnumber {
 	margin-right: 10px;

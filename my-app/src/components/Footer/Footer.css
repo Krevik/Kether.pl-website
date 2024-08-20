@@ -9,4 +9,20 @@ footer span {
 
 span.contact {float: right; margin: -1.8% 15px; white-space: pre-wrap; height: 32px; border: none;}
 span.contact button {background-color: transparent; border: none;}
+span.contact button:before {
+	content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 2px;
+    background-color: rgb(155, 2, 2);
+    width: 0;
+    transition: width 0.2s ease-in-out;
+}
+span.contact button:hover:before {width: 100%;}
+span.contact button:hover, span.contact button:active {
+    color: rgb(248, 67, 67) !important;
+    background-color: #000000 !important;
+}
 .pi {width: 24; height: 24; color: #e8e6e3;}

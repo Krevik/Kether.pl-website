@@ -24,6 +24,7 @@
 	padding-top: 10px;
 	margin: auto;
 	font-size: 0.8rem;
+	font-family: "Montserrat", "Noto Sans", sans-serif;
 	background: radial-gradient( #000 0%, #222E3A 100%);
 	-webkit-text-stroke: 1px gray;
 	width: 98%;
