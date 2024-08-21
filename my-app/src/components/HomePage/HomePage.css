@@ -1,63 +1,78 @@
 .home-page {
-	display: flex;
-	justify-content: space-between;
-	align-items: baseline;
-	min-width: 900px
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    min-width: 900px;
 }
 
 .section {
-	display:flex;
-	flex-direction: column;
-	text-align: center;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
 }
 
 .home-page .section span {
-	-webkit-text-stroke: 1px black;
-	font-size: 2rem;
-	font-weight: 600;
+    -webkit-text-stroke: 1px black;
+    font-size: 2rem;
+    font-weight: 600;
 }
 
 .home-page .section span.p-button-label.p-c {
-	font-family: sans-serif;
-	font-size: 1rem;
+    font-family: sans-serif;
+    font-size: 1rem;
+    color: white;
+    -webkit-text-stroke: 0px !important;
+}
+
+.home-page span.centered-text {
+    margin-top: 30px;
 }
 
 .home-page .p-datatable {
-	font-family: "Future Rot";
-	font-size: 1.2rem;
-	-webkit-text-stroke: 1px black;
+    font-family: 'Future Rot';
+    font-size: 1.2rem;
+    -webkit-text-stroke: 1px black;
 }
 
 .home-page .p-datatable .p-datatable-tbody > tr {
-	background: transparent;
-	border: none;
+    background: transparent;
+    border: none;
 }
 
 .home-page .p-datatable .p-datatable-thead > tr > th {
-	background: transparent;
-	border: none;
+    background: transparent;
+    border: none;
 }
 
 .home-page .p-datatable .p-datatable-tbody > tr > td {
-	border: none;
+    border: none;
 }
 
 .home-page button {
-	background: greenyellow;
+    background: rgb(172, 21, 21);
+    border: none;
+    cursor: pointer;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.home-page button:hover {
+    background-color: red !important;
+    transition: 0.2s;
 }
 
 .player-list-table {
-	backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
 }
 
 .player-list-table .p-datatable-scrollable .p-datatable-wrapper span {
-	font-size: 1rem;
+    font-size: 1rem;
 }
 
-.home-page span[class*="p-button-icon p-c pi pi-trash"] {
-	font-size: 1rem;
+.home-page span[class*='p-button-icon p-c pi pi-trash'] {
+    font-size: 1rem;
 }
 
-.home-page span[class*="p-button-icon p-c pi pi-pencil"] {
-	font-size: 1rem;
+.home-page span[class*='p-button-icon p-c pi pi-pencil'] {
+    font-size: 1rem;
 }

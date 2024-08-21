@@ -121,6 +121,7 @@ export default function CommandsSection() {
                 style={{
                     backgroundColor: 'transparent',
                     background: 'transparent',
+                    backdropFilter: 'blur(2px)',
                 }}
             >
                 <Column field="command" header="Command"></Column>
