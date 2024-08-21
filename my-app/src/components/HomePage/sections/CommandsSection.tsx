@@ -37,7 +37,7 @@ export default function CommandsSection() {
                     data-toggle="tooltip"
                     title="Edits the given command"
                     icon="pi pi-pencil"
-                    className="p-button-rounded p-button-success mr-2"
+                    className="p-button-rounded mr-2"
                     onClick={() => {
                         editingCommandID.current = rowData.id;
                         setEditCommandDialogVisibility(true);
@@ -49,7 +49,7 @@ export default function CommandsSection() {
                     data-toggle="tooltip"
                     title="Deletes the given command instantly"
                     icon="pi pi-trash"
-                    className="p-button-rounded p-button-warning"
+                    className="p-button-rounded p-button-danger"
                     onClick={() => {
                         commandsManagingService
                             .deleteCommand(rowData)
@@ -78,7 +78,7 @@ export default function CommandsSection() {
                     <Button
                         label="New Command"
                         icon="pi pi-plus"
-                        className="p-button-success mr-2"
+                        className="mr-2"
                         data-toggle="tooltip"
                         title="Adds new command"
                         onClick={() => setNewCommandDialogVisibility(true)}

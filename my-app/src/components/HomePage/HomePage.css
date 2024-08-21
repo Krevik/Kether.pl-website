@@ -28,10 +28,61 @@
     margin-top: 30px;
 }
 
+.home-page .p-toolbar {
+    backdrop-filter: blur(10px);
+    background-color: rgba(0, 0, 0, 0.45) !important;
+    border: none;
+}
+
+.home-page .p-toolbar button {
+    background-color: #000;
+    border: none;
+}
+
+.home-page .p-toolbar button:hover,
+.home-page .p-toolbar button:active {
+    background-color: #000 !important;
+    color: #ff1313 !important;
+    transition: 0.1s;
+    border: none;
+}
+
 .home-page .p-datatable {
     font-family: 'Future Rot';
     font-size: 1.2rem;
     -webkit-text-stroke: 1px black;
+}
+
+.home-page .p-datatable button {
+    color: white;
+    border: none;
+}
+
+.home-page .p-datatable button:hover,
+.home-page .p-datatable button:active {
+    border: none;
+}
+
+.home-page .p-datatable button.mr-2 {
+    background-color: #000 !important;
+}
+
+.home-page .p-datatable button.mr-2:hover,
+.home-page .p-datatable button.mr-2:active {
+    background-color: #000 !important;
+    color: rgb(248, 67, 67) !important;
+}
+
+.home-page .p-datatable button.p-button-danger {
+    background: rgb(172, 21, 21);
+    margin-left: 15px;
+}
+
+.home-page .p-datatable button.p-button-danger:hover,
+.home-page .p-datatable button.p-button-danger:active {
+    background-color: red !important;
+    transition: 0.2s;
+    color: white !important;
 }
 
 .home-page .p-datatable .p-datatable-tbody > tr {
@@ -48,7 +99,7 @@
     border: none;
 }
 
-.home-page button {
+.home-page .section.future-rot button {
     background: rgb(172, 21, 21);
     border: none;
     cursor: pointer;
@@ -56,7 +107,7 @@
     text-decoration: none;
 }
 
-.home-page button:hover {
+.home-page .section.future-rot button:hover {
     background-color: red !important;
     transition: 0.2s;
 }
