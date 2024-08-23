@@ -125,11 +125,13 @@
 }
 
 .hall-of-fame [class*='p-button-icon p-c pi pi-trash'] {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
+    -webkit-text-stroke: 0px;
 }
 
 .hall-of-fame [class*='p-button-icon p-c pi pi-pencil'] {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
+    -webkit-text-stroke: 0px;
 }
 
 .hall-of-fame .p-datatable button {
