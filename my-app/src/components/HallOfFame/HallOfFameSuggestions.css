@@ -45,8 +45,11 @@
     appearance: none;
 }
 
-.hall-of-fame-suggestions .p-datatable .p-datatable-thead > tr > th:hover,
-.hall-of-fame-suggestions .p-datatable .p-column-header-content:hover {
+.hall-of-fame-suggestions .p-datatable .p-sortable-column:hover,
+.hall-of-fame-suggestions
+    .p-datatable
+    .p-sortable-column
+    .p-column-header-content:hover {
     background-color: rgba(0, 0, 0, 0.85) !important;
     color: rgb(248, 67, 67) !important;
 }

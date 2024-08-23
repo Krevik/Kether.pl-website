@@ -55,8 +55,8 @@
     appearance: none;
 }
 
-.hall-of-fame .p-datatable .p-datatable-thead > tr > th:hover,
-.hall-of-fame .p-datatable .p-column-header-content:hover {
+.hall-of-fame .p-datatable .p-sortable-column:hover,
+.hall-of-fame .p-datatable .p-sortable-column .p-column-header-content:hover {
     background-color: rgba(0, 0, 0, 0.85) !important;
     color: rgb(248, 67, 67) !important;
 }
@@ -122,6 +122,46 @@
 
 .hall-of-fame [class*='vote-down-button']:active:focus {
     background: rgb(139, 34, 34);
+}
+
+.hall-of-fame [class*='p-button-icon p-c pi pi-trash'] {
+    font-size: 1.4rem;
+}
+
+.hall-of-fame [class*='p-button-icon p-c pi pi-pencil'] {
+    font-size: 1.4rem;
+}
+
+.hall-of-fame .p-datatable button {
+    color: white;
+    border: none;
+}
+
+.hall-of-fame .p-datatable button:hover,
+.hall-of-fame .p-datatable button:active {
+    border: none;
+}
+
+.hall-of-fame .p-datatable button.mr-2 {
+    background-color: #000 !important;
+}
+
+.hall-of-fame .p-datatable button.mr-2:hover,
+.hall-of-fame .p-datatable button.mr-2:active {
+    background-color: #000 !important;
+    color: rgb(248, 67, 67) !important;
+}
+
+.hall-of-fame .p-datatable button.p-button-danger {
+    background: rgb(172, 21, 21);
+    margin-left: 15px;
+}
+
+.hall-of-fame .p-datatable button.p-button-danger:hover,
+.hall-of-fame .p-datatable button.p-button-danger:active {
+    background-color: red !important;
+    transition: 0.2s;
+    color: white !important;
 }
 
 .p-dialog {

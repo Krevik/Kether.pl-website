@@ -1,113 +1,143 @@
 .game-stats {
-	display: flex;
-	flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 .game-stats .card {
-	display: flex;
-	justify-content: space-between;
-	align-items: baseline;
-	flex-direction: column;
-	width: 100%;
-	overflow: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-direction: column;
+    width: 100%;
+    overflow: auto;
 }
 
 .game-stats .centered-text {
-	margin: auto;
+    margin: auto;
 }
 
 .game-stats .p-datatable-scrollable .p-datatable-wrapper {
-	overflow: auto;
+    overflow: auto;
 }
 
 .game-stats .p-datatable {
-	padding-top: 10px;
-	margin: auto;
-	font-size: 0.8rem;
-	font-family: "Montserrat", "Noto Sans", sans-serif;
-	background: radial-gradient( #000 0%, #222E3A 100%);
-	-webkit-text-stroke: 1px gray;
-	width: 98%;
+    padding-top: 10px;
+    margin: auto;
+    font-size: 0.8rem;
+    font-family: 'Montserrat', 'Noto Sans', sans-serif;
+    background: radial-gradient(#000 0%, #222e3a 100%);
+    -webkit-text-stroke: 1px gray;
+    width: 98%;
 }
 
 .game-stats .p-datatable .p-datatable-tbody > tr {
-	font-size: large;
-	-webkit-text-stroke: 1px wheat;
-	background: transparent;
-	border: none;
+    font-size: large;
+    -webkit-text-stroke: 1px wheat;
+    background: transparent;
+    border: none;
 }
 
 .game-stats .user-data img {
-	width: 32px;
-	height: 32px;
+    width: 32px;
+    height: 32px;
 }
 
 .game-stats .user-data {
-	display: flex;
-	flex-direction: row;
+    display: flex;
+    flex-direction: row;
 }
 
 .game-stats .user-data span {
-	margin: auto auto auto 1rem;
-	text-decoration: none;
-	font-size: 1.3rem;
+    margin: auto auto auto 1rem;
+    text-decoration: none;
+    font-size: 1.3rem;
 }
 
 .game-stats .user-data .user-nickname span {
-	text-decoration: none;
+    text-decoration: none;
 }
 
 .game-stats .p-accordion-header-text {
-	width: 100%;
+    width: 100%;
 }
 
 .game-stats .p-accordion-content {
-	display: flex;
-	flex-direction: row;
-	gap: 1rem;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
 }
 
 .game-stats .p-input-icon-left {
-	margin: auto auto 0.5rem;
+    margin: auto auto 0.5rem;
 }
 
 .game-stats .accordion-column {
-	font-size: 1.3rem;
+    font-size: 1.3rem;
 }
 
-.game-stats .accordion-column >div {
-	font-size: 0.8rem;
+.game-stats .accordion-column > div {
+    font-size: 0.8rem;
 }
 
 .game-stats .accordion-header-data {
-	margin: auto 0 auto 2rem;
+    margin: auto 0 auto 2rem;
 }
 
 .game-stats .p-accordion .p-accordion-header-link {
-	padding: 0.2rem 0.6rem;
+    padding: 0.2rem 0.6rem;
 }
 
 .game-stats .p-datatable .p-datatable-tbody > tr > td {
-	padding: 0.25rem 0.25rem;
+    padding: 0.25rem 0.25rem;
 }
 
 .game-stats .p-button {
-	height: 2rem;
-	background: #0F2027;  /* fallback for old browsers */
-	background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027);  /* Chrome 10-25, Safari 5.1-6 */
-	background: linear-gradient(to right, #2C5364, #203A43, #0F2027); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    height: 2rem;
+    background: #0f2027; /* fallback for old browsers */
+    background: -webkit-linear-gradient(
+        to right,
+        #2c5364,
+        #203a43,
+        #0f2027
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(
+        to right,
+        #2c5364,
+        #203a43,
+        #0f2027
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 .game-stats .p-button:active {
-	height: 2rem;
-	background: #0F2027;  /* fallback for old browsers */
-	background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027);  /* Chrome 10-25, Safari 5.1-6 */
-	background: linear-gradient(to right, #2C5364, #203A43, #0F2027); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    height: 2rem;
+    background: #0f2027; /* fallback for old browsers */
+    background: -webkit-linear-gradient(
+        to right,
+        #2c5364,
+        #203a43,
+        #0f2027
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(
+        to right,
+        #2c5364,
+        #203a43,
+        #0f2027
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 .game-stats .p-button:hover {
-	height: 2rem;
-	background: #0F2027;  /* fallback for old browsers */
-	background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027);  /* Chrome 10-25, Safari 5.1-6 */
-	background: linear-gradient(to right, #2C5364, #203A43, #0F2027); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    height: 2rem;
+    background: #0f2027; /* fallback for old browsers */
+    background: -webkit-linear-gradient(
+        to right,
+        #2c5364,
+        #203a43,
+        #0f2027
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(
+        to right,
+        #2c5364,
+        #203a43,
+        #0f2027
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }

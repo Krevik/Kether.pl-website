@@ -60,7 +60,7 @@ export default function HallOfFame() {
                     data-toggle="tooltip"
                     title="Edits the given bind"
                     icon="pi pi-pencil"
-                    className="p-button-rounded p-button-success mr-2"
+                    className="p-button-rounded p-button-warning mr-2"
                     onClick={() => {
                         editingBindID.current = rowData.id;
                         setEditBindDialogVisibility(true);
@@ -72,7 +72,7 @@ export default function HallOfFame() {
                     data-toggle="tooltip"
                     title="Deletes the given bind instantly"
                     icon="pi pi-trash"
-                    className="p-button-rounded p-button-warning"
+                    className="p-button-rounded p-button-danger"
                     onClick={() => {
                         bindsManagingService
                             .deleteBind(rowData, userData?.steamid)
