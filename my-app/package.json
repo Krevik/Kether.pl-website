@@ -1,6 +1,6 @@
 {
-	"name": "kether.pl",
-	"version": "0.1.0",
+	"name": "kether.pl | ktpl.eu",
+	"version": "0.1.99",
 	"private": true,
 	"homepage": "https://krevik.github.io/",
 	"dependencies": {
@@ -51,8 +51,11 @@
 	},
 	"browserslist": {
 		"production": [
-			">0.2%",
+			">0.5% in alt-EU",
+			"unreleased Chrome versions",
+			"unreleased Firefox versions",
 			"not dead",
+			"not iOS <= 2137",
 			"not op_mini all"
 		],
 		"development": [

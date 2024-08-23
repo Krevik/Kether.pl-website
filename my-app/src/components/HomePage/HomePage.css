@@ -56,7 +56,6 @@
 .home-page .p-datatable button {
     color: white;
     border: none;
-    -webkit-text-stroke: 0px;
 }
 
 .home-page .p-datatable button:hover,
@@ -123,8 +122,10 @@
 
 .home-page span[class*='p-button-icon p-c pi pi-trash'] {
     font-size: 1.2rem;
+    -webkit-text-stroke: 0px !important;
 }
 
 .home-page span[class*='p-button-icon p-c pi pi-pencil'] {
     font-size: 1.2rem;
+    -webkit-text-stroke: 0px !important;
 }
