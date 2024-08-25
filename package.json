@@ -1,8 +1,8 @@
 {
 	"name": "kether.pl | ktpl.eu",
-	"version": "0.1.99",
+	"version": "0.2.0",
 	"private": true,
-	"homepage": "https://krevik.github.io/",
+	"homepage": "https://github.com/Krevik/Kether.pl-website",
 	"dependencies": {
 		"@reduxjs/toolkit": "^1.9.2",
 		"@testing-library/jest-dom": "^5.16.5",
