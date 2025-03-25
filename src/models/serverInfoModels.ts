@@ -1,9 +1,8 @@
-export type SteamPlayerServerData = {
-	index: number;
-	name: string;
-	score: number;
-	duration: number;
-}
+export type PlayerDetails = {
+    name: string;
+    score: number;
+    duration: number;
+};
 
 export type ServerInfo = {
 	map: string;
@@ -11,10 +10,7 @@ export type ServerInfo = {
 	name: string;
 	password: string;
 	players: string;
+    bots: number;
+    playerdetails: PlayerDetails[];
 	status: string;
 };
-
-export type SteamServerInfo = {
-	playerCount: number;
-	players: SteamPlayerServerData[]
-}

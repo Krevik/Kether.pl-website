@@ -30,10 +30,10 @@ export default function Navbar(props: NavbarProps) {
             label: 'Hall of Fame Suggestions',
             targetPage: pagePaths.HALL_OF_FAME_SUGGESTIONS,
         },
-        {
-            label: 'Game Stats',
-            targetPage: pagePaths.GAME_STATS,
-        },
+        // {
+        //     label: 'Game Stats',
+        //     targetPage: pagePaths.GAME_STATS,
+        // },
         {
             label: 'Github Repo',
             targetPage: pagePaths.GITHUB,

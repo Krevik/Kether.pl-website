@@ -2,10 +2,9 @@ import { Button } from 'primereact/button';
 import { useSelector } from 'react-redux';
 import { AppState } from '../../../redux/store';
 import { serverInfoService } from '../../../services/serverInfoService';
-import { steamServerInfoService } from '../../../services/steamServerInfoService';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import { SteamPlayerServerData } from '../../../models/serverInfoModels';
+import { PlayerDetails, ServerInfo } from '../../../models/serverInfoModels';
 import { notificationManager } from '../../../utils/notificationManager';
 
 export default function ServerInfoSection() {
@@ -13,12 +12,7 @@ export default function ServerInfoSection() {
         (state: AppState) => state.serverInfoReducer.serverInfo
     );
 
-    const steamServerInfo = useSelector(
-        (state: AppState) => state.serverInfoReducer.steamServerInfo
-    );
-
     serverInfoService.useServerInfoLoadingService();
-    steamServerInfoService.useSteamServerInfoLoadingService();
 
     function getFormattedGamePlayTime(duration: number): string {
         // Hours, minutes and seconds
@@ -39,7 +33,7 @@ export default function ServerInfoSection() {
         return ret;
     }
 
-    const getPlayerGameTimeColumnBody = (rowData: SteamPlayerServerData) => {
+    const getPlayerGameTimeColumnBody = (rowData: PlayerDetails) => {
         return <span>{getFormattedGamePlayTime(rowData.duration)}</span>;
     };
 
@@ -47,7 +41,7 @@ export default function ServerInfoSection() {
         return (
             <div className={'player-list-table'}>
                 <DataTable
-                    value={steamServerInfo!.players}
+                    value={serverInfo!.playerdetails}
                     removableSort
                     sortMode="multiple"
                     scrollable={true}
@@ -78,7 +72,7 @@ export default function ServerInfoSection() {
                 />
             </span>
             <span>
-                Players: {serverInfo?.players}/{serverInfo?.maxplayers}
+                Players: {serverInfo?.players}/{serverInfo?.maxplayers} ({serverInfo?.bots} {serverInfo?.bots === 1 ? 'bot' : 'bots'})
             </span>
             <span>
                 Status: {serverInfo?.status === '1' ? 'Online' : 'Offline'}
@@ -93,7 +87,7 @@ export default function ServerInfoSection() {
                     }}
                 ></Button>
             </span>
-            {steamServerInfo && steamServerInfo.playerCount > 0 && (
+            {serverInfo && serverInfo.playerdetails.length > 0 && (
                 <span>{getPlayerList()}</span>
             )}
             <span className="centered-text">

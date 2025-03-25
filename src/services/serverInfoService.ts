@@ -32,18 +32,19 @@ export const serverInfoService = {
     },
 };
 
-const refreshServerInfo = (
+const refreshServerInfo = async (
     actualServerInfo: ServerInfo | undefined,
     isLoading: MutableRefObject<boolean>
 ) => {
     isLoading.current = true;
-    return axios
-        .get(API_PATHS.SERVER_INFO_LIVESERVER)
-        .then((response) => {
-            const newServerInfo: ServerInfo = response.data as ServerInfo;
-            appStore.dispatch(serverInfoActions.setServerInfo(newServerInfo));
-        })
-        .finally(() => {
-            isLoading.current = false;
-        });
+    try {
+        const response = await axios
+            .get(API_PATHS.SERVER_INFO);
+        const newServerInfo: ServerInfo = response.data as ServerInfo;
+        // Set status based on if there is any players or bots on the server.
+        // newServerInfo.status = (newServerInfo.players + newServerInfo.bots) > 0 ? '1' : '0';
+        appStore.dispatch(serverInfoActions.setServerInfo(newServerInfo));
+    } finally {
+        isLoading.current = false;
+    }
 };

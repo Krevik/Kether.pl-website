@@ -4,4 +4,4 @@ export const isDevelopmentEnvironment = () => {
 
 export const API_DOMAIN = isDevelopmentEnvironment()
     ? 'http://localhost:3001'
-    : 'https://kether-api.fun';
+    : 'https://21370000.xyz';

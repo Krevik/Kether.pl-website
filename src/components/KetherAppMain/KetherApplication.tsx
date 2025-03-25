@@ -3,7 +3,7 @@ import HallOfFame from '../HallOfFame/HallOfFame';
 import GithubRepo from '../GithubRepo/GithubRepo';
 import Donate from '../Donate/Donate';
 import { steamAPIService } from '../../services/steamAPIService';
-import GameStats from '../GameStats/GameStats';
+// import GameStats from '../GameStats/GameStats';
 import {
     createBrowserRouter,
     createRoutesFromElements,
@@ -56,7 +56,7 @@ export default function KetherApplication() {
                         />
                     }
                 />
-                <Route
+                {/* <Route
                     path={pagePaths.GAME_STATS}
                     element={
                         <PageLayout
@@ -65,7 +65,7 @@ export default function KetherApplication() {
                             setIsMenuShown={setIsMenuShown}
                         />
                     }
-                />
+                /> */}
                 <Route
                     path={pagePaths.GITHUB}
                     element={
