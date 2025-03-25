@@ -41,10 +41,24 @@ const refreshServerInfo = async (
         const response = await axios
             .get(API_PATHS.SERVER_INFO);
         const newServerInfo: ServerInfo = response.data as ServerInfo;
-        // Set status based on if there is any players or bots on the server.
-        // newServerInfo.status = (newServerInfo.players + newServerInfo.bots) > 0 ? '1' : '0';
+        // Set status based on if the response data is not empty
+        newServerInfo.status = Object.keys(newServerInfo).length > 0 ? '1' : '0';
+
         appStore.dispatch(serverInfoActions.setServerInfo(newServerInfo));
-    } finally {
+    } catch (error) {
+        console.error("Error fetching server info:", error);
+        // If there's an error, set the status to offline
+        const offlineServerInfo: ServerInfo = {
+            name: "Offline",
+            map: "Offline",
+            players: '0',
+            maxplayers: '0',
+            bots: 0,
+            playerdetails: [],
+            status: '0',
+        };
+        appStore.dispatch(serverInfoActions.setServerInfo(offlineServerInfo));
+    }  finally {
         isLoading.current = false;
     }
 };
