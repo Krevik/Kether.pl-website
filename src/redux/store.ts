@@ -4,7 +4,7 @@ import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
 import { bindsReducer } from './slices/bindsSlice';
 import { bindSuggestionsReducer } from './slices/bindSuggestionsSlice';
-import { gameStatsReducer } from './slices/gameStatsSlice';
+// import { gameStatsReducer } from './slices/gameStatsSlice';
 import { serverInfoReducer } from './slices/serverInfoSlice';
 import { commandsReducer } from './slices/commandsSlice';
 import { notificationsReducer } from './slices/notificationsSlice';
@@ -20,7 +20,7 @@ const combinedReducers = combineReducers({
     bindsReducer: bindsReducer,
     commandsReducer: commandsReducer,
     bindSuggestionsReducer: bindSuggestionsReducer,
-    gameStatsReducer: gameStatsReducer,
+    // gameStatsReducer: gameStatsReducer,
     serverInfoReducer: serverInfoReducer,
     notificationsReducer: notificationsReducer,
 });
