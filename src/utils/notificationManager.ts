@@ -12,6 +12,9 @@ export const notificationManager = {
             message: message,
         };
         appStore.dispatch(notificationsActions.addNotification(notification));
+        setTimeout(() => {
+            appStore.dispatch(notificationsActions.clearNotification());
+        }, 5000);
     },
     ERROR: (message: string) => {
         const notification: Notification = {
@@ -20,5 +23,8 @@ export const notificationManager = {
             message: message,
         };
         appStore.dispatch(notificationsActions.addNotification(notification));
+        setTimeout(() => {
+            appStore.dispatch(notificationsActions.clearNotification());
+        }, 5000);
     },
 };

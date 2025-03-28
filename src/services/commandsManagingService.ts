@@ -1,94 +1,95 @@
 import { useEffect } from 'react';
-import {
-    AttachedBindVoteData,
-    BindEntry,
-    BindVote,
-    BindVotingType,
-} from '../models/bindsModels';
-import { AppState, appStore } from '../redux/store';
-import { bindsActions } from '../redux/slices/bindsSlice';
-import { API_PATHS, apiPaths } from '../utils/apiPaths';
 import { CommandEntry } from '../models/commandModels';
+import { appStore } from '../redux/store';
 import { commandsActions } from '../redux/slices/commandsSlice';
+import { API_PATHS } from '../utils/apiPaths';
+import { notificationManager } from '../utils/notificationManager';
 
 export const commandsManagingService = {
     useCommandsLoadingService: () => {
         useServerCommandsLoader();
     },
-    getCommands: () => {
-        fetch(`${API_PATHS.COMMANDS}/getCommands`, {
-            method: 'get',
-        })
-            .then((response) => {
-                if (response.ok) {
-                    return response.json();
-                }
-            })
-            .then((commandEntries: CommandEntry[]) => {
-                appStore.dispatch(commandsActions.setCommands(commandEntries));
+    getCommands: async () => {
+        try {
+            const response = await fetch(`${API_PATHS.COMMANDS}/getCommands`, {
+                method: 'get',
             });
-    },
-    addNewCommand: (command: CommandEntry) => {
-        return fetch(`${API_PATHS.COMMANDS}/addCommand`, {
-            method: 'post',
-            body: new URLSearchParams({
-                command: command.command,
-                description: command.description,
-            }),
-        }).then(async (response) => {
-            if (response.ok) {
-                commandsManagingService.getCommands();
-                return response.json().then((response) => {
-                    return response;
-                });
-            } else {
-                throw new Error("Couldn't add the command");
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
-        });
+            const commandEntries: CommandEntry[] = await response.json();
+            appStore.dispatch(commandsActions.setCommands(commandEntries));
+        } catch (error) {
+            notificationManager.ERROR(
+                `Error while fetching commands: ${error.message}`
+            );
+        }
     },
-    deleteCommand: (command: CommandEntry) => {
-        return fetch(`${API_PATHS.COMMANDS}/deleteCommand`, {
-            method: 'post',
-            body: new URLSearchParams({
-                id: `${command.id}`,
-            }),
-        })
-            .then((response) => {
-                if (response.ok) {
-                    return response.json().then((jsonedResponse) => {
-                        commandsManagingService.getCommands();
-                        return jsonedResponse.message;
-                    });
-                } else {
-                    throw new Error("Couldn't delete command");
-                }
-            })
-            .catch((error) => {
-                throw new Error(error);
+    addNewCommand: async (command: CommandEntry) => {
+        try {
+            const response = await fetch(`${API_PATHS.COMMANDS}/addCommand`, {
+                method: 'post',
+                body: new URLSearchParams({
+                    command: command.command,
+                    description: command.description,
+                }),
             });
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const responseData = await response.json();
+            commandsManagingService.getCommands();
+            return responseData;
+        } catch (error) {
+            notificationManager.ERROR(
+                `Error while adding new command: ${error.message}`
+            );
+            throw error;
+        }
     },
-    updateCommand: (newCommandData: CommandEntry) => {
-        return fetch(`${API_PATHS.COMMANDS}/updateCommand`, {
-            method: 'post',
-            body: new URLSearchParams({
-                id: `${newCommandData.id}`,
-                command: `${newCommandData.command}`,
-                description: `${newCommandData.description}`,
-            }),
-        })
-            .then((response) => {
-                if (response.ok) {
-                    return response.json().then((jsonedResponse) => {
-                        commandsManagingService.getCommands();
-                        return jsonedResponse.message;
-                    });
-                } else {
-                    throw new Error("Couldn't update command");
-                }
-            })
-            .catch((error) => {
-                throw new Error(error);
+    deleteCommand: async (command: CommandEntry) => {
+        try {
+            const response = await fetch(`${API_PATHS.COMMANDS}/deleteCommand`, {
+                method: 'post',
+                body: new URLSearchParams({
+                    id: `${command.id}`,
+                }),
             });
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const jsonedResponse = await response.json();
+            commandsManagingService.getCommands();
+            return jsonedResponse.message;
+        } catch (error) {
+            notificationManager.ERROR(
+                `Error while deleting command: ${error.message}`
+            );
+            throw error;
+        }
+    },
+    updateCommand: async (newCommandData: CommandEntry) => {
+        try {
+            const response = await fetch(`${API_PATHS.COMMANDS}/updateCommand`, {
+                method: 'post',
+                body: new URLSearchParams({
+                    id: `${newCommandData.id}`,
+                    command: `${newCommandData.command}`,
+                    description: `${newCommandData.description}`,
+                }),
+            });
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const jsonedResponse = await response.json();
+            commandsManagingService.getCommands();
+            return jsonedResponse.message;
+        } catch (error) {
+            notificationManager.ERROR(
+                `Error while updating command: ${error.message}`
+            );
+            throw error;
+        }
     },
 };
 

@@ -1,78 +1,84 @@
 import { useEffect } from 'react';
 import { BindSuggestionEntry } from '../models/bindsModels';
-import { AppState, appStore } from '../redux/store';
+import { appStore } from '../redux/store';
 import { apiPaths } from '../utils/apiPaths';
 import { bindSuggestionsActions } from '../redux/slices/bindSuggestionsSlice';
-import { useSelector } from 'react-redux';
 import { API_DOMAIN } from '../utils/envUtils';
+import { notificationManager } from '../utils/notificationManager';
 
 export const bindSuggestionsManagingService = {
     useBindSuggestionsLoadingService: () => {
         useServerBindSuggestionsLoader();
     },
-    getBindSuggestions: () => {
-        fetch(
-            `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BIND_SUGGESTIONS_PATH}/getBinds`,
-            {
-                method: 'get',
-            }
-        )
-            .then((response) => {
-                if (response.ok) {
-                    return response.json();
+    getBindSuggestions: async () => {
+        try {
+            const response = await fetch(
+                `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BIND_SUGGESTIONS_PATH}/getBinds`,
+                {
+                    method: 'get',
                 }
-            })
-            .then((response: BindSuggestionEntry[]) => {
-                appStore.dispatch(
-                    bindSuggestionsActions.setBindSuggestions(response)
-                );
-            });
+            );
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const responseData: BindSuggestionEntry[] = await response.json();
+            appStore.dispatch(
+                bindSuggestionsActions.setBindSuggestions(responseData)
+            );
+        } catch (error) {
+            notificationManager.ERROR(
+                `Error while fetching bind suggestions: ${error.message}`
+            );
+        }
     },
-    addNewBindSuggestion: (bind: BindSuggestionEntry) => {
-        return fetch(
-            `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BIND_SUGGESTIONS_PATH}/addBind`,
-            {
-                method: 'post',
-                body: new URLSearchParams({
-                    author: bind.author,
-                    text: bind.text,
-                    proposedBy: bind.proposedBy!,
-                }),
-            }
-        ).then(async (response) => {
-            if (response.ok) {
-                bindSuggestionsManagingService.getBindSuggestions();
-                return response.json().then((response) => {
-                    return response;
-                });
-            } else {
-                throw new Error("Couldn't add the bind suggestion");
-            }
-        });
-    },
-    deleteBindSuggestion: (bind: BindSuggestionEntry) => {
-        return fetch(
-            `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BIND_SUGGESTIONS_PATH}/deleteBind`,
-            {
-                method: 'post',
-                body: new URLSearchParams({
-                    id: `${bind.id}`,
-                }),
-            }
-        )
-            .then((response) => {
-                if (response.ok) {
-                    return response.json().then((jsonedResponse) => {
-                        bindSuggestionsManagingService.getBindSuggestions();
-                        return jsonedResponse.message;
-                    });
-                } else {
-                    throw new Error("Couldn't delete bind suggestion");
+    addNewBindSuggestion: async (bind: BindSuggestionEntry) => {
+        try {
+            const response = await fetch(
+                `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BIND_SUGGESTIONS_PATH}/addBind`,
+                {
+                    method: 'post',
+                    body: new URLSearchParams({
+                        author: bind.author,
+                        text: bind.text,
+                        proposedBy: bind.proposedBy!,
+                    }),
                 }
-            })
-            .catch((error) => {
-                throw new Error(error);
-            });
+            );
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            bindSuggestionsManagingService.getBindSuggestions();
+            return await response.json();
+        } catch (error) {
+            notificationManager.ERROR(
+                `Error while adding new bind suggestion: ${error.message}`
+            );
+            throw error;
+        }
+    },
+    deleteBindSuggestion: async (bind: BindSuggestionEntry) => {
+        try {
+            const response = await fetch(
+                `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BIND_SUGGESTIONS_PATH}/deleteBind`,
+                {
+                    method: 'post',
+                    body: new URLSearchParams({
+                        id: `${bind.id}`,
+                    }),
+                }
+            );
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const jsonedResponse = await response.json();
+            bindSuggestionsManagingService.getBindSuggestions();
+            return jsonedResponse.message;
+        } catch (error) {
+            notificationManager.ERROR(
+                `Error while deleting bind suggestion: ${error.message}`
+            );
+            throw error;
+        }
     },
 };
 

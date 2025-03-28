@@ -10,19 +10,17 @@ export const networkingUtils = {
         data?: any
     ): Promise<ApiResponse<TExpectedDataType>> => {
         const apiResponse: ApiResponse<TExpectedDataType> = {};
-        await axios({
-            method: method,
-            url: url,
-            data: data,
-            headers: { 'content-type': 'application/json' },
-        })
-            .then(async (response) => {
-                const fetchingResult = await response.data;
-                apiResponse.data = fetchingResult;
-            })
-            .catch((error) => {
-                apiResponse.error = error;
+        try {
+            const response = await axios({
+                method: method,
+                url: url,
+                data: data,
+                headers: { 'content-type': 'application/json' },
             });
+            apiResponse.data = response.data;
+        } catch (error) {
+            apiResponse.error = error.message;
+        }
         return apiResponse;
     },
 };

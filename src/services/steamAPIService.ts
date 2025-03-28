@@ -9,6 +9,7 @@ import adminsFileLoc from '../resources/admins/admins.json';
 import { Admin } from '../models/adminModels';
 import { apiPaths } from '../utils/apiPaths';
 import { API_DOMAIN } from '../utils/envUtils';
+import { notificationManager } from '../utils/notificationManager';
 
 export const steamAPIService = {
     useAdminDetectionService: () => {
@@ -46,7 +47,7 @@ export const steamAPIService = {
                                 .replace(/=/g, '":"') +
                             '"}'
                     );
-                    const getUserId = (response) => {
+                    const getUserId = (response?) => {
                         const str = response['openid.claimed_id'];
                         const res = decodeURIComponent(str);
                         const propsArr = res.split('/');
@@ -56,7 +57,7 @@ export const steamAPIService = {
 
                     const userId = getUserId(urlObj);
                     userId &&
-                        appStore.dispatch(userDataActions.setUserID(userId));
+                        appStore?.dispatch(userDataActions.setUserID(userId));
                     window.location.href = '/';
                 }
             }, 500);
@@ -69,8 +70,8 @@ export const steamAPIService = {
 
         useEffect(() => {
             if (userID) {
-                steamAPIService.getUserData(userID).then((userData) => {
-                    appStore.dispatch(userDataActions.setUserData(userData));
+                steamAPIService?.getUserData(userID).then((userData) => {
+                    appStore?.dispatch(userDataActions?.setUserData(userData));
                 });
             }
         }, [userID]);
@@ -92,33 +93,48 @@ export const steamAPIService = {
                     }
                 )
                     .then((response) => {
-                        return response.json();
+                        if (response.ok) {
+                            return response.json();
+                        } else {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
                     })
                     .then((response) => {
-                        if (response.ownsLeft4Dead2 === true) {
-                            userDataActions.setGamesData({
+                        if (response?.ownsLeft4Dead2 === true) {
+                            appStore.dispatch(userDataActions.setGamesData({
                                 ownsLeft4Dead2: true,
-                            });
+                            }));
                         }
+                    })
+                    .catch((error) => {
+                        notificationManager.ERROR(
+                            `Error while fetching owned games: ${error.message}`
+                        );
                     });
             }
         }, []);
     },
-    getUserData: (userID: string): Promise<SteamUserDetails> => {
-        return fetch(
-            `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.STEAM_PATH}/userData`,
-            {
-                method: 'post',
-                body: new URLSearchParams({
-                    userID: `${userID}`,
-                }),
+    getUserData: async (userID: string): Promise<SteamUserDetails> => {
+        try {
+            const response = await fetch(
+                `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.STEAM_PATH}/userData`,
+                {
+                    method: 'post',
+                    body: new URLSearchParams({
+                        userID: `${userID}`,
+                    }),
+                }
+            );
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
-        )
-            .then((response) => {
-                return response.json();
-            })
-            .then((response) => {
-                return response.response.players[0];
-            });
+            const responseData = await response.json();
+            return responseData?.response.players[0];
+        } catch (error) {
+            notificationManager.ERROR(
+                `Error while fetching user data: ${error.message}`
+            );
+            throw error;
+        }
     },
 };
