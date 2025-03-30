@@ -104,8 +104,8 @@ export const bindsManagingService = {
         try {
             const response = await fetch(
                 `${API_DOMAIN}${apiPaths.API_BASE_PATH}${
-                    apiPaths.BINDS_PATH
-                }/${undoVote ? 'vote/delete' : 'vote'}`,
+                    apiPaths.BIND_VOTES_PATH
+                }/${undoVote ? 'deleteBindVoting' : 'addBindVoting'}`,
                 {
                     method: 'post',
                     body: urlSearchParams,
@@ -202,7 +202,7 @@ export const bindsManagingService = {
 const getRawBindVotings = async (): Promise<BindVote[]> => {
     try {
         const response = await fetch(
-            `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BINDS_PATH}/votes`,
+            `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BIND_VOTES_PATH}/getBindVotings`,
             {
                 method: 'get',
             }

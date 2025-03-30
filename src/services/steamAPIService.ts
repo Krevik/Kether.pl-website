@@ -87,9 +87,10 @@ export const steamAPIService = {
                     `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.STEAM_PATH}/games`,
                     {
                         method: 'post',
-                        body: new URLSearchParams({
-                            userID: `${userID}`,
-                        }),
+                        body: userID, // Changed here: send only the userID
+                        headers: {
+                            'Content-Type': 'text/plain' // Added header to indicate plain text
+                        }
                     }
                 )
                     .then((response) => {
@@ -112,7 +113,7 @@ export const steamAPIService = {
                         );
                     });
             }
-        }, []);
+        }, [userID]);
     },
     getUserData: async (userID: string): Promise<SteamUserDetails> => {
         try {
@@ -120,9 +121,10 @@ export const steamAPIService = {
                 `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.STEAM_PATH}/userData`,
                 {
                     method: 'post',
-                    body: new URLSearchParams({
-                        userID: `${userID}`,
-                    }),
+                    body: userID, // Changed here: send only the userID
+                    headers: {
+                        'Content-Type': 'text/plain' // Added header to indicate plain text
+                    }
                 }
             );
             if (!response.ok) {

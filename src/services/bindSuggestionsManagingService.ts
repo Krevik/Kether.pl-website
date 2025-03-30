@@ -13,7 +13,7 @@ export const bindSuggestionsManagingService = {
     getBindSuggestions: async () => {
         try {
             const response = await fetch(
-                `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BIND_SUGGESTIONS_PATH}/getBinds`,
+                `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BIND_SUGGESTIONS_PATH}/getBindSuggestions`,
                 {
                     method: 'get',
                 }
@@ -34,7 +34,7 @@ export const bindSuggestionsManagingService = {
     addNewBindSuggestion: async (bind: BindSuggestionEntry) => {
         try {
             const response = await fetch(
-                `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BIND_SUGGESTIONS_PATH}/addBind`,
+                `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BIND_SUGGESTIONS_PATH}/addBindSuggestion`,
                 {
                     method: 'post',
                     body: new URLSearchParams({
@@ -59,7 +59,7 @@ export const bindSuggestionsManagingService = {
     deleteBindSuggestion: async (bind: BindSuggestionEntry) => {
         try {
             const response = await fetch(
-                `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BIND_SUGGESTIONS_PATH}/deleteBind`,
+                `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BIND_SUGGESTIONS_PATH}/deleteBindSuggestion`,
                 {
                     method: 'post',
                     body: new URLSearchParams({
