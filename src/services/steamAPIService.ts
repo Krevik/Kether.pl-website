@@ -89,7 +89,7 @@ export const steamAPIService = {
                         method: 'post',
                         body: userID, // Changed here: send only the userID
                         headers: {
-                            'Content-Type': 'text/plain' // Added header to indicate plain text
+                            'Content-Type': 'application/json' // Added header to indicate plain text
                         }
                     }
                 )
@@ -123,7 +123,7 @@ export const steamAPIService = {
                     method: 'post',
                     body: userID, // Changed here: send only the userID
                     headers: {
-                        'Content-Type': 'text/plain' // Added header to indicate plain text
+                        'Content-Type': 'application/json' // Added header to indicate plain text
                     }
                 }
             );
@@ -131,7 +131,7 @@ export const steamAPIService = {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             const responseData = await response.json();
-            return responseData?.response.players[0];
+            return responseData;
         } catch (error) {
             notificationManager.ERROR(
                 `Error while fetching user data: ${error.message}`
