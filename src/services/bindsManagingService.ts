@@ -129,7 +129,10 @@ export const bindsManagingService = {
                 `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BINDS_PATH}/addBind`,
                 {
                     method: 'post',
-                    body: new URLSearchParams({
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
                         author: bind.author,
                         text: bind.text,
                     }),
@@ -153,8 +156,11 @@ export const bindsManagingService = {
                 `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BINDS_PATH}/deleteBind`,
                 {
                     method: 'post',
-                    body: new URLSearchParams({
-                        id: `${bind.id}`,
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        id: bind.id,
                     }),
                 }
             );
@@ -177,8 +183,11 @@ export const bindsManagingService = {
                 `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BINDS_PATH}/updateBind`,
                 {
                     method: 'post',
-                    body: new URLSearchParams({
-                        id: `${newBindData.id}`,
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        id: newBindData.id,
                         author: `${newBindData.author}`,
                         text: `${newBindData.text}`,
                     }),

@@ -37,7 +37,10 @@ export const bindSuggestionsManagingService = {
                 `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BIND_SUGGESTIONS_PATH}/addBindSuggestion`,
                 {
                     method: 'post',
-                    body: new URLSearchParams({
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
                         author: bind.author,
                         text: bind.text,
                         proposedBy: bind.proposedBy!,
@@ -62,8 +65,11 @@ export const bindSuggestionsManagingService = {
                 `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BIND_SUGGESTIONS_PATH}/deleteBindSuggestion`,
                 {
                     method: 'post',
-                    body: new URLSearchParams({
-                        id: `${bind.id}`,
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        id: bind.id,
                     }),
                 }
             );

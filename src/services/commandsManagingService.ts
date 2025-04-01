@@ -29,7 +29,10 @@ export const commandsManagingService = {
         try {
             const response = await fetch(`${API_PATHS.COMMANDS}/addCommand`, {
                 method: 'post',
-                body: new URLSearchParams({
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
                     command: command.command,
                     description: command.description,
                 }),
@@ -51,8 +54,11 @@ export const commandsManagingService = {
         try {
             const response = await fetch(`${API_PATHS.COMMANDS}/deleteCommand`, {
                 method: 'post',
-                body: new URLSearchParams({
-                    id: `${command.id}`,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id: command.id,
                 }),
             });
             if (!response.ok) {
@@ -72,10 +78,13 @@ export const commandsManagingService = {
         try {
             const response = await fetch(`${API_PATHS.COMMANDS}/updateCommand`, {
                 method: 'post',
-                body: new URLSearchParams({
-                    id: `${newCommandData.id}`,
-                    command: `${newCommandData.command}`,
-                    description: `${newCommandData.description}`,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id: newCommandData.id,
+                    command: newCommandData.command,
+                    description: newCommandData.description,
                 }),
             });
             if (!response.ok) {
