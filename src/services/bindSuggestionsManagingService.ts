@@ -10,81 +10,88 @@ export const bindSuggestionsManagingService = {
     useBindSuggestionsLoadingService: () => {
         useServerBindSuggestionsLoader();
     },
-    getBindSuggestions: async () => {
-        try {
-            const response = await fetch(
-                `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BIND_SUGGESTIONS_PATH}/getBindSuggestions`,
-                {
-                    method: 'get',
-                }
-            );
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+    getBindSuggestions: () => {
+        return fetch(
+            `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BIND_SUGGESTIONS_PATH}/getBindSuggestions`,
+            {
+                method: 'get',
             }
-            const responseData: BindSuggestionEntry[] = await response.json();
-            appStore.dispatch(
-                bindSuggestionsActions.setBindSuggestions(responseData)
-            );
-        } catch (error) {
-            notificationManager.ERROR(
-                `Error while fetching bind suggestions: ${error.message}`
-            );
-        }
+        )
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then((responseData: BindSuggestionEntry[]) => {
+                appStore.dispatch(
+                    bindSuggestionsActions.setBindSuggestions(responseData)
+                );
+            })
+            .catch((error) => {
+                notificationManager.ERROR(
+                    `Error while fetching bind suggestions: ${error.message}`
+                );
+            });
     },
-    addNewBindSuggestion: async (bind: BindSuggestionEntry) => {
-        try {
-            const response = await fetch(
-                `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BIND_SUGGESTIONS_PATH}/addBindSuggestion`,
-                {
-                    method: 'post',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        author: bind.author,
-                        text: bind.text,
-                        proposed_by: bind.proposedBy!,
-                    }),
-                }
-            );
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+    addNewBindSuggestion: (bind: BindSuggestionEntry) => {
+        return fetch(
+            `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BIND_SUGGESTIONS_PATH}/addBindSuggestion`,
+            {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    author: bind.author,
+                    text: bind.text,
+                    proposed_by: bind.proposedBy!,
+                }),
             }
-            bindSuggestionsManagingService.getBindSuggestions();
-            return await response.json();
-        } catch (error) {
-            notificationManager.ERROR(
-                `Error while adding new bind suggestion: ${error.message}`
-            );
-            throw error;
-        }
+        )
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                bindSuggestionsManagingService.getBindSuggestions();
+                return response.json();
+            })
+            .catch((error) => {
+                notificationManager.ERROR(
+                    `Error while adding new bind suggestion: ${error.message}`
+                );
+                throw error;
+            });
     },
-    deleteBindSuggestion: async (bind: BindSuggestionEntry) => {
-        try {
-            const response = await fetch(
-                `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BIND_SUGGESTIONS_PATH}/deleteBindSuggestion`,
-                {
-                    method: 'post',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        id: bind.id,
-                    }),
-                }
-            );
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+    deleteBindSuggestion: (bind: BindSuggestionEntry) => {
+        return fetch(
+            `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BIND_SUGGESTIONS_PATH}/deleteBindSuggestion`,
+            {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id: bind.id,
+                }),
             }
-            const jsonedResponse = await response.json();
-            bindSuggestionsManagingService.getBindSuggestions();
-            return jsonedResponse.message;
-        } catch (error) {
-            notificationManager.ERROR(
-                `Error while deleting bind suggestion: ${error.message}`
-            );
-            throw error;
-        }
+        )
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then((jsonedResponse) => {
+                bindSuggestionsManagingService.getBindSuggestions();
+                return jsonedResponse.message;
+            })
+            .catch((error) => {
+                notificationManager.ERROR(
+                    `Error while deleting bind suggestion: ${error.message}`
+                );
+                throw error;
+            });
     },
 };
 
