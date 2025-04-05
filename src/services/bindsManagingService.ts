@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import {
     AttachedBindVoteData,
     BindEntry,
@@ -14,7 +14,7 @@ import { notificationManager } from '../utils/notificationManager';
 
 export const bindsManagingService = {
     useBindsLoadingService: (steamUserID?: string) => {
-        useServerBindsLoader(steamUserID ? steamUserID : undefined);
+        return useServerBindsLoader(steamUserID ? steamUserID : undefined);
     },
     getBinds: (userSteamID?: string) => {
         return fetch(
@@ -251,10 +251,12 @@ const useServerBindsLoader = (steamUserID?: string) => {
     const userData = useSelector(
         (state: AppState) => state.userDataReducer.userData
     );
+    const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
-        bindsManagingService.getBinds(steamUserID);
-    }, []);
-    useEffect(() => {
-        bindsManagingService.getBinds(steamUserID);
-    }, [userData]);
+        setIsLoading(true);
+        bindsManagingService.getBinds(steamUserID).finally(() => {
+            setIsLoading(false);
+        });
+    }, [userData, steamUserID]);
+    return isLoading;
 };

@@ -1,14 +1,15 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { BindSuggestionEntry } from '../models/bindsModels';
-import { appStore } from '../redux/store';
+import { appStore, AppState } from '../redux/store';
 import { apiPaths } from '../utils/apiPaths';
 import { bindSuggestionsActions } from '../redux/slices/bindSuggestionsSlice';
 import { API_DOMAIN } from '../utils/envUtils';
 import { notificationManager } from '../utils/notificationManager';
+import { useSelector } from 'react-redux';
 
 export const bindSuggestionsManagingService = {
     useBindSuggestionsLoadingService: () => {
-        useServerBindSuggestionsLoader();
+        return useServerBindSuggestionsLoader();
     },
     getBindSuggestions: () => {
         return fetch(
@@ -96,7 +97,15 @@ export const bindSuggestionsManagingService = {
 };
 
 const useServerBindSuggestionsLoader = () => {
+    const userData = useSelector(
+        (state: AppState) => state.userDataReducer.userData
+    );
+    const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
-        bindSuggestionsManagingService.getBindSuggestions();
-    }, []);
+        setIsLoading(true);
+        bindSuggestionsManagingService.getBindSuggestions().finally(() => {
+            setIsLoading(false);
+        });
+    }, [userData]);
+    return isLoading;
 };
