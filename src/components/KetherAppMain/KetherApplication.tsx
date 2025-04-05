@@ -30,7 +30,7 @@ export default function KetherApplication() {
                     path={pagePaths.HOME_PAGE}
                     element={
                         <PageLayout
-                            children={HomePage()}
+                            children={<HomePage/>}
                             isMenuShown={isMenuShown}
                             setIsMenuShown={setIsMenuShown}
                         />
@@ -40,7 +40,7 @@ export default function KetherApplication() {
                     path={pagePaths.HALL_OF_FAME}
                     element={
                         <PageLayout
-                            children={HallOfFame()}
+                            children={<HallOfFame/>}
                             isMenuShown={isMenuShown}
                             setIsMenuShown={setIsMenuShown}
                         />
@@ -50,7 +50,7 @@ export default function KetherApplication() {
                     path={pagePaths.HALL_OF_FAME_SUGGESTIONS}
                     element={
                         <PageLayout
-                            children={HallOfFameSuggestions()}
+                            children={<HallOfFameSuggestions/>}
                             isMenuShown={isMenuShown}
                             setIsMenuShown={setIsMenuShown}
                         />
@@ -70,7 +70,7 @@ export default function KetherApplication() {
                     path={pagePaths.GITHUB}
                     element={
                         <PageLayout
-                            children={GithubRepo()}
+                            children={<GithubRepo/>}
                             isMenuShown={isMenuShown}
                             setIsMenuShown={setIsMenuShown}
                         />
@@ -80,7 +80,7 @@ export default function KetherApplication() {
                     path={pagePaths.DONATE}
                     element={
                         <PageLayout
-                            children={Donate()}
+                            children={<Donate/>}
                             isMenuShown={isMenuShown}
                             setIsMenuShown={setIsMenuShown}
                         />
@@ -90,7 +90,7 @@ export default function KetherApplication() {
                     path="*"
                     element={
                         <PageLayout
-                            children={HomePage()}
+                            children={<HomePage/>}
                             isMenuShown={isMenuShown}
                             setIsMenuShown={setIsMenuShown}
                         />
