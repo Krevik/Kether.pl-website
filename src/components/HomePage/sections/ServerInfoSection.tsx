@@ -61,12 +61,12 @@ export default function ServerInfoSection() {
         <div className="section future-rot">
             <span>Name: {serverInfo?.name}</span>
             <span>
-                IP: 51.83.217.86:29800
+                IP: 54.36.179.182:27015
                 <Button
                     icon={'pi pi-copy'}
                     style={{ scale: '0.8', verticalAlign: 'unset' }}
                     onClick={() => {
-                        navigator.clipboard.writeText('51.83.217.86:29800');
+                        navigator.clipboard.writeText('54.36.179.182:27015');
                         notificationManager.SUCCESS('IP Copied to clipboard');
                     }}
                 />
