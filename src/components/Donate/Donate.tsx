@@ -49,7 +49,7 @@ export default function Donate() {
                             Bank: (GBP only) 61 1140 2004 0000 3012 0719 8312
                         </div>
                         <div className="font1">
-                            Blik: <i><noscript>Ask me ;)</noscript></i>
+                            Blik: <i>Ask me ;)</i>
                         </div>
                     </div>
                 </div>
