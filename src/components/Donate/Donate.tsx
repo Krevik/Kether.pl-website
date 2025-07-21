@@ -1,9 +1,7 @@
 import './Donate.css';
-import LiveServerPaymentMethod from './paymentMethods/LiveServerPaymentMethod';
 import { PageWithBackground } from '../PageLayout/PageBackground/PageWithBackground';
 import { BACKGROUNDS } from '../PageLayout/PageBackground/backgrounds';
 
-const CLIENT_ID = 26606;
 export default function Donate() {
     return (
         <PageWithBackground imageUrl={BACKGROUNDS.BACKGROUND_5}>
@@ -12,24 +10,6 @@ export default function Donate() {
                     You like the server or just want access to vip commands?
                     Support us by making a donate!
                 </div>
-
-                <LiveServerPaymentMethod
-                    paymentMethod={'online'}
-                    paymentMethodName={'Przelewy24'}
-                    clientId={CLIENT_ID}
-                />
-
-                <LiveServerPaymentMethod
-                    paymentMethod={'psc'}
-                    paymentMethodName={'PSC'}
-                    clientId={CLIENT_ID}
-                />
-
-                <LiveServerPaymentMethod
-                    paymentMethod={'paypal'}
-                    paymentMethodName={'Paypal'}
-                    clientId={CLIENT_ID}
-                />
 
                 <div
                     className="payment-method"
@@ -40,7 +20,7 @@ export default function Donate() {
                     }}
                 >
                     <div className="centered-text">
-                        Other
+                        Transfer
                         <div className="font1">Revolut: @krevik </div>
                         <div className="font1">
                             Bank: (PLN only) 74 1140 2004 0000 3702 7618 0386
@@ -56,6 +36,20 @@ export default function Donate() {
                         <div className="font1">
                             Crypto Polygon:
                             0xE59FfC3689af47fC501Ce84A2F1cf3C435a67869
+                        </div>
+
+                        <div className="font1">Satanixon: </div>
+                        <div className="font1">
+                            Bank: (PLN) 64 1140 2004 0000 3002 7774 2415
+                        </div>
+                        <div className="font1">
+                            Bank: (EUR only) 11 1140 2004 0000 3512 0719 8288
+                        </div>
+                        <div className="font1">
+                            Bank: (GBP only) 61 1140 2004 0000 3012 0719 8312
+                        </div>
+                        <div className="font1">
+                            Blik: <i><noscript>Ask me ;)</noscript></i>
                         </div>
                     </div>
                 </div>
