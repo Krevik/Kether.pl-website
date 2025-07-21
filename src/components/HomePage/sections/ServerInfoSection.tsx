@@ -83,7 +83,7 @@ export default function ServerInfoSection() {
                     label="Join game"
                     onClick={() => {
                         window.location.href =
-                            'steam://connect/51.83.217.86:29800';
+                            'steam://connect/54.36.179.182:27015';
                     }}
                 ></Button>
             </span>
