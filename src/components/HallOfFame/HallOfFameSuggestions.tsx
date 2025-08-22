@@ -14,6 +14,7 @@ import AddNewBindSuggestionDialog from './Dialogues/AddNewBindSuggestionDalog';
 import { PageWithBackground } from '../PageLayout/PageBackground/PageWithBackground';
 import { BACKGROUNDS } from '../PageLayout/PageBackground/backgrounds';
 import { trimBindAuthor } from '../../utils/bindUtils';
+import { useSuggestionsTranslations, useBindsTranslations } from '../../hooks/useTranslations';
 
 const mapBinds = (binds: BindEntry[] | BindSuggestionEntry[]) => {
     return binds.map((bind) => {
@@ -28,17 +29,18 @@ const getToolbarLeftSide = (
     userID: string | undefined,
     setNewBindSuggestionDialogVisibility: (
         value: boolean | ((prevVar: boolean) => boolean)
-    ) => void
+    ) => void,
+    suggestionsTranslations: ReturnType<typeof useSuggestionsTranslations>
 ) => {
     return (
         <>
             {userID && (
                 <Button
-                    label="Suggest Bind"
+                    label={suggestionsTranslations.suggestBind}
                     icon="pi pi-plus"
                     className="p-button-success mr-2"
                     data-toggle="tooltip"
-                    title="Adds new bind suggestion"
+                    title={suggestionsTranslations.suggestBindTooltip}
                     onClick={() => setNewBindSuggestionDialogVisibility(true)}
                 ></Button>
             )}
@@ -49,14 +51,15 @@ const getToolbarLeftSide = (
 const bindSuggestionBody = (
     rowData: BindSuggestionEntry,
     isAdmin: boolean,
-    userData: any
+    userData: any,
+    suggestionsTranslations: ReturnType<typeof useSuggestionsTranslations>
 ) => {
     return (
         isAdmin && (
             <>
                 <Button
                     data-toggle="tooltip"
-                    title="Accepts the given bind"
+                    title={suggestionsTranslations.acceptBindTooltip}
                     icon="pi pi-check"
                     className="p-button-rounded p-button-success"
                     onClick={() => {
@@ -67,7 +70,7 @@ const bindSuggestionBody = (
                             .addNewBind(bind, userData?.steamid)
                             .then((addedBind) => {
                                 notificationManager.SUCCESS(
-                                    `Successfully accepted new bind: ${addedBind}`
+                                    suggestionsTranslations.successfullyAccepted
                                 );
                                 bindSuggestionsManagingService.deleteBindSuggestion(
                                     bind
@@ -75,7 +78,7 @@ const bindSuggestionBody = (
                             })
                             .catch((error) => {
                                 notificationManager.ERROR(
-                                    `Couldn't add new bind: ${error}`
+                                    `${suggestionsTranslations.couldntAccept}: ${error}`
                                 );
                             });
                     }}
@@ -83,7 +86,7 @@ const bindSuggestionBody = (
 
                 <Button
                     data-toggle="tooltip"
-                    title="Deletes the given bind suggestion instantly"
+                    title={suggestionsTranslations.deleteSuggestionTooltip}
                     icon="pi pi-times"
                     className="p-button-rounded p-button-danger"
                     onClick={() => {
@@ -96,7 +99,7 @@ const bindSuggestionBody = (
                             })
                             .catch((error) => {
                                 notificationManager.ERROR(
-                                    `Couldn't delete bind suggestion: ${error}`
+                                    `${suggestionsTranslations.couldntDelete}: ${error}`
                                 );
                             });
                     }}
@@ -110,6 +113,8 @@ export default function HallOfFameSuggestions() {
     const bindSuggestions = useSelector(
         (state: AppState) => state.bindSuggestionsReducer.bindSuggestions
     );
+    const suggestionsTranslations = useSuggestionsTranslations();
+    const bindsTranslations = useBindsTranslations();
 
     const userID = useSelector(
         (state: AppState) => state.userDataReducer.userID
@@ -154,12 +159,13 @@ export default function HallOfFameSuggestions() {
                         className="mb-4"
                         start={getToolbarLeftSide(
                             userID,
-                            setNewBindSuggestionDialogVisibility
+                            setNewBindSuggestionDialogVisibility,
+                            suggestionsTranslations
                         )}
                     ></Toolbar>
 
                     <>
-                        <div className="centered-text">Bind Suggestions</div>
+                        <div className="centered-text">{suggestionsTranslations.bindSuggestions}</div>
                         <div className="card">
                             {isLoading ? (
                                 <p>Loading...</p>
@@ -168,33 +174,35 @@ export default function HallOfFameSuggestions() {
                                     value={mapBinds(bindSuggestions)}
                                     scrollable={true}
                                     scrollHeight="flex"
+                                    emptyMessage={suggestionsTranslations.noSuggestionsAvailable}
                                 >
                                     <Column
                                         field="proposedBy"
-                                        header="Proposed By"
+                                        header={suggestionsTranslations.proposedBy}
                                     ></Column>
                                     <Column
                                         field="id"
-                                        header="database ID"
+                                        header={bindsTranslations.databaseId}
                                         sortable
                                     ></Column>
                                     <Column
                                         field="author"
-                                        header="Author"
+                                        header={bindsTranslations.author}
                                         sortable
                                     ></Column>
                                     <Column
                                         field="text"
-                                        header="Text"
+                                        header={bindsTranslations.text}
                                         sortable
                                     ></Column>
                                     <Column
-                                        header="Actions"
+                                        header={bindsTranslations.actions}
                                         body={(rowData) =>
                                             bindSuggestionBody(
                                                 rowData,
                                                 isAdmin,
-                                                userData
+                                                userData,
+                                                suggestionsTranslations
                                             )
                                         }
                                     ></Column>

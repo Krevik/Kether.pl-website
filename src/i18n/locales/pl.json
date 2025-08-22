@@ -5,7 +5,9 @@
         "retry": "Ponow",
         "cancel": "Anuluj",
         "save": "Zapisz",
-        "refresh": "Odswiez"
+        "update": "Aktualizuj",
+        "refresh": "Odswiez",
+        "noAvailableOptions": "Brak dostepnych opcji"
     },
     "navigation": {
         "home": "Strona Glowna",
@@ -36,7 +38,8 @@
         "bot": "bot",
         "bots": "boty",
         "customMapsText": "Mozesz pobrac wszystkie niestandardowe mapy zainstalowane na serwerze",
-        "here": "TUTAJ"
+        "here": "TUTAJ",
+        "noPlayersAvailable": "Brak dostepnych graczy"
     },
     "commands": {
         "newCommand": "Nowa Komenda",
@@ -44,7 +47,14 @@
         "editCommand": "Edytuj Komende",
         "addNewCommandTooltip": "Dodaje nowa komende",
         "successfullyAdded": "Pomyslnie dodano nowa komende",
-        "couldntAdd": "Nie mozna bylo dodac komendy"
+        "couldntAdd": "Nie mozna bylo dodac komendy",
+        "command": "Komenda",
+        "description": "Opis",
+        "actions": "Akcje",
+        "editCommandTooltip": "Edytuje dana komende",
+        "deleteCommandTooltip": "Usuwa dana komende natychmiast",
+        "couldntDelete": "Nie mozna bylo usunac komendy",
+        "noCommandsAvailable": "Brak dostepnych komend"
     },
     "binds": {
         "newBind": "Nowy Bind",
@@ -53,14 +63,36 @@
         "binds": "Bindy",
         "addNewBindTooltip": "Dodaje nowy bind",
         "successfullyAdded": "Pomyslnie dodano nowy bind",
-        "couldntAdd": "Nie mozna bylo dodac binda"
+        "couldntAdd": "Nie mozna bylo dodac binda",
+        "author": "Autor",
+        "text": "Tekst",
+        "databaseId": "ID bazy danych",
+        "actions": "Akcje",
+        "editBindTooltip": "Edytuje dany bind",
+        "deleteBindTooltip": "Usuwa dany bind natychmiast",
+        "couldntDelete": "Nie mozna bylo usunac binda",
+        "voting": "Glosowanie",
+        "upvotes": "Glosy za",
+        "downvotes": "Glosy przeciw",
+        "noBindsAvailable": "Brak dostepnych bindow"
     },
     "suggestions": {
         "newSuggestion": "Nowa Sugestia",
         "addNewSuggestion": "Dodaj nowa sugestie",
         "editSuggestion": "Edytuj Sugestie",
         "successfullyAdded": "Pomyslnie dodano nowa sugestie",
-        "couldntAdd": "Nie mozna bylo dodac sugestii"
+        "couldntAdd": "Nie mozna bylo dodac sugestii",
+        "bindSuggestions": "Sugestie Bindow",
+        "suggestBind": "Zaproponuj Bind",
+        "suggestBindTooltip": "Dodaje nowa sugestie binda",
+        "acceptBindTooltip": "Akceptuje dany bind",
+        "deleteSuggestionTooltip": "Usuwa dana sugestie",
+        "couldntAccept": "Nie mozna bylo dodac nowego binda",
+        "couldntDelete": "Nie mozna bylo usunac sugestii",
+        "successfullyAccepted": "Pomyslnie zaakceptowano nowy bind",
+        "successfullySuggested": "Pomyslnie zaproponowano nowy bind",
+        "proposedBy": "Zaproponowany przez",
+        "noSuggestionsAvailable": "Brak dostepnych sugestii"
     },
     "errors": {
         "loadingTimeout": "Ladowanie trwa dluzej niz oczekiwano",

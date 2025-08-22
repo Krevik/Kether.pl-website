@@ -37,7 +37,7 @@ export default function CommandsSection() {
             <>
                 <Button
                     data-toggle="tooltip"
-                    title="Edits the given command"
+                    title={commandsTranslations.editCommandTooltip}
                     icon="pi pi-pencil"
                     className="p-button-rounded mr-2"
                     onClick={() => {
@@ -49,7 +49,7 @@ export default function CommandsSection() {
                 />
                 <Button
                     data-toggle="tooltip"
-                    title="Deletes the given command instantly"
+                    title={commandsTranslations.deleteCommandTooltip}
                     icon="pi pi-trash"
                     className="p-button-rounded p-button-danger"
                     onClick={() => {
@@ -64,7 +64,7 @@ export default function CommandsSection() {
                             })
                             .catch((error) => {
                                 notificationManager.ERROR(
-                                    `Couldn't delete the command: ${error}`
+                                    `${commandsTranslations.couldntDelete}: ${error}`
                                 );
                             });
                     }}
@@ -125,12 +125,13 @@ export default function CommandsSection() {
                     background: 'transparent',
                     backdropFilter: 'blur(2px)',
                 }}
+                emptyMessage={commandsTranslations.noCommandsAvailable}
             >
-                <Column field="command" header="Command"></Column>
-                <Column field="description" header="Description"></Column>
+                <Column field="command" header={commandsTranslations.command}></Column>
+                <Column field="description" header={commandsTranslations.description}></Column>
                 {isAdmin && (
                     <Column
-                        header="Actions"
+                        header={commandsTranslations.actions}
                         body={commandActionsColumnBody}
                     ></Column>
                 )}

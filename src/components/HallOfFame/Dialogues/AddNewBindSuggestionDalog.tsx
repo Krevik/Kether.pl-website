@@ -7,6 +7,7 @@ import { bindSuggestionsManagingService } from '../../../services/bindSuggestion
 import { notificationManager } from '../../../utils/notificationManager';
 import { useSelector } from 'react-redux';
 import { AppState } from '../../../redux/store';
+import { useSuggestionsTranslations, useCommonTranslations } from '../../../hooks/useTranslations';
 
 type AddNewBindSuggestionDialogProps = {
     isDialogVisible: boolean;
@@ -24,16 +25,19 @@ export default function AddNewBindSuggestionDialog(
     const steamUserData = useSelector(
         (state: AppState) => state.userDataReducer.userData
     );
+    const suggestionsTranslations = useSuggestionsTranslations();
+    const commonTranslations = useCommonTranslations();
+    
     const newBindSuggestionDialogFooter = (
         <>
             <Button
-                label="Cancel"
+                label={commonTranslations.cancel}
                 icon="pi pi-times"
                 className="p-button-text"
                 onClick={() => props.setDialogVisibility(false)}
             />
             <Button
-                label="Save"
+                label={commonTranslations.save}
                 icon="pi pi-check"
                 className="p-button-text"
                 onClick={() => {
@@ -47,14 +51,14 @@ export default function AddNewBindSuggestionDialog(
                         .addNewBindSuggestion(newBind)
                         .then(() => {
                             notificationManager.SUCCESS(
-                                `Successfully suggested new bind`
+                                suggestionsTranslations.successfullySuggested
                             );
                             props.setDialogVisibility(false);
                             props.setBindText('');
                         })
                         .catch((error) => {
                             notificationManager.ERROR(
-                                `Couldn't suggest the bind: ${error}`
+                                `${suggestionsTranslations.couldntAdd}: ${error}`
                             );
                         });
                 }}
@@ -65,7 +69,7 @@ export default function AddNewBindSuggestionDialog(
     return (
         <Dialog
             visible={props.isDialogVisible}
-            header="Suggest new bind"
+            header={suggestionsTranslations.addNewSuggestion}
             modal
             className="p-fluid"
             footer={newBindSuggestionDialogFooter}

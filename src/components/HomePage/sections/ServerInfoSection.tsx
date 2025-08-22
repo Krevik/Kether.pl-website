@@ -52,6 +52,7 @@ function ServerInfoSection() {
                     removableSort
                     sortMode="multiple"
                     scrollable={true}
+                    emptyMessage={serverInfoTranslations.noPlayersAvailable}
                 >
                     <Column field={'name'} header={serverInfoTranslations.nickname} sortable />
                     <Column field={'score'} header={serverInfoTranslations.score} sortable />

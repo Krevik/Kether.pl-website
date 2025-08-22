@@ -5,6 +5,7 @@ import { BindEntry } from '../../../models/bindsModels';
 import { bindsManagingService } from '../../../services/bindsManagingService';
 import { notificationManager } from '../../../utils/notificationManager';
 import { MutableRefObject } from 'react';
+import { useBindsTranslations, useCommonTranslations } from '../../../hooks/useTranslations';
 
 type EditBindDialogProps = {
     isDialogVisible: boolean;
@@ -17,11 +18,14 @@ type EditBindDialogProps = {
 };
 
 export default function EditBindDialog(props: EditBindDialogProps) {
+    const bindsTranslations = useBindsTranslations();
+    const commonTranslations = useCommonTranslations();
+    
     const editBindDialogFooter = () => {
         return (
             <>
                 <Button
-                    label="Cancel"
+                    label={commonTranslations.cancel}
                     icon="pi pi-times"
                     className="p-button-text"
                     onClick={() => {
@@ -31,7 +35,7 @@ export default function EditBindDialog(props: EditBindDialogProps) {
                 />
 
                 <Button
-                    label="Update"
+                    label={commonTranslations.update}
                     icon="pi pi-check"
                     className="p-button-text"
                     onClick={() => {
@@ -63,7 +67,7 @@ export default function EditBindDialog(props: EditBindDialogProps) {
     return (
         <Dialog
             visible={props.isDialogVisible}
-            header="Edit Bind"
+            header={bindsTranslations.editBind}
             modal
             className="p-fluid"
             footer={editBindDialogFooter()}

@@ -5,6 +5,7 @@ import { MutableRefObject } from 'react';
 import { CommandEntry } from '../../../models/commandModels';
 import { commandsManagingService } from '../../../services/commandsManagingService';
 import DialogCommandContent from './DialogCommandContent';
+import { useCommandsTranslations, useCommonTranslations } from '../../../hooks/useTranslations';
 
 type EditCommandDialogProps = {
     isDialogVisible: boolean;
@@ -17,11 +18,14 @@ type EditCommandDialogProps = {
 };
 
 export default function EditCommandDialog(props: EditCommandDialogProps) {
+    const commandsTranslations = useCommandsTranslations();
+    const commonTranslations = useCommonTranslations();
+    
     const editCommandDialogFooter = () => {
         return (
             <>
                 <Button
-                    label="Cancel"
+                    label={commonTranslations.cancel}
                     icon="pi pi-times"
                     className="p-button-text"
                     onClick={() => {
@@ -31,7 +35,7 @@ export default function EditCommandDialog(props: EditCommandDialogProps) {
                 />
 
                 <Button
-                    label="Update"
+                    label={commonTranslations.update}
                     icon="pi pi-check"
                     className="p-button-text"
                     onClick={() => {
@@ -63,7 +67,7 @@ export default function EditCommandDialog(props: EditCommandDialogProps) {
     return (
         <Dialog
             visible={props.isDialogVisible}
-            header="Edit Command"
+            header={commandsTranslations.editCommand}
             modal
             className="p-fluid"
             footer={editCommandDialogFooter()}

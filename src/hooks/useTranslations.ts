@@ -29,6 +29,8 @@ export function useCommonTranslations() {
         retry: t('common.retry'),
         cancel: t('common.cancel'),
         save: t('common.save'),
+        update: t('common.update'),
+        noAvailableOptions: t('common.noAvailableOptions'),
         delete: t('common.delete'),
         edit: t('common.edit'),
         add: t('common.add'),
@@ -131,6 +133,7 @@ export function useServerInfoTranslations() {
         bots: t('serverInfo.bots'),
         customMapsText: t('serverInfo.customMapsText'),
         here: t('serverInfo.here'),
+        noPlayersAvailable: t('serverInfo.noPlayersAvailable'),
     };
 }
 
@@ -147,6 +150,13 @@ export function useCommandsTranslations() {
         addNewCommandTooltip: t('commands.addNewCommandTooltip'),
         successfullyAdded: t('commands.successfullyAdded'),
         couldntAdd: t('commands.couldntAdd'),
+        command: t('commands.command'),
+        description: t('commands.description'),
+        actions: t('commands.actions'),
+        editCommandTooltip: t('commands.editCommandTooltip'),
+        deleteCommandTooltip: t('commands.deleteCommandTooltip'),
+        couldntDelete: t('commands.couldntDelete'),
+        noCommandsAvailable: t('commands.noCommandsAvailable'),
     };
 }
 
@@ -164,6 +174,17 @@ export function useBindsTranslations() {
         addNewBindTooltip: t('binds.addNewBindTooltip'),
         successfullyAdded: t('binds.successfullyAdded'),
         couldntAdd: t('binds.couldntAdd'),
+        author: t('binds.author'),
+        text: t('binds.text'),
+        databaseId: t('binds.databaseId'),
+        actions: t('binds.actions'),
+        editBindTooltip: t('binds.editBindTooltip'),
+        deleteBindTooltip: t('binds.deleteBindTooltip'),
+        couldntDelete: t('binds.couldntDelete'),
+        voting: t('binds.voting'),
+        upvotes: t('binds.upvotes'),
+        downvotes: t('binds.downvotes'),
+        noBindsAvailable: t('binds.noBindsAvailable'),
     };
 }
 
@@ -179,5 +200,16 @@ export function useSuggestionsTranslations() {
         editSuggestion: t('suggestions.editSuggestion'),
         successfullyAdded: t('suggestions.successfullyAdded'),
         couldntAdd: t('suggestions.couldntAdd'),
+        bindSuggestions: t('suggestions.bindSuggestions'),
+        suggestBind: t('suggestions.suggestBind'),
+        suggestBindTooltip: t('suggestions.suggestBindTooltip'),
+        acceptBindTooltip: t('suggestions.acceptBindTooltip'),
+        deleteSuggestionTooltip: t('suggestions.deleteSuggestionTooltip'),
+        couldntAccept: t('suggestions.couldntAccept'),
+        couldntDelete: t('suggestions.couldntDelete'),
+        successfullyAccepted: t('suggestions.successfullyAccepted'),
+        successfullySuggested: t('suggestions.successfullySuggested'),
+        proposedBy: t('suggestions.proposedBy'),
+        noSuggestionsAvailable: t('suggestions.noSuggestionsAvailable'),
     };
 }

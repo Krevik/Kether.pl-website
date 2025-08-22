@@ -61,13 +61,14 @@ const bindActionBodyTemplate = (
     setBindAuthor: (value: string | ((prevVar: string) => string)) => void,
     setBindText: (value: string | ((prevVar: string) => string)) => void,
     editingBindID: React.MutableRefObject<number>,
-    userData: any
+    userData: any,
+    bindsTranslations: ReturnType<typeof useBindsTranslations>
 ) => {
     return (
         <>
             <Button
                 data-toggle="tooltip"
-                title="Edits the given bind"
+                title={bindsTranslations.editBindTooltip}
                 icon="pi pi-pencil"
                 className="p-button-rounded p-button-warning mr-2"
                 onClick={() => {
@@ -79,7 +80,7 @@ const bindActionBodyTemplate = (
             />
             <Button
                 data-toggle="tooltip"
-                title="Deletes the given bind instantly"
+                title={bindsTranslations.deleteBindTooltip}
                 icon="pi pi-trash"
                 className="p-button-rounded p-button-danger"
                 onClick={() => {
@@ -92,7 +93,7 @@ const bindActionBodyTemplate = (
                         })
                         .catch((error) => {
                             notificationManager.ERROR(
-                                `Couldn't delete the bind: ${error}`
+                                `${bindsTranslations.couldntDelete}: ${error}`
                             );
                         });
                 }}
@@ -245,22 +246,23 @@ export default function HallOfFame() {
                                 value={mapBinds(binds)}
                                 scrollable={true}
                                 scrollHeight="flex"
+                                emptyMessage={bindsTranslations.noBindsAvailable}
                             >
                                 {isAdmin && (
                                     <Column
                                         field="id"
-                                        header="database ID"
+                                        header={bindsTranslations.databaseId}
                                         sortable
                                     ></Column>
                                 )}
                                 <Column
                                     field="author"
-                                    header="Author"
+                                    header={bindsTranslations.author}
                                     sortable
                                 ></Column>
                                 <Column
                                     field="text"
-                                    header="Text"
+                                    header={bindsTranslations.text}
                                     sortable
                                 ></Column>
                                 {userID &&
@@ -268,7 +270,7 @@ export default function HallOfFame() {
                                     userData.steamid && (
                                         <Column
                                             className="voting"
-                                            header="Voting"
+                                            header={bindsTranslations.voting}
                                             body={(rowData) =>
                                                 bindVotingBodyTemplate(
                                                     rowData,
@@ -279,7 +281,7 @@ export default function HallOfFame() {
                                     )}
                                 {isAdmin && (
                                     <Column
-                                        header="Actions"
+                                        header={bindsTranslations.actions}
                                         body={(rowData) =>
                                             bindActionBodyTemplate(
                                                 rowData,
@@ -287,7 +289,8 @@ export default function HallOfFame() {
                                                 setBindAuthor,
                                                 setBindText,
                                                 editingBindID,
-                                                userData
+                                                userData,
+                                                bindsTranslations
                                             )
                                         }
                                     ></Column>

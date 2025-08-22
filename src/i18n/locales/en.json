@@ -5,7 +5,9 @@
         "retry": "Retry",
         "cancel": "Cancel",
         "save": "Save",
-        "refresh": "Refresh"
+        "update": "Update",
+        "refresh": "Refresh",
+        "noAvailableOptions": "No available options"
     },
     "navigation": {
         "home": "Home",
@@ -36,7 +38,8 @@
         "bot": "bot",
         "bots": "bots",
         "customMapsText": "You can download all the custom maps installed on the server",
-        "here": "HERE"
+        "here": "HERE",
+        "noPlayersAvailable": "No players available"
     },
     "commands": {
         "newCommand": "New Command",
@@ -44,7 +47,14 @@
         "editCommand": "Edit Command",
         "addNewCommandTooltip": "Adds new command",
         "successfullyAdded": "Successfully added new command",
-        "couldntAdd": "Couldn't add the command"
+        "couldntAdd": "Couldn't add the command",
+        "command": "Command",
+        "description": "Description",
+        "actions": "Actions",
+        "editCommandTooltip": "Edits the given command",
+        "deleteCommandTooltip": "Deletes the given command instantly",
+        "couldntDelete": "Couldn't delete the command",
+        "noCommandsAvailable": "No commands available"
     },
     "binds": {
         "newBind": "New Bind",
@@ -53,14 +63,36 @@
         "binds": "Binds",
         "addNewBindTooltip": "Adds new bind",
         "successfullyAdded": "Successfully added new bind",
-        "couldntAdd": "Couldn't add the bind"
+        "couldntAdd": "Couldn't add the bind",
+        "author": "Author",
+        "text": "Text",
+        "databaseId": "Database ID",
+        "actions": "Actions",
+        "editBindTooltip": "Edits the given bind",
+        "deleteBindTooltip": "Deletes the given bind instantly",
+        "couldntDelete": "Couldn't delete the bind",
+        "voting": "Voting",
+        "upvotes": "Upvotes",
+        "downvotes": "Downvotes",
+        "noBindsAvailable": "No binds available"
     },
     "suggestions": {
         "newSuggestion": "New Suggestion",
         "addNewSuggestion": "Add new suggestion",
         "editSuggestion": "Edit Suggestion",
         "successfullyAdded": "Successfully added new suggestion",
-        "couldntAdd": "Couldn't add the suggestion"
+        "couldntAdd": "Couldn't add the suggestion",
+        "bindSuggestions": "Bind Suggestions",
+        "suggestBind": "Suggest Bind",
+        "suggestBindTooltip": "Adds new bind suggestion",
+        "acceptBindTooltip": "Accepts the given bind",
+        "deleteSuggestionTooltip": "Deletes the given suggestion",
+        "couldntAccept": "Couldn't add new bind",
+        "couldntDelete": "Couldn't delete the suggestion",
+        "successfullyAccepted": "Successfully accepted new bind",
+        "successfullySuggested": "Successfully suggested new bind",
+        "proposedBy": "Proposed by",
+        "noSuggestionsAvailable": "No suggestions available"
     },
     "errors": {
         "loadingTimeout": "Loading is taking longer than expected",
