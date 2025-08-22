@@ -5,34 +5,20 @@
 	"homepage": "https://kether.pl",
 	"dependencies": {
 		"@reduxjs/toolkit": "2.6.1",
-		"@testing-library/jest-dom": "^6.6.3",
-		"@testing-library/react": "16.2.0",
-		"@testing-library/user-event": "^14.6.1",
-		"@types/jest": "^29.5.14",
-		"@types/node": "^22.13.10",
+		"@types/node": "^22.17.2",
 		"@types/react": "19.0.11",
 		"@types/react-dom": "19.0.4",
-		"axios": "^1.8.3",
-		"browserify-zlib": "^0.2.0",
-		"create-react-app": "^5.1.0",
-		"crypto": "^1.0.1",
-		"crypto-browserify": "^3.12.1",
+		"axios": "^1.11.0",
 		"gh-pages": "^6.3.0",
 		"prettier": "3.5.3",
 		"primeicons": "7.0.0",
 		"primereact": "10.9.3",
-		"querystring-es3": "^0.2.1",
 		"react": "19.0.0",
 		"react-dom": "19.0.0",
-		"react-openidconnect": "^1.1.1",
 		"react-redux": "9.2.0",
 		"react-scripts": "^5.0.1",
 		"redux-persist": "^6.0.0",
-		"stream-browserify": "^3.0.0",
-		"typed-css-modules": "^0.9.1",
-		"typescript": "^5.8.2",
-		"url": "^0.11.4",
-		"util": "^0.12.5"
+		"typescript": "^5.9.2"
 	},
 	"scripts": {
 		"start": "react-scripts start",
@@ -65,9 +51,9 @@
 		]
 	},
 	"devDependencies": {
-		"react-router-dom": "^7.3.0",
+		"react-router-dom": "^7.8.1",
 		"shx": "^0.4.0",
-		"typescript-plugin-css-modules": "^5.1.0"
+		"typescript-plugin-css-modules": "^5.2.0"
 	},
 	"prettier": {
 		"trailingComma": "es5",
