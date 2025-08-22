@@ -9,10 +9,17 @@ import './global.css';
 import { PersistGate } from 'redux-persist/integration/react';
 import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary';
 import errorLogger from './utils/errorLogger';
+import { analyzeBundleSize } from './utils/performanceUtils';
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 );
+
+// Performance monitoring
+if (process.env.NODE_ENV === 'development') {
+    analyzeBundleSize();
+}
+
 root.render(
     <React.StrictMode>
         <ErrorBoundary

@@ -1,0 +1,115 @@
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    min-height: 200px;
+}
+
+.loading-container.fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 9999;
+    min-height: 100vh;
+}
+
+.loading-spinner {
+    position: relative;
+    display: inline-block;
+}
+
+.loading-spinner.small {
+    width: 24px;
+    height: 24px;
+}
+
+.loading-spinner.medium {
+    width: 48px;
+    height: 48px;
+}
+
+.loading-spinner.large {
+    width: 64px;
+    height: 64px;
+}
+
+.spinner-ring {
+    position: absolute;
+    border: 3px solid transparent;
+    border-top: 3px solid #e74c3c;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.loading-spinner.small .spinner-ring {
+    width: 24px;
+    height: 24px;
+    border-width: 2px;
+}
+
+.loading-spinner.medium .spinner-ring {
+    width: 48px;
+    height: 48px;
+    border-width: 3px;
+}
+
+.loading-spinner.large .spinner-ring {
+    width: 64px;
+    height: 64px;
+    border-width: 4px;
+}
+
+.spinner-ring:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.spinner-ring:nth-child(2) {
+    animation-delay: 0.2s;
+    border-top-color: #f39c12;
+}
+
+.spinner-ring:nth-child(3) {
+    animation-delay: 0.4s;
+    border-top-color: #3498db;
+}
+
+.loading-message {
+    margin-top: 1rem;
+    color: #ffffff;
+    font-size: 1rem;
+    text-align: center;
+    font-family: 'Future Rot', sans-serif;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Skeleton loading for content */
+.skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+    border-radius: 4px;
+}
+
+.skeleton-line {
+    height: 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 4px;
+}
+
+.skeleton-line:last-child {
+    width: 60%;
+}
+
+@keyframes loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}

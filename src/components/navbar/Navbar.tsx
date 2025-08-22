@@ -8,6 +8,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { AppState } from '../../redux/store';
 import { uiActions } from '../../redux/slices/uiSlice';
 import { withNavigationErrorBoundary } from '../ErrorBoundary/SpecificErrorBoundaries';
+import React, { useMemo, useCallback } from 'react';
+
 interface TabItem {
     label: string;
     targetPage: string;
@@ -18,7 +20,7 @@ function Navbar() {
     const dispatch = useDispatch();
     const isMenuShown = useSelector((state: AppState) => state.uiReducer.isNavbarVisible);
 
-    const tabs: TabItem[] = [
+    const tabs: TabItem[] = useMemo(() => [
         {
             label: 'Home',
             targetPage: pagePaths.HOME_PAGE,
@@ -31,7 +33,6 @@ function Navbar() {
             label: 'Hall of Fame Suggestions',
             targetPage: pagePaths.HALL_OF_FAME_SUGGESTIONS,
         },
-
         {
             label: 'Github Repo',
             targetPage: pagePaths.GITHUB,
@@ -40,9 +41,9 @@ function Navbar() {
             label: 'Donate',
             targetPage: pagePaths.DONATE,
         },
-    ];
+    ], []);
 
-    const getNavigationButtons = () => {
+    const getNavigationButtons = useCallback(() => {
         return tabs.map((tab) => {
             return (
                 <button
@@ -56,9 +57,9 @@ function Navbar() {
                 </button>
             );
         });
-    };
+    }, [tabs, navigate]);
 
-    const hideMenuButton = () => {
+    const hideMenuButton = useCallback(() => {
         return (
             <Button
                 className={styles.openHideMenuButton}
@@ -70,9 +71,9 @@ function Navbar() {
                 onClick={() => dispatch(uiActions.toggleNavbarVisibility())}
             />
         );
-    };
+    }, [isMenuShown, dispatch]);
 
-    const navigationInternalContent = () => {
+    const navigationInternalContent = useCallback(() => {
         return (
             <>
                 <SteamLoginButton />
@@ -80,11 +81,16 @@ function Navbar() {
                 {getNavigationButtons()}
             </>
         );
-    };
+    }, [getNavigationButtons]);
+
+    const containerClassName = useMemo(() => 
+        `${styles.navigationMenu} ${isMenuShown ? styles.menuVisible : styles.menuHidden}`,
+        [isMenuShown]
+    );
 
     return (
         <div className={styles.navigationMenuContainer}>
-            <div className={`${styles.navigationMenu} ${isMenuShown ? styles.menuVisible : styles.menuHidden}`}>
+            <div className={containerClassName}>
                 {navigationInternalContent()}
             </div>
             {hideMenuButton()}

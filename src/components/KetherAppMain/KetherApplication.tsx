@@ -1,7 +1,3 @@
-import HomePage from '../HomePage/HomePage';
-import HallOfFame from '../HallOfFame/HallOfFame';
-import GithubRepo from '../GithubRepo/GithubRepo';
-import Donate from '../Donate/Donate';
 import { steamAPIService } from '../../services/steamAPIService';
 import {
     createBrowserRouter,
@@ -10,8 +6,17 @@ import {
     RouterProvider,
 } from 'react-router-dom';
 import { pagePaths } from '../../utils/pagePaths';
-import HallOfFameSuggestions from '../HallOfFame/HallOfFameSuggestions';
 import { PageLayout } from '../PageLayout/PageLayout';
+import { lazy, Suspense } from 'react';
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
+import PerformanceMonitor from '../PerformanceMonitor/PerformanceMonitor';
+
+// Lazy load components for better performance
+const HomePage = lazy(() => import('../HomePage/HomePage'));
+const HallOfFame = lazy(() => import('../HallOfFame/HallOfFame'));
+const GithubRepo = lazy(() => import('../GithubRepo/GithubRepo'));
+const Donate = lazy(() => import('../Donate/Donate'));
+const HallOfFameSuggestions = lazy(() => import('../HallOfFame/HallOfFameSuggestions'));
 export default function KetherApplication() {
     steamAPIService.useAdminDetectionService();
     steamAPIService.useSteamAuthService();
@@ -25,7 +30,9 @@ export default function KetherApplication() {
                     path={pagePaths.HOME_PAGE}
                     element={
                         <PageLayout>
-                            <HomePage/>
+                            <Suspense fallback={<LoadingSpinner message="Loading Home Page..." />}>
+                                <HomePage/>
+                            </Suspense>
                         </PageLayout>
                     }
                 />
@@ -33,7 +40,9 @@ export default function KetherApplication() {
                     path={pagePaths.HALL_OF_FAME}
                     element={
                         <PageLayout>
-                            <HallOfFame/>
+                            <Suspense fallback={<LoadingSpinner message="Loading Hall of Fame..." />}>
+                                <HallOfFame/>
+                            </Suspense>
                         </PageLayout>
                     }
                 />
@@ -41,7 +50,9 @@ export default function KetherApplication() {
                     path={pagePaths.HALL_OF_FAME_SUGGESTIONS}
                     element={
                         <PageLayout>
-                            <HallOfFameSuggestions/>
+                            <Suspense fallback={<LoadingSpinner message="Loading Suggestions..." />}>
+                                <HallOfFameSuggestions/>
+                            </Suspense>
                         </PageLayout>
                     }
                 />
@@ -50,7 +61,9 @@ export default function KetherApplication() {
                     path={pagePaths.GITHUB}
                     element={
                         <PageLayout>
-                            <GithubRepo/>
+                            <Suspense fallback={<LoadingSpinner message="Loading GitHub..." />}>
+                                <GithubRepo/>
+                            </Suspense>
                         </PageLayout>
                     }
                 />
@@ -58,7 +71,9 @@ export default function KetherApplication() {
                     path={pagePaths.DONATE}
                     element={
                         <PageLayout>
-                            <Donate/>
+                            <Suspense fallback={<LoadingSpinner message="Loading Donate Page..." />}>
+                                <Donate/>
+                            </Suspense>
                         </PageLayout>
                     }
                 />
@@ -66,7 +81,9 @@ export default function KetherApplication() {
                     path="*"
                     element={
                         <PageLayout>
-                            <HomePage/>
+                            <Suspense fallback={<LoadingSpinner message="Loading..." />}>
+                                <HomePage/>
+                            </Suspense>
                         </PageLayout>
                     }
                 />
@@ -77,6 +94,9 @@ export default function KetherApplication() {
     return (
         <>
             <RouterProvider router={router} />
+            {process.env.NODE_ENV === 'development' && (
+                <PerformanceMonitor show={true} />
+            )}
         </>
     );
 }

@@ -23,11 +23,18 @@
 	"scripts": {
 		"start": "react-scripts start",
 		"build": "react-scripts build && shx cp build/index.html build/404.html",
+		"build:analyze": "npm run build && npx webpack-bundle-analyzer build/static/js/*.js",
+		"build:prod": "GENERATE_SOURCEMAP=false react-scripts build && shx cp build/index.html build/404.html",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject",
 		"predeploy": "npm run build",
 		"deploy": "gh-pages -d build",
-		"runBoth": "run-p server start"
+		"runBoth": "run-p server start",
+		"lint": "eslint src --ext .ts,.tsx",
+		"lint:fix": "eslint src --ext .ts,.tsx --fix",
+		"type-check": "tsc --noEmit",
+		"performance:analyze": "npm run build && npx lighthouse http://localhost:3000 --output=json --output-path=./lighthouse-report.json",
+		"performance:budget": "npm run build && npx bundle-buddy build/static/js/*.js"
 	},
 	"eslintConfig": {
 		"extends": [

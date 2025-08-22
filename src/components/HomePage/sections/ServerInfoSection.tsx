@@ -8,6 +8,7 @@ import { PlayerDetails } from '../../../models/serverInfoModels';
 import { notificationManager } from '../../../utils/notificationManager';
 import { SERVER_CONFIG, SUCCESS_MESSAGES } from '../../../utils/constants';
 import { withServerInfoErrorBoundary } from '../../ErrorBoundary/SpecificErrorBoundaries';
+import React, { useCallback } from 'react';
 
 function ServerInfoSection() {
     const serverInfo = useSelector(
@@ -16,7 +17,7 @@ function ServerInfoSection() {
 
     serverInfoService.useServerInfoLoadingService();
 
-    function getFormattedGamePlayTime(duration: number): string {
+    const getFormattedGamePlayTime = useCallback((duration: number): string => {
         // Hours, minutes and seconds
         const hrs = ~~(duration / 3600);
         const mins = ~~((duration % 3600) / 60);
@@ -33,17 +34,19 @@ function ServerInfoSection() {
         ret += '' + secs;
 
         return ret;
-    }
+    }, []);
 
-    const getPlayerGameTimeColumnBody = (rowData: PlayerDetails) => {
+    const getPlayerGameTimeColumnBody = useCallback((rowData: PlayerDetails) => {
         return <span>{getFormattedGamePlayTime(rowData.duration)}</span>;
-    };
+    }, [getFormattedGamePlayTime]);
 
-    const getPlayerList = () => {
+    const getPlayerList = useCallback(() => {
+        if (!serverInfo?.playerdetails?.length) return null;
+        
         return (
             <div className={'player-list-table'}>
                 <DataTable
-                    value={serverInfo!.playerdetails}
+                    value={serverInfo.playerdetails}
                     removableSort
                     sortMode="multiple"
                     scrollable={true}
@@ -57,7 +60,7 @@ function ServerInfoSection() {
                 </DataTable>
             </div>
         );
-    };
+    }, [serverInfo, getPlayerGameTimeColumnBody]);
 
     return (
         <div className="section future-rot">
@@ -88,7 +91,7 @@ function ServerInfoSection() {
                     }}
                 ></Button>
             </span>
-            {serverInfo && serverInfo.playerdetails.length > 0 && (
+            {getPlayerList() && (
                 <span>{getPlayerList()}</span>
             )}
             <span className="centered-text">

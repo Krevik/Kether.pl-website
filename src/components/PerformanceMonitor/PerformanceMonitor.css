@@ -1,0 +1,129 @@
+.performance-monitor {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 350px;
+    max-height: 500px;
+    background: rgba(0, 0, 0, 0.9);
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 16px;
+    color: white;
+    font-family: 'Future Rot', monospace;
+    font-size: 12px;
+    z-index: 10000;
+    overflow-y: auto;
+    backdrop-filter: blur(10px);
+}
+
+.performance-monitor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 8px;
+}
+
+.performance-monitor-header h3 {
+    margin: 0;
+    font-size: 14px;
+    color: #e74c3c;
+}
+
+.clear-button {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 10px;
+}
+
+.clear-button:hover {
+    background: #c0392b;
+}
+
+.performance-stats {
+    margin-bottom: 16px;
+}
+
+.stat {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px;
+    padding: 4px 0;
+}
+
+.stat-label {
+    color: #bdc3c7;
+}
+
+.stat-value {
+    color: #2ecc71;
+    font-weight: bold;
+}
+
+.performance-metrics h4 {
+    margin: 0 0 8px 0;
+    font-size: 12px;
+    color: #f39c12;
+}
+
+.metrics-list {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.metric-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 8px;
+    margin-bottom: 2px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+    border-left: 3px solid #3498db;
+}
+
+.metric-item.slow {
+    border-left-color: #e74c3c;
+    background: rgba(231, 76, 60, 0.1);
+}
+
+.metric-name {
+    color: #ecf0f1;
+    font-size: 11px;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.metric-duration {
+    color: #2ecc71;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+.metric-item.slow .metric-duration {
+    color: #e74c3c;
+}
+
+/* Scrollbar styling */
+.metrics-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.metrics-list::-webkit-scrollbar-track {
+    background: #333;
+}
+
+.metrics-list::-webkit-scrollbar-thumb {
+    background: #666;
+    border-radius: 2px;
+}
+
+.metrics-list::-webkit-scrollbar-thumb:hover {
+    background: #888;
+}
