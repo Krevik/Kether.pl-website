@@ -47,7 +47,7 @@ export const steamAPIService = {
                                 .replace(/=/g, '":"') +
                             '"}'
                     );
-                    const getUserId = (response?) => {
+                    const getUserId = (response: Record<string, string>) => {
                         const str = response['openid.claimed_id'];
                         const res = decodeURIComponent(str);
                         const propsArr = res.split('/');
@@ -133,8 +133,9 @@ export const steamAPIService = {
             const responseData = await response.json();
             return responseData;
         } catch (error) {
+            const errorMessage = error instanceof Error ? error.message : 'Unknown error';
             notificationManager.ERROR(
-                `Error while fetching user data: ${error.message}`
+                `Error while fetching user data: ${errorMessage}`
             );
             throw error;
         }

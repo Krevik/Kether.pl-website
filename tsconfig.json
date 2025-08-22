@@ -7,7 +7,7 @@
 		"allowSyntheticDefaultImports": true,
 		"strict": true,
 		"forceConsistentCasingInFileNames": true,
-		"useUnknownInCatchVariables": false,
+		"useUnknownInCatchVariables": true,
 		"skipLibCheck": true,
 		"noFallthroughCasesInSwitch": true,
 		"module": "esnext",
@@ -15,7 +15,7 @@
 		"resolveJsonModule": true,
 		"isolatedModules": true,
 		"noEmit": true,
-		"noImplicitAny": false,
+		"noImplicitAny": true,
 		"jsx": "react-jsx",
 		"plugins": [{ "name": "typescript-plugin-css-modules",
 			"options": {

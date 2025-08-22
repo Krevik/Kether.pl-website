@@ -24,7 +24,7 @@ export const NotificationsOverlay = () => {
             notificationsToast.current!.show(getToastMessage());
             appStore.dispatch(notificationsActions.clearNotification());
         }
-    }, [notificationToShow]);
+    }, [notificationToShow, getToastMessage]);
     return (
         <>
             <Toast ref={notificationsToast}></Toast>

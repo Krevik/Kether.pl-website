@@ -13,7 +13,7 @@ export type ActionDialogProps = {
     dialogHeader: string;
     actionType: 'ADD' | 'UPDATE';
     isDialogVisible: boolean;
-    setDialogVisibility: (boolean) => void;
+    setDialogVisibility: (visible: boolean) => void;
     initialData: Field[];
     onSave: (data: Field[]) => void;
 };

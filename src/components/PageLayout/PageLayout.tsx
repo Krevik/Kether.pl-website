@@ -5,7 +5,7 @@ import { NotificationsOverlay } from './NotificationsOverlay';
 
 export type PageLayoutProps = {
     isMenuShown: boolean;
-    setIsMenuShown: (boolean) => void;
+    setIsMenuShown: (isShown: boolean) => void;
 } & PropsWithChildren;
 
 export const PageLayout = (props: PageLayoutProps) => {

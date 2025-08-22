@@ -11,7 +11,7 @@ interface TabItem {
 
 export type NavbarProps = {
     isMenuShown: boolean;
-    setIsMenuShown: (boolean) => void;
+    setIsMenuShown: (isShown: boolean) => void;
 };
 
 export default function Navbar(props: NavbarProps) {

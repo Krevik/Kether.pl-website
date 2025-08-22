@@ -6,8 +6,7 @@ import { ServerInfo } from '../models/serverInfoModels';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { notificationManager } from '../utils/notificationManager';
-
-const REFRESH_INTERVAL_MS = 5000;
+import { API_CONFIG } from '../utils/constants';
 export const serverInfoService = {
     useServerInfoLoadingService: () => {
         const serverInfo = useSelector(
@@ -25,11 +24,11 @@ export const serverInfoService = {
                 if (!isLoading.current) {
                     refreshServerInfo(serverInfo, isLoading);
                 }
-            }, REFRESH_INTERVAL_MS);
+            }, API_CONFIG.REFRESH_INTERVAL_MS);
             return () => {
                 clearInterval(refreshDataInterval);
             };
-        }, []);
+        }, [serverInfo]);
     },
 };
 
@@ -46,8 +45,9 @@ const refreshServerInfo = async (
 
         appStore.dispatch(serverInfoActions.setServerInfo(newServerInfo));
     } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
         notificationManager.ERROR(
-            `Error while fetching server info: ${error.message}`
+            `Error while fetching server info: ${errorMessage}`
         );
         // If there's an error, set the status to offline
         const offlineServerInfo: ServerInfo = {

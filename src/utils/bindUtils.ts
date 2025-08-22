@@ -92,7 +92,7 @@ export const bindUtils = {
 
         // Replace characters based on the mapping
         return strippedText
-            .replace(/[^\x00-\x7F]/g, (char) => mapping[char] || char)
+            .replace(/[^\u0000-\u007F]/g, (char) => mapping[char] || char)
             .replace(/[:;#*()]/g, '')
             .replace('^', '')
             .replace('%', ' procent');

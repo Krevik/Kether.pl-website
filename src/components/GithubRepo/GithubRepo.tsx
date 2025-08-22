@@ -1,6 +1,7 @@
 import './GithubRepo.css';
 import { PageWithBackground } from '../PageLayout/PageBackground/PageWithBackground';
 import { BACKGROUNDS } from '../PageLayout/PageBackground/backgrounds';
+import { EXTERNAL_URLS } from '../../utils/constants';
 
 export default function GithubRepo() {
     return (
@@ -9,7 +10,7 @@ export default function GithubRepo() {
                 <div className="card">
                     <div className="centered-text">
                         You can find our server files{' '}
-                        <a href="https://github.com/Krevik/Kether.pl-L4D2-Server">
+                        <a href={EXTERNAL_URLS.GITHUB_REPO}>
                             HERE
                         </a>
                     </div>

@@ -1,13 +1,16 @@
 import axios from 'axios';
-export type ApiResponse<TExptectedDataType> = {
-    data?: TExptectedDataType;
+export type ApiResponse<TExpectedDataType> = {
+    data?: TExpectedDataType;
     error?: string;
 };
+
+export type HttpMethod = 'get' | 'post' | 'delete' | 'put';
+
 export const networkingUtils = {
     doFetch: async <TExpectedDataType>(
         url: string,
-        method: 'get' | 'post' | 'delete' | 'put',
-        data?: any
+        method: HttpMethod,
+        data?: unknown
     ): Promise<ApiResponse<TExpectedDataType>> => {
         const apiResponse: ApiResponse<TExpectedDataType> = {};
         try {
@@ -19,7 +22,8 @@ export const networkingUtils = {
             });
             apiResponse.data = response.data;
         } catch (error) {
-            apiResponse.error = error.message;
+            const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+            apiResponse.error = errorMessage;
         }
         return apiResponse;
     },

@@ -12,6 +12,7 @@ import { useSelector } from 'react-redux';
 import { API_DOMAIN } from '../utils/envUtils';
 import { notificationManager } from '../utils/notificationManager';
 
+
 export const bindsManagingService = {
     useBindsLoadingService: (steamUserID?: string) => {
         return useServerBindsLoader(steamUserID ? steamUserID : undefined);

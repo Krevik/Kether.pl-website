@@ -6,6 +6,7 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { PlayerDetails } from '../../../models/serverInfoModels';
 import { notificationManager } from '../../../utils/notificationManager';
+import { SERVER_CONFIG, SUCCESS_MESSAGES } from '../../../utils/constants';
 
 export default function ServerInfoSection() {
     const serverInfo = useSelector(
@@ -61,13 +62,13 @@ export default function ServerInfoSection() {
         <div className="section future-rot">
             <span>Name: {serverInfo?.name}</span>
             <span>
-                IP: 54.36.179.182:27015
+                IP: {SERVER_CONFIG.IP}
                 <Button
                     icon={'pi pi-copy'}
                     style={{ scale: '0.8', verticalAlign: 'unset' }}
                     onClick={() => {
-                        navigator.clipboard.writeText('54.36.179.182:27015');
-                        notificationManager.SUCCESS('IP Copied to clipboard');
+                        navigator.clipboard.writeText(SERVER_CONFIG.IP);
+                        notificationManager.SUCCESS(SUCCESS_MESSAGES.COPY_SUCCESS);
                     }}
                 />
             </span>
@@ -82,8 +83,7 @@ export default function ServerInfoSection() {
                 <Button
                     label="Join game"
                     onClick={() => {
-                        window.location.href =
-                            'steam://connect/54.36.179.182:27015';
+                        window.location.href = SERVER_CONFIG.STEAM_CONNECT_URL;
                     }}
                 ></Button>
             </span>
