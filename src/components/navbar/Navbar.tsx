@@ -9,6 +9,7 @@ import { AppState } from '../../redux/store';
 import { uiActions } from '../../redux/slices/uiSlice';
 import { withNavigationErrorBoundary } from '../ErrorBoundary/SpecificErrorBoundaries';
 import React, { useMemo, useCallback } from 'react';
+import { preloadOnHover } from '../../utils/preloadUtils';
 
 interface TabItem {
     label: string;
@@ -45,6 +46,24 @@ function Navbar() {
 
     const getNavigationButtons = useCallback(() => {
         return tabs.map((tab) => {
+            // Create preload handlers for each tab
+            const preloadHandler = preloadOnHover(tab.label, () => {
+                switch (tab.targetPage) {
+                    case pagePaths.HOME_PAGE:
+                        return import('../HomePage/HomePage');
+                    case pagePaths.HALL_OF_FAME:
+                        return import('../HallOfFame/HallOfFame');
+                    case pagePaths.HALL_OF_FAME_SUGGESTIONS:
+                        return import('../HallOfFame/HallOfFameSuggestions');
+                    case pagePaths.GITHUB:
+                        return import('../GithubRepo/GithubRepo');
+                    case pagePaths.DONATE:
+                        return import('../Donate/Donate');
+                    default:
+                        return Promise.resolve();
+                }
+            });
+
             return (
                 <button
                     className={styles.navigationButton}
@@ -52,6 +71,7 @@ function Navbar() {
                     onClick={() => {
                         navigate(`../${tab.targetPage}`);
                     }}
+                    onMouseEnter={preloadHandler}
                 >
                     {tab.label}
                 </button>

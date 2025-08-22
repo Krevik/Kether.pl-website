@@ -7,9 +7,10 @@ import {
 } from 'react-router-dom';
 import { pagePaths } from '../../utils/pagePaths';
 import { PageLayout } from '../PageLayout/PageLayout';
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import PerformanceMonitor from '../PerformanceMonitor/PerformanceMonitor';
+import { preloadAllComponents } from '../../utils/preloadUtils';
 
 // Lazy load components for better performance
 const HomePage = lazy(() => import('../HomePage/HomePage'));
@@ -23,6 +24,11 @@ export default function KetherApplication() {
     steamAPIService.useUserDataFetcher();
     steamAPIService.useOwnedGamesFetcher();
 
+    // Preload components for instant navigation
+    useEffect(() => {
+        preloadAllComponents();
+    }, []);
+
     const router = createBrowserRouter(
         createRoutesFromElements(
             <>
@@ -30,7 +36,13 @@ export default function KetherApplication() {
                     path={pagePaths.HOME_PAGE}
                     element={
                         <PageLayout>
-                            <Suspense fallback={<LoadingSpinner message="Loading Home Page..." />}>
+                            <Suspense fallback={
+                                <LoadingSpinner 
+                                    message="Loading Home Page..." 
+                                    type="skeleton"
+                                    minDelay={200}
+                                />
+                            }>
                                 <HomePage/>
                             </Suspense>
                         </PageLayout>
@@ -40,7 +52,13 @@ export default function KetherApplication() {
                     path={pagePaths.HALL_OF_FAME}
                     element={
                         <PageLayout>
-                            <Suspense fallback={<LoadingSpinner message="Loading Hall of Fame..." />}>
+                            <Suspense fallback={
+                                <LoadingSpinner 
+                                    message="Loading Hall of Fame..." 
+                                    type="progressive"
+                                    minDelay={150}
+                                />
+                            }>
                                 <HallOfFame/>
                             </Suspense>
                         </PageLayout>
@@ -50,7 +68,13 @@ export default function KetherApplication() {
                     path={pagePaths.HALL_OF_FAME_SUGGESTIONS}
                     element={
                         <PageLayout>
-                            <Suspense fallback={<LoadingSpinner message="Loading Suggestions..." />}>
+                            <Suspense fallback={
+                                <LoadingSpinner 
+                                    message="Loading Suggestions..." 
+                                    type="skeleton"
+                                    minDelay={150}
+                                />
+                            }>
                                 <HallOfFameSuggestions/>
                             </Suspense>
                         </PageLayout>
@@ -61,7 +85,13 @@ export default function KetherApplication() {
                     path={pagePaths.GITHUB}
                     element={
                         <PageLayout>
-                            <Suspense fallback={<LoadingSpinner message="Loading GitHub..." />}>
+                            <Suspense fallback={
+                                <LoadingSpinner 
+                                    message="Loading GitHub..." 
+                                    size="small"
+                                    minDelay={100}
+                                />
+                            }>
                                 <GithubRepo/>
                             </Suspense>
                         </PageLayout>
@@ -71,7 +101,13 @@ export default function KetherApplication() {
                     path={pagePaths.DONATE}
                     element={
                         <PageLayout>
-                            <Suspense fallback={<LoadingSpinner message="Loading Donate Page..." />}>
+                            <Suspense fallback={
+                                <LoadingSpinner 
+                                    message="Loading Donate Page..." 
+                                    type="progressive"
+                                    minDelay={200}
+                                />
+                            }>
                                 <Donate/>
                             </Suspense>
                         </PageLayout>
@@ -81,7 +117,13 @@ export default function KetherApplication() {
                     path="*"
                     element={
                         <PageLayout>
-                            <Suspense fallback={<LoadingSpinner message="Loading..." />}>
+                            <Suspense fallback={
+                                <LoadingSpinner 
+                                    message="Loading..." 
+                                    type="skeleton"
+                                    minDelay={100}
+                                />
+                            }>
                                 <HomePage/>
                             </Suspense>
                         </PageLayout>
