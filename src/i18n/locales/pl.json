@@ -94,6 +94,24 @@
         "proposedBy": "Zaproponowany przez",
         "noSuggestionsAvailable": "Brak dostepnych sugestii"
     },
+    "github": {
+        "title": "Repozytorium GitHub",
+        "description": "Mozesz znalezc pliki naszego serwera",
+        "here": "TUTAJ"
+    },
+    "donate": {
+        "title": "Wesprzyj Nas",
+        "description": "Lubisz nasz serwer lub chcesz dostep do komend vip? Wesprzyj nas poprzez donacje!",
+        "transfer": "Przelew",
+        "bankPLN": "Bank: (tylko PLN)",
+        "cryptoBSC": "Krypto BSC:",
+        "cryptoBTC": "Krypto BTC:",
+        "cryptoPolygon": "Krypto Polygon:",
+        "bankPLN2": "Bank: (PLN)",
+        "bankEUR": "Bank: (tylko EUR)",
+        "bankGBP": "Bank: (tylko GBP)",
+        "blik": "Blik: Zapytaj mnie ;)"
+    },
     "errors": {
         "loadingTimeout": "Ladowanie trwa dluzej niz oczekiwano",
         "serverInfoUnavailable": "Informacje o serwerze niedostepne",
@@ -111,6 +129,8 @@
         }
     },
     "footer": {
-        "copyright": "© 2025 Kether.pl."
+        "copyright": "© 2025 Kether dzieki: Krevik, SATANIXON.",
+        "discordTooltip": "Zaproszenie na serwer Discord",
+        "steamTooltip": "Zaproszenie do grupy czatu Steam"
     }
 }

@@ -213,3 +213,50 @@ export function useSuggestionsTranslations() {
         noSuggestionsAvailable: t('suggestions.noSuggestionsAvailable'),
     };
 }
+
+/**
+ * Hook for GitHub translations
+ */
+export function useGithubTranslations() {
+    const { t } = useTranslation();
+    
+    return {
+        title: t('github.title'),
+        description: t('github.description'),
+        here: t('github.here'),
+    };
+}
+
+/**
+ * Hook for donate translations
+ */
+export function useDonateTranslations() {
+    const { t } = useTranslation();
+    
+    return {
+        title: t('donate.title'),
+        description: t('donate.description'),
+        transfer: t('donate.transfer'),
+        bankPLN: t('donate.bankPLN'),
+        cryptoBSC: t('donate.cryptoBSC'),
+        cryptoBTC: t('donate.cryptoBTC'),
+        cryptoPolygon: t('donate.cryptoPolygon'),
+        bankPLN2: t('donate.bankPLN2'),
+        bankEUR: t('donate.bankEUR'),
+        bankGBP: t('donate.bankGBP'),
+        blik: t('donate.blik'),
+    };
+}
+
+/**
+ * Hook for footer translations
+ */
+export function useFooterTranslations() {
+    const { t } = useTranslation();
+    
+    return {
+        copyright: t('footer.copyright'),
+        discordTooltip: t('footer.discordTooltip'),
+        steamTooltip: t('footer.steamTooltip'),
+    };
+}

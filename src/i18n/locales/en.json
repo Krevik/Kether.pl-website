@@ -94,6 +94,24 @@
         "proposedBy": "Proposed by",
         "noSuggestionsAvailable": "No suggestions available"
     },
+    "github": {
+        "title": "GitHub Repository",
+        "description": "You can find our server files",
+        "here": "HERE"
+    },
+    "donate": {
+        "title": "Support Us",
+        "description": "You like the server or just want access to vip commands? Support us by making a donate!",
+        "transfer": "Transfer",
+        "bankPLN": "Bank: (PLN only)",
+        "cryptoBSC": "Crypto BSC:",
+        "cryptoBTC": "Crypto BTC:",
+        "cryptoPolygon": "Crypto Polygon:",
+        "bankPLN2": "Bank: (PLN)",
+        "bankEUR": "Bank: (EUR only)",
+        "bankGBP": "Bank: (GBP only)",
+        "blik": "Blik: Ask me ;)"
+    },
     "errors": {
         "loadingTimeout": "Loading is taking longer than expected",
         "serverInfoUnavailable": "Server Information Unavailable",
@@ -111,6 +129,8 @@
         }
     },
     "footer": {
-        "copyright": "© 2025 Kether.pl."
+        "copyright": "© 2025 Kether by Krevik and SATANIXON.",
+        "discordTooltip": "Discord server invitation",
+        "steamTooltip": "Steam chat group invitation"
     }
 }
