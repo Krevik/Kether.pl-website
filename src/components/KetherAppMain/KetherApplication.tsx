@@ -3,7 +3,6 @@ import HallOfFame from '../HallOfFame/HallOfFame';
 import GithubRepo from '../GithubRepo/GithubRepo';
 import Donate from '../Donate/Donate';
 import { steamAPIService } from '../../services/steamAPIService';
-// import GameStats from '../GameStats/GameStats';
 import {
     createBrowserRouter,
     createRoutesFromElements,
@@ -13,7 +12,7 @@ import {
 import { pagePaths } from '../../utils/pagePaths';
 import HallOfFameSuggestions from '../HallOfFame/HallOfFameSuggestions';
 import { PageLayout } from '../PageLayout/PageLayout';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 export default function KetherApplication() {
     steamAPIService.useAdminDetectionService();
@@ -56,16 +55,7 @@ export default function KetherApplication() {
                         />
                     }
                 />
-                {/* <Route
-                    path={pagePaths.GAME_STATS}
-                    element={
-                        <PageLayout
-                            children={GameStats()}
-                            isMenuShown={isMenuShown}
-                            setIsMenuShown={setIsMenuShown}
-                        />
-                    }
-                /> */}
+
                 <Route
                     path={pagePaths.GITHUB}
                     element={

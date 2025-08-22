@@ -4,8 +4,7 @@ import { Button } from 'primereact/button';
 import { BindEntry } from '../../../models/bindsModels';
 import { bindsManagingService } from '../../../services/bindsManagingService';
 import { notificationManager } from '../../../utils/notificationManager';
-import { MutableRefObject, RefObject } from 'react';
-import { Toast } from 'primereact/toast';
+import { MutableRefObject } from 'react';
 
 type EditBindDialogProps = {
     isDialogVisible: boolean;

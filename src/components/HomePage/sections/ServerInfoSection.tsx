@@ -4,7 +4,7 @@ import { AppState } from '../../../redux/store';
 import { serverInfoService } from '../../../services/serverInfoService';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import { PlayerDetails, ServerInfo } from '../../../models/serverInfoModels';
+import { PlayerDetails } from '../../../models/serverInfoModels';
 import { notificationManager } from '../../../utils/notificationManager';
 
 export default function ServerInfoSection() {

@@ -1,8 +1,7 @@
 import { Dialog } from 'primereact/dialog';
 import { Button } from 'primereact/button';
 import { notificationManager } from '../../../utils/notificationManager';
-import { RefObject } from 'react';
-import { Toast } from 'primereact/toast';
+
 import { CommandEntry } from '../../../models/commandModels';
 import { commandsManagingService } from '../../../services/commandsManagingService';
 import DialogCommandContent from './DialogCommandContent';

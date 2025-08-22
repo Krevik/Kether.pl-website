@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getEnvironmentData } from 'worker_threads';
 
 export type SteamUserDetails = {
     personaname: string;

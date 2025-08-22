@@ -1,4 +1,3 @@
-import backgroundImage from '../../resources/backgrounds/background_3.jpg';
 import './GithubRepo.css';
 import { PageWithBackground } from '../PageLayout/PageBackground/PageWithBackground';
 import { BACKGROUNDS } from '../PageLayout/PageBackground/backgrounds';

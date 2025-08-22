@@ -1,7 +1,6 @@
 import { Dialog } from 'primereact/dialog';
 import DialogBindContent from './DialogBindContent';
-import { MutableRefObject, RefObject } from 'react';
-import { Toast } from 'primereact/toast';
+import { MutableRefObject } from 'react';
 import { Button } from 'primereact/button';
 import { BindSuggestionEntry } from '../../../models/bindsModels';
 import { bindSuggestionsManagingService } from '../../../services/bindSuggestionsManagingService';
