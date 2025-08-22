@@ -4,18 +4,18 @@ import UserDetails from './userDetails/UserDetails';
 import { Button } from 'primereact/button';
 import { useNavigate } from 'react-router-dom';
 import { pagePaths } from '../../utils/pagePaths';
+import { useSelector, useDispatch } from 'react-redux';
+import { AppState } from '../../redux/store';
+import { uiActions } from '../../redux/slices/uiSlice';
 interface TabItem {
     label: string;
     targetPage: string;
 }
 
-export type NavbarProps = {
-    isMenuShown: boolean;
-    setIsMenuShown: (isShown: boolean) => void;
-};
-
-export default function Navbar(props: NavbarProps) {
+export default function Navbar() {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const isMenuShown = useSelector((state: AppState) => state.uiReducer.isNavbarVisible);
 
     const tabs: TabItem[] = [
         {
@@ -62,11 +62,11 @@ export default function Navbar(props: NavbarProps) {
             <Button
                 className={styles.openHideMenuButton}
                 icon={
-                    props.isMenuShown
+                    isMenuShown
                         ? 'pi-angle-double-up'
                         : 'pi-angle-double-down'
                 }
-                onClick={() => props.setIsMenuShown(!props.isMenuShown)}
+                onClick={() => dispatch(uiActions.toggleNavbarVisibility())}
             />
         );
     };
@@ -83,8 +83,8 @@ export default function Navbar(props: NavbarProps) {
 
     return (
         <div className={styles.navigationMenuContainer}>
-            <div className={styles.navigationMenu}>
-                {props.isMenuShown && navigationInternalContent()}
+            <div className={`${styles.navigationMenu} ${isMenuShown ? styles.menuVisible : styles.menuHidden}`}>
+                {navigationInternalContent()}
             </div>
             {hideMenuButton()}
         </div>

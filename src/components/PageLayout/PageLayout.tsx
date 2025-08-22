@@ -3,19 +3,13 @@ import Footer from '../Footer/Footer';
 import { PropsWithChildren } from 'react';
 import { NotificationsOverlay } from './NotificationsOverlay';
 
-export type PageLayoutProps = {
-    isMenuShown: boolean;
-    setIsMenuShown: (isShown: boolean) => void;
-} & PropsWithChildren;
+export type PageLayoutProps = PropsWithChildren;
 
 export const PageLayout = (props: PageLayoutProps) => {
     return (
         <>
             <NotificationsOverlay />
-            <Navbar
-                setIsMenuShown={props.setIsMenuShown}
-                isMenuShown={props.isMenuShown}
-            />
+            <Navbar />
             {props.children}
             <Footer />
         </>

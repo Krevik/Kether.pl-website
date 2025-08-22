@@ -7,12 +7,19 @@ import { bindSuggestionsReducer } from './slices/bindSuggestionsSlice';
 import { serverInfoReducer } from './slices/serverInfoSlice';
 import { commandsReducer } from './slices/commandsSlice';
 import { notificationsReducer } from './slices/notificationsSlice';
+import { uiReducer } from './slices/uiSlice';
 
-const persistConfig = {
-    key: 'root',
+const userDataPersistConfig = {
+    key: 'userData',
     storage,
 };
-const persistedUserDataReducer = persistReducer(persistConfig, userDataReducer);
+const uiPersistConfig = {
+    key: 'ui',
+    storage,
+};
+
+const persistedUserDataReducer = persistReducer(userDataPersistConfig, userDataReducer);
+const persistedUIReducer = persistReducer(uiPersistConfig, uiReducer);
 
 const combinedReducers = combineReducers({
     userDataReducer: persistedUserDataReducer,
@@ -21,6 +28,7 @@ const combinedReducers = combineReducers({
     bindSuggestionsReducer: bindSuggestionsReducer,
     serverInfoReducer: serverInfoReducer,
     notificationsReducer: notificationsReducer,
+    uiReducer: persistedUIReducer,
 });
 
 export const appStore = configureStore({

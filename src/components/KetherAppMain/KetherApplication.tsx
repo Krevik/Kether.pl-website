@@ -12,15 +12,11 @@ import {
 import { pagePaths } from '../../utils/pagePaths';
 import HallOfFameSuggestions from '../HallOfFame/HallOfFameSuggestions';
 import { PageLayout } from '../PageLayout/PageLayout';
-import { useState } from 'react';
-
 export default function KetherApplication() {
     steamAPIService.useAdminDetectionService();
     steamAPIService.useSteamAuthService();
     steamAPIService.useUserDataFetcher();
     steamAPIService.useOwnedGamesFetcher();
-
-    const [isMenuShown, setIsMenuShown] = useState(true);
 
     const router = createBrowserRouter(
         createRoutesFromElements(
@@ -28,62 +24,50 @@ export default function KetherApplication() {
                 <Route
                     path={pagePaths.HOME_PAGE}
                     element={
-                        <PageLayout
-                            children={<HomePage/>}
-                            isMenuShown={isMenuShown}
-                            setIsMenuShown={setIsMenuShown}
-                        />
+                        <PageLayout>
+                            <HomePage/>
+                        </PageLayout>
                     }
                 />
                 <Route
                     path={pagePaths.HALL_OF_FAME}
                     element={
-                        <PageLayout
-                            children={<HallOfFame/>}
-                            isMenuShown={isMenuShown}
-                            setIsMenuShown={setIsMenuShown}
-                        />
+                        <PageLayout>
+                            <HallOfFame/>
+                        </PageLayout>
                     }
                 />
                 <Route
                     path={pagePaths.HALL_OF_FAME_SUGGESTIONS}
                     element={
-                        <PageLayout
-                            children={<HallOfFameSuggestions/>}
-                            isMenuShown={isMenuShown}
-                            setIsMenuShown={setIsMenuShown}
-                        />
+                        <PageLayout>
+                            <HallOfFameSuggestions/>
+                        </PageLayout>
                     }
                 />
 
                 <Route
                     path={pagePaths.GITHUB}
                     element={
-                        <PageLayout
-                            children={<GithubRepo/>}
-                            isMenuShown={isMenuShown}
-                            setIsMenuShown={setIsMenuShown}
-                        />
+                        <PageLayout>
+                            <GithubRepo/>
+                        </PageLayout>
                     }
                 />
                 <Route
                     path={pagePaths.DONATE}
                     element={
-                        <PageLayout
-                            children={<Donate/>}
-                            isMenuShown={isMenuShown}
-                            setIsMenuShown={setIsMenuShown}
-                        />
+                        <PageLayout>
+                            <Donate/>
+                        </PageLayout>
                     }
                 />
                 <Route
                     path="*"
                     element={
-                        <PageLayout
-                            children={<HomePage/>}
-                            isMenuShown={isMenuShown}
-                            setIsMenuShown={setIsMenuShown}
-                        />
+                        <PageLayout>
+                            <HomePage/>
+                        </PageLayout>
                     }
                 />
             </>
