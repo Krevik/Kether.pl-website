@@ -1,6 +1,6 @@
 {
 	"name": "kether.pl",
-	"version": "0.2.0.1",
+	"version": "0.2.1.0",
 	"private": true,
 	"homepage": "https://kether.pl",
 	"dependencies": {
@@ -22,9 +22,10 @@
 	},
 	"scripts": {
 		"start": "react-scripts start",
-		"build": "react-scripts build && shx cp build/index.html build/404.html",
+		"build": "GENERATE_SOURCEMAP=false react-scripts build && shx cp build/index.html build/404.html",
+		"build:dev": "GENERATE_SOURCEMAP=true react-scripts build && shx cp build/index.html build/404.html",
 		"build:analyze": "npm run build && npx webpack-bundle-analyzer build/static/js/*.js",
-		"build:prod": "GENERATE_SOURCEMAP=false react-scripts build && shx cp build/index.html build/404.html",
+		"build:analyze:dev": "npm run build:dev && npx webpack-bundle-analyzer build/static/js/*.js",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject",
 		"predeploy": "npm run build",
