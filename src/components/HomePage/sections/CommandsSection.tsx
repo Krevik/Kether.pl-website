@@ -11,6 +11,7 @@ import { notificationManager } from '../../../utils/notificationManager';
 import EditCommandDialog from './EditCommandDialog';
 import { Toolbar } from 'primereact/toolbar';
 import AddNewCommandDialog from './AddNewCommandDialog';
+import { useCommandsTranslations } from '../../../hooks/useTranslations';
 
 export default function CommandsSection() {
     const isAdmin: boolean = useSelector(
@@ -19,6 +20,7 @@ export default function CommandsSection() {
     const commands: CommandEntry[] = useSelector(
         (state: AppState) => state.commandsReducer.commands
     );
+    const commandsTranslations = useCommandsTranslations();
     const [commandDescription, setCommandDescription] = useState('');
     const editingCommandID = useRef(-1);
     const [command, setCommand] = useState('');
@@ -76,11 +78,11 @@ export default function CommandsSection() {
             <>
                 {isAdmin && (
                     <Button
-                        label="New Command"
+                        label={commandsTranslations.newCommand}
                         icon="pi pi-plus"
                         className="mr-2"
                         data-toggle="tooltip"
-                        title="Adds new command"
+                        title={commandsTranslations.addNewCommandTooltip}
                         onClick={() => setNewCommandDialogVisibility(true)}
                     ></Button>
                 )}

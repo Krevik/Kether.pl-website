@@ -1,0 +1,84 @@
+{
+    "common": {
+        "loading": "Loading...",
+        "error": "Error",
+        "retry": "Retry",
+        "cancel": "Cancel",
+        "save": "Save",
+        "refresh": "Refresh"
+    },
+    "navigation": {
+        "home": "Home",
+        "hallOfFame": "Hall of Fame",
+        "hallOfFameSuggestions": "Hall of Fame Suggestions",
+        "githubRepo": "Github Repo",
+        "donate": "Donate",
+        "loading": {
+            "home": "Loading Home Page...",
+            "hallOfFame": "Loading Hall of Fame...",
+            "suggestions": "Loading Suggestions...",
+            "github": "Loading GitHub...",
+            "donate": "Loading Donate Page...",
+            "generic": "Loading..."
+        }
+    },
+    "serverInfo": {
+        "name": "Name",
+        "players": "Players",
+        "status": "Status",
+        "online": "Online",
+        "offline": "Offline",
+        "map": "Map",
+        "joinGame": "Join game",
+        "nickname": "Nickname",
+        "score": "Score",
+        "duration": "Duration",
+        "bot": "bot",
+        "bots": "bots",
+        "customMapsText": "You can download all the custom maps installed on the server",
+        "here": "HERE"
+    },
+    "commands": {
+        "newCommand": "New Command",
+        "addNewCommand": "Add new command",
+        "editCommand": "Edit Command",
+        "addNewCommandTooltip": "Adds new command",
+        "successfullyAdded": "Successfully added new command",
+        "couldntAdd": "Couldn't add the command"
+    },
+    "binds": {
+        "newBind": "New Bind",
+        "addNewBind": "Add new Bind",
+        "editBind": "Edit Bind",
+        "binds": "Binds",
+        "addNewBindTooltip": "Adds new bind",
+        "successfullyAdded": "Successfully added new bind",
+        "couldntAdd": "Couldn't add the bind"
+    },
+    "suggestions": {
+        "newSuggestion": "New Suggestion",
+        "addNewSuggestion": "Add new suggestion",
+        "editSuggestion": "Edit Suggestion",
+        "successfullyAdded": "Successfully added new suggestion",
+        "couldntAdd": "Couldn't add the suggestion"
+    },
+    "errors": {
+        "loadingTimeout": "Loading is taking longer than expected",
+        "serverInfoUnavailable": "Server Information Unavailable",
+        "serverInfoUnavailableDescription": "Unable to fetch server status. The server might be temporarily unavailable.",
+        "refreshServerInfo": "Refresh Server Info"
+    },
+    "performance": {
+        "monitor": {
+            "title": "Performance Monitor",
+            "totalOperations": "Total Operations",
+            "averageDuration": "Average Duration",
+            "slowOperations": "Slow Operations (>100ms)",
+            "recentOperations": "Recent Operations",
+            "clear": "Clear"
+        }
+    },
+    "footer": {
+        "copyright": "© 2025 Kether.pl."
+    }
+}

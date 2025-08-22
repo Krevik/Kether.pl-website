@@ -9,11 +9,13 @@ import { notificationManager } from '../../../utils/notificationManager';
 import { SERVER_CONFIG, SUCCESS_MESSAGES } from '../../../utils/constants';
 import { withServerInfoErrorBoundary } from '../../ErrorBoundary/SpecificErrorBoundaries';
 import React, { useCallback } from 'react';
+import { useServerInfoTranslations } from '../../../hooks/useTranslations';
 
 function ServerInfoSection() {
     const serverInfo = useSelector(
         (state: AppState) => state.serverInfoReducer.serverInfo
     );
+    const serverInfoTranslations = useServerInfoTranslations();
 
     serverInfoService.useServerInfoLoadingService();
 
@@ -51,20 +53,20 @@ function ServerInfoSection() {
                     sortMode="multiple"
                     scrollable={true}
                 >
-                    <Column field={'name'} header={'Nickname'} sortable />
-                    <Column field={'score'} header={'Score'} sortable />
+                    <Column field={'name'} header={serverInfoTranslations.nickname} sortable />
+                    <Column field={'score'} header={serverInfoTranslations.score} sortable />
                     <Column
                         body={getPlayerGameTimeColumnBody}
-                        header={'Duration'}
+                        header={serverInfoTranslations.duration}
                     />
                 </DataTable>
             </div>
         );
-    }, [serverInfo, getPlayerGameTimeColumnBody]);
+    }, [serverInfo, getPlayerGameTimeColumnBody, serverInfoTranslations]);
 
     return (
         <div className="section future-rot">
-            <span>Name: {serverInfo?.name}</span>
+            <span>{serverInfoTranslations.name}: {serverInfo?.name}</span>
             <span>
                 IP: {SERVER_CONFIG.IP}
                 <Button
@@ -77,15 +79,15 @@ function ServerInfoSection() {
                 />
             </span>
             <span>
-                Players: {serverInfo?.players}/{serverInfo?.maxplayers} ({serverInfo?.bots} {serverInfo?.bots === 1 ? 'bot' : 'bots'})
+                {serverInfoTranslations.players}: {serverInfo?.players}/{serverInfo?.maxplayers} ({serverInfo?.bots} {serverInfo?.bots === 1 ? serverInfoTranslations.bot : serverInfoTranslations.bots})
             </span>
             <span>
-                Status: {serverInfo?.status === '1' ? 'Online' : 'Offline'}
+                {serverInfoTranslations.status}: {serverInfo?.status === '1' ? serverInfoTranslations.online : serverInfoTranslations.offline}
             </span>
-            <span>Map: {serverInfo?.map}</span>
+            <span>{serverInfoTranslations.map}: {serverInfo?.map}</span>
             <span>
                 <Button
-                    label="Join game"
+                    label={serverInfoTranslations.joinGame}
                     onClick={() => {
                         window.location.href = SERVER_CONFIG.STEAM_CONNECT_URL;
                     }}
@@ -95,7 +97,7 @@ function ServerInfoSection() {
                 <span>{getPlayerList()}</span>
             )}
             <span className="centered-text">
-                You can download all the custom maps installed on the server
+                {serverInfoTranslations.customMapsText}
                 <a
                     style={{
                         display: 'inline-block',
@@ -106,7 +108,7 @@ function ServerInfoSection() {
                     }}
                     href="https://steamcommunity.com/sharedfiles/filedetails/?id=2542824628"
                 >
-                    HERE
+                    {serverInfoTranslations.here}
                 </a>
             </span>
         </div>

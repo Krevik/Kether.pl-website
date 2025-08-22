@@ -10,6 +10,8 @@ import { uiActions } from '../../redux/slices/uiSlice';
 import { withNavigationErrorBoundary } from '../ErrorBoundary/SpecificErrorBoundaries';
 import React, { useMemo, useCallback } from 'react';
 import { preloadOnHover } from '../../utils/preloadUtils';
+import { useNavigationTranslations } from '../../hooks/useTranslations';
+import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher';
 
 interface TabItem {
     label: string;
@@ -20,29 +22,30 @@ function Navbar() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const isMenuShown = useSelector((state: AppState) => state.uiReducer.isNavbarVisible);
+    const navTranslations = useNavigationTranslations();
 
     const tabs: TabItem[] = useMemo(() => [
         {
-            label: 'Home',
+            label: navTranslations.home,
             targetPage: pagePaths.HOME_PAGE,
         },
         {
-            label: 'Hall of Fame',
+            label: navTranslations.hallOfFame,
             targetPage: pagePaths.HALL_OF_FAME,
         },
         {
-            label: 'Hall of Fame Suggestions',
+            label: navTranslations.hallOfFameSuggestions,
             targetPage: pagePaths.HALL_OF_FAME_SUGGESTIONS,
         },
         {
-            label: 'Github Repo',
+            label: navTranslations.githubRepo,
             targetPage: pagePaths.GITHUB,
         },
         {
-            label: 'Donate',
+            label: navTranslations.donate,
             targetPage: pagePaths.DONATE,
         },
-    ], []);
+    ], [navTranslations]);
 
     const getNavigationButtons = useCallback(() => {
         return tabs.map((tab) => {
@@ -99,6 +102,7 @@ function Navbar() {
                 <SteamLoginButton />
                 <UserDetails />
                 {getNavigationButtons()}
+                <LanguageSwitcher />
             </>
         );
     }, [getNavigationButtons]);

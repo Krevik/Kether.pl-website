@@ -6,6 +6,7 @@ import React from 'react';
 import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
 import { AppError, ErrorType, ErrorSeverity } from '../../utils/errorUtils';
+import { useTranslation } from 'react-i18next';
 
 export interface ErrorFallbackProps {
     error: AppError;
@@ -118,42 +119,46 @@ export const GenericErrorFallback: React.FC<ErrorFallbackProps> = ({
 export const ServerInfoErrorFallback: React.FC<ErrorFallbackProps> = ({ 
     error, 
     onRetry 
-}) => (
-    <Card 
-        className="server-info-error"
-        style={{
-            padding: '1.5rem',
-            textAlign: 'center',
-            backgroundColor: 'rgba(0, 0, 0, 0.6)',
-            border: '1px solid #e74c3c',
-            color: 'white'
-        }}
-    >
-        <i 
-            className="pi pi-server" 
-            style={{ 
-                fontSize: '2rem', 
-                color: '#e74c3c',
-                marginBottom: '1rem',
-                display: 'block'
+}) => {
+    const { t } = useTranslation();
+    
+    return (
+        <Card 
+            className="server-info-error"
+            style={{
+                padding: '1.5rem',
+                textAlign: 'center',
+                backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                border: '1px solid #e74c3c',
+                color: 'white'
             }}
-        />
-        <h4 style={{ color: 'white', marginBottom: '0.5rem' }}>
-            Server Information Unavailable
-        </h4>
-        <p style={{ color: '#bdc3c7', marginBottom: '1rem' }}>
-            Unable to fetch server status. The server might be temporarily unavailable.
-        </p>
-        {onRetry && (
-            <Button
-                label="Refresh Server Info"
-                icon="pi pi-refresh"
-                onClick={onRetry}
-                className="p-button-sm p-button-outlined"
+        >
+            <i 
+                className="pi pi-server" 
+                style={{ 
+                    fontSize: '2rem', 
+                    color: '#e74c3c',
+                    marginBottom: '1rem',
+                    display: 'block'
+                }}
             />
-        )}
-    </Card>
-);
+            <h4 style={{ color: 'white', marginBottom: '0.5rem' }}>
+                {t('errors.serverInfoUnavailable')}
+            </h4>
+            <p style={{ color: '#bdc3c7', marginBottom: '1rem' }}>
+                {t('errors.serverInfoUnavailableDescription')}
+            </p>
+            {onRetry && (
+                <Button
+                    label={t('errors.refreshServerInfo')}
+                    icon="pi pi-refresh"
+                    onClick={onRetry}
+                    className="p-button-sm p-button-outlined"
+                />
+            )}
+        </Card>
+    );
+};
 
 /**
  * Binds/Hall of Fame specific error fallback

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import './LoadingSpinner.css';
 
 interface LoadingSpinnerProps {
@@ -12,12 +13,15 @@ interface LoadingSpinnerProps {
 
 export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ 
     size = 'medium', 
-    message = 'Loading...',
+    message,
     fullScreen = false,
     minDelay = 300, // Show spinner for at least 300ms to prevent flashing
     timeout = 10000, // 10 second timeout
     type = 'spinner'
 }) => {
+    const { t } = useTranslation();
+    const defaultMessage = t('common.loading');
+    const displayMessage = message || defaultMessage;
     const [shouldShow, setShouldShow] = useState(false);
     const [hasTimedOut, setHasTimedOut] = useState(false);
 
@@ -48,12 +52,12 @@ export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
             <div className={`loading-container ${fullScreen ? 'fullscreen' : ''}`}>
                 <div className="loading-error">
                     <div className="error-icon">⚠️</div>
-                    <p className="error-message">Loading is taking longer than expected</p>
+                    <p className="error-message">{t('errors.loadingTimeout')}</p>
                     <button 
                         className="retry-button"
                         onClick={() => window.location.reload()}
                     >
-                        Retry
+                        {t('common.retry')}
                     </button>
                 </div>
             </div>
@@ -80,7 +84,7 @@ export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
                     <div className="progress-bar">
                         <div className="progress-fill"></div>
                     </div>
-                    <p className="loading-message">{message}</p>
+                    <p className="loading-message">{displayMessage}</p>
                 </div>
             </div>
         );
@@ -97,7 +101,7 @@ export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
                 <div className="spinner-ring"></div>
                 <div className="spinner-ring"></div>
             </div>
-            {message && <p className="loading-message">{message}</p>}
+            {displayMessage && <p className="loading-message">{displayMessage}</p>}
         </div>
     );
 };

@@ -19,6 +19,7 @@ import AddNewBindDialog from './Dialogues/AddNewBindDialog';
 import { PageWithBackground } from '../PageLayout/PageBackground/PageWithBackground';
 import { BACKGROUNDS } from '../PageLayout/PageBackground/backgrounds';
 import { trimBindAuthor } from '../../utils/bindUtils';
+import { useBindsTranslations } from '../../hooks/useTranslations';
 
 const mapBinds = (binds: BindEntry[] | BindSuggestionEntry[]) => {
     return binds.map((bind) => {
@@ -33,17 +34,18 @@ const getToolbarLeftSide = (
     isAdmin: boolean,
     setNewBindDialogVisibility: (
         value: boolean | ((prevVar: boolean) => boolean)
-    ) => void
+    ) => void,
+    bindsTranslations: ReturnType<typeof useBindsTranslations>
 ) => {
     return (
         <>
             {isAdmin && (
                 <Button
-                    label="New Bind"
+                    label={bindsTranslations.newBind}
                     icon="pi pi-plus"
                     className="p-button-success mr-2"
                     data-toggle="tooltip"
-                    title="Adds new bind"
+                    title={bindsTranslations.addNewBindTooltip}
                     onClick={() => setNewBindDialogVisibility(true)}
                 ></Button>
             )}
@@ -175,6 +177,7 @@ const bindVotingBodyTemplate = (
 
 export default function HallOfFame() {
     const binds = useSelector((state: AppState) => state.bindsReducer.binds);
+    const bindsTranslations = useBindsTranslations();
 
     const isAdmin: boolean = useSelector(
         (state: AppState) => state.userDataReducer.isAdmin
@@ -228,11 +231,12 @@ export default function HallOfFame() {
                         className="mb-4"
                         start={getToolbarLeftSide(
                             isAdmin,
-                            setNewBindDialogVisibility
+                            setNewBindDialogVisibility,
+                            bindsTranslations
                         )}
                     ></Toolbar>
 
-                    <div className="centered-text"> Binds</div>
+                    <div className="centered-text">{bindsTranslations.binds}</div>
                     <div className="card">
                         {isLoading ? (
                             <p>Loading...</p>

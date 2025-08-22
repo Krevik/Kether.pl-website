@@ -4,6 +4,7 @@ import { Button } from 'primereact/button';
 import { BindEntry } from '../../../models/bindsModels';
 import { bindsManagingService } from '../../../services/bindsManagingService';
 import { notificationManager } from '../../../utils/notificationManager';
+import { useBindsTranslations, useCommonTranslations } from '../../../hooks/useTranslations';
 
 type AddNewBindDialogProps = {
     isDialogVisible: boolean;
@@ -15,16 +16,19 @@ type AddNewBindDialogProps = {
 };
 
 export default function AddNewBindDialog(props: AddNewBindDialogProps) {
+    const bindsTranslations = useBindsTranslations();
+    const commonTranslations = useCommonTranslations();
+    
     const newBindDialogFooter = (
         <>
             <Button
-                label="Cancel"
+                label={commonTranslations.cancel}
                 icon="pi pi-times"
                 className="p-button-text"
                 onClick={() => props.setDialogVisibility(false)}
             />
             <Button
-                label="Save"
+                label={commonTranslations.save}
                 icon="pi pi-check"
                 className="p-button-text"
                 onClick={() => {
@@ -36,14 +40,14 @@ export default function AddNewBindDialog(props: AddNewBindDialogProps) {
                         .addNewBind(newBind)
                         .then(() => {
                             notificationManager.SUCCESS(
-                                `Successfully added new bind`
+                                bindsTranslations.successfullyAdded
                             );
                             props.setDialogVisibility(false);
                             props.setBindText('');
                         })
                         .catch((error) => {
                             notificationManager.ERROR(
-                                `Couldn't add the bind: ${error}`
+                                `${bindsTranslations.couldntAdd}: ${error}`
                             );
                         });
                 }}
@@ -54,7 +58,7 @@ export default function AddNewBindDialog(props: AddNewBindDialogProps) {
     return (
         <Dialog
             visible={props.isDialogVisible}
-            header="Add new Bind"
+            header={bindsTranslations.addNewBind}
             modal
             className="p-fluid"
             footer={newBindDialogFooter}

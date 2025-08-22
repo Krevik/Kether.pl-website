@@ -10,6 +10,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary';
 import errorLogger from './utils/errorLogger';
 import { analyzeBundleSize } from './utils/performanceUtils';
+import './i18n'; // Initialize i18n
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement

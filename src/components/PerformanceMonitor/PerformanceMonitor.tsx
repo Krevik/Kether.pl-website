@@ -1,5 +1,6 @@
 import React from 'react';
 import { usePerformanceMonitor } from '../../utils/performanceUtils';
+import { useTranslation } from 'react-i18next';
 import './PerformanceMonitor.css';
 
 interface PerformanceMonitorProps {
@@ -8,6 +9,7 @@ interface PerformanceMonitorProps {
 
 export const PerformanceMonitor: React.FC<PerformanceMonitorProps> = ({ show = false }) => {
     const { metrics, clearMetrics } = usePerformanceMonitor();
+    const { t } = useTranslation();
 
     if (!show || process.env.NODE_ENV !== 'development') {
         return null;
@@ -22,30 +24,30 @@ export const PerformanceMonitor: React.FC<PerformanceMonitorProps> = ({ show = f
     return (
         <div className="performance-monitor">
             <div className="performance-monitor-header">
-                <h3>Performance Monitor</h3>
+                <h3>{t('performance.monitor.title')}</h3>
                 <button onClick={clearMetrics} className="clear-button">
-                    Clear
+                    {t('performance.monitor.clear')}
                 </button>
             </div>
             
             <div className="performance-stats">
                 <div className="stat">
-                    <span className="stat-label">Total Operations:</span>
+                    <span className="stat-label">{t('performance.monitor.totalOperations')}:</span>
                     <span className="stat-value">{metrics.length}</span>
                 </div>
                 <div className="stat">
-                    <span className="stat-label">Average Duration:</span>
+                    <span className="stat-label">{t('performance.monitor.averageDuration')}:</span>
                     <span className="stat-value">{averageDuration.toFixed(2)}ms</span>
                 </div>
                 <div className="stat">
-                    <span className="stat-label">Slow Operations (&gt;100ms):</span>
+                    <span className="stat-label">{t('performance.monitor.slowOperations')}:</span>
                     <span className="stat-value">{slowOperations.length}</span>
                 </div>
             </div>
 
             {metrics.length > 0 && (
                 <div className="performance-metrics">
-                    <h4>Recent Operations</h4>
+                    <h4>{t('performance.monitor.recentOperations')}</h4>
                     <div className="metrics-list">
                         {metrics.slice(-10).reverse().map((metric, index) => {
                             const isSlow = (metric.duration || 0) > 100;

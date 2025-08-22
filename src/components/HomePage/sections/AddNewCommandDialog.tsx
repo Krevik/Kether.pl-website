@@ -5,6 +5,7 @@ import { notificationManager } from '../../../utils/notificationManager';
 import { CommandEntry } from '../../../models/commandModels';
 import { commandsManagingService } from '../../../services/commandsManagingService';
 import DialogCommandContent from './DialogCommandContent';
+import { useCommandsTranslations, useCommonTranslations } from '../../../hooks/useTranslations';
 
 type AddNewCommandDialogProps = {
     isDialogVisible: boolean;
@@ -16,16 +17,19 @@ type AddNewCommandDialogProps = {
 };
 
 export default function AddNewCommandDialog(props: AddNewCommandDialogProps) {
+    const commandsTranslations = useCommandsTranslations();
+    const commonTranslations = useCommonTranslations();
+    
     const newCommandDialogFooter = (
         <>
             <Button
-                label="Cancel"
+                label={commonTranslations.cancel}
                 icon="pi pi-times"
                 className="p-button-text"
                 onClick={() => props.setDialogVisibility(false)}
             />
             <Button
-                label="Save"
+                label={commonTranslations.save}
                 icon="pi pi-check"
                 className="p-button-text"
                 onClick={() => {
@@ -37,14 +41,14 @@ export default function AddNewCommandDialog(props: AddNewCommandDialogProps) {
                         .addNewCommand(newCommand)
                         .then(() => {
                             notificationManager.SUCCESS(
-                                `Successfully added new command`
+                                commandsTranslations.successfullyAdded
                             );
                             props.setDialogVisibility(false);
                             props.setCommandDescription('');
                         })
                         .catch((error) => {
                             notificationManager.ERROR(
-                                `Couldn't add the command: ${error.message}`
+                                `${commandsTranslations.couldntAdd}: ${error.message}`
                             );
                         });
                 }}
@@ -55,7 +59,7 @@ export default function AddNewCommandDialog(props: AddNewCommandDialogProps) {
     return (
         <Dialog
             visible={props.isDialogVisible}
-            header="Add new command"
+            header={commandsTranslations.addNewCommand}
             modal
             className="p-fluid"
             footer={newCommandDialogFooter}

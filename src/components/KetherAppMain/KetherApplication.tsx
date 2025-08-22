@@ -11,6 +11,7 @@ import { lazy, Suspense, useEffect } from 'react';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import PerformanceMonitor from '../PerformanceMonitor/PerformanceMonitor';
 import { preloadAllComponents } from '../../utils/preloadUtils';
+import { useNavigationTranslations } from '../../hooks/useTranslations';
 
 // Lazy load components for better performance
 const HomePage = lazy(() => import('../HomePage/HomePage'));
@@ -23,6 +24,8 @@ export default function KetherApplication() {
     steamAPIService.useSteamAuthService();
     steamAPIService.useUserDataFetcher();
     steamAPIService.useOwnedGamesFetcher();
+
+    const navTranslations = useNavigationTranslations();
 
     // Preload components for instant navigation
     useEffect(() => {
@@ -38,7 +41,7 @@ export default function KetherApplication() {
                         <PageLayout>
                             <Suspense fallback={
                                 <LoadingSpinner 
-                                    message="Loading Home Page..." 
+                                    message={navTranslations.loading.home} 
                                     type="skeleton"
                                     minDelay={200}
                                 />
@@ -54,7 +57,7 @@ export default function KetherApplication() {
                         <PageLayout>
                             <Suspense fallback={
                                 <LoadingSpinner 
-                                    message="Loading Hall of Fame..." 
+                                    message={navTranslations.loading.hallOfFame} 
                                     type="progressive"
                                     minDelay={150}
                                 />
@@ -70,7 +73,7 @@ export default function KetherApplication() {
                         <PageLayout>
                             <Suspense fallback={
                                 <LoadingSpinner 
-                                    message="Loading Suggestions..." 
+                                    message={navTranslations.loading.suggestions} 
                                     type="skeleton"
                                     minDelay={150}
                                 />
@@ -87,7 +90,7 @@ export default function KetherApplication() {
                         <PageLayout>
                             <Suspense fallback={
                                 <LoadingSpinner 
-                                    message="Loading GitHub..." 
+                                    message={navTranslations.loading.github} 
                                     size="small"
                                     minDelay={100}
                                 />
@@ -103,7 +106,7 @@ export default function KetherApplication() {
                         <PageLayout>
                             <Suspense fallback={
                                 <LoadingSpinner 
-                                    message="Loading Donate Page..." 
+                                    message={navTranslations.loading.donate} 
                                     type="progressive"
                                     minDelay={200}
                                 />
@@ -119,7 +122,7 @@ export default function KetherApplication() {
                         <PageLayout>
                             <Suspense fallback={
                                 <LoadingSpinner 
-                                    message="Loading..." 
+                                    message={navTranslations.loading.generic} 
                                     type="skeleton"
                                     minDelay={100}
                                 />

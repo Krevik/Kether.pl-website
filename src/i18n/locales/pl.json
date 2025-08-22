@@ -1,0 +1,84 @@
+{
+    "common": {
+        "loading": "Ladowanie...",
+        "error": "Blad",
+        "retry": "Ponow",
+        "cancel": "Anuluj",
+        "save": "Zapisz",
+        "refresh": "Odswiez"
+    },
+    "navigation": {
+        "home": "Strona Glowna",
+        "hallOfFame": "Galeria Slawy",
+        "hallOfFameSuggestions": "Sugestie Galerii Slawy",
+        "githubRepo": "Repo GitHub",
+        "donate": "Wsparcie",
+        "loading": {
+            "home": "Ladowanie Strony Glownej...",
+            "hallOfFame": "Ladowanie Galerii Slawy...",
+            "suggestions": "Ladowanie Sugestii...",
+            "github": "Ladowanie Repo GitHub...",
+            "donate": "Ladowanie Strony Wsparcia...",
+            "generic": "Ladowanie..."
+        }
+    },
+    "serverInfo": {
+        "name": "Nazwa",
+        "players": "Gracze",
+        "status": "Status",
+        "online": "Online",
+        "offline": "Offline",
+        "map": "Mapa",
+        "joinGame": "Dolacz do gry",
+        "nickname": "Nick",
+        "score": "Wynik",
+        "duration": "Czas gry",
+        "bot": "bot",
+        "bots": "boty",
+        "customMapsText": "Mozesz pobrac wszystkie niestandardowe mapy zainstalowane na serwerze",
+        "here": "TUTAJ"
+    },
+    "commands": {
+        "newCommand": "Nowa Komenda",
+        "addNewCommand": "Dodaj nowa komende",
+        "editCommand": "Edytuj Komende",
+        "addNewCommandTooltip": "Dodaje nowa komende",
+        "successfullyAdded": "Pomyslnie dodano nowa komende",
+        "couldntAdd": "Nie mozna bylo dodac komendy"
+    },
+    "binds": {
+        "newBind": "Nowy Bind",
+        "addNewBind": "Dodaj nowy bind",
+        "editBind": "Edytuj Bind",
+        "binds": "Bindy",
+        "addNewBindTooltip": "Dodaje nowy bind",
+        "successfullyAdded": "Pomyslnie dodano nowy bind",
+        "couldntAdd": "Nie mozna bylo dodac binda"
+    },
+    "suggestions": {
+        "newSuggestion": "Nowa Sugestia",
+        "addNewSuggestion": "Dodaj nowa sugestie",
+        "editSuggestion": "Edytuj Sugestie",
+        "successfullyAdded": "Pomyslnie dodano nowa sugestie",
+        "couldntAdd": "Nie mozna bylo dodac sugestii"
+    },
+    "errors": {
+        "loadingTimeout": "Ladowanie trwa dluzej niz oczekiwano",
+        "serverInfoUnavailable": "Informacje o serwerze niedostepne",
+        "serverInfoUnavailableDescription": "Nie mozna pobrac statusu serwera. Serwer moze byc chwilowo niedostepny.",
+        "refreshServerInfo": "Odswiez informacje o serwerze"
+    },
+    "performance": {
+        "monitor": {
+            "title": "Monitor wydajnosci",
+            "totalOperations": "Laczna liczba operacji",
+            "averageDuration": "Sredni czas trwania",
+            "slowOperations": "Wolne operacje (>100ms)",
+            "recentOperations": "Ostatnie operacje",
+            "clear": "Wyczysc"
+        }
+    },
+    "footer": {
+        "copyright": "© 2025 Kether.pl."
+    }
+}
