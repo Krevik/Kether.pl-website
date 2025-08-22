@@ -7,12 +7,13 @@ import { pagePaths } from '../../utils/pagePaths';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppState } from '../../redux/store';
 import { uiActions } from '../../redux/slices/uiSlice';
+import { withNavigationErrorBoundary } from '../ErrorBoundary/SpecificErrorBoundaries';
 interface TabItem {
     label: string;
     targetPage: string;
 }
 
-export default function Navbar() {
+function Navbar() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const isMenuShown = useSelector((state: AppState) => state.uiReducer.isNavbarVisible);
@@ -90,3 +91,5 @@ export default function Navbar() {
         </div>
     );
 }
+
+export default withNavigationErrorBoundary(Navbar);

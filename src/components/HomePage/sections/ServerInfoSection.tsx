@@ -7,8 +7,9 @@ import { Column } from 'primereact/column';
 import { PlayerDetails } from '../../../models/serverInfoModels';
 import { notificationManager } from '../../../utils/notificationManager';
 import { SERVER_CONFIG, SUCCESS_MESSAGES } from '../../../utils/constants';
+import { withServerInfoErrorBoundary } from '../../ErrorBoundary/SpecificErrorBoundaries';
 
-export default function ServerInfoSection() {
+function ServerInfoSection() {
     const serverInfo = useSelector(
         (state: AppState) => state.serverInfoReducer.serverInfo
     );
@@ -108,3 +109,5 @@ export default function ServerInfoSection() {
         </div>
     );
 }
+
+export default withServerInfoErrorBoundary(ServerInfoSection);
