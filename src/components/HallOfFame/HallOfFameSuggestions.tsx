@@ -176,14 +176,16 @@ export default function HallOfFameSuggestions() {
                                     scrollHeight="flex"
                                     emptyMessage={suggestionsTranslations.noSuggestionsAvailable}
                                 >
-                                    <Column
-                                        field="proposed_by"
-                                        header={suggestionsTranslations.proposedBy}
-                                    ></Column>
+                                    {isAdmin && (
                                     <Column
                                         field="id"
                                         header={bindsTranslations.databaseId}
                                         sortable
+                                    ></Column>
+                                    )}
+                                    <Column
+                                        field="proposed_by"
+                                        header={suggestionsTranslations.proposedBy}
                                     ></Column>
                                     <Column
                                         field="author"
@@ -195,6 +197,7 @@ export default function HallOfFameSuggestions() {
                                         header={bindsTranslations.text}
                                         sortable
                                     ></Column>
+                                    {isAdmin && (
                                     <Column
                                         header={bindsTranslations.actions}
                                         body={(rowData) =>
@@ -206,6 +209,7 @@ export default function HallOfFameSuggestions() {
                                             )
                                         }
                                     ></Column>
+                                    )}
                                 </DataTable>
                             )}
                         </div>
