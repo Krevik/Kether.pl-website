@@ -46,7 +46,7 @@ export const bindSuggestionsManagingService = {
                 body: JSON.stringify({
                     author: bind.author,
                     text: bind.text,
-                    proposed_by: bind.proposedBy!,
+                    proposed_by: bind.proposed_by!,
                 }),
             }
         )

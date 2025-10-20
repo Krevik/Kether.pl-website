@@ -25,4 +25,4 @@ export type BindEntry = {
     votingData?: AttachedBindVoteData;
 };
 
-export type BindSuggestionEntry = BindEntry & { proposedBy: string };
+export type BindSuggestionEntry = BindEntry & { proposed_by: string };

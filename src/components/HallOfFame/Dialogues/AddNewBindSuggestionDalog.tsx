@@ -43,7 +43,7 @@ export default function AddNewBindSuggestionDialog(
                 onClick={() => {
                     const newBind = {
                         id: -1,
-                        proposedBy: steamUserData!.personaname,
+                        proposed_by: steamUserData!.personaname,
                         author: props.bindAuthor,
                         text: props.bindText,
                     } as BindSuggestionEntry;

@@ -177,7 +177,7 @@ export default function HallOfFameSuggestions() {
                                     emptyMessage={suggestionsTranslations.noSuggestionsAvailable}
                                 >
                                     <Column
-                                        field="proposedBy"
+                                        field="proposed_by"
                                         header={suggestionsTranslations.proposedBy}
                                     ></Column>
                                     <Column
