@@ -23,18 +23,18 @@ This project now supports full internationalization with English and Polish lang
 ### **Dependencies**
 ```json
 {
-  "i18next": "25.4.0",
-  "react-i18next": "15.7.1",
-  "i18next-browser-languagedetector": "8.2.0",
-  "i18next-http-backend": "3.0.2"
+  "i18next": "25.6.0",
+  "react-i18next": "15.7.4",
+  "i18next-browser-languagedetector": "8.2.0"
 }
 ```
+
+Note: Translation files are imported statically for better tree-shaking and smaller bundle size.
 
 ### **Configuration**
 ```typescript
 // src/i18n/index.ts
 i18n
-    .use(Backend)
     .use(LanguageDetector)
     .use(initReactI18next)
     .init({
