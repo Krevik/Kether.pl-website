@@ -1,19 +1,18 @@
 {
   "files": {
     "main.css": "/static/css/main.2bad4322.css",
-    "main.js": "/static/js/main.5b279f5c.js",
-    "static/css/575.67231261.chunk.css": "/static/css/575.67231261.chunk.css",
-    "static/js/575.49eb725f.chunk.js": "/static/js/575.49eb725f.chunk.js",
-    "static/css/643.d25c9a72.chunk.css": "/static/css/643.d25c9a72.chunk.css",
-    "static/js/643.63e4c2d5.chunk.js": "/static/js/643.63e4c2d5.chunk.js",
-    "static/css/595.c49bc632.chunk.css": "/static/css/595.c49bc632.chunk.css",
-    "static/js/595.f16c4897.chunk.js": "/static/js/595.f16c4897.chunk.js",
-    "static/css/33.d82d76f0.chunk.css": "/static/css/33.d82d76f0.chunk.css",
-    "static/js/33.6ef4d92d.chunk.js": "/static/js/33.6ef4d92d.chunk.js",
-    "static/css/649.c9d5c8ac.chunk.css": "/static/css/649.c9d5c8ac.chunk.css",
-    "static/js/649.ffdb07fa.chunk.js": "/static/js/649.ffdb07fa.chunk.js",
+    "main.js": "/static/js/main.945ba8b8.js",
+    "static/css/978.67231261.chunk.css": "/static/css/978.67231261.chunk.css",
+    "static/js/978.ceae2015.chunk.js": "/static/js/978.ceae2015.chunk.js",
+    "static/css/614.d25c9a72.chunk.css": "/static/css/614.d25c9a72.chunk.css",
+    "static/js/614.85ae12a4.chunk.js": "/static/js/614.85ae12a4.chunk.js",
+    "static/css/558.c49bc632.chunk.css": "/static/css/558.c49bc632.chunk.css",
+    "static/js/558.8b303074.chunk.js": "/static/js/558.8b303074.chunk.js",
+    "static/css/424.d82d76f0.chunk.css": "/static/css/424.d82d76f0.chunk.css",
+    "static/js/424.043aad3e.chunk.js": "/static/js/424.043aad3e.chunk.js",
+    "static/css/128.c9d5c8ac.chunk.css": "/static/css/128.c9d5c8ac.chunk.css",
+    "static/js/128.5e475e0c.chunk.js": "/static/js/128.5e475e0c.chunk.js",
     "static/js/711.1d86f471.chunk.js": "/static/js/711.1d86f471.chunk.js",
-    "static/js/755.9e2769a9.chunk.js": "/static/js/755.9e2769a9.chunk.js",
     "static/media/background_5.jpg": "/static/media/background_5.4d636ab7f678d71f2368.jpg",
     "static/media/background_1.jpg": "/static/media/background_1.bbbbf33c0f3cf7222559.jpg",
     "static/media/background_3.jpg": "/static/media/background_3.4e932a7e40bb7c3fc904.jpg",
@@ -32,6 +31,6 @@
   },
   "entrypoints": [
     "static/css/main.2bad4322.css",
-    "static/js/main.5b279f5c.js"
+    "static/js/main.945ba8b8.js"
   ]
 }
