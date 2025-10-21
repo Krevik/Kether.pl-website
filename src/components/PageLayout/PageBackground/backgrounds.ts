@@ -5,9 +5,8 @@ import background4 from '../../../resources/backgrounds/background_4.jpg';
 import background5 from '../../../resources/backgrounds/background_5.jpg';
 import background6 from '../../../resources/backgrounds/background_6.jpg';
 
-import { Image } from 'primereact/image';
-const createBackgroundUrl = (imageLoc: Image) => {
-    return `${imageLoc}`;
+const createBackgroundUrl = (imageLoc: string) => {
+    return imageLoc;
 };
 export const BACKGROUNDS = {
     BACKGROUND_1: createBackgroundUrl(background1),
