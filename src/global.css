@@ -6,12 +6,8 @@
 
 @font-face {
 	font-family: "Future Rot";
-	src: url("./resources/fonts/FutureRot.eot");
-	src: url("./resources/fonts/FutureRot.eot?#iefix") format("embedded-opentype"),
-		url("./resources/fonts/FutureRot.woff2") format("woff2"),
-		url("./resources/fonts/FutureRot.woff") format("woff"),
-		url("./resources/fonts/FutureRot.ttf") format("truetype"),
-		url("./resources/fonts/FutureRot.svg#FutureRot") format("svg");
+	src: url("./resources/fonts/FutureRot.woff2") format("woff2"),
+		url("./resources/fonts/FutureRot.woff") format("woff");
 	font-weight: normal;
 	font-style: normal;
 	font-display: swap;
