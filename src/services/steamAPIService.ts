@@ -35,7 +35,6 @@ export const steamAPIService = {
     },
     useSteamAuthService: () => {
         useEffect(() => {
-            setTimeout(() => {
                 if (window.location.href.includes('openid')) {
                     const search = window.location.search.substring(1);
 
@@ -60,7 +59,6 @@ export const steamAPIService = {
                         appStore?.dispatch(userDataActions.setUserID(userId));
                     window.location.href = '/';
                 }
-            }, 500);
         }, []);
     },
     useUserDataFetcher: () => {
