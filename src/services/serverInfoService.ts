@@ -4,7 +4,6 @@ import { AppState, appStore } from '../redux/store';
 import { serverInfoActions } from '../redux/slices/serverInfoSlice';
 import { ServerInfo } from '../models/serverInfoModels';
 import { useSelector } from 'react-redux';
-import axios from 'axios';
 import { notificationManager } from '../utils/notificationManager';
 import { API_CONFIG } from '../utils/constants';
 import { ErrorType, getUserFriendlyMessage } from '../utils/errorUtils';
@@ -43,10 +42,24 @@ const refreshServerInfo = async (
     
     const result = await retryAsync(
         async () => {
-            const response = await axios.get(API_PATHS.SERVER_INFO, {
-                timeout: API_CONFIG.DEFAULT_TIMEOUT_MS,
-            });
-            return response.data as ServerInfo;
+            // Replace 'Axios' package with native fetch + AbortController
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), API_CONFIG.DEFAULT_TIMEOUT_MS);
+
+            try {
+                const response = await fetch(API_PATHS.SERVER_INFO, {
+                    signal: controller.signal,
+                });
+                clearTimeout(timeoutId);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return await response.json() as ServerInfo;
+            } catch (error) {
+                clearTimeout(timeoutId);
+                throw error;
+            }
         },
         {
             maxAttempts: 3,
