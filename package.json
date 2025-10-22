@@ -1,6 +1,6 @@
 {
 	"name": "kether.pl",
-	"version": "0.2.2.0",
+	"version": "0.3.0",
 	"private": true,
 	"homepage": "https://kether.pl",
 	"dependencies": {
@@ -48,18 +48,18 @@
 		]
 	},
 	"devDependencies": {
-		"@typescript-eslint/eslint-plugin": "^8.0.0",
-		"@typescript-eslint/parser": "^8.0.0",
-		"@vitejs/plugin-react": "^5.0.0",
-		"eslint": "^9.0.0",
-		"eslint-plugin-react-hooks": "^5.0.0",
-		"eslint-plugin-react-refresh": "^0.4.0",
+		"@typescript-eslint/eslint-plugin": "^8.46.2",
+		"@typescript-eslint/parser": "^8.46.2",
+		"@vitejs/plugin-react": "^5.0.4",
+		"eslint": "^9.38.0",
+		"eslint-plugin-react-hooks": "^5.2.0",
+		"eslint-plugin-react-refresh": "^0.4.24",
 		"prettier": "3.5.3",
 		"react-router-dom": "^7.9.4",
 		"shx": "^0.4.0",
 		"typescript-plugin-css-modules": "^5.2.0",
-		"vite": "^6.0.0",
-		"vite-tsconfig-paths": "^5.0.0"
+		"vite": "^6.4.1",
+		"vite-tsconfig-paths": "^5.1.4"
 	},
 	"prettier": {
 		"trailingComma": "es5",
