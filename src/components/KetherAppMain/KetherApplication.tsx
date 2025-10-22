@@ -7,10 +7,9 @@ import {
 } from 'react-router-dom';
 import { pagePaths } from '../../utils/pagePaths';
 import { PageLayout } from '../PageLayout/PageLayout';
-import { lazy, Suspense, useEffect } from 'react';
+import { lazy, Suspense } from 'react';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import PerformanceMonitor from '../PerformanceMonitor/PerformanceMonitor';
-import { preloadAllComponents } from '../../utils/preloadUtils';
 import { useNavigationTranslations } from '../../hooks/useTranslations';
 
 // Lazy load components for better performance
@@ -26,11 +25,6 @@ export default function KetherApplication() {
     steamAPIService.useOwnedGamesFetcher();
 
     const navTranslations = useNavigationTranslations();
-
-    // Preload components for instant navigation
-    useEffect(() => {
-        preloadAllComponents();
-    }, []);
 
     const router = createBrowserRouter(
         createRoutesFromElements(
