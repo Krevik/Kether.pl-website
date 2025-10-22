@@ -26,7 +26,7 @@ type FireflyType = {
     maxLifetime: number;
     markedForRemoval: boolean;
 };
-const MAX_FIREFLIES = 10;
+// const MAX_FIREFLIES = 10; // Unused constant
 
 export type FirefliesProps = {
     containerWidth: number;

@@ -17,32 +17,20 @@
 		"react-dom": "19.0.0",
 		"react-i18next": "^15.7.4",
 		"react-redux": "9.2.0",
-		"react-scripts": "^5.0.1",
 		"redux-persist": "^6.0.0",
 		"typescript": "^5.9.3"
 	},
 	"scripts": {
-		"start": "react-scripts start",
-		"build": "GENERATE_SOURCEMAP=false DISABLE_ESLINT_PLUGIN=true react-scripts build && shx cp build/index.html build/404.html",
-		"build:dev": "GENERATE_SOURCEMAP=true react-scripts build && shx cp build/index.html build/404.html",
-		"build:analyze": "npm run build && npx webpack-bundle-analyzer build/static/js/*.js",
-		"build:analyze:dev": "npm run build:dev && npx webpack-bundle-analyzer build/static/js/*.js",
-		"test": "react-scripts test",
-		"eject": "react-scripts eject",
-		"predeploy": "npm run build",
-		"deploy": "gh-pages -d build",
-		"runBoth": "run-p server start",
+		"dev": "vite",
+		"start": "vite",
+		"build": "tsc && vite build && shx cp build/index.html build/404.html",
+		"build:dev": "tsc && vite build --mode development && shx cp build/index.html build/404.html",
+		"preview": "vite preview",
+		"type-check": "tsc --noEmit",
 		"lint": "eslint src --ext .ts,.tsx",
 		"lint:fix": "eslint src --ext .ts,.tsx --fix",
-		"type-check": "tsc --noEmit",
-		"performance:analyze": "npm run build && npx lighthouse http://localhost:3000 --output=json --output-path=./lighthouse-report.json",
-		"performance:budget": "npm run build && npx bundle-buddy build/static/js/*.js"
-	},
-	"eslintConfig": {
-		"extends": [
-			"react-app",
-			"react-app/jest"
-		]
+		"predeploy": "npm run build",
+		"deploy": "gh-pages -d build"
 	},
 	"browserslist": {
 		"production": [
@@ -60,10 +48,18 @@
 		]
 	},
 	"devDependencies": {
+		"@typescript-eslint/eslint-plugin": "^8.0.0",
+		"@typescript-eslint/parser": "^8.0.0",
+		"@vitejs/plugin-react": "^5.0.0",
+		"eslint": "^9.0.0",
+		"eslint-plugin-react-hooks": "^5.0.0",
+		"eslint-plugin-react-refresh": "^0.4.0",
 		"prettier": "3.5.3",
 		"react-router-dom": "^7.9.4",
 		"shx": "^0.4.0",
-		"typescript-plugin-css-modules": "^5.2.0"
+		"typescript-plugin-css-modules": "^5.2.0",
+		"vite": "^6.0.0",
+		"vite-tsconfig-paths": "^5.0.0"
 	},
 	"prettier": {
 		"trailingComma": "es5",

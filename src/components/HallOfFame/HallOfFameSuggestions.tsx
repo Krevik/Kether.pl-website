@@ -68,7 +68,7 @@ const bindSuggestionBody = (
                         ) as BindSuggestionEntry;
                         bindsManagingService
                             .addNewBind(bind, userData?.steamid)
-                            .then((addedBind) => {
+                            .then((_addedBind) => {
                                 notificationManager.SUCCESS(
                                     suggestionsTranslations.successfullyAccepted
                                 );

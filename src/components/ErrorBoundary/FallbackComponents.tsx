@@ -117,7 +117,7 @@ export const GenericErrorFallback: React.FC<ErrorFallbackProps> = ({
  * Server info specific error fallback
  */
 export const ServerInfoErrorFallback: React.FC<ErrorFallbackProps> = ({ 
-    error, 
+    error: _error, 
     onRetry 
 }) => {
     const { t } = useTranslation();
@@ -164,7 +164,7 @@ export const ServerInfoErrorFallback: React.FC<ErrorFallbackProps> = ({
  * Binds/Hall of Fame specific error fallback
  */
 export const BindsErrorFallback: React.FC<ErrorFallbackProps> = ({ 
-    error, 
+    error: _error, 
     onRetry 
 }) => (
     <Card 
@@ -218,7 +218,7 @@ export const BindsErrorFallback: React.FC<ErrorFallbackProps> = ({
  * Network error specific fallback
  */
 export const NetworkErrorFallback: React.FC<ErrorFallbackProps> = ({ 
-    error, 
+    error: _error, 
     onRetry 
 }) => (
     <Card 
@@ -266,7 +266,7 @@ export const NetworkErrorFallback: React.FC<ErrorFallbackProps> = ({
  * Minimal error fallback for small components
  */
 export const MinimalErrorFallback: React.FC<ErrorFallbackProps> = ({ 
-    error, 
+    error: _error, 
     onRetry 
 }) => (
     <div 

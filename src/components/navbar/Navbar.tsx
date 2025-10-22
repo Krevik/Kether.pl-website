@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { AppState } from '../../redux/store';
 import { uiActions } from '../../redux/slices/uiSlice';
 import { withNavigationErrorBoundary } from '../ErrorBoundary/SpecificErrorBoundaries';
-import React, { useMemo, useCallback } from 'react';
+import { useMemo, useCallback } from 'react';
 import { useNavigationTranslations } from '../../hooks/useTranslations';
 import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher';
 

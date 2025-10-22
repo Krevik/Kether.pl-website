@@ -45,7 +45,7 @@ export const validationUtils = {
     /**
      * Validates if a string matches a regex pattern
      */
-    validatePattern: (value: string, fieldName: string, pattern: RegExp, message: string): ValidationResult => {
+    validatePattern: (value: string, _fieldName: string, pattern: RegExp, message: string): ValidationResult => {
         const errors: string[] = [];
         
         if (value && !pattern.test(value)) {

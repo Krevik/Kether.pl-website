@@ -236,7 +236,7 @@ class ErrorLogger {
 
 // Create singleton instance
 export const errorLogger = new ErrorLogger({
-    remoteEndpoint: process.env.REACT_APP_ERROR_ENDPOINT,
+    remoteEndpoint: import.meta.env.VITE_ERROR_ENDPOINT,
 });
 
 // Export for use in components

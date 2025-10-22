@@ -8,7 +8,7 @@ import { PlayerDetails } from '../../../models/serverInfoModels';
 import { notificationManager } from '../../../utils/notificationManager';
 import { SERVER_CONFIG, SUCCESS_MESSAGES } from '../../../utils/constants';
 import { withServerInfoErrorBoundary } from '../../ErrorBoundary/SpecificErrorBoundaries';
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import { useServerInfoTranslations } from '../../../hooks/useTranslations';
 
 function ServerInfoSection() {

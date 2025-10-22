@@ -209,7 +209,7 @@ export function usePerformanceMonitor() {
 // Higher-order component for performance monitoring
 export function withPerformanceMonitoring<P extends object>(
     WrappedComponent: React.ComponentType<P>,
-    componentName?: string
+    _componentName?: string
 ) {
     const WithPerformanceMonitoring = (props: P) => {
 
