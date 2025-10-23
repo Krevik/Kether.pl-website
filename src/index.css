@@ -1,5 +1,8 @@
-@import "primereact/resources/themes/bootstrap4-dark-purple/theme.css";
+/* Critical PrimeReact styles - loaded immediately */
 @import "primereact/resources/primereact.min.css";
+
+/* Non-critical styles - can be loaded asynchronously */
+@import "primereact/resources/themes/bootstrap4-dark-purple/theme.css";
 @import "primeicons/primeicons.css";
 
 body {

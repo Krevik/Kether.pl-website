@@ -19,12 +19,23 @@ export default defineConfig(({ mode }) => ({
         },
       },
     },
+    // Optimize chunk size and loading
+    chunkSizeWarningLimit: 1000,
+    cssCodeSplit: true,
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: mode === 'production',
+        drop_debugger: mode === 'production',
+      },
+    },
   },
   server: {
     port: 3000,
     open: true,
   },
-  optimizeDeps: {
-    include: ['primeicons'],
+  // Performance optimizations
+  esbuild: {
+    drop: mode === 'production' ? ['console', 'debugger'] : [],
   },
 }));

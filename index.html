@@ -10,6 +10,54 @@
 			content="Kether.pl L4D2 Server Website"
 		/>
 		<link rel="apple-touch-icon" href="/logo192.png" />
+		
+		<!-- Resource hints for better performance -->
+		<link rel="dns-prefetch" href="https://fonts.gstatic.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+		<link rel="dns-prefetch" href="https://21370000.xyz">
+		<link rel="preconnect" href="https://21370000.xyz" crossorigin>
+
+		<link rel="dns-prefetch" href="https://steamcdn-a.akamaihd.net">
+		<link rel="preconnect" href="https://steamcdn-a.akamaihd.net" crossorigin>
+		
+		<!-- Preload critical fonts -->
+		<link rel="preload" href="/src/resources/fonts/FutureRot.woff2" as="font" type="font/woff2" crossorigin>
+		<link rel="preload" href="https://fonts.gstatic.com/s/montserrat/v26/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCtr6Hw5aXo.woff2" as="font" type="font/woff2" crossorigin>
+		
+		<!-- Preload critical background image for LCP -->
+		<link rel="preload" href="/backgrounds/background_1.jpg" as="image" type="image/jpeg">
+		
+		<!-- Critical CSS for above-the-fold content -->
+		<style>
+			/* Critical styles for immediate rendering */
+			.pageWithBackground {
+				background-size: cover;
+				background-repeat: no-repeat;
+				flex-grow: 1;
+			}
+			.centered-text {
+				-webkit-text-stroke: 1px black;
+				font-family: "Future Rot", -apple-system, BlinkMacSystemFont, sans-serif;
+				font-size: 2rem;
+				font-weight: 600;
+				text-align: center;
+			}
+			body {
+				margin: 0;
+				font-family: -apple-system, BlinkMacSystemFont, "Montserrat", "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Noto Sans", sans-serif;
+				-webkit-font-smoothing: antialiased;
+				-moz-osx-font-smoothing: grayscale;
+				text-rendering: optimizeSpeed;
+			}
+			#root {
+				height: 100%;
+				width: 100%;
+				display: flex;
+				flex-direction: column;
+			}
+		</style>
+		
 		<!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/

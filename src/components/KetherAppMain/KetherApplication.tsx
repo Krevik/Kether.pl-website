@@ -37,7 +37,7 @@ export default function KetherApplication() {
                                 <LoadingSpinner 
                                     message={navTranslations.loading.home} 
                                     type="skeleton"
-                                    minDelay={200}
+                                    minDelay={50}
                                 />
                             }>
                                 <HomePage/>
@@ -53,7 +53,7 @@ export default function KetherApplication() {
                                 <LoadingSpinner 
                                     message={navTranslations.loading.hallOfFame} 
                                     type="progressive"
-                                    minDelay={150}
+                                    minDelay={100}
                                 />
                             }>
                                 <HallOfFame/>
@@ -69,7 +69,7 @@ export default function KetherApplication() {
                                 <LoadingSpinner 
                                     message={navTranslations.loading.suggestions} 
                                     type="skeleton"
-                                    minDelay={150}
+                                    minDelay={100}
                                 />
                             }>
                                 <HallOfFameSuggestions/>
@@ -86,7 +86,7 @@ export default function KetherApplication() {
                                 <LoadingSpinner 
                                     message={navTranslations.loading.github} 
                                     size="small"
-                                    minDelay={100}
+                                    minDelay={50}
                                 />
                             }>
                                 <GithubRepo/>
@@ -102,7 +102,7 @@ export default function KetherApplication() {
                                 <LoadingSpinner 
                                     message={navTranslations.loading.donate} 
                                     type="progressive"
-                                    minDelay={200}
+                                    minDelay={50}
                                 />
                             }>
                                 <Donate/>
