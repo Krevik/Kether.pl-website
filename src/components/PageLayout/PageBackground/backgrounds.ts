@@ -1,9 +1,9 @@
-import background1 from '../../../resources/backgrounds/background_1.jpg';
-import background2 from '../../../resources/backgrounds/background_2.jpg';
-import background3 from '../../../resources/backgrounds/background_3.jpg';
-import background4 from '../../../resources/backgrounds/background_4.jpg';
-import background5 from '../../../resources/backgrounds/background_5.jpg';
-import background6 from '../../../resources/backgrounds/background_6.jpg';
+import background1 from '/backgrounds/background_1.jpg';
+import background2 from '/backgrounds/background_2.jpg';
+import background3 from '/backgrounds/background_3.jpg';
+import background4 from '/backgrounds/background_4.jpg';
+import background5 from '/backgrounds/background_5.jpg';
+import background6 from '/backgrounds/background_6.jpg';
 
 export const BACKGROUNDS = {
     BACKGROUND_1: background1,
