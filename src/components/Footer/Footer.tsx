@@ -1,6 +1,6 @@
 import './Footer.css';
 import { Button } from 'primereact/button';
-import ST_L from '../../resources/favicons/steam-logo-svgrepo.png';
+import ST_L from '/favicons/steam-logo-svgrepo.png';
 import { EXTERNAL_URLS } from '../../utils/constants';
 import { useFooterTranslations } from '../../hooks/useTranslations';
 
