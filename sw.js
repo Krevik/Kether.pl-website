@@ -57,7 +57,7 @@ self.addEventListener('fetch', (event) => {
   // Cache static assets for 1 year
   if (event.request.url.includes('/backgrounds/') || 
       event.request.url.includes('/favicons/') ||
-      (event.request.url.includes('/assets/') | (event.request.url.includes('.woff') || event.request.url.includes('primereact-a-ERR')))) {
+      (event.request.url.includes('/assets/') && (event.request.url.includes('.woff') || event.request.url.includes('primereact-a-ERR')))) {
     event.respondWith(
       caches.match(event.request)
         .then((response) => {
