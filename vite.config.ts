@@ -17,6 +17,21 @@ export default defineConfig(({ mode }) => ({
           'primereact': ['primereact/button', 'primereact/datatable', 'primereact/column', 'primereact/dialog', 'primereact/dropdown', 'primereact/toolbar', 'primereact/inputtext', 'primereact/inputnumber', 'primereact/toast'],
           'i18n': ['i18next', 'react-i18next', 'i18next-browser-languagedetector'],
         },
+        // Cache headers
+        assetFileNames: (assetInfo) => {
+          const info = assetInfo.name.split('.');
+          const ext = info[info.length - 1];
+          if (/\.(css)$/.test(assetInfo.name)) {
+            return `assets/[name]-[hash].${ext}`;
+          }
+          if (/\.(woff2?|eot|ttf|otf)$/.test(assetInfo.name)) {
+            return `assets/[name]-[hash].${ext}`;
+          }
+          if (/\.(png|jpe?g|gif|svg|webp|avif)$/.test(assetInfo.name)) {
+            return `assets/[name]-[hash].${ext}`;
+          }
+          // return `assets/[name]-[hash].${ext}`;
+        },
       },
     },
     // Optimize chunk size and loading
