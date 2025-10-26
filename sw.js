@@ -62,11 +62,11 @@ self.addEventListener('fetch', (event) => {
       caches.match(event.request)
         .then((response) => {
           if (response) {
-          console.log('Service Worker: Serving from cache:', event.request.url);
+          // console.log('Service Worker: Serving from cache:', event.request.url);
           return response; // Return cached version
           }
 
-          console.log('Service Worker: Fetching from network:', event.request.url);
+          // console.log('Service Worker: Fetching from network:', event.request.url);
           return fetch(event.request).then((response) => {
             // Don't cache non-successful responses
             if (!response || response.status !== 200 || response.type !== 'basic') {
