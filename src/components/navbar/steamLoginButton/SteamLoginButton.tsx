@@ -47,8 +47,7 @@ export default function SteamLoginButton() {
     ) : (
         <div className="steam-login-button">
             <Button
-                icon="pi pi-sign-out"
-                label="Log out"
+                label="🚪 Log out"
                 onClick={() => {
                     appStore.dispatch(userDataActions.setUserID(undefined));
                 }}

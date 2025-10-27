@@ -120,16 +120,6 @@
     font-size: 1rem;
 }
 
-.home-page span[class*='p-button-icon p-c pi pi-trash'] {
-    font-size: 1.2rem;
-    -webkit-text-stroke: 0px !important;
-}
-
-.home-page span[class*='p-button-icon p-c pi pi-pencil'] {
-    font-size: 1.2rem;
-    -webkit-text-stroke: 0px !important;
-}
-
 .large-emoji-button {
     width: 3rem !important;
 }

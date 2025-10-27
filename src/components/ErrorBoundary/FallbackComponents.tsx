@@ -25,17 +25,17 @@ export const GenericErrorFallback: React.FC<ErrorFallbackProps> = ({
     const getErrorIcon = () => {
         switch (error.type) {
             case ErrorType.NETWORK:
-                return 'pi pi-wifi';
+                return '📶';
             case ErrorType.SERVER:
-                return 'pi pi-server';
+                return '🖥️';
             case ErrorType.NOT_FOUND:
-                return 'pi pi-search';
+                return '🔍';
             case ErrorType.AUTHENTICATION:
-                return 'pi pi-lock';
+                return '🔒';
             case ErrorType.AUTHORIZATION:
-                return 'pi pi-shield';
+                return '🛡️';
             default:
-                return 'pi pi-exclamation-triangle';
+                return '⚠️';
         }
     };
 
@@ -66,14 +66,15 @@ export const GenericErrorFallback: React.FC<ErrorFallbackProps> = ({
         >
             <div style={{ marginBottom: '1rem' }}>
                 <i 
-                    className={getErrorIcon()} 
                     style={{ 
                         fontSize: '3rem', 
                         color: getErrorColor(),
                         marginBottom: '1rem',
                         display: 'block'
                     }}
-                />
+                >
+                    {getErrorIcon()}
+                </i>
                 <h3 style={{ color: 'white', marginBottom: '0.5rem' }}>
                     Oops! Something went wrong
                 </h3>
@@ -85,24 +86,21 @@ export const GenericErrorFallback: React.FC<ErrorFallbackProps> = ({
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
                 {onRetry && (
                     <Button
-                        label="Try Again"
-                        icon="pi pi-refresh"
+                        label={`🔄 Try Again`}
                         onClick={onRetry}
                         className="p-button-outlined"
                     />
                 )}
                 
                 <Button
-                    label="Go Home"
-                    icon="pi pi-home"
+                    label={`🏠 Go Home`}
                     onClick={() => window.location.href = '/'}
                     className="p-button-outlined"
                 />
                 
                 {onReport && (
                     <Button
-                        label="Report Issue"
-                        icon="pi pi-flag"
+                        label={`🚩 Report Issue`}
                         onClick={onReport}
                         className="p-button-outlined p-button-secondary"
                         style={{ fontSize: '0.875rem' }}
@@ -134,14 +132,15 @@ export const ServerInfoErrorFallback: React.FC<ErrorFallbackProps> = ({
             }}
         >
             <i 
-                className="pi pi-server" 
                 style={{ 
                     fontSize: '2rem', 
                     color: '#e74c3c',
                     marginBottom: '1rem',
                     display: 'block'
                 }}
-            />
+            >
+                🖥️
+            </i>
             <h4 style={{ color: 'white', marginBottom: '0.5rem' }}>
                 {t('errors.serverInfoUnavailable')}
             </h4>
@@ -150,8 +149,7 @@ export const ServerInfoErrorFallback: React.FC<ErrorFallbackProps> = ({
             </p>
             {onRetry && (
                 <Button
-                    label={t('errors.refreshServerInfo')}
-                    icon="pi pi-refresh"
+                    label={`🔄 ${t('errors.refreshServerInfo')}`}
                     onClick={onRetry}
                     className="p-button-sm p-button-outlined"
                 />
@@ -178,14 +176,15 @@ export const BindsErrorFallback: React.FC<ErrorFallbackProps> = ({
         }}
     >
         <i 
-            className="pi pi-list" 
             style={{ 
                 fontSize: '2.5rem', 
                 color: '#f39c12',
                 marginBottom: '1rem',
                 display: 'block'
             }}
-        />
+        >
+            📋
+        </i>
         <h4 style={{ color: 'white', marginBottom: '0.5rem' }}>
             Unable to Load Binds
         </h4>
@@ -195,15 +194,13 @@ export const BindsErrorFallback: React.FC<ErrorFallbackProps> = ({
         <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
             {onRetry && (
                 <Button
-                    label="Reload Binds"
-                    icon="pi pi-refresh"
+                    label={`🔄 Reload Binds`}
                     onClick={onRetry}
                     className="p-button-outlined"
                 />
             )}
             <Button
-                label="View Cached Binds"
-                icon="pi pi-database"
+                label={`💾 View Cached Binds`}
                 onClick={() => {
                     // Could implement offline/cached data viewing
                     console.log('Show cached binds');
@@ -232,14 +229,15 @@ export const NetworkErrorFallback: React.FC<ErrorFallbackProps> = ({
         }}
     >
         <i 
-            className="pi pi-wifi" 
             style={{ 
                 fontSize: '3rem', 
                 color: '#e74c3c',
                 marginBottom: '1rem',
                 display: 'block'
             }}
-        />
+        >
+            📶
+        </i>
         <h3 style={{ color: 'white', marginBottom: '0.5rem' }}>
             Connection Problem
         </h3>
@@ -253,8 +251,7 @@ export const NetworkErrorFallback: React.FC<ErrorFallbackProps> = ({
         </div>
         {onRetry && (
             <Button
-                label="Try Again"
-                icon="pi pi-refresh"
+                label={`🔄 Try Again`}
                 onClick={onRetry}
                 className="p-button-outlined"
             />
@@ -280,13 +277,12 @@ export const MinimalErrorFallback: React.FC<ErrorFallbackProps> = ({
         }}
     >
         <p style={{ margin: '0 0 0.5rem 0', fontSize: '0.875rem' }}>
-            <i className="pi pi-exclamation-triangle" style={{ marginRight: '0.5rem' }} />
+            <span style={{ marginRight: '0.5rem' }}>⚠️</span>
             Unable to load content
         </p>
         {onRetry && (
             <Button
-                label="Retry"
-                icon="pi pi-refresh"
+                label={`🔄 Retry`}
                 onClick={onRetry}
                 className="p-button-sm p-button-text"
                 style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem' }}

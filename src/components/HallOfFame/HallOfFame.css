@@ -93,7 +93,7 @@
 }
 
 .hall-of-fame [class*='vote-up-button'] {
-    background: rgb(0, 220, 0);
+    background: rgb(0, 188, 0);
     border: none;
 }
 
@@ -112,7 +112,7 @@
 }
 
 .hall-of-fame [class*='vote-down-button'] {
-    background: rgb(220, 0, 0);
+    background: rgb(188, 0, 0);
     border: none;
 }
 
@@ -124,15 +124,10 @@
     background: rgb(139, 34, 34);
 }
 
-.hall-of-fame [class*='p-button-icon p-c pi pi-trash'] {
+/* .hall-of-fame [class*='p-button-rounded'] {
     font-size: 1.2rem;
     -webkit-text-stroke: 0px;
-}
-
-.hall-of-fame [class*='p-button-icon p-c pi pi-pencil'] {
-    font-size: 1.2rem;
-    -webkit-text-stroke: 0px;
-}
+} */
 
 .hall-of-fame .p-datatable button {
     color: white;

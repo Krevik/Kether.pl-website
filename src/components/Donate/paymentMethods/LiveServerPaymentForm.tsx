@@ -23,8 +23,8 @@ export default function LiveServerPaymentForm(
             <InputNumber
                 value={donateAmount}
                 onValueChange={(e) => setDonateAmount(e.value! | donateAmount)}
-                incrementButtonIcon="pi pi-plus"
-                decrementButtonIcon="pi pi-minus"
+                incrementButtonIcon="➕"
+                decrementButtonIcon="➖"
                 showButtons
                 mode="currency"
                 min={0}

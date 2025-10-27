@@ -143,7 +143,7 @@ const bindVotingBodyTemplate = (
         <>
             <Button
                 className={voteUpButtonStyling}
-                label={`👍 ${rowData.votingData?.Upvotes || 0}`}
+                label={`👍🏻 ${rowData.votingData?.Upvotes || 0}`}
                 onClick={() => {
                     handleVote(
                         BindVotingType.UPVOTE,
@@ -157,7 +157,7 @@ const bindVotingBodyTemplate = (
             
             <Button
                 className={voteDownButtonStyling}
-                label={`👎 ${rowData.votingData?.Downvotes || 0}`}
+                label={`👎🏻 ${rowData.votingData?.Downvotes || 0}`}
                 onClick={() => {
                     handleVote(
                         BindVotingType.DOWNVOTE,
