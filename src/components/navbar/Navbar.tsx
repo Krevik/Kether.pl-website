@@ -66,11 +66,7 @@ function Navbar() {
         return (
             <Button
                 className={styles.openHideMenuButton}
-                icon={
-                    isMenuShown
-                        ? 'pi-angle-double-up'
-                        : 'pi-angle-double-down'
-                }
+                label={isMenuShown ? '«' : '»'}
                 onClick={() => dispatch(uiActions.toggleNavbarVisibility())}
             />
         );
