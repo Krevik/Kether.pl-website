@@ -1,5 +1,6 @@
 import './Footer.css';
 import { Button } from 'primereact/button';
+import DC from '/favicons/discord-mark-white.png';
 import ST_L from '/favicons/steam-logo-svgrepo.png';
 import { EXTERNAL_URLS } from '../../utils/constants';
 import { useFooterTranslations } from '../../hooks/useTranslations';
@@ -13,7 +14,7 @@ export default function Footer() {
             
              <span className="contact">
                 <Button 
-                    icon='pi pi-discord'
+                    icon={<img src={DC} width="23px" height="19px" alt="Discord logo" />}
                     title={footerTranslations.discordTooltip}
                     onClick={() =>
                             window.open(EXTERNAL_URLS.DISCORD_INVITE)
@@ -25,7 +26,7 @@ export default function Footer() {
                     onClick={() =>
                             window.open(EXTERNAL_URLS.STEAM_CHAT_INVITE)
                         }
-                ><img src={ST_L} width="20px" height="20px" alt="Steam logo" /></Button></span>
+                ><img src={ST_L} width="23px" height="23px" alt="Steam logo" /></Button></span>
         </footer>
     );
 }

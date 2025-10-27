@@ -1,3 +1,5 @@
+footer {position: relative;}
+
 footer span {
 	-webkit-text-stroke: 0.1px red;
 	font-family: "Future Rot";
@@ -7,7 +9,14 @@ footer span {
 	justify-content: center;
 }
 
-span.contact {float: right; margin: -1.8% 15px; white-space: pre-wrap; height: 32px; border: none;}
+span.contact {
+    position: absolute;
+    bottom: 2px;
+    right: 0px;
+    white-space: pre-wrap;
+    height: 32px;
+    border: none;
+}
 span.contact button {background-color: transparent; border: none;}
 span.contact button:before {
 	content: "";
