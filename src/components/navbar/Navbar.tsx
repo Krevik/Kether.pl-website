@@ -53,7 +53,7 @@ function Navbar() {
                     className={styles.navigationButton}
                     key={tab.label.toString()}
                     onClick={() => {
-                        navigate(`../${tab.targetPage}`);
+                        navigate(`../${tab.targetPage}`, { viewTransition: true });
                     }}
                 >
                     {tab.label}
