@@ -5,11 +5,10 @@ import {
     userDataActions,
 } from '../redux/slices/userDataSlice';
 import { useSelector } from 'react-redux';
-import adminsFileLoc from '../resources/admins/admins.json';
-import { Admin } from '../models/adminModels';
 import { apiPaths } from '../utils/apiPaths';
 import { API_DOMAIN } from '../utils/envUtils';
 import { notificationManager } from '../utils/notificationManager';
+import { adminService } from './adminService';
 
 export const steamAPIService = {
     useAdminDetectionService: () => {
@@ -17,20 +16,18 @@ export const steamAPIService = {
             (state: AppState) => state.userDataReducer.userData
         );
         useEffect(() => {
-            const admins: Admin[] = [];
-            adminsFileLoc.forEach((readCommand: Admin) => {
-                admins.push(readCommand);
-            });
-
-            let verifiedAsAdmin = false;
-            for (let x = 0; x < admins.length; x++) {
-                const adminEntry: Admin = admins[x];
-                if (adminEntry.steamID === userData?.steamid) {
-                    verifiedAsAdmin = true;
-                    break;
+            const verifyAdmin = async () => {
+                if (!userData?.steamid) {
+                    appStore.dispatch(userDataActions.setIsAdmin(false));
+                    return;
                 }
-            }
-            appStore.dispatch(userDataActions.setIsAdmin(verifiedAsAdmin));
+
+                // Verify admin status with backend
+                const isAdmin = await adminService.verifyAdminStatus(userData.steamid);
+                appStore.dispatch(userDataActions.setIsAdmin(isAdmin));
+            };
+
+            verifyAdmin();
         }, [userData]);
     },
     useSteamAuthService: () => {

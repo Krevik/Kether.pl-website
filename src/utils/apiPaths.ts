@@ -12,4 +12,5 @@ export const apiPaths = {
 export const API_PATHS = {
     SERVER_INFO: `${API_DOMAIN}/api/LiveServerInfo/kether`,
     COMMANDS: `${API_DOMAIN}/api/commands`,
+    ADMIN_VERIFY: `${API_DOMAIN}/api/admin/verify`,
 };
