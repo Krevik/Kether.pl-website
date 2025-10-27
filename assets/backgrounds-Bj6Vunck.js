@@ -1,0 +1,1 @@
+import{j as a}from"./index-BcBID-x6.js";const g="_pageWithBackground_18yuq_1",r=r=>a.jsx("div",{className:g,style:{backgroundImage:`url(${r.imageUrl})`},children:r.children}),c={BACKGROUND_1:"/backgrounds/background_1.jpg",BACKGROUND_2:"/backgrounds/background_2.jpg",BACKGROUND_4:"/backgrounds/background_4.jpg",BACKGROUND_5:"/backgrounds/background_5.jpg"};export{c as B,r as P};
