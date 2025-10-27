@@ -26,14 +26,12 @@ export const ActionDialog = (props: ActionDialogProps) => {
     const newBindDialogFooter = (
         <>
             <Button
-                label="Cancel"
-                icon="pi pi-times"
+                label="❌ Cancel"
                 className="p-button-text"
                 onClick={() => props.setDialogVisibility(false)}
             />
             <Button
-                label="Save"
-                icon="pi pi-check"
+                label="✅ Save"
                 className="p-button-text"
                 onClick={() => {
                     props.onSave(data);

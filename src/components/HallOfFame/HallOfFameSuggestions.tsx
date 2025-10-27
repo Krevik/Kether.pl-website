@@ -36,8 +36,7 @@ const getToolbarLeftSide = (
         <>
             {userID && (
                 <Button
-                    label={suggestionsTranslations.suggestBind}
-                    icon="pi pi-plus"
+                    label={`➕ ${suggestionsTranslations.suggestBind}`}
                     className="p-button-success mr-2"
                     data-toggle="tooltip"
                     title={suggestionsTranslations.suggestBindTooltip}
@@ -60,7 +59,7 @@ const bindSuggestionBody = (
                 <Button
                     data-toggle="tooltip"
                     title={suggestionsTranslations.acceptBindTooltip}
-                    icon="pi pi-check"
+                    label="✅"
                     className="p-button-rounded p-button-success"
                     onClick={() => {
                         const bind = trimBindAuthor(
@@ -87,7 +86,7 @@ const bindSuggestionBody = (
                 <Button
                     data-toggle="tooltip"
                     title={suggestionsTranslations.deleteSuggestionTooltip}
-                    icon="pi pi-times"
+                    label="❌"
                     className="p-button-rounded p-button-danger"
                     onClick={() => {
                         bindSuggestionsManagingService

@@ -25,8 +25,7 @@ export default function EditCommandDialog(props: EditCommandDialogProps) {
         return (
             <>
                 <Button
-                    label={commonTranslations.cancel}
-                    icon="pi pi-times"
+                    label={`❌ ${commonTranslations.cancel}`}
                     className="p-button-text"
                     onClick={() => {
                         props.commandEditingIdRef.current = -1;
@@ -35,8 +34,7 @@ export default function EditCommandDialog(props: EditCommandDialogProps) {
                 />
 
                 <Button
-                    label={commonTranslations.update}
-                    icon="pi pi-check"
+                    label={`✅ ${commonTranslations.update}`}
                     className="p-button-text"
                     onClick={() => {
                         const newCommandData = {

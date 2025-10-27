@@ -23,14 +23,12 @@ export default function AddNewCommandDialog(props: AddNewCommandDialogProps) {
     const newCommandDialogFooter = (
         <>
             <Button
-                label={commonTranslations.cancel}
-                icon="pi pi-times"
+                label={`❌ ${commonTranslations.cancel}`}
                 className="p-button-text"
                 onClick={() => props.setDialogVisibility(false)}
             />
             <Button
-                label={commonTranslations.save}
-                icon="pi pi-check"
+                label={`✅ ${commonTranslations.save}`}
                 className="p-button-text"
                 onClick={() => {
                     const newCommand = {

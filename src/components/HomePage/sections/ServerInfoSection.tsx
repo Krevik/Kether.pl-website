@@ -71,13 +71,16 @@ function ServerInfoSection() {
             <span>
                 IP: {SERVER_CONFIG.IP}
                 <Button
-                    icon={'pi pi-copy'}
+                    label="📄"
+                    className="large-emoji-button"
                     style={{ scale: '0.8', verticalAlign: 'unset' }}
                     onClick={() => {
                         navigator.clipboard.writeText(SERVER_CONFIG.IP);
                         notificationManager.SUCCESS(SUCCESS_MESSAGES.COPY_SUCCESS);
                     }}
-                />
+                >
+                    <span className="large-copy-emoji">📄</span>
+                </Button>
             </span>
             <span>
                 {serverInfoTranslations.players}: {serverInfo?.players}/{serverInfo?.maxplayers} ({serverInfo?.bots} {serverInfo?.bots === 1 ? serverInfoTranslations.bot : serverInfoTranslations.bots})

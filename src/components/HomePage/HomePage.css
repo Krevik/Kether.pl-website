@@ -129,3 +129,24 @@
     font-size: 1.2rem;
     -webkit-text-stroke: 0px !important;
 }
+
+.large-emoji-button {
+    width: 3rem !important;
+}
+
+.large-emoji-button .p-button-label {
+    font-size: 1.8rem !important;
+    position: absolute !important;
+    bottom: 10px !important;
+    left: 10px !important;
+    -webkit-text-stroke: 1px greenyellow !important;
+}
+
+.large-copy-emoji {
+    position: relative;
+    font-size: 1.8rem !important;
+    width: 0.5rem;
+    left: -18px !important;
+    top: 0.18em !important;
+    -webkit-text-stroke: 1px blueviolet !important;
+}

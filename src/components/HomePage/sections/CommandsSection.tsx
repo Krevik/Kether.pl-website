@@ -38,7 +38,7 @@ export default function CommandsSection() {
                 <Button
                     data-toggle="tooltip"
                     title={commandsTranslations.editCommandTooltip}
-                    icon="pi pi-pencil"
+                    label="✏️"
                     className="p-button-rounded mr-2"
                     onClick={() => {
                         editingCommandID.current = rowData.id;
@@ -50,7 +50,7 @@ export default function CommandsSection() {
                 <Button
                     data-toggle="tooltip"
                     title={commandsTranslations.deleteCommandTooltip}
-                    icon="pi pi-trash"
+                    label="🗑️"
                     className="p-button-rounded p-button-danger"
                     onClick={() => {
                         commandsManagingService
@@ -78,8 +78,7 @@ export default function CommandsSection() {
             <>
                 {isAdmin && (
                     <Button
-                        label={commandsTranslations.newCommand}
-                        icon="pi pi-plus"
+                        label={`➕ ${commandsTranslations.newCommand}`}
                         className="mr-2"
                         data-toggle="tooltip"
                         title={commandsTranslations.addNewCommandTooltip}

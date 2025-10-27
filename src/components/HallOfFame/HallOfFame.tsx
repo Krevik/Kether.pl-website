@@ -41,8 +41,7 @@ const getToolbarLeftSide = (
         <>
             {isAdmin && (
                 <Button
-                    label={bindsTranslations.newBind}
-                    icon="pi pi-plus"
+                    label={`➕ ${bindsTranslations.newBind}`}
                     className="p-button-success mr-2"
                     data-toggle="tooltip"
                     title={bindsTranslations.addNewBindTooltip}
@@ -69,7 +68,7 @@ const bindActionBodyTemplate = (
             <Button
                 data-toggle="tooltip"
                 title={bindsTranslations.editBindTooltip}
-                icon="pi pi-pencil"
+                label="✏️"
                 className="p-button-rounded p-button-warning mr-2"
                 onClick={() => {
                     editingBindID.current = rowData.id;
@@ -81,7 +80,7 @@ const bindActionBodyTemplate = (
             <Button
                 data-toggle="tooltip"
                 title={bindsTranslations.deleteBindTooltip}
-                icon="pi pi-trash"
+                label="🗑️"
                 className="p-button-rounded p-button-danger"
                 onClick={() => {
                     bindsManagingService
@@ -144,7 +143,7 @@ const bindVotingBodyTemplate = (
         <>
             <Button
                 className={voteUpButtonStyling}
-                icon="pi pi-thumbs-up"
+                label={`👍 ${rowData.votingData?.Upvotes || 0}`}
                 onClick={() => {
                     handleVote(
                         BindVotingType.UPVOTE,
@@ -154,12 +153,11 @@ const bindVotingBodyTemplate = (
                             selfBindVote === BindVotingType.UPVOTE
                     );
                 }}
-            >
-                {rowData.votingData?.Upvotes || 0}
-            </Button>
+            />
+            
             <Button
                 className={voteDownButtonStyling}
-                icon="pi pi-thumbs-down"
+                label={`👎 ${rowData.votingData?.Downvotes || 0}`}
                 onClick={() => {
                     handleVote(
                         BindVotingType.DOWNVOTE,
@@ -169,9 +167,7 @@ const bindVotingBodyTemplate = (
                             selfBindVote === BindVotingType.DOWNVOTE
                     );
                 }}
-            >
-                {rowData.votingData?.Downvotes || 0}
-            </Button>
+            />
         </>
     );
 };

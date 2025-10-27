@@ -31,14 +31,12 @@ export default function AddNewBindSuggestionDialog(
     const newBindSuggestionDialogFooter = (
         <>
             <Button
-                label={commonTranslations.cancel}
-                icon="pi pi-times"
+                label={`❌ ${commonTranslations.cancel}`}
                 className="p-button-text"
                 onClick={() => props.setDialogVisibility(false)}
             />
             <Button
-                label={commonTranslations.save}
-                icon="pi pi-check"
+                label={`✅ ${commonTranslations.save}`}
                 className="p-button-text"
                 onClick={() => {
                     const newBind = {
