@@ -17,6 +17,7 @@ const STATIC_ASSETS = [
   '/assets/primeicons-WjwUDZjB.woff',
   '/assets/primereact-a-ERR-hv.js',
   '/favicons/steam-logo-svgrepo.png',
+  '/favicons/discord-mark-white.png',
 ];
 
 // Install event - cache assets immediately
