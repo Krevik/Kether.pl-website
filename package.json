@@ -68,5 +68,6 @@
 		"singleQuote": true,
 		"indent_size": 2,
 		"max_line_length": 160
-	}
+	},
+	"packageManager": "pnpm@10.20.0"
 }
