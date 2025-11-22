@@ -147,7 +147,8 @@
 
 /* ID column (first column when admin) */
 .installed-sv-maps .p-datatable .p-datatable-tbody > tr > td:first-of-type {
-    max-width: 80px;
+    max-width: 120px;
+    min-width: 120px;
     white-space: nowrap;
 }
 
