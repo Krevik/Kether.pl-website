@@ -111,6 +111,7 @@
         "download": "Pobierz (Reczna instalacja)",
         "workshop": "Warsztat Steam",
         "noMapsAvailable": "Brak dostepnych map",
+        "allMaps": "Wszystkie Mapy (Wszystkie kampanie z poniższej listy w jednym pliku zip)",
         "installationHelp": "Instrukcje instalacji",
         "installationInstructions": "Instrukcje instalacji",
         "installationDescription": "Po pobraniu mapy, wypakuj plik *.vpk i skopiuj go do następującego katalogu:",

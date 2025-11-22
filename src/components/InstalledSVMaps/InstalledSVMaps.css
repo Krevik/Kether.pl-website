@@ -19,7 +19,7 @@
 
 .tables-container {
     display: flex;
-    gap: 2rem;
+    gap: .5rem;
     width: 100%;
     padding: 1rem;
     justify-content: center;
@@ -31,6 +31,7 @@
     min-width: 0;
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 .table-title {
@@ -43,18 +44,20 @@
     color: white;
 }
 
+/* Table */
 .installed-sv-maps .p-datatable {
-    width: 100%;
+    width: 90%;
     background-color: transparent;
     background: transparent;
     padding-top: 10px;
     margin: 0;
     font-family: 'Future Rot';
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     backdrop-filter: blur(10px);
     -webkit-text-stroke: 1px black;
 }
 
+/* Table buttons */
 .installed-sv-maps .p-datatable button {
     color: white;
     border: none;
@@ -108,19 +111,68 @@
     color: white !important;
 } */
 
+/* Table body */
 .installed-sv-maps .p-datatable .p-datatable-tbody > tr {
     background: transparent;
     border: none;
 }
 
+/* Table header */
 .installed-sv-maps .p-datatable .p-datatable-thead > tr > th {
     background-color: rgba(0, 0, 0, 0.85);
     border: none;
     appearance: none;
+    word-wrap: break-word;
+}
+/* ID column */
+.installed-sv-maps .p-datatable .p-datatable-thead > tr > th:first-of-type {
+    max-width: 80px;
 }
 
+/* Actions column */
+.installed-sv-maps .p-datatable .p-datatable-thead > tr > th:last-of-type {
+    max-width: none;
+    min-width: 100px;
+}
+
+/* Table body (rows) */
 .installed-sv-maps .p-datatable .p-datatable-tbody > tr > td {
     border: none;
+    word-wrap: break-word;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    line-height: 1.4;
+}
+
+/* ID column (first column when admin) */
+.installed-sv-maps .p-datatable .p-datatable-tbody > tr > td:first-of-type {
+    max-width: 80px;
+    white-space: nowrap;
+}
+
+/* Map name column - second column if admin, first if not admin */
+.installed-sv-maps .p-datatable .p-datatable-tbody > tr > td:nth-of-type(2) {
+    max-width: auto;
+    white-space: normal;
+    word-wrap: break-word;
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+
+/* When admin column is not shown, map name is first column */
+.installed-sv-maps .p-datatable .p-datatable-tbody > tr > td:first-of-type:only-child,
+.installed-sv-maps .p-datatable .p-datatable-tbody > tr > td:first-of-type:not(:nth-of-type(2)):not(:last-of-type) {
+    max-width: 450px;
+    white-space: normal;
+    word-wrap: break-word;
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+
+/* Actions column (last column) */
+.installed-sv-maps .p-datatable .p-datatable-tbody > tr > td:last-of-type {
+    min-width: auto;
 }
 
 .installed-sv-maps .p-datatable .p-sortable-column:hover,

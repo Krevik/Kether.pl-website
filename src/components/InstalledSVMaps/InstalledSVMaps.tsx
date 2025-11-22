@@ -36,7 +36,7 @@ const installedMaps: MapEntry[] = [
     // SirPlease maps (all campaigns from sirplease.vercel.app, excluding Urban Flight)
     {
         id: 40,
-        mapName: 'All Maps (All listed campaigns in one zip file)',
+        mapName: '__ALL_MAPS_TRANSLATION__', // Placeholder that will be replaced in component
         source: 'SirPlease',
         downloadUrl: 'https://sirplease.vercel.app/downloads/maps/allmaps.zip',
     },
@@ -348,10 +348,17 @@ export default function InstalledSVMaps() {
     );
     const [helpDialogVisible, setHelpDialogVisible] = useState(false);
 
-    // Filter maps by source
-    const workshopMaps = installedMaps.filter(map => map.source === 'Workshop');
-    const sirPleaseMaps = installedMaps.filter(map => map.source === 'SirPlease');
-    const otherMaps = installedMaps.filter(map => map.source === 'Other');
+    // Filter maps by source and replace translation placeholder for 'all maps' entry
+    const processedMaps = installedMaps.map(map => {
+        if (map.mapName === '__ALL_MAPS_TRANSLATION__') {
+            return { ...map, mapName: mapsTranslations.allMaps };
+        }
+        return map;
+    });
+    
+    const workshopMaps = processedMaps.filter(map => map.source === 'Workshop');
+    const sirPleaseMaps = processedMaps.filter(map => map.source === 'SirPlease');
+    const otherMaps = processedMaps.filter(map => map.source === 'Other');
 
     const openHelpDialog = () => {
         setHelpDialogVisible(true);
