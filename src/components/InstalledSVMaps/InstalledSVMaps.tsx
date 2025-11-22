@@ -87,6 +87,24 @@ const installedMaps: MapEntry[] = [
         source: 'Workshop',
         downloadUrl: 'https://steamcommunity.com/sharedfiles/filedetails/?id=121157156',
     },
+    {
+        id: 50,
+        mapName: 'Left 4 Mario',
+        source: 'Workshop',
+        downloadUrl: 'https://steamcommunity.com/sharedfiles/filedetails/?id=210014615',
+    },
+    {
+        id: 51,
+        mapName: "We Don't Go To Ravenholm (Workshop)",
+        source: 'Workshop',
+        downloadUrl: 'https://steamcommunity.com/sharedfiles/filedetails/?id=143565981',
+    },
+    {
+        id: 52,
+        mapName: 'Welcome to Hell (Workshop)',
+        source: 'Workshop',
+        downloadUrl: 'https://steamcommunity.com/sharedfiles/filedetails/?id=381848620',
+    },
     // SirPlease maps (all campaigns from sirplease.vercel.app, excluding Urban Flight)
     {
         id: 40,
