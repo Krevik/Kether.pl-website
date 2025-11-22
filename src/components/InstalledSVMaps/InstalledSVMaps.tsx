@@ -198,6 +198,7 @@ export default function InstalledSVMaps() {
     // Filter maps by source
     const workshopMaps = installedMaps.filter(map => map.source === 'Workshop');
     const sirPleaseMaps = installedMaps.filter(map => map.source === 'SirPlease');
+    const otherMaps = installedMaps.filter(map => map.source === 'Other');
 
     return (
         <PageWithBackground imageUrl={BACKGROUNDS.BACKGROUND_4}>
@@ -206,6 +207,7 @@ export default function InstalledSVMaps() {
                     <div className="centered-text">{mapsTranslations.title}</div>
                     <div className="tables-container">
                         {/* Workshop Maps Table */}
+                        {workshopMaps.length > 0 && ( // Only show if there are workshop maps
                         <div className="table-wrapper">
                             <div className="table-title">{mapsTranslations.workshop}</div>
                             <DataTable
@@ -234,8 +236,10 @@ export default function InstalledSVMaps() {
                                 ></Column>
                             </DataTable>
                         </div>
+                        )}
 
                         {/* SirPlease Maps Table */}
+                        {sirPleaseMaps.length > 0 && ( // Only show if there are SirPlease maps
                         <div className="table-wrapper">
                             <div className="table-title">SirPlease</div>
                             <DataTable
@@ -264,6 +268,39 @@ export default function InstalledSVMaps() {
                                 ></Column>
                             </DataTable>
                         </div>
+                        )}
+
+                        {/* Other Maps Table */}
+                        {otherMaps.length > 0 && ( // Only show if there are other maps
+                        <div className="table-wrapper">
+                            <div className="table-title">Other</div>
+                            <DataTable
+                                value={otherMaps}
+                                scrollable={true}
+                                scrollHeight="flex"
+                                emptyMessage={mapsTranslations.noMapsAvailable}
+                            >
+                                {isAdmin && (
+                                    <Column
+                                        field="id"
+                                        header={mapsTranslations.databaseId}
+                                        sortable
+                                    ></Column>
+                                )}
+                                <Column
+                                    field="mapName"
+                                    header={mapsTranslations.mapName}
+                                    sortable
+                                ></Column>
+                                <Column
+                                    header={mapsTranslations.actions}
+                                    body={(rowData) =>
+                                        mapActionsBodyTemplate(rowData, mapsTranslations)
+                                    }
+                                ></Column>
+                            </DataTable>
+                        </div>
+                        )}
                     </div>
                 </div>
             </div>
