@@ -33,6 +33,60 @@ const installedMaps: MapEntry[] = [
         source: 'Workshop',
         downloadUrl: 'https://steamcommunity.com/sharedfiles/filedetails/?id=1643520526',
     },
+    {
+        id: 41,
+        mapName: 'Ceda Fever',
+        source: 'Workshop',
+        downloadUrl: 'https://steamcommunity.com/sharedfiles/filedetails/?id=2786082058',
+    },
+    {
+        id: 42,
+        mapName: 'Gas Fever',
+        source: 'Workshop',
+        downloadUrl: 'https://steamcommunity.com/sharedfiles/filedetails/?id=381439453',
+    },
+    {
+        id: 43,
+        mapName: 'Outline',
+        source: 'Workshop',
+        downloadUrl: 'https://steamcommunity.com/sharedfiles/filedetails/?id=1749424232',
+    },
+    {
+        id: 44,
+        mapName: 'Drop Dead Gorges',
+        source: 'Workshop',
+        downloadUrl: 'https://steamcommunity.com/sharedfiles/filedetails/?id=205465933',
+    },
+    {
+        id: 45,
+        mapName: 'Prague',
+        source: 'Workshop',
+        downloadUrl: 'https://steamcommunity.com/workshop/filedetails/?id=3128058513',
+    },
+    {
+        id: 46,
+        mapName: 'Day Break (v4)',
+        source: 'Workshop',
+        downloadUrl: 'https://steamcommunity.com/sharedfiles/filedetails/?id=180925247',
+    },
+    {
+        id: 47,
+        mapName: 'Urban Flight',
+        source: 'Workshop',
+        downloadUrl: 'https://steamcommunity.com/sharedfiles/filedetails/?id=121086524',
+    },
+    {
+        id: 48,
+        mapName: 'Diescraper Redux',
+        source: 'Workshop',
+        downloadUrl: 'https://steamcommunity.com/sharedfiles/filedetails/?id=121116980',
+    },
+    {
+        id: 49,
+        mapName: 'Blood Proof',
+        source: 'Workshop',
+        downloadUrl: 'https://steamcommunity.com/sharedfiles/filedetails/?id=121157156',
+    },
     // SirPlease maps (all campaigns from sirplease.vercel.app, excluding Urban Flight)
     {
         id: 40,
@@ -88,12 +142,12 @@ const installedMaps: MapEntry[] = [
         source: 'SirPlease',
         downloadUrl: 'https://sirplease.vercel.app/downloads/maps/DarkWood.zip',
     },
-    {
-        id: 11,
-        mapName: 'Daybreak',
-        source: 'SirPlease',
-        downloadUrl: 'https://sirplease.vercel.app/downloads/maps/Daybreak.zip',
-    },
+    // {
+    //     id: 11,
+    //     mapName: 'Daybreak',
+    //     source: 'SirPlease',
+    //     downloadUrl: 'https://sirplease.vercel.app/downloads/maps/Daybreak.zip',
+    // },
     {
         id: 12,
         mapName: 'Dead Before Dawn',
