@@ -194,45 +194,76 @@ export default function InstalledSVMaps() {
     const isAdmin: boolean = useSelector(
         (state: AppState) => state.userDataReducer.isAdmin
     );
+
+    // Filter maps by source
+    const workshopMaps = installedMaps.filter(map => map.source === 'Workshop');
+    const sirPleaseMaps = installedMaps.filter(map => map.source === 'SirPlease');
+
     return (
         <PageWithBackground imageUrl={BACKGROUNDS.BACKGROUND_4}>
             <div className="installed-sv-maps">
                 <div className="card">
                     <div className="centered-text">{mapsTranslations.title}</div>
-                    <div className="card">
-                        <DataTable
-                            value={installedMaps}
-                            scrollable={true}
-                            scrollHeight="flex"
-                            emptyMessage={mapsTranslations.noMapsAvailable}
-                        >
-                            {isAdmin && (
+                    <div className="tables-container">
+                        {/* Workshop Maps Table */}
+                        <div className="table-wrapper">
+                            <div className="table-title">{mapsTranslations.workshop}</div>
+                            <DataTable
+                                value={workshopMaps}
+                                scrollable={true}
+                                scrollHeight="flex"
+                                emptyMessage={mapsTranslations.noMapsAvailable}
+                            >
+                                {isAdmin && (
                                     <Column
                                         field="id"
                                         header={mapsTranslations.databaseId}
                                         sortable
                                     ></Column>
                                 )}
-                            <Column
-                                field="mapName"
-                                header={mapsTranslations.mapName}
-                                sortable
-                            ></Column>
-                            <Column
-                                field="source"
-                                header={mapsTranslations.source}
-                                body={(rowData) =>
-                                    mapSourceBodyTemplate(rowData, mapsTranslations)
-                                }
-                                sortable
-                            ></Column>
-                            <Column
-                                header={mapsTranslations.actions}
-                                body={(rowData) =>
-                                    mapActionsBodyTemplate(rowData, mapsTranslations)
-                                }
-                            ></Column>
-                        </DataTable>
+                                <Column
+                                    field="mapName"
+                                    header={mapsTranslations.mapName}
+                                    sortable
+                                ></Column>
+                                <Column
+                                    header={mapsTranslations.actions}
+                                    body={(rowData) =>
+                                        mapActionsBodyTemplate(rowData, mapsTranslations)
+                                    }
+                                ></Column>
+                            </DataTable>
+                        </div>
+
+                        {/* SirPlease Maps Table */}
+                        <div className="table-wrapper">
+                            <div className="table-title">SirPlease</div>
+                            <DataTable
+                                value={sirPleaseMaps}
+                                scrollable={true}
+                                scrollHeight="flex"
+                                emptyMessage={mapsTranslations.noMapsAvailable}
+                            >
+                                {isAdmin && (
+                                    <Column
+                                        field="id"
+                                        header={mapsTranslations.databaseId}
+                                        sortable
+                                    ></Column>
+                                )}
+                                <Column
+                                    field="mapName"
+                                    header={mapsTranslations.mapName}
+                                    sortable
+                                ></Column>
+                                <Column
+                                    header={mapsTranslations.actions}
+                                    body={(rowData) =>
+                                        mapActionsBodyTemplate(rowData, mapsTranslations)
+                                    }
+                                ></Column>
+                            </DataTable>
+                        </div>
                     </div>
                 </div>
             </div>
