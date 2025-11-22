@@ -142,10 +142,20 @@
     text-decoration: underline;
 }
 
-.p-dialog {
-    height: 80%;
-    width: 80%;
+
+.installed-sv-maps .p-datatable button.p-button-help {
+    color: pink;
+    -webkit-text-stroke: 1px red;
+    min-width: 2rem;
+    width: 2rem;
+    font-size: 1.4rem;
+    font-weight: bold;
 }
+
+/* .installed-sv-maps .p-datatable button.p-button-help:hover,
+.installed-sv-maps .p-datatable button.p-button-help:active {
+    color: white !important;
+} */
 
 /* Responsive: Stack tables vertically on smaller screens */
 @media (max-width: 1200px) {

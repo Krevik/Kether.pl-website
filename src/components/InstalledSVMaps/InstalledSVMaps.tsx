@@ -2,6 +2,8 @@ import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
 import './InstalledSVMaps.css';
 import { Button } from 'primereact/button';
+import { Dialog } from 'primereact/dialog';
+import { useState } from 'react';
 import ST_L from '/favicons/steam-logo-svgrepo.png';
 import { PageWithBackground } from '../PageLayout/PageBackground/PageWithBackground';
 import { BACKGROUNDS } from '../PageLayout/PageBackground/backgrounds';
@@ -32,6 +34,12 @@ const installedMaps: MapEntry[] = [
         downloadUrl: 'https://steamcommunity.com/sharedfiles/filedetails/?id=1643520526',
     },
     // SirPlease maps (all campaigns from sirplease.vercel.app, excluding Urban Flight)
+    {
+        id: 40,
+        mapName: 'All Maps (All listed campaigns in one zip file)',
+        source: 'SirPlease',
+        downloadUrl: 'https://sirplease.vercel.app/downloads/maps/allmaps.zip',
+    },
     {
         id: 3,
         mapName: 'Back To School',
@@ -270,7 +278,8 @@ const extractSteamWorkshopId = (downloadUrl: string | undefined): string | null 
 
 const mapActionsBodyTemplate = (
     rowData: MapEntry,
-    mapsTranslations: ReturnType<typeof useMapsTranslations>
+    mapsTranslations: ReturnType<typeof useMapsTranslations>,
+    onHelpClick?: () => void
 ) => {
     if (rowData.source === 'Workshop') {
         const workshopId = extractSteamWorkshopId(rowData.downloadUrl);
@@ -292,15 +301,25 @@ const mapActionsBodyTemplate = (
         );
     } else {
         return (
-            <Button
-                label={`🌐　${mapsTranslations.download}`}
-                className="p-button-info"
-                onClick={() => {
-                    if (rowData.downloadUrl) {
-                        window.open(rowData.downloadUrl, '_blank');
-                    }
-                }}
-            />
+            <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                <Button
+                    label={`🌐　${mapsTranslations.download}`}
+                    className="p-button-info"
+                    onClick={() => {
+                        if (rowData.downloadUrl) {
+                            window.open(rowData.downloadUrl, '_blank');
+                        }
+                    }}
+                />
+                {rowData.source === 'SirPlease' && (
+                    <Button
+                        label="?"
+                        className="p-button p-button-help"
+                        onClick={onHelpClick}
+                        title={mapsTranslations.installationHelp}
+                    />
+                )}
+            </div>
         );
     }
 };
@@ -327,11 +346,16 @@ export default function InstalledSVMaps() {
     const isAdmin: boolean = useSelector(
         (state: AppState) => state.userDataReducer.isAdmin
     );
+    const [helpDialogVisible, setHelpDialogVisible] = useState(false);
 
     // Filter maps by source
     const workshopMaps = installedMaps.filter(map => map.source === 'Workshop');
     const sirPleaseMaps = installedMaps.filter(map => map.source === 'SirPlease');
     const otherMaps = installedMaps.filter(map => map.source === 'Other');
+
+    const openHelpDialog = () => {
+        setHelpDialogVisible(true);
+    };
 
     return (
         <PageWithBackground imageUrl={BACKGROUNDS.BACKGROUND_4}>
@@ -399,7 +423,7 @@ export default function InstalledSVMaps() {
                                 <Column
                                     header={mapsTranslations.actions}
                                     body={(rowData) =>
-                                        mapActionsBodyTemplate(rowData, mapsTranslations)
+                                        mapActionsBodyTemplate(rowData, mapsTranslations, openHelpDialog)
                                     }
                                 ></Column>
                             </DataTable>
@@ -440,6 +464,52 @@ export default function InstalledSVMaps() {
                     </div>
                 </div>
             </div>
+            
+            {/* Installation Help Dialog */}
+            <Dialog
+                visible={helpDialogVisible}
+                header={mapsTranslations.installationInstructions}
+                modal
+                className="p-fluid"
+                onHide={() => setHelpDialogVisible(false)}
+                style={{ width: '90vw', maxWidth: '600px' }}
+            >
+                <div style={{ padding: '1rem' }}>
+                    <p style={{ marginBottom: '1rem' }}>{mapsTranslations.installationDescription}</p>
+                    
+                    <div style={{ marginBottom: '1.5rem' }}>
+                        <h4 style={{ marginBottom: '0.5rem', color: '#4a9eff' }}>🪟 Windows:</h4>
+                        <code style={{ 
+                            display: 'block', 
+                            padding: '0.75rem', 
+                            backgroundColor: '#1e1e1e', 
+                            color: '#d4d4d4',
+                            borderRadius: '4px',
+                            fontFamily: 'monospace',
+                            whiteSpace: 'pre-wrap',
+                            wordBreak: 'break-all'
+                        }}>
+                            {mapsTranslations.windowsPath}
+                        </code>
+                    </div>
+                    
+                    <div>
+                        <h4 style={{ marginBottom: '0.5rem', color: '#4a9eff' }}>🐧 Linux:</h4>
+                        <code style={{ 
+                            display: 'block', 
+                            padding: '0.75rem', 
+                            backgroundColor: '#1e1e1e', 
+                            color: '#d4d4d4',
+                            borderRadius: '4px',
+                            fontFamily: 'monospace',
+                            whiteSpace: 'pre-wrap',
+                            wordBreak: 'break-all'
+                        }}>
+                            {mapsTranslations.linuxPath}
+                        </code>
+                    </div>
+                </div>
+            </Dialog>
         </PageWithBackground>
     );
 }

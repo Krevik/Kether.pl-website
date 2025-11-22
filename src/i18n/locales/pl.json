@@ -110,7 +110,12 @@
         "install": "Zainstaluj",
         "download": "Pobierz (Reczna instalacja)",
         "workshop": "Warsztat Steam",
-        "noMapsAvailable": "Brak dostepnych map"
+        "noMapsAvailable": "Brak dostepnych map",
+        "installationHelp": "Instrukcje instalacji",
+        "installationInstructions": "Instrukcje instalacji",
+        "installationDescription": "Po pobraniu mapy, wypakuj plik *.vpk i skopiuj go do następującego katalogu:",
+        "windowsPath": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Left 4 Dead 2\\left4dead2\\addons\\",
+        "linuxPath": "~/.steam/steam/steamapps/common/Left 4 Dead 2/left4dead2/addons/"
     },
     "donate": {
         "title": "Wesprzyj Nas",

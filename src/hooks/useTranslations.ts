@@ -279,5 +279,10 @@ export function useMapsTranslations() {
         workshop: t('maps.workshop'),
         databaseId: t('maps.databaseId'),
         noMapsAvailable: t('maps.noMapsAvailable'),
+        installationHelp: t('maps.installationHelp'),
+        installationInstructions: t('maps.installationInstructions'),
+        installationDescription: t('maps.installationDescription'),
+        windowsPath: t('maps.windowsPath'),
+        linuxPath: t('maps.linuxPath'),
     };
 }
