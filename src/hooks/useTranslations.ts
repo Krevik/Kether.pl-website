@@ -277,6 +277,7 @@ export function useMapsTranslations() {
         install: t('maps.install'),
         download: t('maps.download'),
         workshop: t('maps.workshop'),
+        databaseId: t('maps.databaseId'),
         noMapsAvailable: t('maps.noMapsAvailable'),
     };
 }

@@ -305,15 +305,8 @@ const mapActionsBodyTemplate = (
     }
 };
 
-const mapSourceBodyTemplate = (
-    rowData: MapEntry,
-    mapsTranslations: ReturnType<typeof useMapsTranslations>
-) => {
-    const sourceText = rowData.source === 'Workshop' 
-        ? mapsTranslations.workshop 
-        : rowData.source; // SirPlease and Other are not translatable
-    
-    if (rowData.downloadUrl) {
+const mapNameBodyTemplate = (rowData: MapEntry) => {
+    if (rowData.source === 'Workshop') {
         return (
             <a 
                 href={rowData.downloadUrl} 
@@ -321,12 +314,12 @@ const mapSourceBodyTemplate = (
                 rel="noopener noreferrer"
                 className="map-source-link"
             >
-                {sourceText}
+                {rowData.mapName}
             </a>
         );
     }
     
-    return sourceText;
+    return rowData.mapName;
 };
 
 export default function InstalledSVMaps() {
@@ -367,6 +360,9 @@ export default function InstalledSVMaps() {
                                     field="mapName"
                                     header={mapsTranslations.mapName}
                                     sortable
+                                    body={(rowData) =>
+                                        mapNameBodyTemplate(rowData)
+                                    }
                                 ></Column>
                                 <Column
                                     header={mapsTranslations.actions}
