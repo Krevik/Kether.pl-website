@@ -1,0 +1,122 @@
+.installed-sv-maps {
+    display: flex;
+    flex-direction: column;
+}
+
+.installed-sv-maps .card {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-direction: column;
+    width: 100%;
+    max-height: 100vh;
+    overflow: auto;
+}
+
+.installed-sv-maps .centered-text {
+    margin: auto;
+}
+
+.installed-sv-maps .p-datatable {
+    width: 90%;
+    background-color: transparent;
+    background: transparent;
+    padding-top: 10px;
+    margin: auto;
+    font-family: 'Future Rot';
+    font-size: 1.1rem;
+    backdrop-filter: blur(10px);
+    -webkit-text-stroke: 1px black;
+}
+
+.installed-sv-maps .p-datatable button {
+    color: white;
+    border: none;
+    -webkit-text-stroke: 0px !important;
+    min-width: 10rem;
+    flex-wrap: wrap;
+    font-family: 'Future Rot';
+    overflow: inherit;
+    appearance: none;
+    background-color: #000 !important;
+    cursor: pointer;
+    font-weight: 600;
+    margin: 0;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    justify-content: center;
+    position: relative;
+}
+
+.installed-sv-maps .p-datatable button:hover,
+.installed-sv-maps .p-datatable button:active {
+    background-color: #000 !important;
+    color: rgb(248, 67, 67) !important;
+    transition: 0.1s;
+    border: none;
+}
+
+
+/* .installed-sv-maps .p-datatable button.p-button-success {
+    background: rgb(21, 172, 21);
+}
+
+.installed-sv-maps .p-datatable button.p-button-success:hover,
+.installed-sv-maps .p-datatable button.p-button-success:active {
+    background-color: rgb(28, 224, 28) !important;
+    transition: 0.2s;
+    color: white !important;
+}
+
+.installed-sv-maps .p-datatable button.p-button-info {
+    background: rgb(21, 100, 172);
+}
+
+.installed-sv-maps .p-datatable button.p-button-info:hover,
+.installed-sv-maps .p-datatable button.p-button-info:active {
+    background-color: rgb(28, 130, 224) !important;
+    transition: 0.2s;
+    color: white !important;
+} */
+
+.installed-sv-maps .p-datatable .p-datatable-tbody > tr {
+    background: transparent;
+    border: none;
+}
+
+.installed-sv-maps .p-datatable .p-datatable-thead > tr > th {
+    background-color: rgba(0, 0, 0, 0.85);
+    border: none;
+    appearance: none;
+}
+
+.installed-sv-maps .p-datatable .p-datatable-tbody > tr > td {
+    border: none;
+}
+
+.installed-sv-maps .p-datatable .p-sortable-column:hover,
+.installed-sv-maps .p-datatable .p-sortable-column .p-column-header-content:hover {
+    background-color: rgba(0, 0, 0, 0.85) !important;
+    color: rgb(248, 67, 67) !important;
+}
+
+.installed-sv-maps .map-source-link {
+    color: wheat;
+    text-decoration: none;
+    font-family: "Future Rot";
+    -webkit-text-stroke: 1px black;
+    transition: color 0.2s ease;
+}
+
+.installed-sv-maps .map-source-link:hover {
+    color: rgb(248, 67, 67);
+    text-decoration: underline;
+}
+
+.p-dialog {
+    height: 80%;
+    width: 80%;
+}

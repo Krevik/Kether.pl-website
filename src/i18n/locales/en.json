@@ -13,12 +13,14 @@
         "home": "Home",
         "hallOfFame": "Hall of Fame",
         "hallOfFameSuggestions": "Hall of Fame Suggestions",
+        "installedSVMaps": "Installed Maps",
         "githubRepo": "Github Repo",
         "donate": "Donate",
         "loading": {
             "home": "Loading Home Page...",
             "hallOfFame": "Loading Hall of Fame...",
             "suggestions": "Loading Suggestions...",
+            "installedSVMaps": "Loading Installed Maps...",
             "github": "Loading GitHub...",
             "donate": "Loading Donate Page...",
             "generic": "Loading..."
@@ -98,6 +100,17 @@
         "title": "GitHub Repository",
         "description": "You can find our server files",
         "here": "HERE"
+    },
+    "maps": {
+        "title": "Server Maps",
+        "databaseId": "Database ID",
+        "mapName": "Map Name",
+        "source": "Source",
+        "actions": "Actions",
+        "install": "Install",
+        "download": "Download (Manual installation)",
+        "workshop": "Workshop",
+        "noMapsAvailable": "No maps available"
     },
     "donate": {
         "title": "Support Us",

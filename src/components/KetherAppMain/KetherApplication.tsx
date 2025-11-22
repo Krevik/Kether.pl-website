@@ -15,6 +15,7 @@ import { useNavigationTranslations } from '../../hooks/useTranslations';
 // Lazy load components for better performance
 const HomePage = lazy(() => import('../HomePage/HomePage'));
 const HallOfFame = lazy(() => import('../HallOfFame/HallOfFame'));
+const InstalledSVMaps = lazy(() => import('../InstalledSVMaps/InstalledSVMaps'));
 const GithubRepo = lazy(() => import('../GithubRepo/GithubRepo'));
 const Donate = lazy(() => import('../Donate/Donate'));
 const HallOfFameSuggestions = lazy(() => import('../HallOfFame/HallOfFameSuggestions'));
@@ -73,6 +74,23 @@ export default function KetherApplication() {
                                 />
                             }>
                                 <HallOfFameSuggestions/>
+                            </Suspense>
+                        </PageLayout>
+                    }
+                />
+
+                <Route
+                    path={pagePaths.INSTALLED_SV_MAPS}
+                    element={
+                        <PageLayout>
+                            <Suspense fallback={
+                                <LoadingSpinner 
+                                    message={navTranslations.loading.installedSVMaps} 
+                                    type="skeleton"
+                                    minDelay={50}
+                                />
+                            }>
+                                <InstalledSVMaps/>
                             </Suspense>
                         </PageLayout>
                     }

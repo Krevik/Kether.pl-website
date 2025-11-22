@@ -13,12 +13,14 @@
         "home": "Strona Glowna",
         "hallOfFame": "Galeria Slawy",
         "hallOfFameSuggestions": "Sugestie Galerii Slawy",
+        "installedSVMaps": "Zainstalowane Mapy",
         "githubRepo": "Repo GitHub",
         "donate": "Wsparcie",
         "loading": {
             "home": "Ladowanie Strony Glownej...",
             "hallOfFame": "Ladowanie Galerii Slawy...",
             "suggestions": "Ladowanie Sugestii...",
+            "installedSVMaps": "Ladowanie Zainstalowanych Map...",
             "github": "Ladowanie Repo GitHub...",
             "donate": "Ladowanie Strony Wsparcia...",
             "generic": "Ladowanie..."
@@ -98,6 +100,17 @@
         "title": "Repozytorium GitHub",
         "description": "Mozesz znalezc pliki naszego serwera",
         "here": "TUTAJ"
+    },
+    "maps": {
+        "title": "Mapy Serwera",
+        "databaseId": "ID bazy danych",
+        "mapName": "Nazwa Mapy",
+        "source": "Zrodlo",
+        "actions": "Akcje",
+        "install": "Zainstaluj",
+        "download": "Pobierz (Reczna instalacja)",
+        "workshop": "Warsztat",
+        "noMapsAvailable": "Brak dostepnych map"
     },
     "donate": {
         "title": "Wesprzyj Nas",

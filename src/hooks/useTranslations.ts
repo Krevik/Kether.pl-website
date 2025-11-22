@@ -64,12 +64,14 @@ export function useNavigationTranslations() {
         home: t('navigation.home'),
         hallOfFame: t('navigation.hallOfFame'),
         hallOfFameSuggestions: t('navigation.hallOfFameSuggestions'),
+        installedSVMaps: t('navigation.installedSVMaps'),
         githubRepo: t('navigation.githubRepo'),
         donate: t('navigation.donate'),
         loading: {
             home: t('navigation.loading.home'),
             hallOfFame: t('navigation.loading.hallOfFame'),
             suggestions: t('navigation.loading.suggestions'),
+            installedSVMaps: t('navigation.loading.installedSVMaps'),
             github: t('navigation.loading.github'),
             donate: t('navigation.loading.donate'),
             generic: t('navigation.loading.generic'),
@@ -258,5 +260,23 @@ export function useFooterTranslations() {
         copyright: t('footer.copyright'),
         discordTooltip: t('footer.discordTooltip'),
         steamTooltip: t('footer.steamTooltip'),
+    };
+}
+
+/**
+ * Hook for maps translations
+ */
+export function useMapsTranslations() {
+    const { t } = useTranslation();
+    
+    return {
+        title: t('maps.title'),
+        mapName: t('maps.mapName'),
+        source: t('maps.source'),
+        actions: t('maps.actions'),
+        install: t('maps.install'),
+        download: t('maps.download'),
+        workshop: t('maps.workshop'),
+        noMapsAvailable: t('maps.noMapsAvailable'),
     };
 }

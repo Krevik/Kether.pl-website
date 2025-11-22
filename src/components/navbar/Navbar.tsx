@@ -37,6 +37,10 @@ function Navbar() {
             targetPage: pagePaths.HALL_OF_FAME_SUGGESTIONS,
         },
         {
+            label: navTranslations.installedSVMaps,
+            targetPage: pagePaths.INSTALLED_SV_MAPS,
+        },
+        {
             label: navTranslations.githubRepo,
             targetPage: pagePaths.GITHUB,
         },
