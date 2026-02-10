@@ -123,8 +123,8 @@ export const RAW_INSTALLED_MAPS: MapEntry[] = [
     {
         id: 7,
         mapName: 'Cold Front',
-        source: 'SirPlease',
-        downloadUrl: 'https://sirplease.vercel.app/downloads/maps/ColdFront.zip',
+        source: 'Workshop',
+        downloadUrl: 'https://steamcommunity.com/workshop/filedetails/?id=3135470026',
     },
     {
         id: 8,
