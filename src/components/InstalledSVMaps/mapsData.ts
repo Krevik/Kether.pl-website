@@ -90,10 +90,9 @@ export const RAW_INSTALLED_MAPS: MapEntry[] = [
         source: 'Workshop',
         downloadUrl: 'https://steamcommunity.com/sharedfiles/filedetails/?id=381848620',
     },
-    // SirPlease maps (all campaigns from sirplease.vercel.app, excluding Urban Flight)
     {
         id: 40,
-        mapName: TRANSLATION_PLACEHOLDER, // Placeholder that will be replaced in component
+        mapName: TRANSLATION_PLACEHOLDER,
         source: 'SirPlease',
         downloadUrl: 'https://sirplease.vercel.app/downloads/maps/allmaps.zip',
     },
@@ -118,8 +117,8 @@ export const RAW_INSTALLED_MAPS: MapEntry[] = [
     {
         id: 6,
         mapName: 'City 17',
-        source: 'SirPlease',
-        downloadUrl: 'https://sirplease.vercel.app/downloads/maps/City17.zip',
+        source: 'Workshop',
+        downloadUrl: 'https://steamcommunity.com/sharedfiles/filedetails/?id=141632373',
     },
     {
         id: 7,
@@ -184,8 +183,8 @@ export const RAW_INSTALLED_MAPS: MapEntry[] = [
     {
         id: 18,
         mapName: 'Diescraper Redux',
-        source: 'SirPlease',
-        downloadUrl: 'https://sirplease.vercel.app/downloads/maps/DiescraperRedux.zip',
+        source: 'Workshop',
+        downloadUrl: 'https://steamcommunity.com/sharedfiles/filedetails/?id=121116980',
     },
     {
         id: 19,
@@ -262,8 +261,8 @@ export const RAW_INSTALLED_MAPS: MapEntry[] = [
     {
         id: 31,
         mapName: 'Suicide Blitz 2',
-        source: 'SirPlease',
-        downloadUrl: 'https://sirplease.vercel.app/downloads/maps/SuicideBlitz2.zip',
+        source: 'Workshop',
+        downloadUrl: 'https://steamcommunity.com/sharedfiles/filedetails/?id=128428201',
     },
     {
         id: 32,
@@ -292,8 +291,8 @@ export const RAW_INSTALLED_MAPS: MapEntry[] = [
     {
         id: 36,
         mapName: 'Warcelona',
-        source: 'SirPlease',
-        downloadUrl: 'https://sirplease.vercel.app/downloads/maps/Warcelona.zip',
+        source: 'Workshop',
+        downloadUrl: 'https://steamcommunity.com/sharedfiles/filedetails/?id=1910147798',
     },
     {
         id: 37,
@@ -304,8 +303,8 @@ export const RAW_INSTALLED_MAPS: MapEntry[] = [
     {
         id: 38,
         mapName: 'Welcome To Hell',
-        source: 'SirPlease',
-        downloadUrl: 'https://sirplease.vercel.app/downloads/maps/WelcomeToHell.zip',
+        source: 'Workshop',
+        downloadUrl: 'https://steamcommunity.com/sharedfiles/filedetails/?id=381848620',
     },
     {
         id: 39,
