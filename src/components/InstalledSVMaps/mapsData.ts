@@ -147,9 +147,9 @@ export const RAW_INSTALLED_MAPS: MapEntry[] = [
     },
     {
         id: 12,
-        mapName: 'Dead Before Dawn',
-        source: 'SirPlease',
-        downloadUrl: 'https://sirplease.vercel.app/downloads/maps/DeadBeforeDawn.zip',
+        mapName: 'Dead Before Dawn DC',
+        source: 'Workshop',
+        downloadUrl: 'https://steamcommunity.com/workshop/filedetails/?id=121786282',
     },
     {
         id: 13,
