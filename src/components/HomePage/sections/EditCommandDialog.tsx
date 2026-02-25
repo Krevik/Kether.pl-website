@@ -46,7 +46,7 @@ export default function EditCommandDialog(props: EditCommandDialogProps) {
                             .updateCommand(newCommandData)
                             .then(() => {
                                 notificationManager.SUCCESS(
-                                    commonTranslations.updated
+                                    commonTranslations.update
                                 );
                                 props.setDialogVisibility(false);
                                 props.commandEditingIdRef.current = -1;

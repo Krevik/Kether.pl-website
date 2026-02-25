@@ -46,7 +46,7 @@ export default function EditBindDialog(props: EditBindDialogProps) {
                             .updateBind(newBindData)
                             .then(() => {
                                 notificationManager.SUCCESS(
-                                    commonTranslations.updated
+                                    commonTranslations.update
                                 );
                                 props.setDialogVisibility(false);
                                 props.bindEditingIdRef.current = -1;
