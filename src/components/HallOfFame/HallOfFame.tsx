@@ -42,7 +42,7 @@ const getToolbarLeftSide = (
             {isAdmin && (
                 <Button
                     label={`➕ ${bindsTranslations.newBind}`}
-                    className="p-button-success mr-2"
+                    className="p-button-success mr-2 app-focus-ring"
                     data-toggle="tooltip"
                     title={bindsTranslations.addNewBindTooltip}
                     onClick={() => setNewBindDialogVisibility(true)}
@@ -69,7 +69,7 @@ const bindActionBodyTemplate = (
                 data-toggle="tooltip"
                 title={bindsTranslations.editBindTooltip}
                 label="✏️"
-                className="p-button-rounded p-button-warning mr-2"
+                className="p-button-rounded p-button-warning mr-2 app-focus-ring"
                 onClick={() => {
                     editingBindID.current = rowData.id;
                     setEditBindDialogVisibility(true);
@@ -81,7 +81,7 @@ const bindActionBodyTemplate = (
                 data-toggle="tooltip"
                 title={bindsTranslations.deleteBindTooltip}
                 label="🗑️"
-                className="p-button-rounded p-button-danger"
+                className="p-button-rounded p-button-danger app-focus-ring"
                 onClick={() => {
                     bindsManagingService
                         .deleteBind(rowData, userData?.steamid)
@@ -142,7 +142,7 @@ const bindVotingBodyTemplate = (
     return (
         <>
             <Button
-                className={voteUpButtonStyling}
+                className={`${voteUpButtonStyling} app-focus-ring`}
                 label={`👍🏻 ${rowData.votingData?.Upvotes || 0}`}
                 onClick={() => {
                     handleVote(
@@ -156,7 +156,7 @@ const bindVotingBodyTemplate = (
             />
             
             <Button
-                className={voteDownButtonStyling}
+                className={`${voteDownButtonStyling} app-focus-ring`}
                 label={`👎🏻 ${rowData.votingData?.Downvotes || 0}`}
                 onClick={() => {
                     handleVote(
@@ -204,7 +204,7 @@ export default function HallOfFame() {
     return (
         <PageWithBackground imageUrl={BACKGROUNDS.BACKGROUND_2}>
             <div className="hall-of-fame">
-                <div className="card">
+                <div className="card app-surface app-page-card">
                     <AddNewBindDialog
                         setBindText={setBindText}
                         bindText={bindText}
@@ -225,7 +225,7 @@ export default function HallOfFame() {
                     />
 
                     <Toolbar
-                        className="mb-4"
+                        className="mb-4 app-toolbar"
                         start={getToolbarLeftSide(
                             isAdmin,
                             setNewBindDialogVisibility,
@@ -240,6 +240,7 @@ export default function HallOfFame() {
                         ) : (
                             <DataTable
                                 value={mapBinds(binds)}
+                                className="app-data-table"
                                 scrollable={true}
                                 scrollHeight="flex"
                                 emptyMessage={bindsTranslations.noBindsAvailable}

@@ -2,28 +2,51 @@
 	width: 100%;
 	display: flex;
 	flex-direction: column;
+	align-items: center;
+	padding: 1rem 1.25rem 1.5rem;
 }
 
 .github-repo .card {
-	height: 100%;
+	height: auto;
 	display: flex;
+	justify-content: center;
+	width: 100%;
+}
+
+.github-repo-card {
+	max-width: 1200px;
+	padding: 1.25rem;
+	border-radius: var(--radius-lg);
 }
 
 .github-repo a {
 	font-family: "Future Rot";
-	font-size: 3rem;
+	font-size: clamp(1.8rem, 4.2vw, 3rem);
 	text-decoration: none;
-	color: wheat;
-	-webkit-text-stroke: 3px red;
+	color: #f4d59a;
+	-webkit-text-stroke: 1px #8a1218;
+	transition: color var(--transition-fast);
+	display: inline-block;
+}
+
+.github-repo a:hover {
+	color: #ffe0a8;
 }
 
 .github-repo .centered-text {
-	padding-top: var(--standardPadding);
-	font-size: 3rem;
+	padding: 1rem;
+	font-size: clamp(1.45rem, 3.6vw, 2.8rem);
 	margin: auto;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
 	-webkit-text-stroke: 1px grey;
+	text-align: center;
+}
+
+@media (max-width: 900px) {
+	.github-repo {
+		padding: 0.75rem;
+	}
+
+	.github-repo-card {
+		padding: 0.85rem;
+	}
 }

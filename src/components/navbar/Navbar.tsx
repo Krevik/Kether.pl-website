@@ -2,7 +2,7 @@ import styles from './Navbar.module.css';
 import SteamLoginButton from './steamLoginButton/SteamLoginButton';
 import UserDetails from './userDetails/UserDetails';
 import { Button } from 'primereact/button';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { pagePaths } from '../../utils/pagePaths';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppState } from '../../redux/store';
@@ -19,6 +19,7 @@ interface TabItem {
 
 function Navbar() {
     const navigate = useNavigate();
+    const location = useLocation();
     const dispatch = useDispatch();
     const isMenuShown = useSelector((state: AppState) => state.uiReducer.isNavbarVisible);
     const navTranslations = useNavigationTranslations();
@@ -52,10 +53,16 @@ function Navbar() {
 
     const getNavigationButtons = useCallback(() => {
         return tabs.map((tab) => {
+            const isActive =
+                location.pathname === `/${tab.targetPage}` ||
+                (tab.targetPage === pagePaths.HOME_PAGE && location.pathname === '/');
+
             return (
                 <button
-                    className={styles.navigationButton}
+                    className={`${styles.navigationButton} ${isActive ? styles.navigationButtonActive : ''} app-focus-ring`}
                     key={tab.label.toString()}
+                    type="button"
+                    aria-current={isActive ? 'page' : undefined}
                     onClick={() => {
                         navigate(`../${tab.targetPage}`, { viewTransition: true });
                     }}
@@ -64,12 +71,12 @@ function Navbar() {
                 </button>
             );
         });
-    }, [tabs, navigate]);
+    }, [tabs, navigate, location.pathname]);
 
     const hideMenuButton = useCallback(() => {
         return (
             <Button
-                className={styles.openHideMenuButton}
+                className={`${styles.openHideMenuButton} app-focus-ring`}
                 label={isMenuShown ? '«' : '»'}
                 onClick={() => dispatch(uiActions.toggleNavbarVisibility())}
             />

@@ -1,0 +1,113 @@
+.app-surface {
+	background: var(--color-bg-elevated);
+	border: 1px solid var(--color-border-subtle);
+	border-radius: var(--radius-lg);
+	box-shadow: var(--shadow-soft);
+	backdrop-filter: blur(8px);
+}
+
+.app-page-card {
+	max-width: 1600px;
+	margin: 0.75rem auto 1.25rem;
+	padding: 1rem;
+	border-radius: var(--radius-lg);
+}
+
+.app-focus-ring:focus-visible {
+	outline: 2px solid var(--color-accent);
+	outline-offset: 2px;
+}
+
+.app-toolbar.p-toolbar {
+	background: rgba(12, 16, 24, 0.65) !important;
+	border: 1px solid var(--color-border-subtle) !important;
+	border-radius: var(--radius-md) !important;
+	backdrop-filter: blur(8px);
+}
+
+.app-toolbar .p-toolbar-group-start,
+.app-toolbar .p-toolbar-group-left {
+	gap: 0.5rem;
+}
+
+.app-toolbar .p-button {
+	background: rgba(9, 12, 19, 0.9);
+	border: 1px solid var(--color-border-subtle);
+	color: var(--color-text-primary);
+	border-radius: var(--radius-md);
+	transition: all var(--transition-fast);
+}
+
+.app-toolbar .p-button:hover,
+.app-toolbar .p-button:active {
+	background: rgba(12, 16, 24, 0.98) !important;
+	border-color: var(--color-border-accent) !important;
+	color: var(--color-accent-hover) !important;
+}
+
+.app-data-table.p-datatable {
+	background: transparent;
+	border: 1px solid var(--color-border-subtle);
+	border-radius: var(--radius-md);
+	overflow: hidden;
+	backdrop-filter: blur(6px);
+}
+
+.app-data-table .p-datatable-thead > tr > th {
+	background: rgba(9, 12, 19, 0.85) !important;
+	border: none;
+	color: var(--color-text-primary);
+}
+
+.app-data-table .p-datatable-tbody > tr {
+	background: rgba(12, 16, 24, 0.45);
+	border: none;
+}
+
+.app-data-table .p-datatable-tbody > tr:nth-child(2n) {
+	background: rgba(10, 14, 21, 0.62);
+}
+
+.app-data-table .p-datatable-tbody > tr > td {
+	border: none;
+	color: var(--color-text-primary);
+}
+
+.app-data-table .p-sortable-column:hover,
+.app-data-table .p-sortable-column .p-column-header-content:hover {
+	background: rgba(9, 12, 19, 0.9) !important;
+	color: var(--color-accent-hover) !important;
+}
+
+.app-dialog.p-dialog {
+	background: var(--color-bg-elevated-strong);
+	border: 1px solid var(--color-border-subtle);
+	border-radius: var(--radius-lg);
+	box-shadow: var(--shadow-soft);
+}
+
+.app-dialog .p-dialog-header,
+.app-dialog .p-dialog-content,
+.app-dialog .p-dialog-footer {
+	background: transparent;
+	border: none;
+	color: var(--color-text-primary);
+}
+
+.app-dialog .p-dialog-footer .p-button {
+	border-radius: var(--radius-md);
+	border: 1px solid var(--color-border-subtle);
+	transition: all var(--transition-fast);
+}
+
+.app-dialog .p-dialog-footer .p-button:hover {
+	border-color: var(--color-border-accent);
+	color: var(--color-accent-hover);
+}
+
+@media (max-width: 900px) {
+	.app-page-card {
+		margin: 0.4rem;
+		padding: 0.75rem;
+	}
+}

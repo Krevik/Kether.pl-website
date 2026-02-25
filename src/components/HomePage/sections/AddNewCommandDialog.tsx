@@ -24,12 +24,12 @@ export default function AddNewCommandDialog(props: AddNewCommandDialogProps) {
         <>
             <Button
                 label={`❌ ${commonTranslations.cancel}`}
-                className="p-button-text"
+                className="p-button-text app-focus-ring"
                 onClick={() => props.setDialogVisibility(false)}
             />
             <Button
                 label={`✅ ${commonTranslations.save}`}
-                className="p-button-text"
+                className="p-button-text app-focus-ring"
                 onClick={() => {
                     const newCommand = {
                         command: props.command,
@@ -59,7 +59,7 @@ export default function AddNewCommandDialog(props: AddNewCommandDialogProps) {
             visible={props.isDialogVisible}
             header={commandsTranslations.addNewCommand}
             modal
-            className="p-fluid"
+            className="p-fluid app-dialog"
             footer={newCommandDialogFooter}
             onHide={() => props.setDialogVisibility(false)}
         >

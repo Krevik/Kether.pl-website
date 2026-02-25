@@ -9,18 +9,11 @@ export default function Donate() {
     return (
         <PageWithBackground imageUrl={BACKGROUNDS.BACKGROUND_5}>
             <div className="donate">
-                <div className="centered-text" style={{ height: '10%' }}>
+                <div className="centered-text donate-description app-surface">
                     {donateTranslations.description}
                 </div>
 
-                <div
-                    className="payment-method"
-                    style={{
-                        height: 'auto',
-                        display: 'block',
-                        overflow: 'auto',
-                    }}
-                >
+                <div className="payment-method donate-payment-card app-surface">
                     <div className="centered-text">
                         {donateTranslations.transfer}
                         <div className="font1">Revolut: @krevik</div>

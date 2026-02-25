@@ -17,41 +17,9 @@
     margin: auto;
 }
 
-.hall-of-fame-suggestions .card .p-toolbar {
-    background-color: rgba(0, 0, 0, 0.85) !important;
-    border: 0;
+.hall-of-fame-suggestions .app-toolbar {
     width: 100%;
-}
-
-.hall-of-fame-suggestions .card .p-toolbar button {
-    background-color: #000;
-    color: white;
-    border: none;
-}
-
-.hall-of-fame-suggestions .card .p-toolbar button:hover,
-.hall-of-fame-suggestions .card .p-toolbar button:active {
-    background-color: #000 !important;
-    color: #ff1313 !important;
-    transition: 0.1s;
-    border: none;
-}
-
-.hall-of-fame-suggestions .p-datatable .p-datatable-thead > tr > th,
-.hall-of-fame-suggestions .p-datatable .p-column-header-content {
-    /*backdrop-filter: blur(10px);*/
-    background-color: rgba(0, 0, 0, 0.85) !important;
-    border: none;
-    appearance: none;
-}
-
-.hall-of-fame-suggestions .p-datatable .p-sortable-column:hover,
-.hall-of-fame-suggestions
-    .p-datatable
-    .p-sortable-column
-    .p-column-header-content:hover {
-    background-color: rgba(0, 0, 0, 0.85) !important;
-    color: rgb(248, 67, 67) !important;
+    margin: 0;
 }
 
 .hall-of-fame-suggestions .card .p-toolbar-group-start .p-toolbar-group-left {
@@ -59,28 +27,15 @@
     margin: auto;
 }
 
-.hall-of-fame-suggestions .card .p-toolbar,
-.p-toolbar-group-center {
-    margin: 0;
-}
-
 .hall-of-fame-suggestions .p-datatable-scrollable .p-datatable-wrapper {
-    overflow: none;
+    overflow: auto;
 }
 
-.hall-of-fame-suggestions .p-datatable {
-    width: 90%;
-    background-color: transparent;
-    background: transparent;
-    padding-top: 20px;
-    margin: auto;
+.hall-of-fame-suggestions .app-data-table.p-datatable {
+    width: 100%;
+    margin: 0;
+    padding-top: 0.8rem;
     font-family: 'Future Rot';
     font-size: 1.1rem;
-    backdrop-filter: blur(10px);
     -webkit-text-stroke: 1px black;
-}
-
-.hall-of-fame-suggestions .p-datatable .p-datatable-tbody > tr {
-    background: transparent;
-    border: none;
 }

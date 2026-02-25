@@ -4,22 +4,24 @@
 
 .steam-login-button .p-button {
 	font-family: "Future Rot";
-	background: #000;
-	color: #d3e0e3;
-	-webkit-text-stroke: 1px #e01220;
-	border: none;
+	background: rgba(9, 12, 19, 0.9);
+	color: var(--color-text-primary);
+	border: 1px solid var(--color-border-subtle);
+	border-radius: var(--radius-md);
+	transition: all var(--transition-fast);
+	box-shadow: var(--shadow-soft);
 }
 
 .steam-login-button .p-button:hover,
 .steam-login-button .p-button:active {
-	background: #000 !important;
-    color: rgb(248, 67, 67) !important;
-    transition: 0.1s;
-    border: none;
+	background: rgba(12, 16, 24, 0.98) !important;
+    color: var(--color-accent-hover) !important;
+    border-color: var(--color-border-accent) !important;
 }
 
 .steam-login-button button {
-	height: 50px;
+	height: 52px;
 	margin-top: auto;
 	margin-bottom: auto;
+	padding-inline: 0.85rem;
 }

@@ -1,24 +1,45 @@
-footer {position: relative;}
+.app-footer {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 54px;
+	margin: 0.4rem 0.75rem 0.6rem;
+	padding: 0.5rem 1rem;
+	border-radius: var(--radius-lg);
+}
 
 footer span {
 	-webkit-text-stroke: 0.1px red;
 	font-family: "Future Rot";
-	font-size: 2rem;
+	font-size: clamp(1rem, 1.9vw, 1.65rem);
 	font-weight: 600;
 	display: flex;
 	justify-content: center;
 }
 
-span.contact {
-    position: absolute;
-    bottom: 2px;
-    right: 0px;
-    white-space: pre-wrap;
-    height: 32px;
-    border: none;
+.footer-copyright {
+	color: var(--color-text-primary);
 }
-span.contact button {background-color: transparent; border: none;}
-span.contact button:before {
+
+.app-footer span.contact {
+    position: absolute;
+    right: 0.55rem;
+    top: 50%;
+    transform: translateY(-50%);
+    white-space: pre-wrap;
+    height: auto;
+    border: none;
+	display: flex;
+	gap: 0.2rem;
+}
+
+.app-footer span.contact button {
+	background-color: transparent;
+	border: 1px solid transparent;
+}
+
+.app-footer span.contact button:before {
 	content: "";
     position: absolute;
     bottom: 0;
@@ -29,9 +50,38 @@ span.contact button:before {
     width: 0;
     transition: width 0.2s ease-in-out;
 }
-span.contact button:hover:before {width: 100%;}
-span.contact button:hover, span.contact button:active {
-    color: rgb(248, 67, 67) !important;
-    background-color: #000000 !important;
+
+.app-footer span.contact button:hover:before {
+	width: 100%;
 }
-.pi {width: 24; height: 24; color: #e8e6e3;}
+
+.app-footer span.contact button:hover,
+.app-footer span.contact button:active {
+    color: var(--color-accent-hover) !important;
+    background-color: rgba(0, 0, 0, 0.55) !important;
+	border-color: var(--color-border-accent) !important;
+}
+
+.footer-icon-button {
+	border-radius: var(--radius-md) !important;
+	transition: all var(--transition-fast);
+}
+
+.pi {
+	width: 24;
+	height: 24;
+	color: #e8e6e3;
+}
+
+@media (max-width: 900px) {
+	.app-footer {
+		padding: 0.75rem 0.55rem 0.9rem;
+		margin: 0.35rem 0.35rem 0.6rem;
+	}
+
+	.app-footer span.contact {
+		position: static;
+		transform: none;
+		margin-left: 0.4rem;
+	}
+}

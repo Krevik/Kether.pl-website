@@ -23,12 +23,12 @@ export default function AddNewBindDialog(props: AddNewBindDialogProps) {
         <>
             <Button
                 label={`❌ ${commonTranslations.cancel}`}
-                className="p-button-text"
+                className="p-button-text app-focus-ring"
                 onClick={() => props.setDialogVisibility(false)}
             />
             <Button
                 label={`✅ ${commonTranslations.save}`}
-                className="p-button-text"
+                className="p-button-text app-focus-ring"
                 onClick={() => {
                     const newBind = {
                         author: props.bindAuthor,
@@ -58,7 +58,7 @@ export default function AddNewBindDialog(props: AddNewBindDialogProps) {
             visible={props.isDialogVisible}
             header={bindsTranslations.addNewBind}
             modal
-            className="p-fluid"
+            className="p-fluid app-dialog"
             footer={newBindDialogFooter}
             onHide={() => props.setDialogVisibility(false)}
         >

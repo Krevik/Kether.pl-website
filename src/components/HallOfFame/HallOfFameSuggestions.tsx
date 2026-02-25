@@ -37,7 +37,7 @@ const getToolbarLeftSide = (
             {userID && (
                 <Button
                     label={`➕ ${suggestionsTranslations.suggestBind}`}
-                    className="p-button-success mr-2"
+                    className="p-button-success mr-2 app-focus-ring"
                     data-toggle="tooltip"
                     title={suggestionsTranslations.suggestBindTooltip}
                     onClick={() => setNewBindSuggestionDialogVisibility(true)}
@@ -60,7 +60,7 @@ const bindSuggestionBody = (
                     data-toggle="tooltip"
                     title={suggestionsTranslations.acceptBindTooltip}
                     label="✅"
-                    className="p-button-rounded p-button-success"
+                    className="p-button-rounded p-button-success app-focus-ring"
                     onClick={() => {
                         const bind = trimBindAuthor(
                             rowData
@@ -87,7 +87,7 @@ const bindSuggestionBody = (
                     data-toggle="tooltip"
                     title={suggestionsTranslations.deleteSuggestionTooltip}
                     label="❌"
-                    className="p-button-rounded p-button-danger"
+                    className="p-button-rounded p-button-danger app-focus-ring"
                     onClick={() => {
                         bindSuggestionsManagingService
                             .deleteBindSuggestion(rowData)
@@ -141,7 +141,7 @@ export default function HallOfFameSuggestions() {
     return (
         <PageWithBackground imageUrl={BACKGROUNDS.BACKGROUND_2}>
             <div className="hall-of-fame-suggestions">
-                <div className="card">
+                <div className="card app-surface app-page-card">
                     <AddNewBindSuggestionDialog
                         setBindText={setBindText}
                         bindText={bindText}
@@ -155,7 +155,7 @@ export default function HallOfFameSuggestions() {
                     />
 
                     <Toolbar
-                        className="mb-4"
+                        className="mb-4 app-toolbar"
                         start={getToolbarLeftSide(
                             userID,
                             setNewBindSuggestionDialogVisibility,
@@ -171,6 +171,7 @@ export default function HallOfFameSuggestions() {
                             ) : (
                                 <DataTable
                                     value={mapBinds(bindSuggestions)}
+                                    className="app-data-table"
                                     scrollable={true}
                                     scrollHeight="flex"
                                     emptyMessage={suggestionsTranslations.noSuggestionsAvailable}

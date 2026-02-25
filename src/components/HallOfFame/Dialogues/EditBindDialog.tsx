@@ -26,7 +26,7 @@ export default function EditBindDialog(props: EditBindDialogProps) {
             <>
                 <Button
                     label={`❌ ${commonTranslations.cancel}`}
-                    className="p-button-text"
+                    className="p-button-text app-focus-ring"
                     onClick={() => {
                         props.bindEditingIdRef.current = -1;
                         props.setDialogVisibility(false);
@@ -35,7 +35,7 @@ export default function EditBindDialog(props: EditBindDialogProps) {
 
                 <Button
                     label={`✅ ${commonTranslations.update}`}
-                    className="p-button-text"
+                    className="p-button-text app-focus-ring"
                     onClick={() => {
                         const newBindData = {
                             author: props.bindAuthor,
@@ -46,14 +46,14 @@ export default function EditBindDialog(props: EditBindDialogProps) {
                             .updateBind(newBindData)
                             .then(() => {
                                 notificationManager.SUCCESS(
-                                    `Successfully updated the bind`
+                                    commonTranslations.updated
                                 );
                                 props.setDialogVisibility(false);
                                 props.bindEditingIdRef.current = -1;
                             })
                             .catch((error) => {
                                 notificationManager.ERROR(
-                                    `Couldn't update the bind: ${error}`
+                                    `${commonTranslations.error}: ${error}`
                                 );
                             });
                     }}
@@ -67,7 +67,7 @@ export default function EditBindDialog(props: EditBindDialogProps) {
             visible={props.isDialogVisible}
             header={bindsTranslations.editBind}
             modal
-            className="p-fluid"
+            className="p-fluid app-dialog"
             footer={editBindDialogFooter()}
             onHide={() => {
                 props.setDialogVisibility(false);

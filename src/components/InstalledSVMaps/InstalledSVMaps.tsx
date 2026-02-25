@@ -12,7 +12,6 @@ import { MapsDataTable } from './MapsDataTable';
 import { InstallationHelpDialog } from './InstallationHelpDialog';
 
 export interface MapEntry {
-    id: number;
     mapName: string;
     source: 'Workshop' | 'SirPlease' | 'Other';
     downloadUrl?: string;
@@ -41,7 +40,7 @@ export default function InstalledSVMaps() {
     return (
         <PageWithBackground imageUrl={BACKGROUNDS.BACKGROUND_4}>
             <div className="installed-sv-maps">
-                <div className="card">
+                <div className="card app-surface app-page-card">
                     <div className="centered-text">{mapsTranslations.title}</div>
                     <div className="tables-container">
                         <MapsDataTable

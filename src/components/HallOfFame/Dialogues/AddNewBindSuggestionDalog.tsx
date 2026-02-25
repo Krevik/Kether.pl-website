@@ -32,12 +32,12 @@ export default function AddNewBindSuggestionDialog(
         <>
             <Button
                 label={`❌ ${commonTranslations.cancel}`}
-                className="p-button-text"
+                className="p-button-text app-focus-ring"
                 onClick={() => props.setDialogVisibility(false)}
             />
             <Button
                 label={`✅ ${commonTranslations.save}`}
-                className="p-button-text"
+                className="p-button-text app-focus-ring"
                 onClick={() => {
                     const newBind = {
                         id: -1,
@@ -69,7 +69,7 @@ export default function AddNewBindSuggestionDialog(
             visible={props.isDialogVisible}
             header={suggestionsTranslations.addNewSuggestion}
             modal
-            className="p-fluid"
+            className="p-fluid app-dialog"
             footer={newBindSuggestionDialogFooter}
             onHide={() => props.setDialogVisibility(false)}
         >

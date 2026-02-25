@@ -39,7 +39,7 @@ export default function CommandsSection() {
                     data-toggle="tooltip"
                     title={commandsTranslations.editCommandTooltip}
                     label="✏️"
-                    className="p-button-rounded mr-2"
+                    className="p-button-rounded mr-2 command-action-button app-focus-ring"
                     onClick={() => {
                         editingCommandID.current = rowData.id;
                         setEditCommandDialogVisibility(true);
@@ -51,7 +51,7 @@ export default function CommandsSection() {
                     data-toggle="tooltip"
                     title={commandsTranslations.deleteCommandTooltip}
                     label="🗑️"
-                    className="p-button-rounded p-button-danger"
+                    className="p-button-rounded p-button-danger command-action-button app-focus-ring"
                     onClick={() => {
                         commandsManagingService
                             .deleteCommand(rowData)
@@ -79,7 +79,7 @@ export default function CommandsSection() {
                 {isAdmin && (
                     <Button
                         label={`➕ ${commandsTranslations.newCommand}`}
-                        className="mr-2"
+                        className="mr-2 app-focus-ring"
                         data-toggle="tooltip"
                         title={commandsTranslations.addNewCommandTooltip}
                         onClick={() => setNewCommandDialogVisibility(true)}
@@ -90,7 +90,7 @@ export default function CommandsSection() {
     };
 
     return (
-        <div className="section">
+        <div className="section commands-section app-surface">
             <AddNewCommandDialog
                 setCommandDescription={setCommandDescription}
                 commandDescription={commandDescription}
@@ -111,7 +111,7 @@ export default function CommandsSection() {
 
             {isAdmin && (
                 <Toolbar
-                    className="mb-4"
+                    className="mb-4 commands-toolbar app-toolbar"
                     start={getToolbarLeftSide()}
                 ></Toolbar>
             )}
@@ -119,11 +119,7 @@ export default function CommandsSection() {
             <DataTable
                 value={commands}
                 responsiveLayout="scroll"
-                style={{
-                    backgroundColor: 'transparent',
-                    background: 'transparent',
-                    backdropFilter: 'blur(2px)',
-                }}
+                className="commands-table app-data-table"
                 emptyMessage={commandsTranslations.noCommandsAvailable}
             >
                 <Column field="command" header={commandsTranslations.command}></Column>

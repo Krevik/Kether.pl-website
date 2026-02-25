@@ -2,6 +2,21 @@
 	--standardPadding: 20px;
 	--standard-font-weight-arabica: 700;
 	--standardGap: 0.5rem;
+	--color-bg-primary: #07090d;
+	--color-bg-elevated: rgba(12, 16, 24, 0.82);
+	--color-bg-elevated-strong: rgba(10, 13, 20, 0.94);
+	--color-border-subtle: rgba(255, 255, 255, 0.08);
+	--color-border-accent: rgba(224, 18, 32, 0.45);
+	--color-text-primary: #f5f7fa;
+	--color-text-muted: #c5ccd8;
+	--color-accent: #e01220;
+	--color-accent-hover: #ff3a47;
+	--shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.35);
+	--shadow-accent: 0 0 0 1px rgba(224, 18, 32, 0.28), 0 8px 18px rgba(224, 18, 32, 0.2);
+	--radius-md: 10px;
+	--radius-lg: 14px;
+	--transition-fast: 160ms ease;
+	--transition-normal: 240ms ease;
 }
 
 @font-face {

@@ -2,6 +2,7 @@ import { Dialog } from 'primereact/dialog';
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import { useState } from 'react';
+import { useCommonTranslations } from '../../../hooks/useTranslations';
 
 export type Field = {
     fieldName: string;
@@ -19,6 +20,7 @@ export type ActionDialogProps = {
 };
 
 export const ActionDialog = (props: ActionDialogProps) => {
+    const commonTranslations = useCommonTranslations();
     const [data, setData] = useState(
         props.actionType === 'ADD' ? props.initialData : []
     );
@@ -26,13 +28,13 @@ export const ActionDialog = (props: ActionDialogProps) => {
     const newBindDialogFooter = (
         <>
             <Button
-                label="❌ Cancel"
-                className="p-button-text"
+                label={`❌ ${commonTranslations.cancel}`}
+                className="p-button-text app-focus-ring"
                 onClick={() => props.setDialogVisibility(false)}
             />
             <Button
-                label="✅ Save"
-                className="p-button-text"
+                label={`✅ ${commonTranslations.save}`}
+                className="p-button-text app-focus-ring"
                 onClick={() => {
                     props.onSave(data);
                 }}
@@ -46,6 +48,7 @@ export const ActionDialog = (props: ActionDialogProps) => {
                 <>
                     <h5>{field.fieldName}</h5>
                     <InputText
+                        className="app-focus-ring"
                         value={field.fieldValue}
                         onChange={(event) => {
                             field.fieldValue = event.target.value;
@@ -63,7 +66,7 @@ export const ActionDialog = (props: ActionDialogProps) => {
             visible={props.isDialogVisible}
             header={props.dialogHeader}
             modal
-            className="p-fluid"
+            className="p-fluid app-dialog"
             footer={newBindDialogFooter}
             onHide={() => props.setDialogVisibility(false)}
         >

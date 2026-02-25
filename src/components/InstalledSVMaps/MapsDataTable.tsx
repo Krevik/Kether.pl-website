@@ -33,15 +33,15 @@ export const MapsDataTable: React.FC<MapsDataTableProps> = ({
             <div className="table-title">{title}</div>
             <DataTable
                 value={maps}
+                className="app-data-table maps-data-table"
                 scrollable={true}
                 scrollHeight="flex"
                 emptyMessage={mapsTranslations.noMapsAvailable}
             >
                 {isAdmin && (
                     <Column
-                        field="id"
                         header={mapsTranslations.databaseId}
-                        sortable
+                        body={(_, options) => options.rowIndex + 1}
                     />
                 )}
                 <Column

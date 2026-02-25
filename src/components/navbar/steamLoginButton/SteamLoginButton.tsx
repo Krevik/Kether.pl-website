@@ -36,7 +36,7 @@ export default function SteamLoginButton() {
                 <input type="hidden" name="openid.mode" value="checkid_setup" />
                 <input type="hidden" name="openid.realm" value={HOST_URL} />
                 <input type="hidden" name="openid.return_to" value={HOST_URL} />
-                <Button type="submit">
+                <Button type="submit" className="app-focus-ring">
                     <img
                         alt="Steam login button img"
                         src="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/steamworks_docs/polish/sits_small.png"
@@ -48,6 +48,7 @@ export default function SteamLoginButton() {
         <div className="steam-login-button">
             <Button
                 label="🚪 Log out"
+                className="app-focus-ring"
                 onClick={() => {
                     appStore.dispatch(userDataActions.setUserID(undefined));
                 }}

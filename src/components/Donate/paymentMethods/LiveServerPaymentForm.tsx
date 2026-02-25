@@ -21,6 +21,7 @@ export default function LiveServerPaymentForm(
             <input type="hidden" name="lvs_o_amount" value={donateAmount} />
 
             <InputNumber
+                className="app-focus-ring"
                 value={donateAmount}
                 onValueChange={(e) => setDonateAmount(e.value! | donateAmount)}
                 incrementButtonIcon="➕"
@@ -30,7 +31,7 @@ export default function LiveServerPaymentForm(
                 min={0}
                 currency="PLN"
             />
-            <Button>
+            <Button className="app-focus-ring">
                 <input type="submit" name="lvs_o_submit" value="Wyślij" />
             </Button>
         </form>

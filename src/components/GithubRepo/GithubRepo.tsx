@@ -10,10 +10,10 @@ export default function GithubRepo() {
     return (
         <PageWithBackground imageUrl={BACKGROUNDS.BACKGROUND_4}>
             <div className="github-repo">
-                <div className="card">
+                <div className="card app-surface github-repo-card">
                     <div className="centered-text">
                         {githubTranslations.description}{' '}
-                        <a href={EXTERNAL_URLS.GITHUB_REPO}>
+                        <a className="app-focus-ring github-repo-link" href={EXTERNAL_URLS.GITHUB_REPO}>
                             {githubTranslations.here}
                         </a>
                     </div>

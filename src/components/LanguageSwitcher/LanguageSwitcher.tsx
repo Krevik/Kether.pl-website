@@ -45,10 +45,9 @@ export const LanguageSwitcher: React.FC = () => {
                 optionLabel="name"
                 itemTemplate={languageTemplate}
                 valueTemplate={selectedLanguageTemplate}
-                className="language-dropdown"
+                className="language-dropdown app-focus-ring"
                 panelClassName="language-dropdown-panel"
                 showClear={false}
-                style={{ backgroundColor: '#000', color: 'white', border: 'none' }}
             />
         </div>
     );

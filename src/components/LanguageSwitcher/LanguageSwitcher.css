@@ -5,7 +5,7 @@
 }
 
 .language-dropdown {
-    min-width: 60px;
+    min-width: 64px;
 }
 
 /* Ultra-specific selectors to override PrimeReact bootstrap4-dark-purple theme */
@@ -14,26 +14,23 @@
 .language-switcher .language-dropdown.p-dropdown,
 div.language-switcher .p-dropdown.language-dropdown,
 div.language-switcher > .p-dropdown.language-dropdown {
-    background-color: #000 !important;
-    background: #000 !important;
-    color: white !important;
-    border: none !important;
-    border-color: transparent !important;
-    transition: all 0.2s !important;
-    box-shadow: none !important;
+    background: rgba(9, 12, 19, 0.9) !important;
+    color: var(--color-text-primary) !important;
+    border: 1px solid var(--color-border-subtle) !important;
+    transition: all var(--transition-fast) !important;
+    box-shadow: var(--shadow-soft) !important;
     outline: none !important;
+    border-radius: var(--radius-md) !important;
+    min-height: 52px;
 }
 
 /* Hover state for dropdown button */
 .language-switcher .p-dropdown.language-dropdown:hover,
 .language-switcher .language-dropdown.p-dropdown:hover,
 div.language-switcher .p-dropdown.language-dropdown:hover {
-    background-color: #000 !important;
-    background: #000 !important;
-    color: #ff1313 !important;
-    border: none !important;
-    border-color: transparent !important;
-    box-shadow: none !important;
+    background: rgba(12, 16, 24, 0.98) !important;
+    color: var(--color-accent-hover) !important;
+    border-color: var(--color-border-accent) !important;
 }
 
 /* Focus state for dropdown button */
@@ -41,10 +38,9 @@ div.language-switcher .p-dropdown.language-dropdown:hover {
 .language-switcher .p-dropdown.language-dropdown.p-focus,
 .language-switcher .p-dropdown.language-dropdown:not(.p-disabled):hover,
 .language-switcher .p-dropdown.language-dropdown:not(.p-disabled).p-focus {
-    background-color: #000 !important;
-    background: #000 !important;
-    border-color: transparent !important;
-    box-shadow: none !important;
+    background: rgba(12, 16, 24, 0.98) !important;
+    border-color: var(--color-border-accent) !important;
+    box-shadow: var(--shadow-accent) !important;
     outline: none !important;
 }
 
@@ -52,34 +48,32 @@ div.language-switcher .p-dropdown.language-dropdown:hover {
 .language-switcher .p-dropdown.language-dropdown.p-inputwrapper,
 .language-switcher .p-dropdown.language-dropdown.p-inputwrapper-filled,
 .language-switcher .p-dropdown.language-dropdown.p-inputwrapper-focus {
-    background-color: #000 !important;
-    background: #000 !important;
-    border-color: transparent !important;
+    background: rgba(12, 16, 24, 0.98) !important;
+    border-color: var(--color-border-accent) !important;
 }
 
 /* Dropdown trigger icon and label */
 .language-switcher .p-dropdown.language-dropdown .p-dropdown-label {
-    color: #fff !important;
+    color: var(--color-text-primary) !important;
     padding: 0.5rem !important;
     background: transparent !important;
 }
 
 .language-switcher .p-dropdown.language-dropdown .p-dropdown-trigger {
     width: 20px !important;
-    background-color: transparent !important;
     background: transparent !important;
-    color: white !important;
+    color: var(--color-text-primary) !important;
 }
 
 .language-switcher .p-dropdown.language-dropdown .p-dropdown-trigger-icon {
-    color: #fff !important;
-    transition: color 0.2s !important;
+    color: var(--color-text-primary) !important;
+    transition: color var(--transition-fast) !important;
 }
 
 /* Hover effect on icons and flag */
 .language-switcher .p-dropdown.language-dropdown:hover .p-dropdown-trigger-icon,
 .language-switcher .p-dropdown.language-dropdown:hover .language-flag {
-    color: #ff1313 !important;
+    color: var(--color-accent-hover) !important;
     filter: brightness(1.2) !important;
 }
 
@@ -107,12 +101,10 @@ div.language-switcher .p-dropdown.language-dropdown:hover {
 div.p-dropdown-panel.language-dropdown-panel,
 .language-switcher + .p-dropdown-panel,
 body .p-dropdown-panel.language-dropdown-panel {
-    background: rgba(0, 0, 0, 0.95) !important;
-    background-color: rgba(0, 0, 0, 0.95) !important;
-    border: none !important;
-    border-color: transparent !important;
-    border-radius: 4px !important;
-    backdrop-filter: blur(10px) !important;
+    background: var(--color-bg-elevated-strong) !important;
+    border: 1px solid var(--color-border-subtle) !important;
+    border-radius: var(--radius-md) !important;
+    backdrop-filter: blur(8px) !important;
 }
 
 /* Dropdown items */
@@ -128,7 +120,7 @@ body .p-dropdown-panel.language-dropdown-panel .p-dropdown-items .p-dropdown-ite
 /* Dropdown items hover */
 .p-dropdown-panel.language-dropdown-panel .p-dropdown-items .p-dropdown-item:hover,
 body .p-dropdown-panel.language-dropdown-panel .p-dropdown-items .p-dropdown-item:hover {
-    color: #ff1313 !important;
+    color: var(--color-accent-hover) !important;
 }
 
 

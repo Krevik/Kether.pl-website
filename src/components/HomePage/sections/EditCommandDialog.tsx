@@ -26,7 +26,7 @@ export default function EditCommandDialog(props: EditCommandDialogProps) {
             <>
                 <Button
                     label={`❌ ${commonTranslations.cancel}`}
-                    className="p-button-text"
+                    className="p-button-text app-focus-ring"
                     onClick={() => {
                         props.commandEditingIdRef.current = -1;
                         props.setDialogVisibility(false);
@@ -35,7 +35,7 @@ export default function EditCommandDialog(props: EditCommandDialogProps) {
 
                 <Button
                     label={`✅ ${commonTranslations.update}`}
-                    className="p-button-text"
+                    className="p-button-text app-focus-ring"
                     onClick={() => {
                         const newCommandData = {
                             command: props.command,
@@ -46,14 +46,14 @@ export default function EditCommandDialog(props: EditCommandDialogProps) {
                             .updateCommand(newCommandData)
                             .then(() => {
                                 notificationManager.SUCCESS(
-                                    `Successfully updated the command`
+                                    commonTranslations.updated
                                 );
                                 props.setDialogVisibility(false);
                                 props.commandEditingIdRef.current = -1;
                             })
                             .catch((error) => {
                                 notificationManager.ERROR(
-                                    `Couldn't update the command: ${error.message}`
+                                    `${commonTranslations.error}: ${error.message}`
                                 );
                             });
                     }}
@@ -67,7 +67,7 @@ export default function EditCommandDialog(props: EditCommandDialogProps) {
             visible={props.isDialogVisible}
             header={commandsTranslations.editCommand}
             modal
-            className="p-fluid"
+            className="p-fluid app-dialog"
             footer={editCommandDialogFooter()}
             onHide={() => {
                 props.setDialogVisibility(false);
