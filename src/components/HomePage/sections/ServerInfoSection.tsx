@@ -19,6 +19,9 @@ function ServerInfoSection() {
     const serverInfo = useSelector(
         (state: AppState) => state.serverInfoReducer.serverInfo
     );
+    const secondaryServerInfo = useSelector(
+        (state: AppState) => state.serverInfoReducer.secondaryServerInfo
+    );
     const serverInfoTranslations = useServerInfoTranslations();
 
     serverInfoService.useServerInfoLoadingService();
@@ -118,32 +121,7 @@ function ServerInfoSection() {
     return (
         <div className="section future-rot server-info-section">
             {renderServerCard(serverInfo, SERVER_CONFIG.IP, SERVER_CONFIG.STEAM_CONNECT_URL)}
-            <div className="server-info-card">
-                <span>{serverInfoTranslations.name}: {SECONDARY_SERVER_CONFIG.FALLBACK_NAME}</span>
-                <span>
-                    IP: {SECONDARY_SERVER_CONFIG.IP}
-                    <Button
-                        label="📄"
-                        className="large-emoji-button app-focus-ring"
-                        style={{ scale: '0.8', verticalAlign: 'unset' }}
-                        onClick={() => {
-                            navigator.clipboard.writeText(SECONDARY_SERVER_CONFIG.IP);
-                            notificationManager.SUCCESS(SUCCESS_MESSAGES.COPY_SUCCESS);
-                        }}
-                    >
-                        <span className="large-copy-emoji">📄</span>
-                    </Button>
-                </span>
-                <span>
-                    <Button
-                        label={serverInfoTranslations.joinGame}
-                        className="app-focus-ring"
-                        onClick={() => {
-                            window.location.href = SECONDARY_SERVER_CONFIG.STEAM_CONNECT_URL;
-                        }}
-                    ></Button>
-                </span>
-            </div>
+            {renderServerCard(secondaryServerInfo, SECONDARY_SERVER_CONFIG.IP, SECONDARY_SERVER_CONFIG.STEAM_CONNECT_URL)}
             <span className="centered-text">
                 {serverInfoTranslations.customMapsText}
                 <a

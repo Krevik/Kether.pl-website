@@ -3,10 +3,12 @@ import { ServerInfo } from '../../models/serverInfoModels';
 
 interface serverInfoSliceProps {
 	serverInfo?: ServerInfo;
+	secondaryServerInfo?: ServerInfo;
 }
 
 const initialState: serverInfoSliceProps = {
 	serverInfo: undefined,
+	secondaryServerInfo: undefined,
 };
 
 const serverInfoSlice = createSlice({
@@ -15,6 +17,9 @@ const serverInfoSlice = createSlice({
 	reducers: {
 		setServerInfo(state, action: PayloadAction<ServerInfo>) {
 			state.serverInfo = action.payload;
+		},
+		setSecondaryServerInfo(state, action: PayloadAction<ServerInfo>) {
+			state.secondaryServerInfo = action.payload;
 		},
 	},
 });
