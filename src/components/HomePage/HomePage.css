@@ -165,6 +165,17 @@
     border: 1px solid var(--color-border-subtle);
     border-radius: var(--radius-md);
     overflow: hidden;
+    font-family: "Montserrat", "Segoe UI", "Roboto", Arial, sans-serif;
+}
+
+.player-list-table .p-datatable,
+.player-list-table .p-datatable .p-datatable-thead > tr > th,
+.player-list-table .p-datatable .p-datatable-tbody > tr > td,
+.player-list-table .p-datatable .p-column-header-content,
+.player-list-table .p-datatable .p-column-title,
+.player-list-table .p-datatable span {
+    font-family: "Montserrat", "Segoe UI", "Roboto", Arial, sans-serif !important;
+    -webkit-text-stroke: 0 !important;
 }
 
 .player-list-table .p-datatable-scrollable .p-datatable-wrapper span {
