@@ -157,6 +157,11 @@ export const RAW_INSTALLED_MAPS: MapEntry[] = [
         downloadUrl: 'https://steamcommunity.com/sharedfiles/filedetails/?id=121116980',
     },
     {
+        mapName: "Cold Stream Night",
+        source: "Workshop",
+        downloadUrl: "https://steamcommunity.com/sharedfiles/filedetails/?id=642879446"
+    },
+    {
         mapName: 'Fatal Freight',
         source: 'SirPlease',
         downloadUrl: 'https://sirplease.vercel.app/downloads/maps/FatalFreight.zip',
