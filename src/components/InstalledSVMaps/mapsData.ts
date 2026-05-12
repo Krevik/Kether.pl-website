@@ -117,11 +117,6 @@ export const RAW_INSTALLED_MAPS: MapEntry[] = [
         downloadUrl: 'https://sirplease.vercel.app/downloads/maps/DarkCarnivalRemix.zip',
     },
     {
-        mapName: 'Dark Wood',
-        source: 'SirPlease',
-        downloadUrl: 'https://sirplease.vercel.app/downloads/maps/DarkWood.zip',
-    },
-    {
         mapName: 'Dead Before Dawn DC',
         source: 'Workshop',
         downloadUrl: 'https://steamcommunity.com/workshop/filedetails/?id=121786282',
