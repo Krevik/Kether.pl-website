@@ -93,8 +93,8 @@ export const RAW_INSTALLED_MAPS: MapEntry[] = [
     },
     {
         mapName: 'Carried Off',
-        source: 'SirPlease',
-        downloadUrl: 'https://sirplease.vercel.app/downloads/maps/CarriedOff.zip',
+        source: 'Workshop',
+        downloadUrl: 'https://steamcommunity.com/sharedfiles/filedetails/?id=2785705403',
     },
     {
         mapName: 'City 17',
