@@ -178,8 +178,8 @@ export const RAW_INSTALLED_MAPS: MapEntry[] = [
     },
     {
         mapName: 'Highway To Hell',
-        source: 'SirPlease',
-        downloadUrl: 'https://sirplease.vercel.app/downloads/maps/HighwayToHell.zip',
+        source: 'Workshop',
+        downloadUrl: 'https://steamcommunity.com/workshop/filedetails/?id=175577491',
     },
     {
         mapName: 'I Hate Mountains 2',
