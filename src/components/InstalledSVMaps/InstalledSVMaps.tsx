@@ -1,16 +1,24 @@
 import { useMemo, useState } from 'react';
+import { InputText } from 'primereact/inputtext';
 import './InstalledSVMaps.css';
 import { PageWithBackground } from '../PageLayout/PageBackground/PageWithBackground';
 import { BACKGROUNDS } from '../PageLayout/PageBackground/backgrounds';
 import { useMapsTranslations } from '../../hooks/useTranslations';
+import { useDebouncedValue } from '../../hooks/useDebouncedValue';
 import { useSelector } from 'react-redux';
 import { AppState } from '../../redux/store';
 import { RAW_INSTALLED_MAPS } from './mapsData';
 import { MAP_SOURCES } from './constants';
-import { processMapsWithTranslations, filterMapsBySource } from './utils';
+import {
+    processMapsWithTranslations,
+    filterMapsBySource,
+    filterMapsByNameQuery,
+} from './utils';
 import { MapsDataTable } from './MapsDataTable';
 import { InstallationHelpDialog } from './InstallationHelpDialog';
 import { WorkshopMapsGrid } from './WorkshopMapsGrid';
+
+const MAP_NAME_SEARCH_DEBOUNCE_MS = 280;
 
 export type { MapEntry } from './mapEntry';
 
@@ -23,6 +31,8 @@ export default function InstalledSVMaps() {
     );
     const [helpDialogVisible, setHelpDialogVisible] = useState(false);
     const [activeTab, setActiveTab] = useState<MapsTabId>('workshop');
+    const [mapSearch, setMapSearch] = useState('');
+    const debouncedMapSearch = useDebouncedValue(mapSearch, MAP_NAME_SEARCH_DEBOUNCE_MS);
 
     // Process maps: replace translation placeholders and filter by source
     const processedMaps = processMapsWithTranslations(
@@ -33,6 +43,38 @@ export default function InstalledSVMaps() {
     const workshopMaps = filterMapsBySource(processedMaps, MAP_SOURCES.WORKSHOP);
     const sirPleaseMaps = filterMapsBySource(processedMaps, MAP_SOURCES.SIR_PLEASE);
     const otherMaps = filterMapsBySource(processedMaps, MAP_SOURCES.OTHER);
+
+    const filteredWorkshopMaps = useMemo(
+        () => filterMapsByNameQuery(workshopMaps, debouncedMapSearch),
+        [workshopMaps, debouncedMapSearch]
+    );
+    const filteredSirPleaseMaps = useMemo(
+        () => filterMapsByNameQuery(sirPleaseMaps, debouncedMapSearch),
+        [sirPleaseMaps, debouncedMapSearch]
+    );
+    const filteredOtherMaps = useMemo(
+        () => filterMapsByNameQuery(otherMaps, debouncedMapSearch),
+        [otherMaps, debouncedMapSearch]
+    );
+
+    const workshopGridEmptyMessage = useMemo(() => {
+        if (workshopMaps.length === 0) {
+            return mapsTranslations.noMapsAvailable;
+        }
+        if (debouncedMapSearch.trim() && filteredWorkshopMaps.length === 0) {
+            return mapsTranslations.searchNoResults;
+        }
+        return mapsTranslations.noMapsAvailable;
+    }, [
+        workshopMaps.length,
+        debouncedMapSearch,
+        filteredWorkshopMaps.length,
+        mapsTranslations.noMapsAvailable,
+        mapsTranslations.searchNoResults,
+    ]);
+
+    const tableEmptyMessage =
+        debouncedMapSearch.trim().length > 0 ? mapsTranslations.searchNoResults : undefined;
 
     const tabIds = useMemo(() => {
         const ids: MapsTabId[] = ['workshop', 'sirplease'];
@@ -85,6 +127,23 @@ export default function InstalledSVMaps() {
                         )}
                     </div>
 
+                    <div className="maps-search-row">
+                        <label className="maps-search-label" htmlFor="maps-name-search">
+                            {mapsTranslations.searchLabel}
+                        </label>
+                        <InputText
+                            id="maps-name-search"
+                            type="search"
+                            value={mapSearch}
+                            onChange={(e) => setMapSearch(e.target.value)}
+                            placeholder={mapsTranslations.searchPlaceholder}
+                            className="maps-search-input app-focus-ring"
+                            autoComplete="off"
+                            spellCheck={false}
+                            aria-busy={mapSearch !== debouncedMapSearch}
+                        />
+                    </div>
+
                     <div className="maps-tab-panels">
                         {activeTab === 'workshop' && (
                             <div
@@ -92,7 +151,11 @@ export default function InstalledSVMaps() {
                                 role="tabpanel"
                                 aria-label={mapsTranslations.tabWorkshop}
                             >
-                                <WorkshopMapsGrid maps={workshopMaps} mapsTranslations={mapsTranslations} />
+                                <WorkshopMapsGrid
+                                    maps={filteredWorkshopMaps}
+                                    mapsTranslations={mapsTranslations}
+                                    zeroStateMessage={workshopGridEmptyMessage}
+                                />
                             </div>
                         )}
                         {activeTab === 'sirplease' && (
@@ -106,12 +169,13 @@ export default function InstalledSVMaps() {
                                         <p className="maps-empty">{mapsTranslations.noMapsAvailable}</p>
                                     ) : (
                                         <MapsDataTable
-                                            maps={sirPleaseMaps}
+                                            maps={filteredSirPleaseMaps}
                                             title={mapsTranslations.tabSirPlease}
                                             isAdmin={isAdmin}
                                             mapsTranslations={mapsTranslations}
                                             onHelpClick={handleOpenHelpDialog}
                                             hideTitle
+                                            emptyMessage={tableEmptyMessage}
                                         />
                                     )}
                                 </div>
@@ -125,11 +189,12 @@ export default function InstalledSVMaps() {
                             >
                                 <div className="tables-container maps-tab-panel-inner">
                                     <MapsDataTable
-                                        maps={otherMaps}
+                                        maps={filteredOtherMaps}
                                         title={mapsTranslations.tabOther}
                                         isAdmin={isAdmin}
                                         mapsTranslations={mapsTranslations}
                                         hideTitle
+                                        emptyMessage={tableEmptyMessage}
                                     />
                                 </div>
                             </div>

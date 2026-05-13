@@ -14,6 +14,8 @@ interface MapsDataTableProps {
     onHelpClick?: () => void;
     /** When tabs already name the section, omit the repeated heading above the table */
     hideTitle?: boolean;
+    /** Override PrimeReact empty state (e.g. active name filter with no hits) */
+    emptyMessage?: string;
 }
 
 /**
@@ -26,6 +28,7 @@ export const MapsDataTable: React.FC<MapsDataTableProps> = ({
     mapsTranslations,
     onHelpClick,
     hideTitle,
+    emptyMessage,
 }) => {
     if (maps.length === 0) {
         return null;
@@ -39,7 +42,7 @@ export const MapsDataTable: React.FC<MapsDataTableProps> = ({
                 className="app-data-table maps-data-table"
                 scrollable={true}
                 scrollHeight="flex"
-                emptyMessage={mapsTranslations.noMapsAvailable}
+                emptyMessage={emptyMessage ?? mapsTranslations.noMapsAvailable}
             >
                 {isAdmin && (
                     <Column

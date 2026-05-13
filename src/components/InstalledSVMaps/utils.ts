@@ -111,6 +111,15 @@ export const filterMapsBySource = (
 };
 
 /**
+ * Case-insensitive substring match on `mapName`. Empty / whitespace query returns `maps` unchanged.
+ */
+export const filterMapsByNameQuery = (maps: MapEntry[], query: string): MapEntry[] => {
+    const q = query.trim().toLowerCase();
+    if (!q) return maps;
+    return maps.filter((m) => m.mapName.toLowerCase().includes(q));
+};
+
+/**
  * First occurrence wins — cleaner grid when the same workshop URL appears twice in data.
  */
 export const dedupeMapsByDownloadUrl = (maps: MapEntry[]): MapEntry[] => {

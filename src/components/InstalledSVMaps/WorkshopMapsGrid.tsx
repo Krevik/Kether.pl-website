@@ -9,16 +9,18 @@ type MapsTranslations = ReturnType<typeof useMapsTranslations>;
 export type WorkshopMapsGridProps = {
     maps: MapEntry[];
     mapsTranslations: MapsTranslations;
+    /** Shown when `maps` is empty (e.g. no search hits vs. no data at all) */
+    zeroStateMessage?: string;
 };
 
-export function WorkshopMapsGrid({ maps, mapsTranslations }: WorkshopMapsGridProps) {
+export function WorkshopMapsGrid({ maps, mapsTranslations, zeroStateMessage }: WorkshopMapsGridProps) {
     const sorted = useMemo(() => {
         const unique = dedupeMapsByDownloadUrl(maps);
         return [...unique].sort((a, b) => a.mapName.localeCompare(b.mapName, undefined, { sensitivity: 'base' }));
     }, [maps]);
 
     if (sorted.length === 0) {
-        return <p className="maps-empty">{mapsTranslations.noMapsAvailable}</p>;
+        return <p className="maps-empty">{zeroStateMessage ?? mapsTranslations.noMapsAvailable}</p>;
     }
 
     return (

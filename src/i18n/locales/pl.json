@@ -122,7 +122,10 @@
         "tabOther": "Inne",
         "mapsSections": "Sekcje map",
         "workshopFileId": "ID pliku w Warsztacie Steam",
-        "openWorkshopPage": "Strona Warsztatu"
+        "openWorkshopPage": "Strona Warsztatu",
+        "searchLabel": "Szukaj map po nazwie",
+        "searchPlaceholder": "Wpisz fragment nazwy mapy…",
+        "searchNoResults": "Brak map pasujacych do wyszukiwania."
     },
     "donate": {
         "title": "Wesprzyj Nas",

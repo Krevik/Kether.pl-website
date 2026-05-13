@@ -291,5 +291,8 @@ export function useMapsTranslations() {
         mapsSections: t('maps.mapsSections'),
         workshopFileId: t('maps.workshopFileId'),
         openWorkshopPage: t('maps.openWorkshopPage'),
+        searchLabel: t('maps.searchLabel'),
+        searchPlaceholder: t('maps.searchPlaceholder'),
+        searchNoResults: t('maps.searchNoResults'),
     };
 }
