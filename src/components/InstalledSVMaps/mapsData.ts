@@ -123,8 +123,8 @@ export const RAW_INSTALLED_MAPS: MapEntry[] = [
     },
     {
         mapName: 'Dead Center Rebirth',
-        source: 'SirPlease',
-        downloadUrl: 'https://sirplease.vercel.app/downloads/maps/DeadCenterRebirth.zip',
+        source: 'Workshop',
+        downloadUrl: 'https://steamcommunity.com/sharedfiles/filedetails/?id=837757984',
     },
     {
         mapName: 'Dead Center Reconstructed',
@@ -157,9 +157,9 @@ export const RAW_INSTALLED_MAPS: MapEntry[] = [
         downloadUrl: "https://steamcommunity.com/sharedfiles/filedetails/?id=642879446"
     },
     {
-        mapName: 'Fatal Freight',
-        source: 'SirPlease',
-        downloadUrl: 'https://sirplease.vercel.app/downloads/maps/FatalFreight.zip',
+        mapName: 'Fatal Freight Remastered',
+        source: 'Workshop',
+        downloadUrl: 'https://steamcommunity.com/workshop/filedetails/?id=372031503',
     },
     {
         mapName: 'Hard Rain Downpour',
@@ -261,6 +261,11 @@ export const RAW_INSTALLED_MAPS: MapEntry[] = [
         source: 'SirPlease',
         downloadUrl: 'https://sirplease.vercel.app/downloads/maps/Yama.zip',
     },
+	{
+		mapName: 'Dead City II',
+		source: 'Workshop',
+		downloadUrl: 'https://steamcommunity.com/sharedfiles/filedetails/?id=2966816688'
+	}
 ];
 
 
