@@ -143,8 +143,8 @@ export const RAW_INSTALLED_MAPS: MapEntry[] = [
     },
     {
         mapName: 'Detour Ahead',
-        source: 'SirPlease',
-        downloadUrl: 'https://sirplease.vercel.app/downloads/maps/DetourAhead.zip',
+        source: 'Workshop',
+        downloadUrl: 'https://steamcommunity.com/sharedfiles/filedetails/?id=121275675',
     },
     {
         mapName: 'Diescraper Redux',
