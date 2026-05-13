@@ -20,6 +20,13 @@ footer span {
 
 .footer-copyright {
 	color: var(--color-text-primary);
+	cursor: default;
+	user-select: none;
+	transition: color var(--transition-fast);
+}
+
+.footer-copyright:hover {
+	color: var(--color-text-muted);
 }
 
 .app-footer span.contact {

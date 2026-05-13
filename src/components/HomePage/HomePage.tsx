@@ -7,7 +7,7 @@ import { BACKGROUNDS } from '../PageLayout/PageBackground/backgrounds';
 export default function HomePage() {
     return (
         <PageWithBackground imageUrl={BACKGROUNDS.BACKGROUND_1}>
-            <div className="home-page">
+            <div className="home-page motion-stagger">
                 <ServerInfoSection />
                 <CommandsSection />
             </div>

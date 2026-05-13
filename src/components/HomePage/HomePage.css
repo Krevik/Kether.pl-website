@@ -39,6 +39,18 @@
     box-shadow: var(--shadow-soft);
     backdrop-filter: blur(6px);
     text-align: left;
+    transition:
+        border-color var(--transition-normal),
+        box-shadow var(--transition-normal),
+        transform var(--transition-normal);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .server-info-card:hover {
+        border-color: rgba(255, 255, 255, 0.14);
+        box-shadow: var(--shadow-soft), 0 0 0 1px rgba(224, 18, 32, 0.12);
+        transform: translateY(-2px);
+    }
 }
 
 .home-page .section span.p-button-label.p-c {
@@ -105,6 +117,11 @@
 .commands-table .p-datatable-tbody > tr {
     background: rgba(12, 16, 24, 0.45);
     border: none;
+    transition: background-color var(--transition-fast);
+}
+
+.commands-table .p-datatable-tbody > tr:hover {
+    background: rgba(18, 24, 36, 0.72);
 }
 
 .commands-table .p-datatable-tbody > tr:nth-child(2n) {

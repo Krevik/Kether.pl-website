@@ -116,7 +116,13 @@
         "installationInstructions": "Installation Instructions",
         "installationDescription": "After downloading the map, extract the *.vpk file and copy it to the following directory:",
         "windowsPath": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Left 4 Dead 2\\left4dead2\\addons\\",
-        "linuxPath": "~/.steam/steam/steamapps/common/Left 4 Dead 2/left4dead2/addons/"
+        "linuxPath": "~/.steam/steam/steamapps/common/Left 4 Dead 2/left4dead2/addons/",
+        "tabWorkshop": "Steam Workshop",
+        "tabSirPlease": "SirPlease",
+        "tabOther": "Other",
+        "mapsSections": "Map sections",
+        "workshopFileId": "Steam Workshop file ID",
+        "openWorkshopPage": "Workshop page"
     },
     "donate": {
         "title": "Support Us",

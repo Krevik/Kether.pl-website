@@ -8,12 +8,13 @@ export type PageWithBackgroundProps = {
 export const PageWithBackground = (props: PageWithBackgroundProps) => {
     return (
         <div
-            className={styles.pageWithBackground}
+            className={`${styles.pageWithBackground} page-bg-shell`}
             style={{
                 backgroundImage: `url(${props.imageUrl})`,
             }}
         >
-            {props.children}
+            <div className="page-bg-overlay" aria-hidden />
+            <div className="page-bg-inner">{props.children}</div>
         </div>
     );
 };

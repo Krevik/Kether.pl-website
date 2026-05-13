@@ -67,7 +67,7 @@
 }
 
 .menuVisible {
-    max-height: 200px;
+    max-height: 280px;
     opacity: 1;
     transform: translateY(0);
     visibility: visible;
@@ -83,7 +83,7 @@
 
 .navigationButton {
     border: 1px solid transparent;
-    min-width: 10rem;
+    min-width: clamp(7.5rem, 14vw, 10rem);
     flex-wrap: wrap;
     font-family: 'Future Rot';
     overflow: inherit;
@@ -160,5 +160,12 @@
         gap: var(--standardGap);
         font-family: 'Future Rot';
         align-items: center;
+    }
+
+    .navigationButton {
+        min-width: clamp(6.5rem, 42vw, 10rem);
+        min-height: 46px;
+        padding: 10px 14px;
+        font-size: 0.88rem;
     }
 }

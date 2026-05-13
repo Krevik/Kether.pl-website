@@ -1,4 +1,4 @@
-import { MapEntry } from './InstalledSVMaps';
+import { MapEntry } from './mapEntry';
 import { TRANSLATION_PLACEHOLDER, STEAM_PROTOCOL_PREFIX } from './constants';
 
 /**
@@ -28,17 +28,75 @@ export const openUrlInNewWindow = (url: string): void => {
 };
 
 /**
+ * Steam UGC image CDN: target box for card hero (~2× logical width for retina, ~2:1 strip).
+ * Tweak here if you change `.workshop-map-card__visual` size in CSS.
+ */
+const STEAM_PREVIEW_IMW = '800';
+const STEAM_PREVIEW_IMH = '400';
+
+function isSteamWorkshopPreviewHost(hostname: string): boolean {
+    const h = hostname.toLowerCase();
+    return (
+        h === 'images.steamusercontent.com' ||
+        h.endsWith('.steamusercontent.com') ||
+        h.includes('steamuserimages')
+    );
+}
+
+/**
+ * Rewrites Steam workshop preview asset URLs: strips any pasted query/hash, then applies
+ * consistent CDN sizing (`imw` / `imh` / `ima` / …) for map cards. Non-Steam URLs are unchanged.
+ */
+export const normalizeWorkshopPreviewUrl = (raw: string): string => {
+    const trimmed = raw.trim();
+    if (!trimmed) return trimmed;
+
+    let url: URL;
+    try {
+        url = new URL(trimmed);
+    } catch {
+        return trimmed;
+    }
+
+    if (!isSteamWorkshopPreviewHost(url.hostname)) {
+        return trimmed;
+    }
+
+    /* Data files store bare asset URLs; sizing always owned by this helper. */
+    url.search = '';
+    url.hash = '';
+
+    url.searchParams.set('imw', STEAM_PREVIEW_IMW);
+    url.searchParams.set('imh', STEAM_PREVIEW_IMH);
+    url.searchParams.set('ima', 'fit');
+    url.searchParams.set('impolicy', 'Letterbox');
+    url.searchParams.set('imcolor', '#000000');
+    url.searchParams.set('letterbox', 'false');
+
+    return url.toString();
+};
+
+/**
  * Processes maps array by replacing translation placeholders
  */
 export const processMapsWithTranslations = (
     maps: MapEntry[],
     allMapsTranslation: string
 ): MapEntry[] => {
-    return maps.map(map => {
-        if (map.mapName === TRANSLATION_PLACEHOLDER) {
-            return { ...map, mapName: allMapsTranslation };
+    return maps.map((map) => {
+        const withName =
+            map.mapName === TRANSLATION_PLACEHOLDER
+                ? { ...map, mapName: allMapsTranslation }
+                : { ...map };
+
+        if (withName.previewUrl?.trim()) {
+            return {
+                ...withName,
+                previewUrl: normalizeWorkshopPreviewUrl(withName.previewUrl),
+            };
         }
-        return map;
+
+        return withName;
     });
 };
 
@@ -50,5 +108,20 @@ export const filterMapsBySource = (
     source: MapEntry['source']
 ): MapEntry[] => {
     return maps.filter(map => map.source === source);
+};
+
+/**
+ * First occurrence wins — cleaner grid when the same workshop URL appears twice in data.
+ */
+export const dedupeMapsByDownloadUrl = (maps: MapEntry[]): MapEntry[] => {
+    const seen = new Set<string>();
+    const out: MapEntry[] = [];
+    for (const m of maps) {
+        const key = m.downloadUrl?.trim() || m.mapName;
+        if (seen.has(key)) continue;
+        seen.add(key);
+        out.push(m);
+    }
+    return out;
 };
 

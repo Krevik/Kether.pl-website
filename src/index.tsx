@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import { appStore, persistedAppStore } from './redux/store';
 import './global.css';
 import './styles/theme.css';
+import './styles/motion.css';
 import { PersistGate } from 'redux-persist/integration/react';
 import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary';
 import errorLogger from './utils/errorLogger';

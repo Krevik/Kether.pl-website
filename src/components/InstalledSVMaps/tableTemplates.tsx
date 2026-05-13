@@ -1,6 +1,6 @@
 import { Button } from 'primereact/button';
 import ST_L from '/favicons/steam-logo-svgrepo.png';
-import { MapEntry } from './InstalledSVMaps';
+import { MapEntry } from './mapEntry';
 import { MAP_SOURCES, BUTTON_CONTAINER_STYLES } from './constants';
 import { extractSteamWorkshopId, openSteamWorkshopPage, openUrlInNewWindow } from './utils';
 import { useMapsTranslations } from '../../hooks/useTranslations';

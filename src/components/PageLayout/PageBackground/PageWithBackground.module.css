@@ -1,5 +1,16 @@
 .pageWithBackground {
+    position: relative;
     background-size: cover;
+    background-position: center;
     background-repeat: no-repeat;
+    background-attachment: scroll;
     flex-grow: 1;
+    min-height: 0;
+    isolation: isolate;
+}
+
+@media (min-width: 1024px) {
+    .pageWithBackground {
+        background-attachment: fixed;
+    }
 }

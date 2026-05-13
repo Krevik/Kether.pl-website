@@ -1,6 +1,6 @@
 import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
-import { MapEntry } from './InstalledSVMaps';
+import { MapEntry } from './mapEntry';
 import { mapNameBodyTemplate, mapActionsBodyTemplate } from './tableTemplates';
 import { useMapsTranslations } from '../../hooks/useTranslations';
 
@@ -12,6 +12,8 @@ interface MapsDataTableProps {
     isAdmin: boolean;
     mapsTranslations: MapsTranslations;
     onHelpClick?: () => void;
+    /** When tabs already name the section, omit the repeated heading above the table */
+    hideTitle?: boolean;
 }
 
 /**
@@ -23,6 +25,7 @@ export const MapsDataTable: React.FC<MapsDataTableProps> = ({
     isAdmin,
     mapsTranslations,
     onHelpClick,
+    hideTitle,
 }) => {
     if (maps.length === 0) {
         return null;
@@ -30,7 +33,7 @@ export const MapsDataTable: React.FC<MapsDataTableProps> = ({
 
     return (
         <div className="table-wrapper">
-            <div className="table-title">{title}</div>
+            {!hideTitle && <div className="table-title">{title}</div>}
             <DataTable
                 value={maps}
                 className="app-data-table maps-data-table"

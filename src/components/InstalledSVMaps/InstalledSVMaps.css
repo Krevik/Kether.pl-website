@@ -240,3 +240,301 @@
         margin-bottom: 0.65rem;
     }
 }
+
+/* —— Tabs (Workshop / SirPlease / Other) —— */
+.maps-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    margin: 0.75rem auto 0.5rem;
+    padding: 0 0.35rem;
+}
+
+.maps-tab {
+    appearance: none;
+    font-family: 'Future Rot', system-ui, sans-serif;
+    font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    padding: 0.55rem 1.15rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border-subtle);
+    background: rgba(9, 12, 19, 0.75);
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition:
+        color var(--transition-fast),
+        border-color var(--transition-fast),
+        background var(--transition-fast),
+        box-shadow var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+.maps-tab:hover {
+    color: var(--color-text-primary);
+    border-color: rgba(255, 255, 255, 0.14);
+}
+
+.maps-tab-active {
+    color: var(--color-text-primary);
+    border-color: var(--color-border-accent);
+    background: linear-gradient(
+        180deg,
+        rgba(224, 18, 32, 0.2) 0%,
+        rgba(12, 16, 24, 0.95) 100%
+    );
+    box-shadow: var(--shadow-accent);
+}
+
+.maps-tab:active {
+    transform: translateY(1px);
+}
+
+.maps-tab-panels {
+    width: 100%;
+    padding: 0.35rem 0 0.25rem;
+}
+
+.maps-tab-panel {
+    width: 100%;
+}
+
+.maps-tab-panel-inner {
+    padding-top: 0.35rem;
+}
+
+.maps-empty {
+    text-align: center;
+    font-family: 'Future Rot', system-ui, sans-serif;
+    font-size: clamp(1rem, 2.2vw, 1.35rem);
+    color: var(--color-text-muted);
+    margin: 1.5rem 0.5rem;
+    -webkit-text-stroke: 0.5px rgba(0, 0, 0, 0.85);
+}
+
+/* —— Workshop card grid —— */
+.workshop-maps-section {
+    width: 100%;
+    padding: 0.25rem 0.35rem 0.75rem;
+}
+
+.workshop-maps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
+    width: 100%;
+    padding: 0.35rem 0.25rem 0.75rem;
+}
+
+.workshop-map-card {
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--color-border-subtle);
+    background: var(--color-bg-elevated-strong);
+    box-shadow: var(--shadow-soft);
+    backdrop-filter: blur(8px);
+    transition:
+        border-color var(--transition-normal),
+        box-shadow var(--transition-normal),
+        transform var(--transition-normal);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .workshop-map-card {
+        animation: workshop-card-in 0.55s var(--ease-out-expo, cubic-bezier(0.22, 1, 0.36, 1)) both;
+    }
+
+    .workshop-map-card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(224, 18, 32, 0.35);
+        box-shadow: var(--shadow-soft), 0 12px 28px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(224, 18, 32, 0.15);
+    }
+}
+
+@keyframes workshop-card-in {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.workshop-map-card__visual {
+    position: relative;
+    height: 132px;
+    overflow: hidden;
+    background: linear-gradient(145deg, rgba(18, 22, 32, 0.95) 0%, rgba(7, 9, 13, 0.98) 100%);
+}
+
+.workshop-map-card__visual--with-preview .workshop-map-card__visual-shade {
+    background: linear-gradient(to top, rgba(7, 9, 13, 0.75) 0%, transparent 50%, rgba(7, 9, 13, 0.25) 100%);
+}
+
+.workshop-map-card__photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+}
+
+.workshop-map-card__visual-shade {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(to top, rgba(7, 9, 13, 0.92) 0%, rgba(7, 9, 13, 0.15) 55%, rgba(7, 9, 13, 0.35) 100%);
+    pointer-events: none;
+}
+
+.workshop-map-card__steam-mark {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    z-index: 2;
+    width: 48px;
+    height: 48px;
+    opacity: 0.35;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
+    pointer-events: none;
+}
+
+.workshop-map-card__id {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    z-index: 2;
+    font-family: ui-monospace, 'Cascadia Code', monospace;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: rgba(255, 255, 255, 0.88);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+    padding: 0.2rem 0.45rem;
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    pointer-events: none;
+}
+
+.workshop-map-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    padding: 0.75rem 0.85rem 0.95rem;
+    flex: 1;
+}
+
+.workshop-map-card__title {
+    margin: 0;
+    font-family: 'Future Rot', system-ui, sans-serif;
+    font-size: clamp(1rem, 2.2vw, 1.2rem);
+    font-weight: 600;
+    line-height: 1.25;
+    -webkit-text-stroke: 0.6px rgba(0, 0, 0, 0.9);
+}
+
+.workshop-map-card__title-link {
+    color: var(--color-text-primary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.workshop-map-card__title-link:hover {
+    color: var(--color-accent-hover);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.workshop-map-card__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-top: auto;
+}
+
+.workshop-map-card__btn {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 0.5rem 0.65rem;
+    border-radius: var(--radius-md);
+    font-family: 'Montserrat', 'Segoe UI', system-ui, sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid var(--color-border-subtle);
+    transition:
+        background var(--transition-fast),
+        border-color var(--transition-fast),
+        color var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+.workshop-map-card__btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.workshop-map-card__btn-secondary {
+    background: rgba(9, 12, 19, 0.9);
+    color: var(--color-text-primary);
+}
+
+.workshop-map-card__btn-secondary:hover:not(:disabled) {
+    border-color: var(--color-border-accent);
+    color: var(--color-accent-hover);
+}
+
+.workshop-map-card__btn-primary {
+    background: linear-gradient(180deg, rgba(224, 18, 32, 0.92) 0%, rgba(150, 10, 20, 0.95) 100%);
+    color: #fff;
+    border-color: rgba(255, 100, 110, 0.35);
+    box-shadow: 0 4px 14px rgba(170, 12, 22, 0.28);
+}
+
+.workshop-map-card__btn-primary:hover:not(:disabled) {
+    filter: brightness(1.06);
+    border-color: rgba(255, 180, 186, 0.45);
+}
+
+.workshop-map-card__btn-primary:active:not(:disabled) {
+    transform: translateY(1px);
+}
+
+.workshop-map-card__btn-icon {
+    flex-shrink: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .workshop-map-card {
+        animation: none !important;
+    }
+
+    .workshop-map-card:hover {
+        transform: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .workshop-maps-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .workshop-map-card__actions {
+        flex-direction: column;
+    }
+
+    .workshop-map-card__btn {
+        width: 100%;
+    }
+}

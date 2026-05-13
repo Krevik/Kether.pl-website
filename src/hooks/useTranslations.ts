@@ -285,5 +285,11 @@ export function useMapsTranslations() {
         installationDescription: t('maps.installationDescription'),
         windowsPath: t('maps.windowsPath'),
         linuxPath: t('maps.linuxPath'),
+        tabWorkshop: t('maps.tabWorkshop'),
+        tabSirPlease: t('maps.tabSirPlease'),
+        tabOther: t('maps.tabOther'),
+        mapsSections: t('maps.mapsSections'),
+        workshopFileId: t('maps.workshopFileId'),
+        openWorkshopPage: t('maps.openWorkshopPage'),
     };
 }
