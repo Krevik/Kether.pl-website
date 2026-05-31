@@ -129,9 +129,10 @@ export const RAW_INSTALLED_MAPS: MapEntry[] = [
         downloadUrl: 'https://sirplease.vercel.app/downloads/maps/CrashCourseRerouted.zip',
     },
     {
-        mapName: 'Dark Carnival Remix',
-        source: 'SirPlease',
-        downloadUrl: 'https://sirplease.vercel.app/downloads/maps/DarkCarnivalRemix.zip',
+        mapName: 'Dark Carnival Remix 2',
+        source: 'Workshop',
+        downloadUrl: 'https://steamcommunity.com/sharedfiles/filedetails/?id=1575673903',
+		previewUrl: 'https://images.steamusercontent.com/ugc/10628197531230386819/B2F40C0BEFFCD458FE4F49D24A5B97F25BBF29B5/',
     },
     {
         mapName: 'Dead Before Dawn DC',
