@@ -39,8 +39,6 @@
         "duration": "Czas gry",
         "bot": "bot",
         "bots": "boty",
-        "customMapsText": "Mozesz pobrac wszystkie niestandardowe mapy zainstalowane na serwerze",
-        "here": "TUTAJ",
         "noPlayersAvailable": "Brak dostepnych graczy"
     },
     "commands": {

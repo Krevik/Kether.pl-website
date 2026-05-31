@@ -192,8 +192,10 @@ export const RAW_INSTALLED_MAPS: MapEntry[] = [
     },
     {
         mapName: 'Haunted Forest',
-        source: 'SirPlease',
-        downloadUrl: 'https://sirplease.vercel.app/downloads/maps/HauntedForest.zip',
+        source: 'Workshop',
+        downloadUrl: 'https://steamcommunity.com/sharedfiles/filedetails/?id=3734390253',
+		previewUrl:
+            'https://images.steamusercontent.com/ugc/1662356454560932294/7E1CA5DDA88C3939A290350F31123B5D6D9A70B8/',
     },
     {
         mapName: 'Heaven Can Wait 2',

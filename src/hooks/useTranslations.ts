@@ -133,8 +133,6 @@ export function useServerInfoTranslations() {
         duration: t('serverInfo.duration'),
         bot: t('serverInfo.bot'),
         bots: t('serverInfo.bots'),
-        customMapsText: t('serverInfo.customMapsText'),
-        here: t('serverInfo.here'),
         noPlayersAvailable: t('serverInfo.noPlayersAvailable'),
     };
 }

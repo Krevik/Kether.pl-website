@@ -39,8 +39,6 @@
         "duration": "Duration",
         "bot": "bot",
         "bots": "bots",
-        "customMapsText": "You can download all the custom maps installed on the server",
-        "here": "HERE",
         "noPlayersAvailable": "No players available"
     },
     "commands": {

@@ -122,21 +122,6 @@ function ServerInfoSection() {
         <div className="section future-rot server-info-section">
             {renderServerCard(serverInfo, SERVER_CONFIG.IP, SERVER_CONFIG.STEAM_CONNECT_URL)}
             {renderServerCard(secondaryServerInfo, SECONDARY_SERVER_CONFIG.IP, SECONDARY_SERVER_CONFIG.STEAM_CONNECT_URL)}
-            <span className="centered-text">
-                {serverInfoTranslations.customMapsText}
-                <a
-                    style={{
-                        display: 'inline-block',
-                        marginLeft: '10px',
-                        textDecoration: 'none',
-                        color: 'white',
-                        WebkitTextStroke: ' 3px red',
-                    }}
-                    href="https://steamcommunity.com/sharedfiles/filedetails/?id=2542824628"
-                >
-                    {serverInfoTranslations.here}
-                </a>
-            </span>
         </div>
     );
 }
