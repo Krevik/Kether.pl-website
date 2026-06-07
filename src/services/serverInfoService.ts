@@ -5,7 +5,7 @@ import { serverInfoActions } from '../redux/slices/serverInfoSlice';
 import { ServerInfo } from '../models/serverInfoModels';
 import { useSelector } from 'react-redux';
 import { notificationManager } from '../utils/notificationManager';
-import { API_CONFIG, SECONDARY_SERVER_CONFIG } from '../utils/constants';
+import { API_CONFIG, isSecondaryServerEnabled, SECONDARY_SERVER_CONFIG } from '../utils/constants';
 import { ErrorType, getUserFriendlyMessage } from '../utils/errorUtils';
 import errorLogger from '../utils/errorLogger';
 import { retryAsync } from '../utils/retryUtils';
@@ -78,8 +78,11 @@ export const serverInfoService = {
         );
         const isLoading = useRef(false);
 
+        const secondaryEnabled = isSecondaryServerEnabled();
+
         useEffect(() => {
-            if (!serverInfo || !secondaryServerInfo) {
+            const needsSecondary = secondaryEnabled && !secondaryServerInfo;
+            if (!serverInfo || needsSecondary) {
                 if (!isLoading.current) {
                     refreshServerInfo(serverInfo, secondaryServerInfo, isLoading);
                 }
@@ -92,7 +95,7 @@ export const serverInfoService = {
             return () => {
                 clearInterval(refreshDataInterval);
             };
-        }, [serverInfo, secondaryServerInfo]);
+        }, [serverInfo, secondaryServerInfo, secondaryEnabled]);
     },
 };
 
@@ -194,14 +197,17 @@ const refreshServerInfo = async (
     isLoading: MutableRefObject<boolean>
 ) => {
     isLoading.current = true;
-    const [primaryResult, secondaryResult] = await Promise.all([
-        fetchServerInfoWithRetry(API_PATHS.SERVER_INFO),
-        fetchServerInfoWithRetry(API_PATHS.SERVER_INFO_SECONDARY),
-    ]);
 
     try {
+        const primaryResult = await fetchServerInfoWithRetry(API_PATHS.SERVER_INFO);
         processPrimaryResult(primaryResult, actualServerInfo);
-        processSecondaryResult(secondaryResult, actualSecondaryServerInfo);
+
+        if (isSecondaryServerEnabled()) {
+            const secondaryResult = await fetchServerInfoWithRetry(
+                API_PATHS.SERVER_INFO_SECONDARY
+            );
+            processSecondaryResult(secondaryResult, actualSecondaryServerInfo);
+        }
     } finally {
         isLoading.current = false;
     }

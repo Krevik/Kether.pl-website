@@ -12,13 +12,21 @@ export const API_CONFIG = {
 export const SERVER_CONFIG = {
     IP: '104.245.245.137:27015',
     STEAM_CONNECT_URL: 'steam://connect/104.245.245.137:27015',
+    FALLBACK_NAME: 'Kether.pl',
 } as const;
 
+/** When set (e.g. `54.36.179.182:27015`), the second server card is shown and queried. */
+export const SECONDARY_SERVER_IP = '';
+
 export const SECONDARY_SERVER_CONFIG = {
-    IP: '54.36.179.182:27015',
-    STEAM_CONNECT_URL: 'steam://connect/54.36.179.182:27015',
+    IP: SECONDARY_SERVER_IP,
+    STEAM_CONNECT_URL: `steam://connect/${SECONDARY_SERVER_IP}`,
     FALLBACK_NAME: 'Kether.pl #2',
 } as const;
+
+/** Second server UI + polling are active only when {@link SECONDARY_SERVER_IP} is non-empty. */
+export const isSecondaryServerEnabled = (): boolean =>
+    SECONDARY_SERVER_IP.trim().length > 0;
 
 // External URLs
 export const EXTERNAL_URLS = {

@@ -7,6 +7,7 @@ import { Column } from 'primereact/column';
 import { PlayerDetails, ServerInfo } from '../../../models/serverInfoModels';
 import { notificationManager } from '../../../utils/notificationManager';
 import {
+    isSecondaryServerEnabled,
     SECONDARY_SERVER_CONFIG,
     SERVER_CONFIG,
     SUCCESS_MESSAGES,
@@ -121,7 +122,12 @@ function ServerInfoSection() {
     return (
         <div className="section future-rot server-info-section">
             {renderServerCard(serverInfo, SERVER_CONFIG.IP, SERVER_CONFIG.STEAM_CONNECT_URL)}
-            {renderServerCard(secondaryServerInfo, SECONDARY_SERVER_CONFIG.IP, SECONDARY_SERVER_CONFIG.STEAM_CONNECT_URL)}
+            {isSecondaryServerEnabled() &&
+                renderServerCard(
+                    secondaryServerInfo,
+                    SECONDARY_SERVER_CONFIG.IP,
+                    SECONDARY_SERVER_CONFIG.STEAM_CONNECT_URL
+                )}
         </div>
     );
 }
