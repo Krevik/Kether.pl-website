@@ -95,6 +95,7 @@
 .commands-table.p-datatable {
     font-family: 'Future Rot';
     font-size: clamp(0.9rem, 1vw, 1.12rem);
+    line-height: 1.1;
     -webkit-text-stroke: 1px black;
     background: transparent;
     border: 1px solid var(--color-border-subtle);
@@ -111,7 +112,7 @@
     background: rgba(9, 12, 19, 0.85);
     border: none;
     color: var(--color-text-primary);
-    padding: 0.85rem 0.75rem;
+    padding: 0.55rem 0.75rem;
 }
 
 .commands-table .p-datatable-tbody > tr {
@@ -131,7 +132,7 @@
 .commands-table .p-datatable-tbody > tr > td {
     border: none;
     color: var(--color-text-primary);
-    padding: 0.7rem 0.75rem;
+    padding: 0.45rem 0.75rem;
 }
 
 .command-action-button {
