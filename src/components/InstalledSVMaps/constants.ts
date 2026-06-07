@@ -5,6 +5,7 @@
 export const MAP_SOURCES = {
     WORKSHOP: 'Workshop',
     SIR_PLEASE: 'SirPlease',
+    L4D2CENTER: 'L4D2Center',
     OTHER: 'Other',
 } as const;
 

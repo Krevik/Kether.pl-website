@@ -90,7 +90,7 @@ const renderDownloadButton = (
                 className="p-button-info"
                 onClick={handleDownload}
             />
-            {rowData.source === MAP_SOURCES.SIR_PLEASE && (
+            {(rowData.source === MAP_SOURCES.SIR_PLEASE || rowData.source === MAP_SOURCES.L4D2CENTER || rowData.source === MAP_SOURCES.OTHER) && (
                 <Button
                     label="?"
                     className="p-button p-button-help"

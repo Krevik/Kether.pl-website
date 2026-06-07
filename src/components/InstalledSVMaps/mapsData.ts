@@ -141,6 +141,11 @@ export const RAW_INSTALLED_MAPS: MapEntry[] = [
         downloadUrl: 'https://steamcommunity.com/workshop/filedetails/?id=121786282',
     },
     {
+        mapName: 'Dead Center 2025',
+        source: 'L4D2Center',
+        downloadUrl: 'https://l4d2center.com/maps/servers/dead_center_2025.7z',
+    },
+    {
         mapName: 'Dead Center Rebirth',
         source: 'Workshop',
         previewUrl: 'https://images.steamusercontent.com/ugc/103980122124804122/F3DDC421A1BC74862608DFB41DA80F4D40086D56/',
@@ -194,8 +199,8 @@ export const RAW_INSTALLED_MAPS: MapEntry[] = [
     {
         mapName: 'Haunted Forest',
         source: 'Workshop',
-        downloadUrl: 'https://steamcommunity.com/sharedfiles/filedetails/?id=3734390253',
-		previewUrl:
+        downloadUrl: 'https://steamcommunity.com/sharedfiles/filedetails/?id=2325347179',
+        previewUrl:
             'https://images.steamusercontent.com/ugc/1662356454560932294/7E1CA5DDA88C3939A290350F31123B5D6D9A70B8/',
     },
     {
@@ -269,6 +274,12 @@ export const RAW_INSTALLED_MAPS: MapEntry[] = [
         mapName: 'Undead Zone',
         source: 'SirPlease',
         downloadUrl: 'https://sirplease.vercel.app/downloads/maps/UndeadZone.zip',
+    },
+    {
+        mapName: 'View of Hell',
+        source: 'Workshop',
+        downloadUrl: 'https://steamcommunity.com/sharedfiles/filedetails/?id=3734390253',
+        previewUrl: 'https://images.steamusercontent.com/ugc/11798151091566424692/06E2E48AA7CA12317ACFE60629CF5A7509E097E7/?imw=268&imh=268&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=true',
     },
     {
         mapName: 'Warcelona',

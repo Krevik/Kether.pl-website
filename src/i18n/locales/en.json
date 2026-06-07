@@ -117,6 +117,7 @@
         "linuxPath": "~/.steam/steam/steamapps/common/Left 4 Dead 2/left4dead2/addons/",
         "tabWorkshop": "Steam Workshop",
         "tabSirPlease": "SirPlease",
+        "tabL4D2Center": "L4D2Center",
         "tabOther": "Other",
         "mapsSections": "Map sections",
         "workshopFileId": "Steam Workshop file ID",

@@ -134,6 +134,7 @@
     border: none;
     appearance: none;
     word-wrap: break-word;
+    font-size: 1rem;
 }
 /* ID column */
 .installed-sv-maps .p-datatable .p-datatable-thead > tr > th:first-of-type {

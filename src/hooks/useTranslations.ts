@@ -285,6 +285,7 @@ export function useMapsTranslations() {
         linuxPath: t('maps.linuxPath'),
         tabWorkshop: t('maps.tabWorkshop'),
         tabSirPlease: t('maps.tabSirPlease'),
+        tabL4D2Center: t('maps.tabL4D2Center'),
         tabOther: t('maps.tabOther'),
         mapsSections: t('maps.mapsSections'),
         workshopFileId: t('maps.workshopFileId'),

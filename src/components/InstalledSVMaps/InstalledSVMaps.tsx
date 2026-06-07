@@ -22,7 +22,7 @@ const MAP_NAME_SEARCH_DEBOUNCE_MS = 280;
 
 export type { MapEntry } from './mapEntry';
 
-type MapsTabId = 'workshop' | 'sirplease' | 'other';
+type MapsTabId = 'workshop' | 'sirplease' | 'l4d2center' | 'other';
 
 export default function InstalledSVMaps() {
     const mapsTranslations = useMapsTranslations();
@@ -42,6 +42,7 @@ export default function InstalledSVMaps() {
     
     const workshopMaps = filterMapsBySource(processedMaps, MAP_SOURCES.WORKSHOP);
     const sirPleaseMaps = filterMapsBySource(processedMaps, MAP_SOURCES.SIR_PLEASE);
+    const l4d2CenterMaps = filterMapsBySource(processedMaps, MAP_SOURCES.L4D2CENTER);
     const otherMaps = filterMapsBySource(processedMaps, MAP_SOURCES.OTHER);
 
     const filteredWorkshopMaps = useMemo(
@@ -51,6 +52,10 @@ export default function InstalledSVMaps() {
     const filteredSirPleaseMaps = useMemo(
         () => filterMapsByNameQuery(sirPleaseMaps, debouncedMapSearch),
         [sirPleaseMaps, debouncedMapSearch]
+    );
+    const filteredL4D2CenterMaps = useMemo(
+        () => filterMapsByNameQuery(l4d2CenterMaps, debouncedMapSearch),
+        [l4d2CenterMaps, debouncedMapSearch]
     );
     const filteredOtherMaps = useMemo(
         () => filterMapsByNameQuery(otherMaps, debouncedMapSearch),
@@ -77,7 +82,7 @@ export default function InstalledSVMaps() {
         debouncedMapSearch.trim().length > 0 ? mapsTranslations.searchNoResults : undefined;
 
     const tabIds = useMemo(() => {
-        const ids: MapsTabId[] = ['workshop', 'sirplease'];
+        const ids: MapsTabId[] = ['workshop', 'sirplease', 'l4d2center'];
         if (otherMaps.length > 0) ids.push('other');
         return ids;
     }, [otherMaps.length]);
@@ -112,6 +117,17 @@ export default function InstalledSVMaps() {
                                 onClick={() => setActiveTab('sirplease')}
                             >
                                 {mapsTranslations.tabSirPlease}
+                            </button>
+                        )}
+                        {tabIds.includes('l4d2center') && (
+                            <button
+                                type="button"
+                                role="tab"
+                                aria-selected={activeTab === 'l4d2center'}
+                                className={`maps-tab app-focus-ring ${activeTab === 'l4d2center' ? 'maps-tab-active' : ''}`}
+                                onClick={() => setActiveTab('l4d2center')}
+                            >
+                                {mapsTranslations.tabL4D2Center}
                             </button>
                         )}
                         {tabIds.includes('other') && (
@@ -181,6 +197,25 @@ export default function InstalledSVMaps() {
                                 </div>
                             </div>
                         )}
+                        {activeTab === 'l4d2center' && (
+                            <div
+                                className="maps-tab-panel"
+                                role="tabpanel"
+                                aria-label={mapsTranslations.tabL4D2Center}
+                            >
+                                <div className="tables-container maps-tab-panel-inner">
+                                    <MapsDataTable
+                                        maps={filteredL4D2CenterMaps}
+                                        title={mapsTranslations.tabL4D2Center}
+                                        isAdmin={isAdmin}
+                                        mapsTranslations={mapsTranslations}
+                                        onHelpClick={handleOpenHelpDialog}
+                                        hideTitle
+                                        emptyMessage={tableEmptyMessage}
+                                    />
+                                </div>
+                            </div>
+                        )}
                         {activeTab === 'other' && otherMaps.length > 0 && (
                             <div
                                 className="maps-tab-panel"
@@ -193,6 +228,7 @@ export default function InstalledSVMaps() {
                                         title={mapsTranslations.tabOther}
                                         isAdmin={isAdmin}
                                         mapsTranslations={mapsTranslations}
+                                        onHelpClick={handleOpenHelpDialog}
                                         hideTitle
                                         emptyMessage={tableEmptyMessage}
                                     />
