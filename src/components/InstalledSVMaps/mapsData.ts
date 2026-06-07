@@ -1,5 +1,5 @@
 import { MapEntry } from './mapEntry';
-import { TRANSLATION_PLACEHOLDER } from './constants';
+import { TRANSLATION_PLACEHOLDER, SIR_PLEASE_ALL_MAPS_URL } from './constants';
 
 /**
  * Raw maps data - will be processed in the component
@@ -93,7 +93,7 @@ export const RAW_INSTALLED_MAPS: MapEntry[] = [
     {
         mapName: TRANSLATION_PLACEHOLDER,
         source: 'SirPlease',
-        downloadUrl: 'https://sirplease.vercel.app/downloads/maps/allmaps.zip',
+        downloadUrl: SIR_PLEASE_ALL_MAPS_URL,
     },
     {
         mapName: 'Back To School',

@@ -11,6 +11,9 @@ export const MAP_SOURCES = {
 
 export const TRANSLATION_PLACEHOLDER = '__ALL_MAPS_TRANSLATION__';
 
+export const SIR_PLEASE_ALL_MAPS_URL =
+    'https://sirplease.vercel.app/downloads/maps/allmaps.zip';
+
 export const STEAM_PROTOCOL_PREFIX = 'steam://url/CommunityFilePage/';
 
 export const DIALOG_STYLES = {

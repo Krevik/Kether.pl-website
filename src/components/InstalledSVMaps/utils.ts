@@ -120,6 +120,25 @@ export const filterMapsByNameQuery = (maps: MapEntry[], query: string): MapEntry
 };
 
 /**
+ * Alphabetical sort with an optional bundle pinned to the top (e.g. SirPlease all-maps pack).
+ */
+export const sortDownloadMaps = (
+    maps: MapEntry[],
+    pinFirstDownloadUrl?: string
+): MapEntry[] => {
+    const pin = pinFirstDownloadUrl?.trim();
+    return [...maps].sort((a, b) => {
+        if (pin) {
+            const aPinned = a.downloadUrl?.trim() === pin;
+            const bPinned = b.downloadUrl?.trim() === pin;
+            if (aPinned && !bPinned) return -1;
+            if (!aPinned && bPinned) return 1;
+        }
+        return a.mapName.localeCompare(b.mapName, undefined, { sensitivity: 'base' });
+    });
+};
+
+/**
  * First occurrence wins — cleaner grid when the same workshop URL appears twice in data.
  */
 export const dedupeMapsByDownloadUrl = (maps: MapEntry[]): MapEntry[] => {

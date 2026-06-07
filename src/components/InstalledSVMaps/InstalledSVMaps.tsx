@@ -8,15 +8,15 @@ import { useDebouncedValue } from '../../hooks/useDebouncedValue';
 import { useSelector } from 'react-redux';
 import { AppState } from '../../redux/store';
 import { RAW_INSTALLED_MAPS } from './mapsData';
-import { MAP_SOURCES } from './constants';
+import { MAP_SOURCES, SIR_PLEASE_ALL_MAPS_URL } from './constants';
 import {
     processMapsWithTranslations,
     filterMapsBySource,
     filterMapsByNameQuery,
 } from './utils';
-import { MapsDataTable } from './MapsDataTable';
 import { InstallationHelpDialog } from './InstallationHelpDialog';
 import { WorkshopMapsGrid } from './WorkshopMapsGrid';
+import { DownloadMapsList } from './DownloadMapsList';
 
 const MAP_NAME_SEARCH_DEBOUNCE_MS = 280;
 
@@ -180,21 +180,18 @@ export default function InstalledSVMaps() {
                                 role="tabpanel"
                                 aria-label={mapsTranslations.tabSirPlease}
                             >
-                                <div className="tables-container maps-tab-panel-inner">
-                                    {sirPleaseMaps.length === 0 ? (
-                                        <p className="maps-empty">{mapsTranslations.noMapsAvailable}</p>
-                                    ) : (
-                                        <MapsDataTable
-                                            maps={filteredSirPleaseMaps}
-                                            title={mapsTranslations.tabSirPlease}
-                                            isAdmin={isAdmin}
-                                            mapsTranslations={mapsTranslations}
-                                            onHelpClick={handleOpenHelpDialog}
-                                            hideTitle
-                                            emptyMessage={tableEmptyMessage}
-                                        />
-                                    )}
-                                </div>
+                                <DownloadMapsList
+                                    maps={filteredSirPleaseMaps}
+                                    isAdmin={isAdmin}
+                                    mapsTranslations={mapsTranslations}
+                                    onHelpClick={handleOpenHelpDialog}
+                                    pinFirstDownloadUrl={SIR_PLEASE_ALL_MAPS_URL}
+                                    emptyMessage={
+                                        sirPleaseMaps.length === 0
+                                            ? mapsTranslations.noMapsAvailable
+                                            : tableEmptyMessage
+                                    }
+                                />
                             </div>
                         )}
                         {activeTab === 'l4d2center' && (
@@ -203,17 +200,17 @@ export default function InstalledSVMaps() {
                                 role="tabpanel"
                                 aria-label={mapsTranslations.tabL4D2Center}
                             >
-                                <div className="tables-container maps-tab-panel-inner">
-                                    <MapsDataTable
-                                        maps={filteredL4D2CenterMaps}
-                                        title={mapsTranslations.tabL4D2Center}
-                                        isAdmin={isAdmin}
-                                        mapsTranslations={mapsTranslations}
-                                        onHelpClick={handleOpenHelpDialog}
-                                        hideTitle
-                                        emptyMessage={tableEmptyMessage}
-                                    />
-                                </div>
+                                <DownloadMapsList
+                                    maps={filteredL4D2CenterMaps}
+                                    isAdmin={isAdmin}
+                                    mapsTranslations={mapsTranslations}
+                                    onHelpClick={handleOpenHelpDialog}
+                                    emptyMessage={
+                                        l4d2CenterMaps.length === 0
+                                            ? mapsTranslations.noMapsAvailable
+                                            : tableEmptyMessage
+                                    }
+                                />
                             </div>
                         )}
                         {activeTab === 'other' && otherMaps.length > 0 && (
@@ -222,17 +219,13 @@ export default function InstalledSVMaps() {
                                 role="tabpanel"
                                 aria-label={mapsTranslations.tabOther}
                             >
-                                <div className="tables-container maps-tab-panel-inner">
-                                    <MapsDataTable
-                                        maps={filteredOtherMaps}
-                                        title={mapsTranslations.tabOther}
-                                        isAdmin={isAdmin}
-                                        mapsTranslations={mapsTranslations}
-                                        onHelpClick={handleOpenHelpDialog}
-                                        hideTitle
-                                        emptyMessage={tableEmptyMessage}
-                                    />
-                                </div>
+                                <DownloadMapsList
+                                    maps={filteredOtherMaps}
+                                    isAdmin={isAdmin}
+                                    mapsTranslations={mapsTranslations}
+                                    onHelpClick={handleOpenHelpDialog}
+                                    emptyMessage={tableEmptyMessage}
+                                />
                             </div>
                         )}
                     </div>
