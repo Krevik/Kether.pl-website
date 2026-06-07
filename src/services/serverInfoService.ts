@@ -68,11 +68,6 @@ const fetchServerInfoWithRetry = (url: string) =>
         }
     );
 
-const getSecondaryServerInfoUrl = (): string => {
-    const [host, port] = SECONDARY_SERVER_CONFIG.IP.split(':');
-    return `${API_PATHS.SERVER_INFO_ANY}/${host}/${port}`;
-};
-
 export const serverInfoService = {
     useServerInfoLoadingService: () => {
         const serverInfo = useSelector(
@@ -199,10 +194,9 @@ const refreshServerInfo = async (
     isLoading: MutableRefObject<boolean>
 ) => {
     isLoading.current = true;
-    const secondaryUrl = getSecondaryServerInfoUrl();
     const [primaryResult, secondaryResult] = await Promise.all([
         fetchServerInfoWithRetry(API_PATHS.SERVER_INFO),
-        fetchServerInfoWithRetry(secondaryUrl),
+        fetchServerInfoWithRetry(API_PATHS.SERVER_INFO_SECONDARY),
     ]);
 
     try {

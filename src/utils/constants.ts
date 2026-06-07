@@ -10,13 +10,13 @@ export const API_CONFIG = {
 
 // Server Configuration
 export const SERVER_CONFIG = {
-    IP: '54.36.179.182:27015',
-    STEAM_CONNECT_URL: 'steam://connect/54.36.179.182:27015',
+    IP: '104.245.245.137:27015',
+    STEAM_CONNECT_URL: 'steam://connect/104.245.245.137:27015',
 } as const;
 
 export const SECONDARY_SERVER_CONFIG = {
-    IP: '104.245.245.137:27015',
-    STEAM_CONNECT_URL: 'steam://connect/104.245.245.137:27015',
+    IP: '54.36.179.182:27015',
+    STEAM_CONNECT_URL: 'steam://connect/54.36.179.182:27015',
     FALLBACK_NAME: 'Kether.pl #2',
 } as const;
 
