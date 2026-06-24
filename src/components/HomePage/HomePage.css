@@ -22,7 +22,7 @@
 }
 
 .home-page .section span {
-    -webkit-text-stroke: 1px black;
+    -webkit-text-stroke: 0.5px black;
     font-size: clamp(1.1rem, 1.4vw, 2rem);
     font-weight: 600;
 }
@@ -93,10 +93,10 @@
 }
 
 .commands-table.p-datatable {
-    font-family: 'Future Rot';
+    font-family: 'Future Rot', 'Impact';
     font-size: clamp(0.9rem, 1vw, 1.12rem);
     line-height: 1.1;
-    -webkit-text-stroke: 1px black;
+    -webkit-text-stroke: 0.5px black;
     background: transparent;
     border: 1px solid var(--color-border-subtle);
     border-radius: var(--radius-md);

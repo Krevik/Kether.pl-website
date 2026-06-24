@@ -20,7 +20,7 @@
 }
 
 .github-repo a {
-	font-family: "Future Rot";
+	font-family: "Future Rot", "Impact";
 	font-size: clamp(1.8rem, 4.2vw, 3rem);
 	text-decoration: none;
 	color: #f4d59a;
