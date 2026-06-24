@@ -1,5 +1,4 @@
 import { InputText } from 'primereact/inputtext';
-import { bindUtils } from '../../../utils/bindUtils';
 import { useBindsTranslations } from '../../../hooks/useTranslations';
 
 type DialogBindContentProps = {
@@ -17,13 +16,13 @@ export default function DialogBindContent(props: DialogBindContentProps) {
             <h5>{bindsTranslations.author}</h5>
             <InputText
                 className="app-focus-ring"
-                value={bindUtils.replaceNonEnglishLatinChars(props.bindAuthor)}
+                value={props.bindAuthor}
                 onChange={(event) => props.setBindAuthor(event.target.value)}
             />
             <h5>{bindsTranslations.text}</h5>
             <InputText
                 className="app-focus-ring"
-                value={bindUtils.replaceNonEnglishLatinChars(props.bindText)}
+                value={props.bindText}
                 onChange={(event) => props.setBindText(event.target.value)}
             />
         </>
