@@ -309,6 +309,12 @@ export const RAW_INSTALLED_MAPS: MapEntry[] = [
         previewUrl: 'https://images.steamusercontent.com/ugc/2058750454234021063/B84FF9D309BF0B0E4BA8F1D2FC01877E1B150F1F/',
         downloadUrl: 'https://steamcommunity.com/sharedfiles/filedetails/?id=2966816688',
     },
+	{
+        mapName: 'Amid The Ruins',
+        source: 'Workshop',
+        previewUrl: 'https://images.steamusercontent.com/ugc/11336356798371388370/FF2BB50A3F9E4A78D07D0D540B1BBDE665EB5BA4/',
+        downloadUrl: 'https://steamcommunity.com/sharedfiles/filedetails/?id=3726403340',
+    },
 ];
 
 
