@@ -97,7 +97,7 @@ export const RAW_INSTALLED_MAPS: MapEntry[] = [
     },
     {
         mapName: 'Back To School',
-        source: 'SirPlease',
+        source: 'Workshop',
         downloadUrl: 'https://sirplease.vercel.app/downloads/maps/BackToSchool.zip',
     },
     {
@@ -205,8 +205,9 @@ export const RAW_INSTALLED_MAPS: MapEntry[] = [
     },
     {
         mapName: 'Heaven Can Wait 2',
-        source: 'SirPlease',
-        downloadUrl: 'https://sirplease.vercel.app/downloads/maps/HeavenCanWait2.zip',
+        source: 'Workshop',
+        downloadUrl: 'https://steamcommunity.com/sharedfiles/filedetails/?id=629476830',
+		previewUrl: 'https://images.steamusercontent.com/ugc/1780633709260683544/971DA4C53B58A45EE3346C429CC2EDE5E1875E3C/'
     },
     {
         mapName: 'Highway To Hell',
@@ -289,8 +290,9 @@ export const RAW_INSTALLED_MAPS: MapEntry[] = [
     },
     {
         mapName: "We Don't Go To Ravenholm",
-        source: 'SirPlease',
-        downloadUrl: 'https://sirplease.vercel.app/downloads/maps/WeDontGoToRavenholm.zip',
+        source: 'Workshop',
+        downloadUrl: 'https://steamcommunity.com/sharedfiles/filedetails/?id=143565981',
+		previewUrl: 'https://images.steamusercontent.com/ugc/867220393878194868/4D0FA677A88A44A2E856A2F46A656E185225D41F/',
     },
     {
         mapName: 'Welcome To Hell',
