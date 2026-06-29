@@ -79,12 +79,6 @@ export const RAW_INSTALLED_MAPS: MapEntry[] = [
         downloadUrl: 'https://steamcommunity.com/sharedfiles/filedetails/?id=210014615',
     },
     {
-        mapName: "We Don't Go To Ravenholm (Workshop)",
-        source: 'Workshop',
-        previewUrl: 'https://images.steamusercontent.com/ugc/867220393878194868/4D0FA677A88A44A2E856A2F46A656E185225D41F/',
-        downloadUrl: 'https://steamcommunity.com/sharedfiles/filedetails/?id=143565981',
-    },
-    {
         mapName: 'Welcome to Hell (Workshop)',
         source: 'Workshop',
         previewUrl: 'https://images.steamusercontent.com/ugc/27354607716793129/2D587AA19CF243639A6944DBE8EF4F28F21BD04B/',
@@ -159,8 +153,9 @@ export const RAW_INSTALLED_MAPS: MapEntry[] = [
     },
     {
         mapName: 'Death Aboard 2',
-        source: 'SirPlease',
-        downloadUrl: 'https://sirplease.vercel.app/downloads/maps/DeathAboard2.zip',
+        source: 'Workshop',
+        downloadUrl: 'https://steamcommunity.com/sharedfiles/filedetails/?id=2823958036',
+		previewUrl: 'https://images.steamusercontent.com/ugc/1869571388982392025/9DB3C900E53BD2819F1695991AF4804A5F8681C2/',
     },
     {
         mapName: 'Death Sentence Redux',
@@ -194,8 +189,9 @@ export const RAW_INSTALLED_MAPS: MapEntry[] = [
     },
     {
         mapName: 'Hard Rain Downpour',
-        source: 'SirPlease',
-        downloadUrl: 'https://sirplease.vercel.app/downloads/maps/HardRainDownpour.zip',
+        source: 'Workshop',
+        downloadUrl: 'https://steamcommunity.com/sharedfiles/filedetails/?id=306243689',
+		previewUrl: 'https://images.steamusercontent.com/ugc/43103517885043083/3F8BE7501CB0A3365DDD99635613CCAE4CB34F34/'
     },
     {
         mapName: 'Haunted Forest',
