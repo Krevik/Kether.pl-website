@@ -142,8 +142,9 @@ export const RAW_INSTALLED_MAPS: MapEntry[] = [
     },
     {
         mapName: 'Dead Center 2025',
-        source: 'L4D2Center',
-        downloadUrl: 'https://l4d2center.com/maps/servers/dead_center_2025.7z',
+        source: 'Workshop',
+        downloadUrl: 'https://steamcommunity.com/sharedfiles/filedetails/?id=3712335840',
+		previewUrl: 'https://images.steamusercontent.com/ugc/16716120752252143707/2EC7F0F23A8FFAD8573FAF7A3BA41F3FD57D3A06/',
     },
     {
         mapName: 'Dead Center Rebirth',
