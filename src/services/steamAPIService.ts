@@ -8,54 +8,22 @@ import { useSelector } from 'react-redux';
 import { apiPaths } from '../utils/apiPaths';
 import { API_DOMAIN } from '../utils/envUtils';
 import { notificationManager } from '../utils/notificationManager';
-import { adminService } from './adminService';
+import { authService } from './authService';
 
 export const steamAPIService = {
-    useAdminDetectionService: () => {
-        const userData = useSelector(
-            (state: AppState) => state.userDataReducer.userData
-        );
+    useSessionHydration: () => {
         useEffect(() => {
-            const verifyAdmin = async () => {
-                if (!userData?.steamid) {
-                    appStore.dispatch(userDataActions.setIsAdmin(false));
-                    return;
+            const hydrateSession = async () => {
+                const session = await authService.getSession();
+                if (session) {
+                    appStore.dispatch(userDataActions.setUserID(session.steamid));
+                    appStore.dispatch(userDataActions.setIsAdmin(session.is_admin));
+                } else {
+                    appStore.dispatch(userDataActions.setUserID(undefined));
                 }
-
-                // Verify admin status with backend
-                const isAdmin = await adminService.verifyAdminStatus(userData.steamid);
-                appStore.dispatch(userDataActions.setIsAdmin(isAdmin));
             };
 
-            verifyAdmin();
-        }, [userData]);
-    },
-    useSteamAuthService: () => {
-        useEffect(() => {
-                if (window.location.href.includes('openid')) {
-                    const search = window.location.search.substring(1);
-
-                    const urlObj = JSON.parse(
-                        '{"' +
-                            decodeURI(search)
-                                .replace(/"/g, '\\"')
-                                .replace(/&/g, '","')
-                                .replace(/=/g, '":"') +
-                            '"}'
-                    );
-                    const getUserId = (response: Record<string, string>) => {
-                        const str = response['openid.claimed_id'];
-                        const res = decodeURIComponent(str);
-                        const propsArr = res.split('/');
-
-                        return propsArr[propsArr.length - 1];
-                    };
-
-                    const userId = getUserId(urlObj);
-                    userId &&
-                        appStore?.dispatch(userDataActions.setUserID(userId));
-                    window.location.href = '/';
-                }
+            hydrateSession();
         }, []);
     },
     useUserDataFetcher: () => {
@@ -82,10 +50,10 @@ export const steamAPIService = {
                     `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.STEAM_PATH}/games`,
                     {
                         method: 'post',
-                        body: userID, // Changed here: send only the userID
+                        body: userID,
                         headers: {
-                            'Content-Type': 'application/json' // Added header to indicate plain text
-                        }
+                            'Content-Type': 'application/json',
+                        },
                     }
                 )
                     .then((response) => {
@@ -116,10 +84,10 @@ export const steamAPIService = {
                 `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.STEAM_PATH}/userData`,
                 {
                     method: 'post',
-                    body: userID, // Changed here: send only the userID
+                    body: userID,
                     headers: {
-                        'Content-Type': 'application/json' // Added header to indicate plain text
-                    }
+                        'Content-Type': 'application/json',
+                    },
                 }
             );
             if (!response.ok) {

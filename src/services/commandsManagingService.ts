@@ -4,6 +4,7 @@ import { appStore } from '../redux/store';
 import { commandsActions } from '../redux/slices/commandsSlice';
 import { API_PATHS } from '../utils/apiPaths';
 import { notificationManager } from '../utils/notificationManager';
+import { handleAuthError } from '../utils/authUtils';
 
 export const commandsManagingService = {
     useCommandsLoadingService: () => {
@@ -31,6 +32,7 @@ export const commandsManagingService = {
     addNewCommand: (command: CommandEntry) => {
         return fetch(`${API_PATHS.COMMANDS}/addCommand`, {
             method: 'post',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -40,6 +42,9 @@ export const commandsManagingService = {
             }),
         })
             .then((response) => {
+                if (handleAuthError(response)) {
+                    throw new Error('Authentication required');
+                }
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
@@ -59,6 +64,7 @@ export const commandsManagingService = {
     deleteCommand: (command: CommandEntry) => {
         return fetch(`${API_PATHS.COMMANDS}/deleteCommand`, {
             method: 'post',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -67,6 +73,9 @@ export const commandsManagingService = {
             }),
         })
             .then((response) => {
+                if (handleAuthError(response)) {
+                    throw new Error('Authentication required');
+                }
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
@@ -86,6 +95,7 @@ export const commandsManagingService = {
     updateCommand: (newCommandData: CommandEntry) => {
         return fetch(`${API_PATHS.COMMANDS}/updateCommand`, {
             method: 'post',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -96,6 +106,9 @@ export const commandsManagingService = {
             }),
         })
             .then((response) => {
+                if (handleAuthError(response)) {
+                    throw new Error('Authentication required');
+                }
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }

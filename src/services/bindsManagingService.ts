@@ -10,6 +10,7 @@ import { apiPaths } from '../utils/apiPaths';
 import { useSelector } from 'react-redux';
 import { API_DOMAIN } from '../utils/envUtils';
 import { notificationManager } from '../utils/notificationManager';
+import { handleAuthError } from '../utils/authUtils';
 
 
 export const bindsManagingService = {
@@ -68,9 +69,7 @@ export const bindsManagingService = {
         });
     },
     setVote: (votingData: BindVote, undoVote?: boolean): Promise<string> => {
-        // Convert to numbers
         const requestBody = {
-            voter_steam_id: Number(votingData.voterSteamID),
             voted_bind_id: Number(votingData.votedBindID),
             vote: votingData.vote!,
         };
@@ -81,13 +80,17 @@ export const bindsManagingService = {
             }/${undoVote ? 'deleteBindVoting' : 'addBindVoting'}`,
             {
                 method: 'post',
+                credentials: 'include',
                 headers: {
-                    'Content-Type': 'application/json',  // ← Changed to JSON
+                    'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(requestBody),  // ← Send JSON, not URLSearchParams
+                body: JSON.stringify(requestBody),
             }
         )
         .then((response) => {
+            if (handleAuthError(response)) {
+                throw new Error('Authentication required');
+            }
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -106,6 +109,7 @@ export const bindsManagingService = {
             `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BINDS_PATH}/addBind`,
             {
                 method: 'post',
+                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -116,6 +120,9 @@ export const bindsManagingService = {
             }
         )
             .then((response) => {
+                if (handleAuthError(response)) {
+                    throw new Error('Authentication required');
+                }
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
@@ -134,6 +141,7 @@ export const bindsManagingService = {
             `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BINDS_PATH}/deleteBind`,
             {
                 method: 'post',
+                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -143,6 +151,9 @@ export const bindsManagingService = {
             }
         )
             .then((response) => {
+                if (handleAuthError(response)) {
+                    throw new Error('Authentication required');
+                }
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
@@ -164,6 +175,7 @@ export const bindsManagingService = {
             `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BINDS_PATH}/updateBind`,
             {
                 method: 'post',
+                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -175,6 +187,9 @@ export const bindsManagingService = {
             }
         )
             .then((response) => {
+                if (handleAuthError(response)) {
+                    throw new Error('Authentication required');
+                }
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }

@@ -6,6 +6,7 @@ import { bindSuggestionsActions } from '../redux/slices/bindSuggestionsSlice';
 import { API_DOMAIN } from '../utils/envUtils';
 import { notificationManager } from '../utils/notificationManager';
 import { useSelector } from 'react-redux';
+import { handleAuthError } from '../utils/authUtils';
 
 export const bindSuggestionsManagingService = {
     useBindSuggestionsLoadingService: () => {
@@ -40,17 +41,20 @@ export const bindSuggestionsManagingService = {
             `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BIND_SUGGESTIONS_PATH}/addBindSuggestion`,
             {
                 method: 'post',
+                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
                     author: bind.author,
                     text: bind.text,
-                    proposed_by: bind.proposed_by!,
                 }),
             }
         )
             .then((response) => {
+                if (handleAuthError(response)) {
+                    throw new Error('Authentication required');
+                }
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
@@ -69,6 +73,7 @@ export const bindSuggestionsManagingService = {
             `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BIND_SUGGESTIONS_PATH}/deleteBindSuggestion`,
             {
                 method: 'post',
+                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -78,6 +83,9 @@ export const bindSuggestionsManagingService = {
             }
         )
             .then((response) => {
+                if (handleAuthError(response)) {
+                    throw new Error('Authentication required');
+                }
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }

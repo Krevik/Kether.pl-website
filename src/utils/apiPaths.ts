@@ -7,6 +7,7 @@ export const apiPaths = {
     BIND_SUGGESTIONS_PATH: `/bind_suggestions`,
     STEAM_PATH: `/steam`,
     LIVE_SERVER_PATH: `/LiveServerInfo`,
+    AUTH_BASE_PATH: `/auth`,
 };
 
 export const API_PATHS = {
@@ -14,5 +15,7 @@ export const API_PATHS = {
     SERVER_INFO_SECONDARY: `${API_DOMAIN}/api/LiveServerInfo/kether2`,
     SERVER_INFO_ANY: `${API_DOMAIN}/api/LiveServerInfo`, // put IP and port after slash. Example: /api/LiveServerInfo/54.36.179.182/27015
     COMMANDS: `${API_DOMAIN}/api/commands`,
-    ADMIN_VERIFY: `${API_DOMAIN}/api/admin/verify`,
+    AUTH_CALLBACK: `${API_DOMAIN}/api/auth/steam/callback`,
+    AUTH_ME: `${API_DOMAIN}/api/auth/me`,
+    AUTH_LOGOUT: `${API_DOMAIN}/api/auth/logout`,
 };

@@ -20,8 +20,7 @@ const GithubRepo = lazy(() => import('../GithubRepo/GithubRepo'));
 const Donate = lazy(() => import('../Donate/Donate'));
 const HallOfFameSuggestions = lazy(() => import('../HallOfFame/HallOfFameSuggestions'));
 export default function KetherApplication() {
-    steamAPIService.useAdminDetectionService();
-    steamAPIService.useSteamAuthService();
+    steamAPIService.useSessionHydration();
     steamAPIService.useUserDataFetcher();
     steamAPIService.useOwnedGamesFetcher();
 
