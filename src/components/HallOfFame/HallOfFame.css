@@ -37,51 +37,110 @@
 }
 
 .hall-of-fame .p-datatable-tbody .voting {
-    display: flex;
+    vertical-align: middle;
+}
+
+.hall-of-fame .hof-vote-actions {
+    display: inline-flex;
     flex-wrap: nowrap;
-    gap: var(--standardGap);
+    align-items: center;
+    gap: 0.45rem;
+}
+
+.hall-of-fame .hof-vote-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    min-width: 3.25rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--radius-md);
+    font-family: 'Montserrat', 'Segoe UI', system-ui, sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    line-height: 1;
+    cursor: pointer;
+    background: rgba(9, 12, 19, 0.9);
+    border: 1px solid var(--color-border-subtle);
+    -webkit-text-stroke: 0;
+    transition:
+        background var(--transition-fast),
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+.hall-of-fame .hof-vote-btn__count {
+    color: var(--color-text-primary);
+    transition: color var(--transition-fast);
+}
+
+.hall-of-fame .hof-vote-btn:hover {
+    border-color: rgba(255, 255, 255, 0.14);
+}
+
+.hall-of-fame .hof-vote-btn:active {
+    transform: translateY(1px);
+}
+
+.hall-of-fame .hof-vote-btn__icon {
+    flex-shrink: 0;
+    font-size: 0.95rem;
+    line-height: 1;
+    font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
+    color: unset;
+    filter: none;
+}
+
+.hall-of-fame .hof-vote-btn--up.hof-vote-btn--active {
+    border-color: rgba(72, 187, 120, 0.45);
+    background: linear-gradient(
+        180deg,
+        rgba(34, 120, 72, 0.88) 0%,
+        rgba(18, 58, 38, 0.95) 100%
+    );
+    box-shadow: 0 4px 14px rgba(34, 120, 72, 0.22);
+}
+
+.hall-of-fame .hof-vote-btn--up.hof-vote-btn--active .hof-vote-btn__count {
+    color: #fff;
+}
+
+.hall-of-fame .hof-vote-btn--up.hof-vote-btn--active:hover {
+    border-color: rgba(140, 220, 170, 0.5);
+    background: linear-gradient(
+        180deg,
+        rgba(40, 132, 80, 0.92) 0%,
+        rgba(22, 66, 44, 0.96) 100%
+    );
+}
+
+.hall-of-fame .hof-vote-btn--down.hof-vote-btn--active {
+    border-color: rgba(255, 100, 110, 0.35);
+    background: linear-gradient(
+        180deg,
+        rgba(224, 18, 32, 0.92) 0%,
+        rgba(150, 10, 20, 0.95) 100%
+    );
+    box-shadow: 0 4px 14px rgba(170, 12, 22, 0.22);
+}
+
+.hall-of-fame .hof-vote-btn--down.hof-vote-btn--active .hof-vote-btn__count {
+    color: #fff;
+}
+
+.hall-of-fame .hof-vote-btn--down.hof-vote-btn--active:hover {
+    border-color: rgba(255, 180, 186, 0.45);
+    background: linear-gradient(
+        180deg,
+        rgba(236, 28, 42, 0.96) 0%,
+        rgba(162, 14, 24, 0.98) 100%
+    );
 }
 
 .hall-of-fame [class*='p-button'] {
     transition: all 0.5s;
 }
-
-.hall-of-fame [class*='vote-up-button'] {
-    background: rgb(0, 188, 0);
-    border: none;
-}
-
-/* No blue colour on pointer's hover */
-.hall-of-fame [class*='vote-up-button']:hover {
-    background: forestgreen;
-}
-
-/* When you click and hold the button, and move the cursor away still holding the button */
-.hall-of-fame [class*='vote-up-button']:active:focus {
-    background: forestgreen;
-}
-
-.hall-of-fame [class*='self-voted'] {
-    box-shadow: inset 1px 5px 20px black;
-}
-
-.hall-of-fame [class*='vote-down-button'] {
-    background: rgb(188, 0, 0);
-    border: none;
-}
-
-.hall-of-fame [class*='vote-down-button']:hover {
-    background: rgb(139, 34, 34);
-}
-
-.hall-of-fame [class*='vote-down-button']:active:focus {
-    background: rgb(139, 34, 34);
-}
-
-/* .hall-of-fame [class*='p-button-rounded'] {
-    font-size: 1.2rem;
-    -webkit-text-stroke: 0px;
-} */
 
 .hall-of-fame .p-datatable button {
     color: white;

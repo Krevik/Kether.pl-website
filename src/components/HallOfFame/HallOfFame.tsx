@@ -129,46 +129,57 @@ const bindVotingBodyTemplate = (
 ) => {
     const selfBindVote: BindVotingType | undefined =
         rowData.votingData?.selfVote;
-    const selfVoteUpStylingClassName =
-        selfBindVote && selfBindVote === BindVotingType.UPVOTE
-            ? 'self-voted'
-            : '';
-    const selfVoteDownStylingClassName =
-        selfBindVote && selfBindVote === BindVotingType.DOWNVOTE
-            ? 'self-voted'
-            : '';
-    const voteUpButtonStyling = `vote-up-button ${selfVoteUpStylingClassName}`;
-    const voteDownButtonStyling = `vote-down-button ${selfVoteDownStylingClassName}`;
+    const upActive = selfBindVote === BindVotingType.UPVOTE;
+    const downActive = selfBindVote === BindVotingType.DOWNVOTE;
+
     return (
-        <>
-            <Button
-                className={`${voteUpButtonStyling} app-focus-ring`}
-                label={`👍🏻 ${rowData.votingData?.Upvotes || 0}`}
+        <div className="hof-vote-actions">
+            <button
+                type="button"
+                className={
+                    'hof-vote-btn hof-vote-btn--up app-focus-ring' +
+                    (upActive ? ' hof-vote-btn--active' : '')
+                }
                 onClick={() => {
                     handleVote(
                         BindVotingType.UPVOTE,
                         rowData,
                         userData,
-                        selfBindVote &&
-                            selfBindVote === BindVotingType.UPVOTE
+                        upActive
                     );
                 }}
-            />
-            
-            <Button
-                className={`${voteDownButtonStyling} app-focus-ring`}
-                label={`👎🏻 ${rowData.votingData?.Downvotes || 0}`}
+            >
+                <span className="hof-vote-btn__icon" aria-hidden>
+                    👍🏻
+                </span>
+                <span className="hof-vote-btn__count">
+                    {rowData.votingData?.Upvotes ?? 0}
+                </span>
+            </button>
+
+            <button
+                type="button"
+                className={
+                    'hof-vote-btn hof-vote-btn--down app-focus-ring' +
+                    (downActive ? ' hof-vote-btn--active' : '')
+                }
                 onClick={() => {
                     handleVote(
                         BindVotingType.DOWNVOTE,
                         rowData,
                         userData,
-                        selfBindVote &&
-                            selfBindVote === BindVotingType.DOWNVOTE
+                        downActive
                     );
                 }}
-            />
-        </>
+            >
+                <span className="hof-vote-btn__icon" aria-hidden>
+                    👎🏻
+                </span>
+                <span className="hof-vote-btn__count">
+                    {rowData.votingData?.Downvotes ?? 0}
+                </span>
+            </button>
+        </div>
     );
 };
 
