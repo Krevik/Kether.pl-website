@@ -17,11 +17,12 @@ export const bindsManagingService = {
     useBindsLoadingService: (steamUserID?: string) => {
         return useServerBindsLoader(steamUserID ? steamUserID : undefined);
     },
-    getBinds: (userSteamID?: string) => {
+    getBinds: (_userSteamID?: string) => {
         return fetch(
             `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BINDS_PATH}/getBinds`,
             {
                 method: 'get',
+                credentials: 'include',
             }
         )
         .then((response) => {
@@ -31,21 +32,11 @@ export const bindsManagingService = {
             return response.json();
         })
         .then((bindEntries: any[]) => {
-            // Map backend format to frontend format
             const mappedBinds: BindEntry[] = bindEntries.map((bind) => {
-                const upvoteCount = bind.upvote?.length || 0;
-                const downvoteCount = bind.downvote?.length || 0;
-                
-                let selfVote: BindVotingType | undefined = undefined;
-                if (userSteamID) {
-                    const steamIDNum = Number(userSteamID);
-                    if (bind.upvote?.includes(steamIDNum)) {
-                        selfVote = BindVotingType.UPVOTE;
-                    } else if (bind.downvote?.includes(steamIDNum)) {
-                        selfVote = BindVotingType.DOWNVOTE;
-                    }
-                }
-                
+                const upvoteCount = bind.upvote_count ?? 0;
+                const downvoteCount = bind.downvote_count ?? 0;
+                const selfVote = bind.self_vote as BindVotingType | undefined;
+
                 return {
                     id: bind.id,
                     author: bind.author,
@@ -59,7 +50,7 @@ export const bindsManagingService = {
                     },
                 };
             });
-            
+
             appStore.dispatch(bindsActions.setBinds(mappedBinds));
         })
         .catch((error) => {
