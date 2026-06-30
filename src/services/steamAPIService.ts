@@ -50,6 +50,7 @@ export const steamAPIService = {
                     `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.STEAM_PATH}/games`,
                     {
                         method: 'post',
+                        credentials: 'include',
                         body: userID,
                         headers: {
                             'Content-Type': 'application/json',
@@ -84,6 +85,7 @@ export const steamAPIService = {
                 `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.STEAM_PATH}/userData`,
                 {
                     method: 'post',
+                    credentials: 'include',
                     body: userID,
                     headers: {
                         'Content-Type': 'application/json',
