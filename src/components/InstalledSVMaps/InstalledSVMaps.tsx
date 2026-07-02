@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { InputText } from 'primereact/inputtext';
 import './InstalledSVMaps.css';
 import { PageWithBackground } from '../PageLayout/PageBackground/PageWithBackground';
@@ -7,7 +7,6 @@ import { useMapsTranslations } from '../../hooks/useTranslations';
 import { useDebouncedValue } from '../../hooks/useDebouncedValue';
 import { useSelector } from 'react-redux';
 import { AppState } from '../../redux/store';
-import { RAW_INSTALLED_MAPS } from './mapsData';
 import { MAP_SOURCES, SIR_PLEASE_ALL_MAPS_URL } from './constants';
 import {
     processMapsWithTranslations,
@@ -17,6 +16,9 @@ import {
 import { InstallationHelpDialog } from './InstallationHelpDialog';
 import { WorkshopMapsGrid } from './WorkshopMapsGrid';
 import { DownloadMapsList } from './DownloadMapsList';
+import { fetchInstalledMaps } from '../../services/mapsService';
+import { LoadingSpinner } from '../LoadingSpinner/LoadingSpinner';
+import { MapEntry } from './mapEntry';
 
 const MAP_NAME_SEARCH_DEBOUNCE_MS = 280;
 
@@ -32,16 +34,49 @@ export default function InstalledSVMaps() {
     const [helpDialogVisible, setHelpDialogVisible] = useState(false);
     const [activeTab, setActiveTab] = useState<MapsTabId>('workshop');
     const [mapSearch, setMapSearch] = useState('');
+    const [maps, setMaps] = useState<MapEntry[]>([]);
+    const [mapsStale, setMapsStale] = useState(false);
+    const [mapsLoading, setMapsLoading] = useState(true);
     const debouncedMapSearch = useDebouncedValue(mapSearch, MAP_NAME_SEARCH_DEBOUNCE_MS);
 
-    // Process maps: replace translation placeholders and filter by source
-    const processedMaps = processMapsWithTranslations(
-        RAW_INSTALLED_MAPS,
-        mapsTranslations.allMaps
+    useEffect(() => {
+        let cancelled = false;
+
+        fetchInstalledMaps().then((result) => {
+            if (cancelled) return;
+            setMaps(result.maps);
+            setMapsStale(result.stale);
+            setMapsLoading(false);
+        });
+
+        return () => {
+            cancelled = true;
+        };
+    }, []);
+
+    const processedMaps = useMemo(
+        () => processMapsWithTranslations(maps, mapsTranslations.allMaps),
+        [maps, mapsTranslations.allMaps]
     );
-    
+
     const workshopMaps = filterMapsBySource(processedMaps, MAP_SOURCES.WORKSHOP);
-    const sirPleaseMaps = filterMapsBySource(processedMaps, MAP_SOURCES.SIR_PLEASE);
+
+    const sirPleaseBundle = useMemo(
+        () => ({
+            mapName: mapsTranslations.allMaps,
+            source: MAP_SOURCES.SIR_PLEASE,
+            downloadUrl: SIR_PLEASE_ALL_MAPS_URL,
+        }),
+        [mapsTranslations.allMaps]
+    );
+
+    const sirPleaseMaps = useMemo(() => {
+        const fromApi = filterMapsBySource(processedMaps, MAP_SOURCES.SIR_PLEASE).filter(
+            (map) => map.downloadUrl !== SIR_PLEASE_ALL_MAPS_URL
+        );
+        return [sirPleaseBundle, ...fromApi];
+    }, [processedMaps, sirPleaseBundle]);
+
     const l4d2CenterMaps = filterMapsBySource(processedMaps, MAP_SOURCES.L4D2CENTER);
     const otherMaps = filterMapsBySource(processedMaps, MAP_SOURCES.OTHER);
 
@@ -90,11 +125,27 @@ export default function InstalledSVMaps() {
     const handleOpenHelpDialog = () => setHelpDialogVisible(true);
     const handleCloseHelpDialog = () => setHelpDialogVisible(false);
 
+    if (mapsLoading) {
+        return (
+            <PageWithBackground imageUrl={BACKGROUNDS.BACKGROUND_4}>
+                <div className="installed-sv-maps">
+                    <LoadingSpinner type="skeleton" minDelay={50} />
+                </div>
+            </PageWithBackground>
+        );
+    }
+
     return (
         <PageWithBackground imageUrl={BACKGROUNDS.BACKGROUND_4}>
             <div className="installed-sv-maps">
                 <div className="card app-surface app-page-card">
                     <div className="centered-text">{mapsTranslations.title}</div>
+
+                    {mapsStale && (
+                        <div className="maps-stale-banner" role="status">
+                            {mapsTranslations.staleListNotice}
+                        </div>
+                    )}
 
                     <div className="maps-tabs" role="tablist" aria-label={mapsTranslations.mapsSections}>
                         {tabIds.includes('workshop') && (
@@ -231,7 +282,7 @@ export default function InstalledSVMaps() {
                     </div>
                 </div>
             </div>
-            
+
             <InstallationHelpDialog
                 visible={helpDialogVisible}
                 onHide={handleCloseHelpDialog}

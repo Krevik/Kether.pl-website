@@ -124,7 +124,8 @@
         "openWorkshopPage": "Strona Warsztatu",
         "searchLabel": "Szukaj map po nazwie",
         "searchPlaceholder": "Wpisz fragment nazwy mapy…",
-        "searchNoResults": "Brak map pasujacych do wyszukiwania."
+        "searchNoResults": "Brak map pasujacych do wyszukiwania.",
+        "staleListNotice": "Lista map moze byc nieaktualna. Odswiezy sie po przywroceniu polaczenia z serwerem."
     },
     "donate": {
         "title": "Wesprzyj Nas",

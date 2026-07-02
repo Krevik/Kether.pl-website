@@ -293,5 +293,6 @@ export function useMapsTranslations() {
         searchLabel: t('maps.searchLabel'),
         searchPlaceholder: t('maps.searchPlaceholder'),
         searchNoResults: t('maps.searchNoResults'),
+        staleListNotice: t('maps.staleListNotice'),
     };
 }

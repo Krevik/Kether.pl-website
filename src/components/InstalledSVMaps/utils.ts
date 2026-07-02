@@ -1,5 +1,6 @@
 import { MapEntry } from './mapEntry';
 import { TRANSLATION_PLACEHOLDER, STEAM_PROTOCOL_PREFIX } from './constants';
+import { FALLBACK_INSTALLED_MAPS } from './mapsData.fallback';
 
 /**
  * Extracts Steam Workshop ID from a downloadUrl
@@ -74,6 +75,80 @@ export const normalizeWorkshopPreviewUrl = (raw: string): string => {
     url.searchParams.set('letterbox', 'false');
 
     return url.toString();
+};
+
+export const normalizeMapName = (name: string): string => {
+    let s = name.toLowerCase();
+    for (const ext of ['.vpk', '.bsp']) {
+        if (s.endsWith(ext)) {
+            s = s.slice(0, -ext.length);
+        }
+    }
+
+    return s
+        .replace(/[^a-z0-9]+/g, ' ')
+        .trim()
+        .replace(/\s+/g, ' ');
+};
+
+type PreviewIndex = {
+    byWorkshopId: Map<string, string>;
+    byNormalizedName: Map<string, string>;
+};
+
+let cachedPreviewIndex: PreviewIndex | null = null;
+
+function buildPreviewIndex(): PreviewIndex {
+    const byWorkshopId = new Map<string, string>();
+    const byNormalizedName = new Map<string, string>();
+
+    for (const entry of FALLBACK_INSTALLED_MAPS) {
+        const preview = entry.previewUrl?.trim();
+        if (!preview) continue;
+
+        const workshopId = extractSteamWorkshopId(entry.downloadUrl);
+        if (workshopId && !byWorkshopId.has(workshopId)) {
+            byWorkshopId.set(workshopId, preview);
+        }
+
+        const normalized = normalizeMapName(entry.mapName);
+        if (normalized && !byNormalizedName.has(normalized)) {
+            byNormalizedName.set(normalized, preview);
+        }
+    }
+
+    return { byWorkshopId, byNormalizedName };
+}
+
+function previewIndex(): PreviewIndex {
+    if (!cachedPreviewIndex) {
+        cachedPreviewIndex = buildPreviewIndex();
+    }
+    return cachedPreviewIndex;
+}
+
+/**
+ * Fills missing workshop preview URLs using the static fallback map list.
+ */
+export const enrichMapsWithFallbackPreviews = (maps: MapEntry[]): MapEntry[] => {
+    const index = previewIndex();
+
+    return maps.map((map) => {
+        if (map.source !== 'Workshop' || map.previewUrl?.trim()) {
+            return map;
+        }
+
+        const workshopId = extractSteamWorkshopId(map.downloadUrl);
+        const fromId = workshopId ? index.byWorkshopId.get(workshopId) : undefined;
+        const fromName = index.byNormalizedName.get(normalizeMapName(map.mapName));
+        const previewUrl = fromId ?? fromName;
+
+        if (!previewUrl) {
+            return map;
+        }
+
+        return { ...map, previewUrl };
+    });
 };
 
 /**

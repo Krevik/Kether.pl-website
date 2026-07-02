@@ -7,6 +7,7 @@ export const apiPaths = {
     BIND_SUGGESTIONS_PATH: `/bind_suggestions`,
     STEAM_PATH: `/steam`,
     LIVE_SERVER_PATH: `/LiveServerInfo`,
+    MAPS_PATH: `/maps`,
     AUTH_BASE_PATH: `/auth`,
 };
 
@@ -18,4 +19,5 @@ export const API_PATHS = {
     AUTH_CALLBACK: `${API_DOMAIN}/api/auth/steam/callback`,
     AUTH_ME: `${API_DOMAIN}/api/auth/me`,
     AUTH_LOGOUT: `${API_DOMAIN}/api/auth/logout`,
+    MAPS: `${API_DOMAIN}/api/maps`,
 };

@@ -124,7 +124,8 @@
         "openWorkshopPage": "Workshop page",
         "searchLabel": "Search maps by name",
         "searchPlaceholder": "Type part of a map name…",
-        "searchNoResults": "No maps match your search."
+        "searchNoResults": "No maps match your search.",
+        "staleListNotice": "The map list may be outdated. It will refresh when the server connection is restored."
     },
     "donate": {
         "title": "Support Us",

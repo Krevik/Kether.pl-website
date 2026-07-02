@@ -17,6 +17,20 @@
     margin: auto;
 }
 
+.maps-stale-banner {
+    margin: 0.75rem auto 0;
+    padding: 0.65rem 1rem;
+    max-width: 52rem;
+    width: calc(100% - 1.5rem);
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(255, 193, 7, 0.35);
+    background: rgba(255, 193, 7, 0.12);
+    color: var(--color-text-primary, #f0f0f0);
+    font-size: 0.95rem;
+    line-height: 1.45;
+    text-align: center;
+}
+
 /* —— Tabs (Workshop / SirPlease / Other) —— */
 .maps-tabs {
     display: flex;
