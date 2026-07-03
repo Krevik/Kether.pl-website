@@ -1,6 +1,8 @@
 import { InputText } from 'primereact/inputtext';
 import { SelectButton } from 'primereact/selectbutton';
+import { Dropdown } from 'primereact/dropdown';
 import { InstallSourceMode } from '../installMapUtils';
+import { L4d2CenterCatalogEntry } from '../../../services/mapsAdminService';
 import { useMapsTranslations } from '../../../hooks/useTranslations';
 
 type MapsTranslations = ReturnType<typeof useMapsTranslations>;
@@ -12,6 +14,9 @@ export type DialogAddMapContentProps = {
     setInput: (value: string) => void;
     nameOverride: string;
     setNameOverride: (value: string) => void;
+    l4d2centerOptions: L4d2CenterCatalogEntry[];
+    catalogLoading: boolean;
+    catalogError: string | null;
     mapsTranslations: MapsTranslations;
 };
 
@@ -22,18 +27,32 @@ export function DialogAddMapContent({
     setInput,
     nameOverride,
     setNameOverride,
+    l4d2centerOptions,
+    catalogLoading,
+    catalogError,
     mapsTranslations,
 }: DialogAddMapContentProps) {
     const sourceOptions: { label: string; value: InstallSourceMode }[] = [
         { label: mapsTranslations.installSourceAuto, value: 'auto' },
         { label: mapsTranslations.installSourceWorkshop, value: 'workshop' },
-        { label: mapsTranslations.installSourceSirPlease, value: 'sirplease' },
         { label: mapsTranslations.installSourceL4d2Center, value: 'l4d2center' },
     ];
 
     const inputLabel = mapsTranslations.installInputLabel(mode);
     const inputPlaceholder = mapsTranslations.installInputPlaceholder(mode);
-    const inputHint = mapsTranslations.installInputHint(mode);
+    const inputHint =
+        mode === 'l4d2center' && catalogError
+            ? catalogError
+            : mode === 'l4d2center' && catalogLoading
+              ? mapsTranslations.installL4d2CenterLoading
+              : mapsTranslations.installInputHint(mode);
+
+    const l4d2centerItemTemplate = (option: L4d2CenterCatalogEntry) => (
+        <span>
+            {option.name}
+            {option.installed ? ` ${mapsTranslations.installL4d2CenterAlreadyInstalled}` : ''}
+        </span>
+    );
 
     return (
         <>
@@ -44,19 +63,41 @@ export function DialogAddMapContent({
                 onChange={(event) => {
                     if (event.value) {
                         setMode(event.value);
+                        setInput('');
                     }
                 }}
                 className="maps-install-source-select app-focus-ring"
             />
 
             <h5>{inputLabel}</h5>
-            <InputText
-                className="app-focus-ring"
-                value={input}
-                onChange={(event) => setInput(event.target.value)}
-                placeholder={inputPlaceholder}
-            />
-            <p className="maps-install-hint">{inputHint}</p>
+            {mode === 'l4d2center' ? (
+                <Dropdown
+                    value={input || null}
+                    options={l4d2centerOptions}
+                    onChange={(event) => setInput(event.value ?? '')}
+                    optionLabel="name"
+                    optionValue="name"
+                    optionDisabled={(option) => option.installed}
+                    itemTemplate={l4d2centerItemTemplate}
+                    placeholder={mapsTranslations.installL4d2CenterSelectPlaceholder}
+                    disabled={catalogLoading || Boolean(catalogError)}
+                    className="maps-install-l4d2center-dropdown app-focus-ring"
+                    panelClassName="maps-install-l4d2center-dropdown-panel"
+                    showClear
+                />
+            ) : (
+                <InputText
+                    className="app-focus-ring"
+                    value={input}
+                    onChange={(event) => setInput(event.target.value)}
+                    placeholder={inputPlaceholder}
+                />
+            )}
+            <p
+                className={`maps-install-hint${catalogError && mode === 'l4d2center' ? ' maps-install-hint-error' : ''}`}
+            >
+                {inputHint}
+            </p>
 
             <h5>{mapsTranslations.installNameOverride}</h5>
             <InputText

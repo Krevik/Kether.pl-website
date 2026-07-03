@@ -8,6 +8,40 @@ export interface AdminInstallMapResponse {
     resolved_mode: string;
 }
 
+export interface L4d2CenterCatalogEntry {
+    name: string;
+    size: number;
+    md5: string;
+    download_link: string;
+    installed: boolean;
+    map_id?: number;
+    status: string;
+}
+
+export async function fetchL4d2CenterCatalog(): Promise<L4d2CenterCatalogEntry[]> {
+    const response = await fetch(
+        `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.MAPS_L4D2CENTER}`,
+        {
+            credentials: 'include',
+        }
+    );
+
+    if (!response.ok) {
+        let errorMessage = `HTTP error! status: ${response.status}`;
+        try {
+            const body = (await response.json()) as { error?: string };
+            if (body.error) {
+                errorMessage = body.error;
+            }
+        } catch {
+            // use default message
+        }
+        throw new Error(errorMessage);
+    }
+
+    return (await response.json()) as L4d2CenterCatalogEntry[];
+}
+
 export async function installMap(
     payload: InstallMapPayload
 ): Promise<AdminInstallMapResponse> {

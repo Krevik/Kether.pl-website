@@ -273,8 +273,6 @@ export function useMapsTranslations() {
         switch (mode) {
             case 'workshop':
                 return t('maps.installInputLabelWorkshop');
-            case 'sirplease':
-                return t('maps.installInputLabelSirPlease');
             case 'l4d2center':
                 return t('maps.installInputLabelL4d2Center');
             default:
@@ -286,10 +284,8 @@ export function useMapsTranslations() {
         switch (mode) {
             case 'workshop':
                 return t('maps.installInputPlaceholderWorkshop');
-            case 'sirplease':
-                return t('maps.installInputPlaceholderSirPlease');
             case 'l4d2center':
-                return t('maps.installInputPlaceholderL4d2Center');
+                return t('maps.installL4d2CenterSelectPlaceholder');
             default:
                 return t('maps.installInputPlaceholderAuto');
         }
@@ -299,8 +295,6 @@ export function useMapsTranslations() {
         switch (mode) {
             case 'workshop':
                 return t('maps.installInputHintWorkshop');
-            case 'sirplease':
-                return t('maps.installInputHintSirPlease');
             case 'l4d2center':
                 return t('maps.installInputHintL4d2Center');
             default:
@@ -346,8 +340,11 @@ export function useMapsTranslations() {
         installSourceLabel: t('maps.installSourceLabel'),
         installSourceAuto: t('maps.installSourceAuto'),
         installSourceWorkshop: t('maps.installSourceWorkshop'),
-        installSourceSirPlease: t('maps.installSourceSirPlease'),
         installSourceL4d2Center: t('maps.installSourceL4d2Center'),
+        installL4d2CenterLoading: t('maps.installL4d2CenterLoading'),
+        installL4d2CenterLoadFailed: t('maps.installL4d2CenterLoadFailed'),
+        installL4d2CenterSelectPlaceholder: t('maps.installL4d2CenterSelectPlaceholder'),
+        installL4d2CenterAlreadyInstalled: t('maps.installL4d2CenterAlreadyInstalled'),
         installInputLabel,
         installInputPlaceholder,
         installInputHint,

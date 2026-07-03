@@ -1,11 +1,15 @@
 import { extractSteamWorkshopId } from './utils';
 
-export type InstallSourceMode = 'auto' | 'workshop' | 'sirplease' | 'l4d2center';
+export type InstallSourceMode = 'auto' | 'workshop' | 'l4d2center';
 
 export interface InstallMapPayload {
     mode: InstallSourceMode;
     input: string;
     name?: string;
+}
+
+export interface ValidateInstallPayloadOptions {
+    catalogNames?: string[];
 }
 
 function isHttpUrl(input: string): boolean {
@@ -21,7 +25,10 @@ function parseWorkshopId(input: string): string | null {
     return extractSteamWorkshopId(trimmed);
 }
 
-export function validateInstallPayload(payload: InstallMapPayload): string | null {
+export function validateInstallPayload(
+    payload: InstallMapPayload,
+    options?: ValidateInstallPayloadOptions
+): string | null {
     const input = payload.input.trim();
     if (!input) {
         return 'installInputRequired';
@@ -35,10 +42,12 @@ export function validateInstallPayload(payload: InstallMapPayload): string | nul
     switch (payload.mode) {
         case 'workshop':
             return parseWorkshopId(input) ? null : 'installInvalidWorkshopInput';
-        case 'sirplease':
-            return isHttpUrl(input) ? null : 'installInvalidUrl';
-        case 'l4d2center':
+        case 'l4d2center': {
+            if (options?.catalogNames && !options.catalogNames.includes(input)) {
+                return 'installInvalidCatalogSelection';
+            }
             return input.length > 0 ? null : 'installInputRequired';
+        }
         case 'auto':
             if (parseWorkshopId(input) || isHttpUrl(input)) {
                 return null;

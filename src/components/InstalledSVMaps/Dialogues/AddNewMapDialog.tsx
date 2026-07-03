@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Dialog } from 'primereact/dialog';
 import { Button } from 'primereact/button';
 import { DialogAddMapContent } from './DialogAddMapContent';
@@ -7,7 +7,11 @@ import {
     InstallSourceMode,
     validateInstallPayload,
 } from '../installMapUtils';
-import { installMap } from '../../../services/mapsAdminService';
+import {
+    fetchL4d2CenterCatalog,
+    installMap,
+    L4d2CenterCatalogEntry,
+} from '../../../services/mapsAdminService';
 import { notificationManager } from '../../../utils/notificationManager';
 import { useCommonTranslations, useMapsTranslations } from '../../../hooks/useTranslations';
 
@@ -28,6 +32,14 @@ export function AddNewMapDialog({
     const [input, setInput] = useState('');
     const [nameOverride, setNameOverride] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [l4d2centerOptions, setL4d2centerOptions] = useState<L4d2CenterCatalogEntry[]>([]);
+    const [catalogLoading, setCatalogLoading] = useState(false);
+    const [catalogError, setCatalogError] = useState<string | null>(null);
+
+    const catalogNames = useMemo(
+        () => l4d2centerOptions.map((entry) => entry.name),
+        [l4d2centerOptions]
+    );
 
     const resetForm = () => {
         setMode('auto');
@@ -35,12 +47,40 @@ export function AddNewMapDialog({
         setNameOverride('');
     };
 
+    useEffect(() => {
+        if (!isDialogVisible) {
+            return;
+        }
+
+        setCatalogLoading(true);
+        setCatalogError(null);
+
+        fetchL4d2CenterCatalog()
+            .then((entries) => {
+                setL4d2centerOptions(
+                    [...entries].sort((a, b) => a.name.localeCompare(b.name))
+                );
+            })
+            .catch((error: Error) => {
+                const message = `${mapsTranslations.installL4d2CenterLoadFailed}: ${error.message}`;
+                setCatalogError(message);
+                setL4d2centerOptions([]);
+                notificationManager.ERROR(message);
+            })
+            .finally(() => {
+                setCatalogLoading(false);
+            });
+    }, [isDialogVisible, mapsTranslations.installL4d2CenterLoadFailed]);
+
     const handleHide = () => {
         if (isSubmitting) {
             return;
         }
         setDialogVisibility(false);
     };
+
+    const installBlocked =
+        mode === 'l4d2center' && (catalogLoading || Boolean(catalogError));
 
     const footer = (
         <>
@@ -57,10 +97,10 @@ export function AddNewMapDialog({
                         : `✅ ${commonTranslations.save}`
                 }
                 className="p-button-text app-focus-ring"
-                disabled={isSubmitting}
+                disabled={isSubmitting || installBlocked}
                 onClick={() => {
                     const payload = buildInstallPayload(mode, input, nameOverride);
-                    const validationKey = validateInstallPayload(payload);
+                    const validationKey = validateInstallPayload(payload, { catalogNames });
                     if (validationKey) {
                         notificationManager.ERROR(mapsTranslations.installValidationError(validationKey));
                         return;
@@ -103,6 +143,9 @@ export function AddNewMapDialog({
                 setInput={setInput}
                 nameOverride={nameOverride}
                 setNameOverride={setNameOverride}
+                l4d2centerOptions={l4d2centerOptions}
+                catalogLoading={catalogLoading}
+                catalogError={catalogError}
                 mapsTranslations={mapsTranslations}
             />
         </Dialog>

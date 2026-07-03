@@ -369,6 +369,18 @@
     line-height: 1.4;
 }
 
+.maps-install-hint-error {
+    color: var(--color-danger, #f87171);
+}
+
+.maps-install-l4d2center-dropdown {
+    width: 100%;
+}
+
+.maps-install-l4d2center-dropdown .p-dropdown-label {
+    width: 100%;
+}
+
 /* —— Workshop card grid —— */
 .workshop-maps-section {
     width: 100%;
