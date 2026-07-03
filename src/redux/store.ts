@@ -12,6 +12,7 @@ import { uiReducer } from './slices/uiSlice';
 const userDataPersistConfig = {
     key: 'userData',
     storage,
+    blacklist: ['userID', 'isAdmin', 'userData', 'gamesData'],
 };
 const uiPersistConfig = {
     key: 'ui',

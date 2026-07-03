@@ -27,7 +27,12 @@ export const authService = {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
-            return (await response.json()) as SessionResponse;
+            const data = (await response.json()) as SessionResponse | null;
+            if (!data?.steamid) {
+                return null;
+            }
+
+            return data;
         } catch (error) {
             const errorMessage = error instanceof Error ? error.message : 'Unknown error';
             errorLogger.logError(
