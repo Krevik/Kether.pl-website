@@ -1,7 +1,8 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { MapEntry } from './mapEntry';
-import { dedupeMapsByDownloadUrl } from './utils';
+import { groupWorkshopMaps, workshopFolderKey } from './utils';
 import { WorkshopMapCard } from './WorkshopMapCard';
+import { WorkshopMapFolderCard } from './WorkshopMapFolderCard';
 import { useMapsTranslations } from '../../hooks/useTranslations';
 
 type MapsTranslations = ReturnType<typeof useMapsTranslations>;
@@ -14,26 +15,49 @@ export type WorkshopMapsGridProps = {
 };
 
 export function WorkshopMapsGrid({ maps, mapsTranslations, zeroStateMessage }: WorkshopMapsGridProps) {
-    const sorted = useMemo(() => {
-        const unique = dedupeMapsByDownloadUrl(maps);
-        return [...unique].sort((a, b) => a.mapName.localeCompare(b.mapName, undefined, { sensitivity: 'base' }));
-    }, [maps]);
+    const [expandedFolderKey, setExpandedFolderKey] = useState<string | null>(null);
 
-    if (sorted.length === 0) {
+    const items = useMemo(() => groupWorkshopMaps(maps), [maps]);
+
+    const handleFolderToggle = useCallback((folderKey: string) => {
+        setExpandedFolderKey((current) => (current === folderKey ? null : folderKey));
+    }, []);
+
+    if (items.length === 0) {
         return <p className="maps-empty">{zeroStateMessage ?? mapsTranslations.noMapsAvailable}</p>;
     }
 
     return (
         <div className="workshop-maps-section">
             <div className="workshop-maps-grid">
-                {sorted.map((map, index) => (
-                    <WorkshopMapCard
-                        key={map.downloadUrl ?? map.mapName}
-                        map={map}
-                        mapsTranslations={mapsTranslations}
-                        style={{ animationDelay: `${Math.min(index, 24) * 35}ms` }}
-                    />
-                ))}
+                {items.map((item, index) => {
+                    const style = { animationDelay: `${Math.min(index, 24) * 35}ms` };
+
+                    if (item.kind === 'folder') {
+                        const folderKey = workshopFolderKey(item);
+                        return (
+                            <WorkshopMapFolderCard
+                                key={folderKey}
+                                folderName={item.folderName}
+                                previewUrl={item.previewUrl}
+                                parts={item.parts}
+                                mapsTranslations={mapsTranslations}
+                                style={style}
+                                expanded={expandedFolderKey === folderKey}
+                                onToggle={() => handleFolderToggle(folderKey)}
+                            />
+                        );
+                    }
+
+                    return (
+                        <WorkshopMapCard
+                            key={item.map.downloadUrl ?? item.map.mapName}
+                            map={item.map}
+                            mapsTranslations={mapsTranslations}
+                            style={style}
+                        />
+                    );
+                })}
             </div>
         </div>
     );

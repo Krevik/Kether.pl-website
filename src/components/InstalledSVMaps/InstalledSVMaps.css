@@ -615,3 +615,139 @@
         width: 100%;
     }
 }
+
+/* —— Workshop map folders (multi-part campaigns) —— */
+.workshop-map-folder--expanded {
+    z-index: 2;
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .workshop-map-folder--expanded:hover,
+    .workshop-map-folder--expanded:focus-within {
+        transform: none;
+    }
+}
+
+.workshop-map-folder__parts-badge {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    z-index: 2;
+    padding: 0.2rem 0.55rem;
+    border-radius: var(--radius-sm, 4px);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: rgba(255, 255, 255, 0.92);
+    background: rgba(7, 9, 13, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    pointer-events: none;
+}
+
+.workshop-map-folder__body {
+    gap: 0.55rem;
+}
+
+.workshop-map-folder__title {
+    margin: 0;
+}
+
+.workshop-map-folder__toggle {
+    width: 100%;
+    margin: 0;
+    padding: 0.45rem 0.65rem;
+    border-radius: var(--radius-sm, 4px);
+    border: 1px solid var(--color-border-subtle);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--color-text-primary, #f2f2f2);
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.workshop-map-folder__toggle:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(224, 18, 32, 0.35);
+}
+
+.workshop-map-folder__parts {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    margin-top: 0.15rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--color-border-subtle);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .workshop-map-folder__parts {
+        animation: workshop-folder-parts-in 0.28s var(--ease-out-expo, cubic-bezier(0.22, 1, 0.36, 1)) both;
+    }
+}
+
+@keyframes workshop-folder-parts-in {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.workshop-map-part-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.55rem 0.45rem;
+    border-radius: var(--radius-sm, 4px);
+    background: rgba(0, 0, 0, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.workshop-map-part-row__info {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.35rem 0.55rem;
+    min-width: 0;
+}
+
+.workshop-map-part-row__label {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--color-text-primary, #f2f2f2);
+}
+
+.workshop-map-part-row__id {
+    font-size: 0.74rem;
+    color: var(--color-text-muted, rgba(255, 255, 255, 0.55));
+    font-variant-numeric: tabular-nums;
+}
+
+.workshop-map-part-row__subtitle {
+    flex-basis: 100%;
+    font-size: 0.78rem;
+    color: var(--color-text-muted, rgba(255, 255, 255, 0.62));
+    line-height: 1.35;
+}
+
+.workshop-map-part-row__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+}
+
+@media (max-width: 480px) {
+    .workshop-map-part-row__actions {
+        flex-direction: column;
+    }
+
+    .workshop-map-part-row__actions .workshop-map-card__btn {
+        width: 100%;
+    }
+}

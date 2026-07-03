@@ -228,3 +228,149 @@ export const dedupeMapsByDownloadUrl = (maps: MapEntry[]): MapEntry[] => {
     return out;
 };
 
+export type WorkshopGridItem =
+    | { kind: 'single'; map: MapEntry }
+    | { kind: 'folder'; folderName: string; previewUrl?: string; parts: MapEntry[] };
+
+export type ParsedWorkshopPart = {
+    baseName: string;
+    partNumber: number | null;
+};
+
+const WORKSHOP_PART_SUFFIX_RE = /^(.+?)\s+part\s+(\d+)\s*$/i;
+const WORKSHOP_PART_OF_RE = /^(.+?):\s*part\s+(\d+)\s+of\s+\d+\s*$/i;
+
+/**
+ * Extracts campaign base title and optional part number from workshop map names.
+ */
+export const parseWorkshopPartName = (mapName: string): ParsedWorkshopPart => {
+    const trimmed = mapName.trim();
+
+    const partOfMatch = trimmed.match(WORKSHOP_PART_OF_RE);
+    if (partOfMatch) {
+        return {
+            baseName: partOfMatch[1].trim(),
+            partNumber: Number.parseInt(partOfMatch[2], 10),
+        };
+    }
+
+    const partSuffixMatch = trimmed.match(WORKSHOP_PART_SUFFIX_RE);
+    if (partSuffixMatch) {
+        return {
+            baseName: partSuffixMatch[1].trim(),
+            partNumber: Number.parseInt(partSuffixMatch[2], 10),
+        };
+    }
+
+    return { baseName: trimmed, partNumber: null };
+};
+
+function workshopGroupingKey(baseName: string): string {
+    return baseName.trim().replace(/\s+/g, ' ').toLowerCase();
+}
+
+function workshopIdNumeric(map: MapEntry): number {
+    const id = extractSteamWorkshopId(map.downloadUrl);
+    return id ? Number.parseInt(id, 10) : 0;
+}
+
+function implicitPartNumber(map: MapEntry, parsed: ParsedWorkshopPart): number {
+    if (parsed.partNumber !== null) {
+        return parsed.partNumber;
+    }
+    if (map.mapName.trim().toLowerCase() === parsed.baseName.toLowerCase()) {
+        return 1;
+    }
+    return Number.MAX_SAFE_INTEGER;
+}
+
+function sortWorkshopParts(parts: MapEntry[]): MapEntry[] {
+    return [...parts].sort((a, b) => {
+        const parsedA = parseWorkshopPartName(a.mapName);
+        const parsedB = parseWorkshopPartName(b.mapName);
+        const numA = implicitPartNumber(a, parsedA);
+        const numB = implicitPartNumber(b, parsedB);
+        if (numA !== numB) return numA - numB;
+
+        const idDiff = workshopIdNumeric(a) - workshopIdNumeric(b);
+        if (idDiff !== 0) return idDiff;
+
+        return a.mapName.localeCompare(b.mapName, undefined, { sensitivity: 'base' });
+    });
+}
+
+function pickFolderDisplayName(parts: MapEntry[]): string {
+    const baseNames = parts.map((part) => parseWorkshopPartName(part.mapName).baseName);
+    return baseNames.reduce((shortest, name) =>
+        name.length < shortest.length ? name : shortest
+    );
+}
+
+function pickFolderPreviewUrl(parts: MapEntry[]): string | undefined {
+    for (const part of parts) {
+        const preview = part.previewUrl?.trim();
+        if (preview) return preview;
+    }
+    return undefined;
+}
+
+/**
+ * Groups workshop maps into single cards or multi-part folder cards.
+ */
+export const groupWorkshopMaps = (maps: MapEntry[]): WorkshopGridItem[] => {
+    const unique = dedupeMapsByDownloadUrl(maps);
+    const buckets = new Map<string, MapEntry[]>();
+
+    for (const map of unique) {
+        const { baseName } = parseWorkshopPartName(map.mapName);
+        const key = workshopGroupingKey(baseName);
+        const bucket = buckets.get(key) ?? [];
+        bucket.push(map);
+        buckets.set(key, bucket);
+    }
+
+    const items: WorkshopGridItem[] = [];
+
+    for (const parts of buckets.values()) {
+        const sorted = sortWorkshopParts(parts);
+        if (sorted.length >= 2) {
+            items.push({
+                kind: 'folder',
+                folderName: pickFolderDisplayName(sorted),
+                previewUrl: pickFolderPreviewUrl(sorted),
+                parts: sorted,
+            });
+        } else if (sorted.length === 1) {
+            items.push({ kind: 'single', map: sorted[0] });
+        }
+    }
+
+    return items.sort((a, b) => {
+        const nameA = a.kind === 'folder' ? a.folderName : a.map.mapName;
+        const nameB = b.kind === 'folder' ? b.folderName : b.map.mapName;
+        return nameA.localeCompare(nameB, undefined, { sensitivity: 'base' });
+    });
+};
+
+export const workshopGridItemSortName = (item: WorkshopGridItem): string =>
+    item.kind === 'folder' ? item.folderName : item.map.mapName;
+
+export const workshopFolderKey = (folder: Extract<WorkshopGridItem, { kind: 'folder' }>): string => {
+    const firstId = extractSteamWorkshopId(folder.parts[0]?.downloadUrl) ?? '0';
+    return `${folder.folderName}:${firstId}`;
+};
+
+/**
+ * Display part number for folder children (explicit suffix or implicit order).
+ */
+export const getWorkshopPartNumber = (map: MapEntry, indexInFolder: number): number => {
+    const parsed = parseWorkshopPartName(map.mapName);
+    if (parsed.partNumber !== null) {
+        return parsed.partNumber;
+    }
+    if (map.mapName.trim().toLowerCase() === parsed.baseName.toLowerCase()) {
+        return 1;
+    }
+    return indexInFolder + 1;
+};
+

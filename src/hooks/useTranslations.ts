@@ -294,5 +294,9 @@ export function useMapsTranslations() {
         searchPlaceholder: t('maps.searchPlaceholder'),
         searchNoResults: t('maps.searchNoResults'),
         staleListNotice: t('maps.staleListNotice'),
+        expandParts: t('maps.expandParts'),
+        collapseParts: t('maps.collapseParts'),
+        partLabel: (n: number) => t('maps.partLabel', { n }),
+        partsCount: (n: number) => t('maps.partsCount', { n }),
     };
 }

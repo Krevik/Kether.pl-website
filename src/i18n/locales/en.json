@@ -125,7 +125,11 @@
         "searchLabel": "Search maps by name",
         "searchPlaceholder": "Type part of a map name…",
         "searchNoResults": "No maps match your search.",
-        "staleListNotice": "The map list may be outdated. It will refresh when the server connection is restored."
+        "staleListNotice": "The map list may be outdated. It will refresh when the server connection is restored.",
+        "expandParts": "Show parts",
+        "collapseParts": "Hide parts",
+        "partLabel": "Part {{n}}",
+        "partsCount": "{{n}} parts"
     },
     "donate": {
         "title": "Support Us",
