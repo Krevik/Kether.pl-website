@@ -1,29 +1,29 @@
 {
     "common": {
-        "loading": "Ladowanie...",
-        "error": "Blad",
-        "retry": "Ponow",
+        "loading": "Ładowanie...",
+        "error": "Błąd",
+        "retry": "Ponów",
         "cancel": "Anuluj",
         "save": "Zapisz",
         "update": "Aktualizuj",
-        "refresh": "Odswiez",
-        "noAvailableOptions": "Brak dostepnych opcji"
+        "refresh": "Odśwież",
+        "noAvailableOptions": "Brak dostępnych opcji"
     },
     "navigation": {
-        "home": "Strona Glowna",
-        "hallOfFame": "Galeria Slawy",
-        "hallOfFameSuggestions": "Sugestie Galerii Slawy",
+        "home": "Strona Główna",
+        "hallOfFame": "Galeria Sławy",
+        "hallOfFameSuggestions": "Sugestie Galerii Sławy",
         "installedSVMaps": "Zainstalowane Mapy",
         "githubRepo": "Repo GitHub",
         "donate": "Wsparcie",
         "loading": {
-            "home": "Ladowanie Strony Glownej...",
-            "hallOfFame": "Ladowanie Galerii Slawy...",
-            "suggestions": "Ladowanie Sugestii...",
-            "installedSVMaps": "Ladowanie Zainstalowanych Map...",
-            "github": "Ladowanie Repo GitHub...",
-            "donate": "Ladowanie Strony Wsparcia...",
-            "generic": "Ladowanie..."
+            "home": "Ładowanie Strony Głównej...",
+            "hallOfFame": "Ładowanie Galerii Sławy...",
+            "suggestions": "Ładowanie Sugestii...",
+            "installedSVMaps": "Ładowanie Zainstalowanych Map...",
+            "github": "Ładowanie Repo GitHub...",
+            "donate": "Ładowanie Strony Wsparcia...",
+            "generic": "Ładowanie..."
         }
     },
     "serverInfo": {
@@ -33,28 +33,28 @@
         "online": "Online",
         "offline": "Offline",
         "map": "Mapa",
-        "joinGame": "Dolacz do gry",
+        "joinGame": "Dołącz do gry",
         "nickname": "Nick",
         "score": "Wynik",
         "duration": "Czas gry",
         "bot": "bot",
         "bots": "boty",
-        "noPlayersAvailable": "Brak dostepnych graczy"
+        "noPlayersAvailable": "Brak dostępnych graczy"
     },
     "commands": {
         "newCommand": "Nowa Komenda",
-        "addNewCommand": "Dodaj nowa komende",
-        "editCommand": "Edytuj Komende",
-        "addNewCommandTooltip": "Dodaje nowa komende",
-        "successfullyAdded": "Pomyslnie dodano nowa komende",
-        "couldntAdd": "Nie mozna bylo dodac komendy",
+        "addNewCommand": "Dodaj nową komendę",
+        "editCommand": "Edytuj Komendę",
+        "addNewCommandTooltip": "Dodaje nową komendę",
+        "successfullyAdded": "Pomyślnie dodano nową komendę",
+        "couldntAdd": "Nie można było dodać komendy",
         "command": "Komenda",
         "description": "Opis",
         "actions": "Akcje",
-        "editCommandTooltip": "Edytuje dana komende",
-        "deleteCommandTooltip": "Usuwa dana komende natychmiast",
-        "couldntDelete": "Nie mozna bylo usunac komendy",
-        "noCommandsAvailable": "Brak dostepnych komend"
+        "editCommandTooltip": "Edytuje daną komendę",
+        "deleteCommandTooltip": "Usuwa daną komendę natychmiast",
+        "couldntDelete": "Nie można było usunąć komendy",
+        "noCommandsAvailable": "Brak dostępnych komend"
     },
     "binds": {
         "newBind": "Nowy Bind",
@@ -62,53 +62,53 @@
         "editBind": "Edytuj Bind",
         "binds": "Bindy",
         "addNewBindTooltip": "Dodaje nowy bind",
-        "successfullyAdded": "Pomyslnie dodano nowy bind",
-        "couldntAdd": "Nie mozna bylo dodac binda",
+        "successfullyAdded": "Pomyślnie dodano nowy bind",
+        "couldntAdd": "Nie można było dodać binda",
         "author": "Autor",
         "text": "Tekst",
         "databaseId": "ID bazy danych",
         "actions": "Akcje",
         "editBindTooltip": "Edytuje dany bind",
         "deleteBindTooltip": "Usuwa dany bind natychmiast",
-        "couldntDelete": "Nie mozna bylo usunac binda",
-        "voting": "Glosowanie",
-        "upvotes": "Glosy za",
-        "downvotes": "Glosy przeciw",
-        "noBindsAvailable": "Brak dostepnych bindow"
+        "couldntDelete": "Nie można było usunąć binda",
+        "voting": "Głosowanie",
+        "upvotes": "Głosy za",
+        "downvotes": "Głosy przeciw",
+        "noBindsAvailable": "Brak dostępnych bindow"
     },
     "suggestions": {
         "newSuggestion": "Nowa Sugestia",
-        "addNewSuggestion": "Dodaj nowa sugestie",
-        "editSuggestion": "Edytuj Sugestie",
-        "successfullyAdded": "Pomyslnie dodano nowa sugestie",
-        "couldntAdd": "Nie mozna bylo dodac sugestii",
+        "addNewSuggestion": "Dodaj nową sugestię",
+        "editSuggestion": "Edytuj Sugestię",
+        "successfullyAdded": "Pomyślnie dodano nową sugestię",
+        "couldntAdd": "Nie można było dodać sugestii",
         "bindSuggestions": "Sugestie Bindow",
         "suggestBind": "Zaproponuj Bind",
-        "suggestBindTooltip": "Dodaje nowa sugestie binda",
+        "suggestBindTooltip": "Dodaje nową sugestię binda",
         "acceptBindTooltip": "Akceptuje dany bind",
-        "deleteSuggestionTooltip": "Usuwa dana sugestie",
-        "couldntAccept": "Nie mozna bylo dodac nowego binda",
-        "couldntDelete": "Nie mozna bylo usunac sugestii",
-        "successfullyAccepted": "Pomyslnie zaakceptowano nowy bind",
-        "successfullySuggested": "Pomyslnie zaproponowano nowy bind",
+        "deleteSuggestionTooltip": "Usuwa daną sugestię",
+        "couldntAccept": "Nie można było dodać nowego binda",
+        "couldntDelete": "Nie można było usunąć sugestii",
+        "successfullyAccepted": "Pomyślnie zaakceptowano nowy bind",
+        "successfullySuggested": "Pomyślnie zaproponowano nowy bind",
         "proposedBy": "Zaproponowany przez",
-        "noSuggestionsAvailable": "Brak dostepnych sugestii"
+        "noSuggestionsAvailable": "Brak dostępnych sugestii"
     },
     "github": {
         "title": "Repozytorium GitHub",
-        "description": "Mozesz znalezc pliki naszego serwera",
+        "description": "Możesz znaleźć pliki naszego serwera",
         "here": "TUTAJ"
     },
     "maps": {
         "title": "Mapy Serwera",
         "databaseId": "ID bazy danych",
         "mapName": "Nazwa Mapy",
-        "source": "Zrodlo",
+        "source": "Źródło",
         "actions": "Akcje",
         "install": "Zainstaluj",
-        "download": "Pobierz (Reczna instalacja)",
+        "download": "Pobierz (Ręczna instalacja)",
         "workshop": "Warsztat Steam",
-        "noMapsAvailable": "Brak dostepnych map",
+        "noMapsAvailable": "Brak dostępnych map",
         "allMaps": "Wszystkie Mapy (Wszystkie kampanie z poniższej listy w jednym pliku zip)",
         "installationHelp": "Instrukcje instalacji",
         "installationInstructions": "Instrukcje instalacji",
@@ -124,16 +124,16 @@
         "openWorkshopPage": "Strona Warsztatu",
         "searchLabel": "Szukaj map po nazwie",
         "searchPlaceholder": "Wpisz fragment nazwy mapy…",
-        "searchNoResults": "Brak map pasujacych do wyszukiwania.",
-        "staleListNotice": "Lista map moze byc nieaktualna. Odswiezy sie po przywroceniu polaczenia z serwerem.",
-        "expandParts": "Pokaz czesci",
-        "collapseParts": "Ukryj czesci",
-        "partLabel": "Czesc {{n}}",
-        "partsCount": "{{n}} czesci"
+        "searchNoResults": "Brak map pasujących do wyszukiwania.",
+        "staleListNotice": "Lista map może być nieaktualna. Odświeży się po przywróceniu połączenia z serwerem.",
+        "expandParts": "Pokaż części",
+        "collapseParts": "Ukryj części",
+        "partLabel": "Część {{n}}",
+        "partsCount": "{{n}} części"
     },
     "donate": {
         "title": "Wesprzyj Nas",
-        "description": "Lubisz nasz serwer lub chcesz dostep do komend vip? Wesprzyj nas poprzez donacje!",
+        "description": "Lubisz nasz serwer lub chcesz dostęp do komend vip? Wesprzyj nas poprzez donację!",
         "transfer": "Przelew",
         "bankPLN": "Bank: (tylko PLN)",
         "cryptoBSC": "Krypto BSC:",
@@ -145,23 +145,23 @@
         "blik": "Blik: Zapytaj mnie ;)"
     },
     "errors": {
-        "loadingTimeout": "Ladowanie trwa dluzej niz oczekiwano",
-        "serverInfoUnavailable": "Informacje o serwerze niedostepne",
-        "serverInfoUnavailableDescription": "Nie mozna pobrac statusu serwera. Serwer moze byc chwilowo niedostepny.",
-        "refreshServerInfo": "Odswiez informacje o serwerze"
+        "loadingTimeout": "Ładowanie trwa dłużej niż oczekiwano",
+        "serverInfoUnavailable": "Informacje o serwerze niedostępne",
+        "serverInfoUnavailableDescription": "Nie można pobrać statusu serwera. Serwer może być chwilowo niedostępny.",
+        "refreshServerInfo": "Odśwież informacje o serwerze"
     },
     "performance": {
         "monitor": {
-            "title": "Monitor wydajnosci",
-            "totalOperations": "Laczna liczba operacji",
-            "averageDuration": "Sredni czas trwania",
+            "title": "Monitor wydajności",
+            "totalOperations": "Łączna liczba operacji",
+            "averageDuration": "Średni czas trwania",
             "slowOperations": "Wolne operacje (>100ms)",
             "recentOperations": "Ostatnie operacje",
-            "clear": "Wyczysc"
+            "clear": "Wyczyść"
         }
     },
     "footer": {
-        "copyright": "© 2025 Kether dzieki: Krevik, SATANIXON.",
+        "copyright": "© 2025 Kether dzięki: Krevik, SATANIXON.",
         "discordTooltip": "Zaproszenie na serwer Discord",
         "steamTooltip": "Zaproszenie do grupy czatu Steam"
     }
