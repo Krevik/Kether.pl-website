@@ -21,7 +21,10 @@ export const InstallationHelpDialog: React.FC<InstallationHelpDialogProps> = ({
             visible={visible}
             header={mapsTranslations.installationInstructions}
             modal
-            className="p-fluid app-dialog"
+            className="p-fluid app-dialog maps-install-dialog"
+            headerClassName="maps-install-dialog__header"
+            contentClassName="maps-install-dialog__content"
+            maskClassName="maps-install-dialog__mask"
             onHide={onHide}
             style={DIALOG_STYLES}
         >

@@ -10,6 +10,7 @@ import {
 import { fetchL4d2CenterCatalog, L4d2CenterCatalogOption } from '../l4d2centerCatalog';
 import { MapEntry } from '../mapEntry';
 import { installMap } from '../../../services/mapsAdminService';
+import { DIALOG_STYLES } from '../constants';
 import { notificationManager } from '../../../utils/notificationManager';
 import { useCommonTranslations, useMapsTranslations } from '../../../hooks/useTranslations';
 
@@ -81,10 +82,10 @@ export function AddNewMapDialog({
         mode === 'l4d2center' && (catalogLoading || Boolean(catalogError));
 
     const footer = (
-        <>
+        <div className="maps-install-dialog__footer-actions">
             <Button
-                label={`❌ ${commonTranslations.cancel}`}
-                className="p-button-text app-focus-ring"
+                label={commonTranslations.cancel}
+                className="maps-install-dialog__btn maps-install-dialog__btn-cancel app-focus-ring"
                 onClick={handleHide}
                 disabled={isSubmitting}
             />
@@ -92,9 +93,9 @@ export function AddNewMapDialog({
                 label={
                     isSubmitting
                         ? mapsTranslations.installInProgress
-                        : `✅ ${commonTranslations.save}`
+                        : commonTranslations.save
                 }
-                className="p-button-text app-focus-ring"
+                className="maps-install-dialog__btn maps-install-dialog__btn-save app-focus-ring"
                 disabled={isSubmitting || installBlocked}
                 onClick={() => {
                     const payload = buildInstallPayload(mode, input, nameOverride);
@@ -122,7 +123,7 @@ export function AddNewMapDialog({
                         });
                 }}
             />
-        </>
+        </div>
     );
 
     return (
@@ -130,7 +131,11 @@ export function AddNewMapDialog({
             visible={isDialogVisible}
             header={mapsTranslations.addMap}
             modal
-            className="p-fluid app-dialog"
+            className="p-fluid app-dialog maps-install-dialog"
+            headerClassName="maps-install-dialog__header"
+            contentClassName="maps-install-dialog__content"
+            maskClassName="maps-install-dialog__mask"
+            style={DIALOG_STYLES}
             footer={footer}
             onHide={handleHide}
         >

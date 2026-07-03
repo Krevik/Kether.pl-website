@@ -64,14 +64,22 @@ export function WorkshopMapFolderCard({
             </div>
             <div className="workshop-map-card__body workshop-map-folder__body">
                 <h3 className="workshop-map-card__title workshop-map-folder__title">{folderName}</h3>
-                <button
+        <button
                     type="button"
-                    className="workshop-map-folder__toggle app-focus-ring"
+                    className={
+                        'workshop-map-card__btn workshop-map-card__btn-secondary workshop-map-folder__toggle app-focus-ring' +
+                        (expanded ? ' workshop-map-folder__toggle--expanded' : '')
+                    }
                     onClick={handleToggle}
                     aria-expanded={expanded}
                     aria-controls={partsPanelId}
                 >
-                    {expanded ? mapsTranslations.collapseParts : mapsTranslations.expandParts}
+                    <span className="workshop-map-folder__toggle-icon" aria-hidden>
+                        ▾
+                    </span>
+                    <span className="workshop-map-folder__toggle-label">
+                        {expanded ? mapsTranslations.collapseParts : mapsTranslations.expandParts}
+                    </span>
                 </button>
                 {expanded ? (
                     <div
