@@ -1,1 +1,0 @@
-import{n as s,f as t,F as o}from"./index-DgeFiv2k.js";function i(i){return 401===i.status?(s.ERROR("Please log in to continue."),t.dispatch(o.setUserID(void 0)),!0):403===i.status&&(s.ERROR("You do not have permission to perform this action."),t.dispatch(o.setIsAdmin(!1)),!0)}export{i as h};
