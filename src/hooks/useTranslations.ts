@@ -261,11 +261,54 @@ export function useFooterTranslations() {
     };
 }
 
+import { InstallSourceMode } from '../components/InstalledSVMaps/installMapUtils';
+
 /**
  * Hook for maps translations
  */
 export function useMapsTranslations() {
     const { t } = useTranslation();
+
+    const installInputLabel = (mode: InstallSourceMode) => {
+        switch (mode) {
+            case 'workshop':
+                return t('maps.installInputLabelWorkshop');
+            case 'sirplease':
+                return t('maps.installInputLabelSirPlease');
+            case 'l4d2center':
+                return t('maps.installInputLabelL4d2Center');
+            default:
+                return t('maps.installInputLabelAuto');
+        }
+    };
+
+    const installInputPlaceholder = (mode: InstallSourceMode) => {
+        switch (mode) {
+            case 'workshop':
+                return t('maps.installInputPlaceholderWorkshop');
+            case 'sirplease':
+                return t('maps.installInputPlaceholderSirPlease');
+            case 'l4d2center':
+                return t('maps.installInputPlaceholderL4d2Center');
+            default:
+                return t('maps.installInputPlaceholderAuto');
+        }
+    };
+
+    const installInputHint = (mode: InstallSourceMode) => {
+        switch (mode) {
+            case 'workshop':
+                return t('maps.installInputHintWorkshop');
+            case 'sirplease':
+                return t('maps.installInputHintSirPlease');
+            case 'l4d2center':
+                return t('maps.installInputHintL4d2Center');
+            default:
+                return t('maps.installInputHintAuto');
+        }
+    };
+
+    const installValidationError = (key: string) => t(`maps.${key}`);
     
     return {
         title: t('maps.title'),
@@ -298,5 +341,21 @@ export function useMapsTranslations() {
         collapseParts: t('maps.collapseParts'),
         partLabel: (n: number) => t('maps.partLabel', { n }),
         partsCount: (n: number) => t('maps.partsCount', { n }),
+        addMap: t('maps.addMap'),
+        addMapTooltip: t('maps.addMapTooltip'),
+        installSourceLabel: t('maps.installSourceLabel'),
+        installSourceAuto: t('maps.installSourceAuto'),
+        installSourceWorkshop: t('maps.installSourceWorkshop'),
+        installSourceSirPlease: t('maps.installSourceSirPlease'),
+        installSourceL4d2Center: t('maps.installSourceL4d2Center'),
+        installInputLabel,
+        installInputPlaceholder,
+        installInputHint,
+        installNameOverride: t('maps.installNameOverride'),
+        installNameOverrideHint: t('maps.installNameOverrideHint'),
+        installInProgress: t('maps.installInProgress'),
+        installSuccess: t('maps.installSuccess'),
+        installFailed: t('maps.installFailed'),
+        installValidationError,
     };
 }

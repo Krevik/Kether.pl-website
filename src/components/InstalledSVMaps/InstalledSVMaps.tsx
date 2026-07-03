@@ -1,5 +1,7 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { InputText } from 'primereact/inputtext';
+import { Button } from 'primereact/button';
+import { Toolbar } from 'primereact/toolbar';
 import './InstalledSVMaps.css';
 import { PageWithBackground } from '../PageLayout/PageBackground/PageWithBackground';
 import { BACKGROUNDS } from '../PageLayout/PageBackground/backgrounds';
@@ -19,6 +21,7 @@ import { DownloadMapsList } from './DownloadMapsList';
 import { fetchInstalledMaps } from '../../services/mapsService';
 import { LoadingSpinner } from '../LoadingSpinner/LoadingSpinner';
 import { MapEntry } from './mapEntry';
+import { AddNewMapDialog } from './Dialogues/AddNewMapDialog';
 
 const MAP_NAME_SEARCH_DEBOUNCE_MS = 280;
 
@@ -37,7 +40,20 @@ export default function InstalledSVMaps() {
     const [maps, setMaps] = useState<MapEntry[]>([]);
     const [mapsStale, setMapsStale] = useState(false);
     const [mapsLoading, setMapsLoading] = useState(true);
+    const [addMapDialogVisible, setAddMapDialogVisible] = useState(false);
     const debouncedMapSearch = useDebouncedValue(mapSearch, MAP_NAME_SEARCH_DEBOUNCE_MS);
+
+    const reloadMaps = useCallback(() => {
+        setMapsLoading(true);
+        return fetchInstalledMaps()
+            .then((result) => {
+                setMaps(result.maps);
+                setMapsStale(result.stale);
+            })
+            .finally(() => {
+                setMapsLoading(false);
+            });
+    }, []);
 
     useEffect(() => {
         let cancelled = false;
@@ -140,6 +156,26 @@ export default function InstalledSVMaps() {
             <div className="installed-sv-maps">
                 <div className="card app-surface app-page-card">
                     <div className="centered-text">{mapsTranslations.title}</div>
+
+                    {isAdmin && (
+                        <Toolbar
+                            className="maps-admin-toolbar app-toolbar"
+                            start={
+                                <Button
+                                    label={`➕ ${mapsTranslations.addMap}`}
+                                    className="p-button-success mr-2 app-focus-ring"
+                                    title={mapsTranslations.addMapTooltip}
+                                    onClick={() => setAddMapDialogVisible(true)}
+                                />
+                            }
+                        />
+                    )}
+
+                    <AddNewMapDialog
+                        isDialogVisible={addMapDialogVisible}
+                        setDialogVisibility={setAddMapDialogVisible}
+                        onInstalled={reloadMaps}
+                    />
 
                     {mapsStale && (
                         <div className="maps-stale-banner" role="status">

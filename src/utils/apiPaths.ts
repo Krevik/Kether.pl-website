@@ -8,6 +8,7 @@ export const apiPaths = {
     STEAM_PATH: `/steam`,
     LIVE_SERVER_PATH: `/LiveServerInfo`,
     MAPS_PATH: `/maps`,
+    MAPS_ADMIN_INSTALL: `/maps/admin/install`,
     AUTH_BASE_PATH: `/auth`,
 };
 

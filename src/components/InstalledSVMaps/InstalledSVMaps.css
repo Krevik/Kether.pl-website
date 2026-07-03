@@ -351,6 +351,24 @@
     }
 }
 
+.maps-admin-toolbar {
+    margin: 0.75rem 0 0.35rem;
+}
+
+.maps-install-source-select {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-bottom: 0.5rem;
+}
+
+.maps-install-hint {
+    margin: 0.35rem 0 0.85rem;
+    font-size: 0.82rem;
+    color: var(--color-text-muted, rgba(255, 255, 255, 0.62));
+    line-height: 1.4;
+}
+
 /* —— Workshop card grid —— */
 .workshop-maps-section {
     width: 100%;
