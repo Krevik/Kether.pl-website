@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 import { API_DOMAIN } from '../utils/envUtils';
 import { notificationManager } from '../utils/notificationManager';
 import { handleAuthError } from '../utils/authUtils';
+import { apiFetch } from '../utils/apiClient';
 
 
 export const bindsManagingService = {
@@ -18,11 +19,11 @@ export const bindsManagingService = {
         return useServerBindsLoader(steamUserID ? steamUserID : undefined);
     },
     getBinds: (_userSteamID?: string) => {
-        return fetch(
+        return apiFetch(
             `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BINDS_PATH}/getBinds`,
             {
                 method: 'get',
-                credentials: 'include',
+                auth: true,
             }
         )
         .then((response) => {
@@ -65,13 +66,13 @@ export const bindsManagingService = {
             vote: votingData.vote!,
         };
         
-        return fetch(
+        return apiFetch(
             `${API_DOMAIN}${apiPaths.API_BASE_PATH}${
                 apiPaths.BIND_VOTES_PATH
             }/${undoVote ? 'deleteBindVoting' : 'addBindVoting'}`,
             {
                 method: 'post',
-                credentials: 'include',
+                auth: true,
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -96,11 +97,11 @@ export const bindsManagingService = {
         });
     },
     addNewBind: (bind: BindEntry, steamUserID?: string) => {
-        return fetch(
+        return apiFetch(
             `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BINDS_PATH}/addBind`,
             {
                 method: 'post',
-                credentials: 'include',
+                auth: true,
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -128,11 +129,11 @@ export const bindsManagingService = {
             });
     },
     deleteBind: (bind: BindEntry, steamUserID?: string) => {
-        return fetch(
+        return apiFetch(
             `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BINDS_PATH}/deleteBind`,
             {
                 method: 'post',
-                credentials: 'include',
+                auth: true,
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -162,11 +163,11 @@ export const bindsManagingService = {
             });
     },
     updateBind: (newBindData: BindEntry, steamUserID?: string) => {
-        return fetch(
+        return apiFetch(
             `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BINDS_PATH}/updateBind`,
             {
                 method: 'post',
-                credentials: 'include',
+                auth: true,
                 headers: {
                     'Content-Type': 'application/json',
                 },

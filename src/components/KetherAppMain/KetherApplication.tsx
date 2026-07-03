@@ -18,6 +18,7 @@ const HallOfFame = lazy(() => import('../HallOfFame/HallOfFame'));
 const InstalledSVMaps = lazy(() => import('../InstalledSVMaps/InstalledSVMaps'));
 const GithubRepo = lazy(() => import('../GithubRepo/GithubRepo'));
 const Donate = lazy(() => import('../Donate/Donate'));
+const AuthCallback = lazy(() => import('../AuthCallback/AuthCallback'));
 const HallOfFameSuggestions = lazy(() => import('../HallOfFame/HallOfFameSuggestions'));
 export default function KetherApplication() {
     steamAPIService.useSessionHydration();
@@ -29,6 +30,20 @@ export default function KetherApplication() {
     const router = createBrowserRouter(
         createRoutesFromElements(
             <>
+                <Route
+                    path={pagePaths.AUTH_CALLBACK}
+                    element={
+                        <Suspense fallback={
+                            <LoadingSpinner
+                                message={navTranslations.loading.generic}
+                                type="progressive"
+                                minDelay={50}
+                            />
+                        }>
+                            <AuthCallback />
+                        </Suspense>
+                    }
+                />
                 <Route
                     path={pagePaths.HOME_PAGE}
                     element={

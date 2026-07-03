@@ -7,6 +7,7 @@ import { API_DOMAIN } from '../utils/envUtils';
 import { notificationManager } from '../utils/notificationManager';
 import { useSelector } from 'react-redux';
 import { handleAuthError } from '../utils/authUtils';
+import { apiFetch } from '../utils/apiClient';
 
 export const bindSuggestionsManagingService = {
     useBindSuggestionsLoadingService: () => {
@@ -37,11 +38,11 @@ export const bindSuggestionsManagingService = {
             });
     },
     addNewBindSuggestion: (bind: BindSuggestionEntry) => {
-        return fetch(
+        return apiFetch(
             `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BIND_SUGGESTIONS_PATH}/addBindSuggestion`,
             {
                 method: 'post',
-                credentials: 'include',
+                auth: true,
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -69,11 +70,11 @@ export const bindSuggestionsManagingService = {
             });
     },
     deleteBindSuggestion: (bind: BindSuggestionEntry) => {
-        return fetch(
+        return apiFetch(
             `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.BIND_SUGGESTIONS_PATH}/deleteBindSuggestion`,
             {
                 method: 'post',
-                credentials: 'include',
+                auth: true,
                 headers: {
                     'Content-Type': 'application/json',
                 },

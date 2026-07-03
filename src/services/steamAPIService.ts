@@ -9,17 +9,26 @@ import { apiPaths } from '../utils/apiPaths';
 import { API_DOMAIN } from '../utils/envUtils';
 import { notificationManager } from '../utils/notificationManager';
 import { authService } from './authService';
+import { getAccessToken } from '../utils/authToken';
+import { apiFetch } from '../utils/apiClient';
 
 export const steamAPIService = {
     useSessionHydration: () => {
         useEffect(() => {
             const hydrateSession = async () => {
+                if (!getAccessToken()) {
+                    appStore.dispatch(userDataActions.setUserID(undefined));
+                    appStore.dispatch(userDataActions.setIsAdmin(false));
+                    return;
+                }
+
                 const session = await authService.getSession();
                 if (session) {
                     appStore.dispatch(userDataActions.setUserID(session.steamid));
                     appStore.dispatch(userDataActions.setIsAdmin(session.is_admin));
                 } else {
                     appStore.dispatch(userDataActions.setUserID(undefined));
+                    appStore.dispatch(userDataActions.setIsAdmin(false));
                 }
             };
 
@@ -46,11 +55,11 @@ export const steamAPIService = {
 
         useEffect(() => {
             if (userID) {
-                fetch(
+                apiFetch(
                     `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.STEAM_PATH}/games`,
                     {
                         method: 'post',
-                        credentials: 'include',
+                        auth: true,
                         body: userID,
                         headers: {
                             'Content-Type': 'application/json',
@@ -81,11 +90,11 @@ export const steamAPIService = {
     },
     getUserData: async (userID: string): Promise<SteamUserDetails> => {
         try {
-            const response = await fetch(
+            const response = await apiFetch(
                 `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.STEAM_PATH}/userData`,
                 {
                     method: 'post',
-                    credentials: 'include',
+                    auth: true,
                     body: userID,
                     headers: {
                         'Content-Type': 'application/json',

@@ -2,6 +2,7 @@ import { InstallMapPayload } from '../components/InstalledSVMaps/installMapUtils
 import { apiPaths } from '../utils/apiPaths';
 import { API_DOMAIN } from '../utils/envUtils';
 import { handleAuthError } from '../utils/authUtils';
+import { apiFetch } from '../utils/apiClient';
 
 export interface AdminInstallMapResponse {
     map_id: number;
@@ -11,11 +12,11 @@ export interface AdminInstallMapResponse {
 export async function installMap(
     payload: InstallMapPayload
 ): Promise<AdminInstallMapResponse> {
-    const response = await fetch(
+    const response = await apiFetch(
         `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.MAPS_ADMIN_INSTALL}`,
         {
             method: 'POST',
-            credentials: 'include',
+            auth: true,
             headers: {
                 'Content-Type': 'application/json',
             },

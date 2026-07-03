@@ -5,6 +5,7 @@ import { commandsActions } from '../redux/slices/commandsSlice';
 import { API_PATHS } from '../utils/apiPaths';
 import { notificationManager } from '../utils/notificationManager';
 import { handleAuthError } from '../utils/authUtils';
+import { apiFetch } from '../utils/apiClient';
 
 export const commandsManagingService = {
     useCommandsLoadingService: () => {
@@ -30,9 +31,9 @@ export const commandsManagingService = {
             });
     },
     addNewCommand: (command: CommandEntry) => {
-        return fetch(`${API_PATHS.COMMANDS}/addCommand`, {
+        return apiFetch(`${API_PATHS.COMMANDS}/addCommand`, {
             method: 'post',
-            credentials: 'include',
+            auth: true,
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -62,9 +63,9 @@ export const commandsManagingService = {
             });
     },
     deleteCommand: (command: CommandEntry) => {
-        return fetch(`${API_PATHS.COMMANDS}/deleteCommand`, {
+        return apiFetch(`${API_PATHS.COMMANDS}/deleteCommand`, {
             method: 'post',
-            credentials: 'include',
+            auth: true,
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -93,9 +94,9 @@ export const commandsManagingService = {
             });
     },
     updateCommand: (newCommandData: CommandEntry) => {
-        return fetch(`${API_PATHS.COMMANDS}/updateCommand`, {
+        return apiFetch(`${API_PATHS.COMMANDS}/updateCommand`, {
             method: 'post',
-            credentials: 'include',
+            auth: true,
             headers: {
                 'Content-Type': 'application/json',
             },

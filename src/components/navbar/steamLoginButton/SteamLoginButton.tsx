@@ -18,6 +18,7 @@ export default function SteamLoginButton() {
     const handleLogout = async () => {
         await authService.logout();
         appStore.dispatch(userDataActions.setUserID(undefined));
+        appStore.dispatch(userDataActions.setIsAdmin(false));
     };
 
     return !userID ? (

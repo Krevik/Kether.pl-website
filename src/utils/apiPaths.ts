@@ -18,6 +18,7 @@ export const API_PATHS = {
     SERVER_INFO_ANY: `${API_DOMAIN}/api/LiveServerInfo`, // put IP and port after slash. Example: /api/LiveServerInfo/54.36.179.182/27015
     COMMANDS: `${API_DOMAIN}/api/commands`,
     AUTH_CALLBACK: `${API_DOMAIN}/api/auth/steam/callback`,
+    AUTH_EXCHANGE: `${API_DOMAIN}/api/auth/exchange`,
     AUTH_ME: `${API_DOMAIN}/api/auth/me`,
     AUTH_LOGOUT: `${API_DOMAIN}/api/auth/logout`,
     MAPS: `${API_DOMAIN}/api/maps`,
