@@ -175,6 +175,7 @@ export default function InstalledSVMaps() {
                         isDialogVisible={addMapDialogVisible}
                         setDialogVisibility={setAddMapDialogVisible}
                         onInstalled={reloadMaps}
+                        installedMaps={maps}
                     />
 
                     {mapsStale && (

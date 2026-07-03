@@ -2,7 +2,7 @@ import { InputText } from 'primereact/inputtext';
 import { SelectButton } from 'primereact/selectbutton';
 import { Dropdown } from 'primereact/dropdown';
 import { InstallSourceMode } from '../installMapUtils';
-import { L4d2CenterCatalogEntry } from '../../../services/mapsAdminService';
+import { L4d2CenterCatalogOption } from '../l4d2centerCatalog';
 import { useMapsTranslations } from '../../../hooks/useTranslations';
 
 type MapsTranslations = ReturnType<typeof useMapsTranslations>;
@@ -14,7 +14,7 @@ export type DialogAddMapContentProps = {
     setInput: (value: string) => void;
     nameOverride: string;
     setNameOverride: (value: string) => void;
-    l4d2centerOptions: L4d2CenterCatalogEntry[];
+    l4d2centerOptions: L4d2CenterCatalogOption[];
     catalogLoading: boolean;
     catalogError: string | null;
     mapsTranslations: MapsTranslations;
@@ -47,7 +47,7 @@ export function DialogAddMapContent({
               ? mapsTranslations.installL4d2CenterLoading
               : mapsTranslations.installInputHint(mode);
 
-    const l4d2centerItemTemplate = (option: L4d2CenterCatalogEntry) => (
+    const l4d2centerItemTemplate = (option: L4d2CenterCatalogOption) => (
         <span>
             {option.name}
             {option.installed ? ` ${mapsTranslations.installL4d2CenterAlreadyInstalled}` : ''}
