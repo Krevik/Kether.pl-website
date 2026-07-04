@@ -1,7 +1,6 @@
 import { API_PATHS } from '../utils/apiPaths';
 import { apiFetch } from '../utils/apiClient';
 import { setAccessToken, clearAccessToken } from '../utils/authToken';
-import { handleAuthError } from '../utils/authUtils';
 import { errorLogger } from '../utils/errorLogger';
 import { ErrorType } from '../utils/errorUtils';
 
@@ -55,42 +54,33 @@ export const authService = {
     },
 
     /**
-     * Fetch the current session from the backend using the stored Bearer token.
-     * Returns null when not authenticated.
+     * Ping the server to confirm the stored Bearer token is still valid.
+     * Does not return session data — UI hints come from the JWT payload.
      */
-    getSession: async (): Promise<SessionResponse | null> => {
+    validateSession: async (): Promise<boolean> => {
         try {
             const response = await apiFetch(API_PATHS.AUTH_ME, {
                 method: 'GET',
                 auth: true,
             });
 
-            if (response.status === 401) {
-                handleAuthError(response);
-                return null;
-            }
-
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                return false;
             }
 
             const data = (await response.json()) as SessionResponse | null;
-            if (!data?.steamid) {
-                return null;
-            }
-
-            return data;
+            return data?.steamid != null;
         } catch (error) {
             const errorMessage = error instanceof Error ? error.message : 'Unknown error';
             errorLogger.logError(
-                new Error(`Session fetch failed: ${errorMessage}`),
+                new Error(`Session validation failed: ${errorMessage}`),
                 {
                     component: 'AuthService',
-                    action: 'get_session',
+                    action: 'validate_session',
                 },
                 ErrorType.SERVER
             );
-            return null;
+            return false;
         }
     },
 

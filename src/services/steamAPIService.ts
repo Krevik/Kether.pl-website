@@ -9,26 +9,45 @@ import { apiPaths } from '../utils/apiPaths';
 import { API_DOMAIN } from '../utils/envUtils';
 import { notificationManager } from '../utils/notificationManager';
 import { authService } from './authService';
-import { getAccessToken } from '../utils/authToken';
+import { clearAccessToken, getAccessToken } from '../utils/authToken';
 import { apiFetch } from '../utils/apiClient';
+import { hydrateSessionFromToken } from '../utils/sessionFromToken';
+
+function clearSessionState(): void {
+    clearAccessToken();
+    appStore.dispatch(userDataActions.setUserID(undefined));
+    appStore.dispatch(userDataActions.setIsAdmin(false));
+}
+
+function applySessionFromToken(token: string): boolean {
+    const session = hydrateSessionFromToken(token);
+    if (!session) {
+        return false;
+    }
+
+    appStore.dispatch(userDataActions.setUserID(session.steamid));
+    appStore.dispatch(userDataActions.setIsAdmin(session.isAdmin));
+    return true;
+}
 
 export const steamAPIService = {
     useSessionHydration: () => {
         useEffect(() => {
             const hydrateSession = async () => {
-                if (!getAccessToken()) {
-                    appStore.dispatch(userDataActions.setUserID(undefined));
-                    appStore.dispatch(userDataActions.setIsAdmin(false));
+                const token = getAccessToken();
+                if (!token) {
+                    clearSessionState();
                     return;
                 }
 
-                const session = await authService.getSession();
-                if (session) {
-                    appStore.dispatch(userDataActions.setUserID(session.steamid));
-                    appStore.dispatch(userDataActions.setIsAdmin(session.is_admin));
-                } else {
-                    appStore.dispatch(userDataActions.setUserID(undefined));
-                    appStore.dispatch(userDataActions.setIsAdmin(false));
+                if (!applySessionFromToken(token)) {
+                    clearSessionState();
+                    return;
+                }
+
+                const isValid = await authService.validateSession();
+                if (!isValid) {
+                    clearSessionState();
                 }
             };
 

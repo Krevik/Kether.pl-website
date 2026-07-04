@@ -17,9 +17,7 @@ export type GamesInfo = {
 
 interface userDataSliceProps {
     userID?: string;
-    // Note: isAdmin state is verified by backend via /api/admin/verify
-    // This state is for UI display only and should NEVER be trusted for authorization
-    // Backend must validate admin status for all admin actions
+    // UI hint from signed JWT; backend enforces on every admin route
     isAdmin: boolean;
     userData?: SteamUserDetails;
     gamesData?: GamesInfo;

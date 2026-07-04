@@ -27,6 +27,7 @@
 		"build:dev": "tsc && vite build --mode development && shx cp build/index.html build/404.html",
 		"preview": "vite preview",
 		"type-check": "tsc --noEmit",
+		"test": "vitest run",
 		"lint": "eslint src --ext .ts,.tsx",
 		"lint:fix": "eslint src --ext .ts,.tsx --fix",
 		"predeploy": "npm run build",
@@ -59,7 +60,8 @@
 		"shx": "^0.4.0",
 		"typescript-plugin-css-modules": "^5.2.0",
 		"vite": "^6.4.3",
-		"vite-tsconfig-paths": "^5.1.4"
+		"vite-tsconfig-paths": "^5.1.4",
+		"vitest": "^3.2.4"
 	},
 	"prettier": {
 		"trailingComma": "es5",
