@@ -1,1 +1,0 @@
-import{K as s,n as t,f as i,G as o}from"./index-yUG55oTl.js";function a(a){return 401===a.status?(s(),t.ERROR("Please log in to continue."),i.dispatch(o.setUserID(void 0)),i.dispatch(o.setIsAdmin(!1)),!0):403===a.status&&(t.ERROR("You do not have permission to perform this action."),i.dispatch(o.setIsAdmin(!1)),!0)}export{a as h};
