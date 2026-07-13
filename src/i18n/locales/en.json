@@ -4,6 +4,7 @@
         "error": "Error",
         "retry": "Retry",
         "cancel": "Cancel",
+        "close": "Close",
         "save": "Save",
         "update": "Update",
         "refresh": "Refresh",

@@ -133,7 +133,7 @@ export function ManageMapDialog({
                         ? mapsTranslations.manageCheckUpdateInProgress
                         : mapsTranslations.manageCheckUpdate
                 }
-                className="maps-install-dialog__btn p-button-info app-focus-ring"
+                className="maps-install-dialog__btn maps-install-dialog__btn-update app-focus-ring"
                 onClick={handleCheckUpdate}
                 disabled={busy || loading || !supportsUpdates}
                 title={
@@ -148,7 +148,7 @@ export function ManageMapDialog({
                         ? mapsTranslations.manageRemoveInProgress
                         : mapsTranslations.manageRemoveAddon
                 }
-                className="maps-install-dialog__btn p-button-danger app-focus-ring"
+                className="maps-install-dialog__btn maps-install-dialog__btn-danger app-focus-ring"
                 onClick={handleRemove}
                 disabled={busy || loading || !detail}
             />

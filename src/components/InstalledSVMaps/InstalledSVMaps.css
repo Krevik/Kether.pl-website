@@ -720,8 +720,34 @@
     border-color: rgba(255, 180, 186, 0.45);
 }
 
+.maps-install-dialog__btn-update.p-button {
+    background: rgba(9, 12, 19, 0.9);
+    color: var(--color-text-primary);
+    border-color: rgba(255, 100, 110, 0.28);
+}
+
+.maps-install-dialog__btn-update.p-button:hover:not(:disabled) {
+    border-color: var(--color-border-accent);
+    color: var(--color-accent-hover);
+    background: rgba(224, 18, 32, 0.12);
+}
+
+.maps-install-dialog__btn-danger.p-button {
+    background: linear-gradient(180deg, rgba(172, 21, 21, 0.95) 0%, rgba(110, 8, 14, 0.98) 100%);
+    color: #fff;
+    border-color: rgba(255, 100, 110, 0.4);
+    box-shadow: 0 4px 14px rgba(120, 8, 16, 0.24);
+}
+
+.maps-install-dialog__btn-danger.p-button:hover:not(:disabled) {
+    filter: brightness(1.08);
+    border-color: rgba(255, 180, 186, 0.5);
+}
+
 .maps-install-dialog__btn-save.p-button:active:not(:disabled),
-.maps-install-dialog__btn-cancel.p-button:active:not(:disabled) {
+.maps-install-dialog__btn-cancel.p-button:active:not(:disabled),
+.maps-install-dialog__btn-update.p-button:active:not(:disabled),
+.maps-install-dialog__btn-danger.p-button:active:not(:disabled) {
     transform: translateY(1px);
 }
 
