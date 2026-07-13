@@ -15,6 +15,8 @@ export type WorkshopMapFolderCardProps = {
     style?: CSSProperties;
     expanded: boolean;
     onToggle: () => void;
+    isAdmin: boolean;
+    onManage: (id: number) => void;
 };
 
 export function WorkshopMapFolderCard({
@@ -25,6 +27,8 @@ export function WorkshopMapFolderCard({
     style,
     expanded,
     onToggle,
+    isAdmin,
+    onManage,
 }: WorkshopMapFolderCardProps) {
     const partsPanelId = useId();
     const previewUrl = rawPreviewUrl?.trim() ?? '';
@@ -94,6 +98,8 @@ export function WorkshopMapFolderCard({
                                 map={part}
                                 indexInFolder={index}
                                 mapsTranslations={mapsTranslations}
+                                isAdmin={isAdmin}
+                                onManage={onManage}
                             />
                         ))}
                     </div>

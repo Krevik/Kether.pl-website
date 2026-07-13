@@ -2,6 +2,8 @@
  * Single entry on the installed custom maps list.
  */
 export interface MapEntry {
+    /** Daemon registry ID. Missing only for local fallback/synthetic entries. */
+    id?: number;
     mapName: string;
     source: 'Workshop' | 'SirPlease' | 'L4D2Center' | 'Other';
     downloadUrl?: string;

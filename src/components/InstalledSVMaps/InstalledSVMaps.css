@@ -421,6 +421,126 @@
     width: 100%;
 }
 
+.maps-manage-dialog__footer-actions {
+    flex-wrap: wrap;
+}
+
+.maps-manage-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+}
+
+.maps-manage-title {
+    margin: 0;
+    color: var(--color-text-primary);
+    font-family: 'Future Rot', 'Impact', system-ui, sans-serif;
+    font-size: 1.15rem;
+}
+
+.maps-manage-loading {
+    margin: 0.5rem 0 1rem;
+    color: var(--color-text-muted);
+}
+
+.maps-manage-detail {
+    display: grid;
+    gap: 0.6rem;
+    margin: 0;
+}
+
+.maps-manage-detail__row {
+    display: grid;
+    grid-template-columns: minmax(8rem, 0.4fr) minmax(0, 1fr);
+    gap: 0.75rem;
+    padding: 0.65rem 0.75rem;
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-md);
+    background: rgba(9, 12, 19, 0.55);
+}
+
+.maps-manage-detail__row dt {
+    color: var(--color-text-muted);
+    font-weight: 600;
+}
+
+.maps-manage-detail__row dd {
+    min-width: 0;
+    margin: 0;
+    color: var(--color-text-primary);
+    overflow-wrap: anywhere;
+}
+
+.maps-manage-detail__checksum {
+    font-family: ui-monospace, 'Cascadia Code', monospace;
+    font-size: 0.82rem;
+}
+
+.maps-manage-status {
+    padding: 0.7rem 0.8rem;
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.maps-manage-status--updated,
+.maps-manage-status--up-to-date {
+    border-color: rgba(46, 204, 113, 0.45);
+    color: #8ce8b2;
+}
+
+.maps-manage-status--unsupported {
+    border-color: rgba(255, 193, 7, 0.45);
+    color: #ffe08a;
+}
+
+.maps-manage-status--failed {
+    border-color: rgba(224, 18, 32, 0.5);
+    color: #ff9ba3;
+}
+
+.maps-manage-button {
+    display: inline-grid;
+    flex: 0 0 auto;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    border: 1px solid var(--color-border-subtle);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--color-text-primary);
+    cursor: pointer;
+    transition:
+        border-color var(--transition-fast),
+        background var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+.maps-manage-button:hover {
+    border-color: var(--color-border-accent);
+    background: rgba(224, 18, 32, 0.14);
+    transform: rotate(20deg);
+}
+
+.workshop-map-card__title-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.55rem;
+}
+
+@media (max-width: 560px) {
+    .maps-manage-detail__row {
+        grid-template-columns: 1fr;
+        gap: 0.3rem;
+    }
+
+    .maps-manage-dialog__footer-actions > .p-button {
+        flex: 1 1 100%;
+    }
+}
+
 .maps-install-form {
     display: flex;
     flex-direction: column;

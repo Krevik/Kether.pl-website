@@ -12,9 +12,17 @@ export type WorkshopMapsGridProps = {
     mapsTranslations: MapsTranslations;
     /** Shown when `maps` is empty (e.g. no search hits vs. no data at all) */
     zeroStateMessage?: string;
+    isAdmin: boolean;
+    onManage: (id: number) => void;
 };
 
-export function WorkshopMapsGrid({ maps, mapsTranslations, zeroStateMessage }: WorkshopMapsGridProps) {
+export function WorkshopMapsGrid({
+    maps,
+    mapsTranslations,
+    zeroStateMessage,
+    isAdmin,
+    onManage,
+}: WorkshopMapsGridProps) {
     const [expandedFolderKey, setExpandedFolderKey] = useState<string | null>(null);
 
     const items = useMemo(() => groupWorkshopMaps(maps), [maps]);
@@ -45,6 +53,8 @@ export function WorkshopMapsGrid({ maps, mapsTranslations, zeroStateMessage }: W
                                 style={style}
                                 expanded={expandedFolderKey === folderKey}
                                 onToggle={() => handleFolderToggle(folderKey)}
+                                isAdmin={isAdmin}
+                                onManage={onManage}
                             />
                         );
                     }
@@ -54,6 +64,8 @@ export function WorkshopMapsGrid({ maps, mapsTranslations, zeroStateMessage }: W
                             key={item.map.downloadUrl ?? item.map.mapName}
                             map={item.map}
                             mapsTranslations={mapsTranslations}
+                            isAdmin={isAdmin}
+                            onManage={onManage}
                             style={style}
                         />
                     );

@@ -11,6 +11,7 @@ export type DownloadMapsListProps = {
     isAdmin: boolean;
     mapsTranslations: MapsTranslations;
     onHelpClick?: () => void;
+    onManage: (id: number) => void;
     emptyMessage?: string;
     /** Keeps a bundle (e.g. all-maps zip) at the top before alphabetical order */
     pinFirstDownloadUrl?: string;
@@ -21,6 +22,7 @@ export function DownloadMapsList({
     isAdmin,
     mapsTranslations,
     onHelpClick,
+    onManage,
     emptyMessage,
     pinFirstDownloadUrl,
 }: DownloadMapsListProps) {
@@ -42,7 +44,7 @@ export function DownloadMapsList({
             <ul className="download-maps-list" role="list">
                 {sorted.map((map, index) => (
                     <li
-                        key={map.downloadUrl ?? map.mapName}
+                        key={map.id ?? map.downloadUrl ?? map.mapName}
                         className="download-maps-list__item"
                         style={{ animationDelay: `${Math.min(index, 32) * 28}ms` }}
                     >
@@ -50,6 +52,8 @@ export function DownloadMapsList({
                             map={map}
                             rowIndex={index}
                             showIndex={isAdmin}
+                            isAdmin={isAdmin}
+                            onManage={onManage}
                             mapsTranslations={mapsTranslations}
                             onHelpClick={onHelpClick}
                         />

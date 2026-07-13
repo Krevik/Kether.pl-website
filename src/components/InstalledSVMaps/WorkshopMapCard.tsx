@@ -4,16 +4,25 @@ import ST_L from '/favicons/steam-logo-svgrepo.png';
 import { MapEntry } from './mapEntry';
 import { extractSteamWorkshopId, openSteamWorkshopPage, openUrlInNewWindow } from './utils';
 import { useMapsTranslations } from '../../hooks/useTranslations';
+import { ManageMapButton } from './ManageMapButton';
 
 type MapsTranslations = ReturnType<typeof useMapsTranslations>;
 
 export type WorkshopMapCardProps = {
     map: MapEntry;
     mapsTranslations: MapsTranslations;
+    isAdmin: boolean;
+    onManage: (id: number) => void;
     style?: CSSProperties;
 };
 
-export function WorkshopMapCard({ map, mapsTranslations, style }: WorkshopMapCardProps) {
+export function WorkshopMapCard({
+    map,
+    mapsTranslations,
+    isAdmin,
+    onManage,
+    style,
+}: WorkshopMapCardProps) {
     const workshopId = extractSteamWorkshopId(map.downloadUrl);
     const previewUrl = map.previewUrl?.trim() ?? '';
     const [imageFailed, setImageFailed] = useState(false);
@@ -59,16 +68,24 @@ export function WorkshopMapCard({ map, mapsTranslations, style }: WorkshopMapCar
                 ) : null}
             </div>
             <div className="workshop-map-card__body">
-                <h3 className="workshop-map-card__title">
-                    <a
-                        href={map.downloadUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="workshop-map-card__title-link"
-                    >
-                        {map.mapName}
-                    </a>
-                </h3>
+                <div className="workshop-map-card__title-row">
+                    <h3 className="workshop-map-card__title">
+                        <a
+                            href={map.downloadUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="workshop-map-card__title-link"
+                        >
+                            {map.mapName}
+                        </a>
+                    </h3>
+                    <ManageMapButton
+                        mapId={map.id}
+                        isAdmin={isAdmin}
+                        tooltip={mapsTranslations.manageMapTooltip}
+                        onManage={onManage}
+                    />
+                </div>
                 <div className="workshop-map-card__actions">
                     <button
                         type="button"

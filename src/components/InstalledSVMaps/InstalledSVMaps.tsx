@@ -22,6 +22,7 @@ import { fetchInstalledMaps } from '../../services/mapsService';
 import { LoadingSpinner } from '../LoadingSpinner/LoadingSpinner';
 import { MapEntry } from './mapEntry';
 import { AddNewMapDialog } from './Dialogues/AddNewMapDialog';
+import { ManageMapDialog } from './Dialogues/ManageMapDialog';
 
 const MAP_NAME_SEARCH_DEBOUNCE_MS = 280;
 
@@ -41,6 +42,8 @@ export default function InstalledSVMaps() {
     const [mapsStale, setMapsStale] = useState(false);
     const [mapsLoading, setMapsLoading] = useState(true);
     const [addMapDialogVisible, setAddMapDialogVisible] = useState(false);
+    const [manageMapId, setManageMapId] = useState<number | null>(null);
+    const [manageDialogVisible, setManageDialogVisible] = useState(false);
     const debouncedMapSearch = useDebouncedValue(mapSearch, MAP_NAME_SEARCH_DEBOUNCE_MS);
 
     const reloadMaps = useCallback(() => {
@@ -140,6 +143,14 @@ export default function InstalledSVMaps() {
 
     const handleOpenHelpDialog = () => setHelpDialogVisible(true);
     const handleCloseHelpDialog = () => setHelpDialogVisible(false);
+    const handleManageMap = useCallback((id: number) => {
+        setManageMapId(id);
+        setManageDialogVisible(true);
+    }, []);
+    const handleCloseManageDialog = useCallback(() => {
+        setManageDialogVisible(false);
+        setManageMapId(null);
+    }, []);
 
     if (mapsLoading) {
         return (
@@ -176,6 +187,13 @@ export default function InstalledSVMaps() {
                         setDialogVisibility={setAddMapDialogVisible}
                         onInstalled={reloadMaps}
                         installedMaps={maps}
+                    />
+                    <ManageMapDialog
+                        isDialogVisible={manageDialogVisible}
+                        mapId={manageMapId}
+                        onHide={handleCloseManageDialog}
+                        onRemoved={reloadMaps}
+                        onUpdated={reloadMaps}
                     />
 
                     {mapsStale && (
@@ -259,6 +277,8 @@ export default function InstalledSVMaps() {
                                     maps={filteredWorkshopMaps}
                                     mapsTranslations={mapsTranslations}
                                     zeroStateMessage={workshopGridEmptyMessage}
+                                    isAdmin={isAdmin}
+                                    onManage={handleManageMap}
                                 />
                             </div>
                         )}
@@ -273,6 +293,7 @@ export default function InstalledSVMaps() {
                                     isAdmin={isAdmin}
                                     mapsTranslations={mapsTranslations}
                                     onHelpClick={handleOpenHelpDialog}
+                                    onManage={handleManageMap}
                                     pinFirstDownloadUrl={SIR_PLEASE_ALL_MAPS_URL}
                                     emptyMessage={
                                         sirPleaseMaps.length === 0
@@ -293,6 +314,7 @@ export default function InstalledSVMaps() {
                                     isAdmin={isAdmin}
                                     mapsTranslations={mapsTranslations}
                                     onHelpClick={handleOpenHelpDialog}
+                                    onManage={handleManageMap}
                                     emptyMessage={
                                         l4d2CenterMaps.length === 0
                                             ? mapsTranslations.noMapsAvailable
@@ -312,6 +334,7 @@ export default function InstalledSVMaps() {
                                     isAdmin={isAdmin}
                                     mapsTranslations={mapsTranslations}
                                     onHelpClick={handleOpenHelpDialog}
+                                    onManage={handleManageMap}
                                     emptyMessage={tableEmptyMessage}
                                 />
                             </div>

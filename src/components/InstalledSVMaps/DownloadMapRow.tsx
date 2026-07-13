@@ -2,6 +2,7 @@ import type { CSSProperties } from 'react';
 import { MapEntry } from './mapEntry';
 import { openUrlInNewWindow } from './utils';
 import { useMapsTranslations } from '../../hooks/useTranslations';
+import { ManageMapButton } from './ManageMapButton';
 
 type MapsTranslations = ReturnType<typeof useMapsTranslations>;
 
@@ -9,6 +10,8 @@ export type DownloadMapRowProps = {
     map: MapEntry;
     rowIndex: number;
     showIndex: boolean;
+    isAdmin: boolean;
+    onManage: (id: number) => void;
     mapsTranslations: MapsTranslations;
     onHelpClick?: () => void;
     style?: CSSProperties;
@@ -18,6 +21,8 @@ export function DownloadMapRow({
     map,
     rowIndex,
     showIndex,
+    isAdmin,
+    onManage,
     mapsTranslations,
     onHelpClick,
     style,
@@ -50,6 +55,12 @@ export function DownloadMapRow({
                         map.mapName
                     )}
                 </h3>
+                <ManageMapButton
+                    mapId={map.id}
+                    isAdmin={isAdmin}
+                    tooltip={mapsTranslations.manageMapTooltip}
+                    onManage={onManage}
+                />
             </div>
             <div className="download-map-row__actions">
                 <button

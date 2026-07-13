@@ -9,6 +9,7 @@ import {
     parseWorkshopPartName,
 } from './utils';
 import { useMapsTranslations } from '../../hooks/useTranslations';
+import { ManageMapButton } from './ManageMapButton';
 
 type MapsTranslations = ReturnType<typeof useMapsTranslations>;
 
@@ -16,12 +17,16 @@ export type WorkshopMapPartRowProps = {
     map: MapEntry;
     indexInFolder: number;
     mapsTranslations: MapsTranslations;
+    isAdmin: boolean;
+    onManage: (id: number) => void;
 };
 
 export function WorkshopMapPartRow({
     map,
     indexInFolder,
     mapsTranslations,
+    isAdmin,
+    onManage,
 }: WorkshopMapPartRowProps) {
     const workshopId = extractSteamWorkshopId(map.downloadUrl);
     const partNumber = getWorkshopPartNumber(map, indexInFolder);
@@ -58,6 +63,12 @@ export function WorkshopMapPartRow({
                 ) : null}
             </div>
             <div className="workshop-map-part-row__actions">
+                <ManageMapButton
+                    mapId={map.id}
+                    isAdmin={isAdmin}
+                    tooltip={mapsTranslations.manageMapTooltip}
+                    onManage={onManage}
+                />
                 <button
                     type="button"
                     className="workshop-map-card__btn workshop-map-card__btn-secondary app-focus-ring"
