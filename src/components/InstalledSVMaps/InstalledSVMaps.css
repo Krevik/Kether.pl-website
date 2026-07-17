@@ -381,14 +381,23 @@
 }
 
 .maps-admin-updates-progress.p-progressbar {
-    height: 0.45rem;
+    height: 0.65rem;
     border-radius: var(--radius-md, 6px);
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.12);
     overflow: hidden;
 }
 
 .maps-admin-updates-progress .p-progressbar-value {
     background: var(--color-accent, #e01220);
+}
+
+.maps-admin-updates-progress.p-progressbar-indeterminate .p-progressbar-value {
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        var(--color-accent, #e01220) 50%,
+        transparent 100%
+    );
 }
 
 .maps-admin-updates__details-btn {

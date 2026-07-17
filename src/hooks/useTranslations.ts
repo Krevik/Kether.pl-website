@@ -411,6 +411,7 @@ export function useMapsTranslations() {
             name: string;
             phase?: string;
             percent?: number;
+            bytesDownloaded?: number;
         }) => {
             const name = item.name;
             if (item.phase === 'downloading') {
@@ -418,6 +419,12 @@ export function useMapsTranslations() {
                     return t('maps.updatesPhaseDownloadingPercent', {
                         name,
                         percent: item.percent,
+                    });
+                }
+                if (typeof item.bytesDownloaded === 'number' && item.bytesDownloaded > 0) {
+                    return t('maps.updatesPhaseDownloadingBytes', {
+                        name,
+                        downloaded: formatDownloadBytes(item.bytesDownloaded),
                     });
                 }
                 return t('maps.updatesPhaseDownloading', { name });
@@ -435,4 +442,11 @@ export function useMapsTranslations() {
         updatesSourceWorkshop: t('maps.updatesSourceWorkshop'),
         updatesSourceL4d2Center: t('maps.updatesSourceL4d2Center'),
     };
+}
+
+function formatDownloadBytes(bytes: number): string {
+    if (bytes < 1024) return `${bytes} B`;
+    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+    if (bytes < 1024 * 1024 * 1024) return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+    return `${(bytes / (1024 * 1024 * 1024)).toFixed(2)} GB`;
 }

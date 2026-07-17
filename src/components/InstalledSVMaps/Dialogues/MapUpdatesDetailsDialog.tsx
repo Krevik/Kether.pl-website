@@ -17,6 +17,8 @@ export type MapUpdatesDetailsDialogProps = {
     status: MapUpdatesStatus;
     onHide: () => void;
     onChanged: () => void | Promise<void>;
+    onApplyStarted?: (items: MapUpdateItem[]) => void;
+    onApplyFinished?: () => void | Promise<void>;
 };
 
 function sourceLabel(
@@ -33,6 +35,8 @@ export function MapUpdatesDetailsDialog({
     status,
     onHide,
     onChanged,
+    onApplyStarted,
+    onApplyFinished,
 }: MapUpdatesDetailsDialogProps) {
     const mapsTranslations = useMapsTranslations();
     const commonTranslations = useCommonTranslations();
@@ -51,10 +55,18 @@ export function MapUpdatesDetailsDialog({
     };
 
     const refreshAfterApply = useCallback(async () => {
+        if (onApplyFinished) {
+            await onApplyFinished();
+            return;
+        }
         await onChanged();
-    }, [onChanged]);
+    }, [onApplyFinished, onChanged]);
 
     const handleUpdateOne = async (mapId: number) => {
+        const item = availableVisible.find((entry) => entry.mapId === mapId);
+        if (item) {
+            onApplyStarted?.([item]);
+        }
         setBusyMapId(mapId);
         try {
             const results = await applyMapUpdate(mapId);
@@ -83,6 +95,7 @@ export function MapUpdatesDetailsDialog({
 
     const handleUpdateAll = async () => {
         if (availableVisible.length === 0) return;
+        onApplyStarted?.(availableVisible);
         setUpdatingAll(true);
         try {
             const results = await applyAllMapUpdates();

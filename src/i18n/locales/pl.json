@@ -197,6 +197,7 @@
         "updatesUpdating": "Aktualizowanie…",
         "updatesPhaseDownloading": "Pobieranie {{name}}…",
         "updatesPhaseDownloadingPercent": "Pobieranie {{name}}… {{percent}}%",
+        "updatesPhaseDownloadingBytes": "Pobieranie {{name}}… {{downloaded}}",
         "updatesPhaseExtracting": "Wypakowywanie {{name}}…",
         "updatesPhaseInstalling": "Instalowanie {{name}}…",
         "updatesPhaseGeneric": "Aktualizowanie {{name}}…",

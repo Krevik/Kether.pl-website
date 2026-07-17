@@ -27,6 +27,7 @@ import { ManageMapDialog } from './Dialogues/ManageMapDialog';
 import { MapUpdatesDetailsDialog } from './Dialogues/MapUpdatesDetailsDialog';
 import {
     fetchMapUpdatesStatus,
+    MapUpdateItem,
     MapUpdatesStatus,
 } from '../../services/mapsManageService';
 
@@ -48,6 +49,22 @@ function visibleAvailable(status: MapUpdatesStatus) {
     return status.available.filter((item) => !inProgressIds.has(item.mapId));
 }
 
+/** Keep optimistic in-progress rows until the daemon reports the same maps. */
+function mergeUpdatesStatus(
+    prev: MapUpdatesStatus,
+    next: MapUpdatesStatus,
+    keepOptimistic: boolean
+): MapUpdatesStatus {
+    if (!keepOptimistic || next.inProgress.length > 0 || prev.inProgress.length === 0) {
+        return next;
+    }
+    const optimisticIds = new Set(prev.inProgress.map((item) => item.mapId));
+    return {
+        available: next.available.filter((item) => !optimisticIds.has(item.mapId)),
+        inProgress: prev.inProgress,
+    };
+}
+
 export default function InstalledSVMaps() {
     const mapsTranslations = useMapsTranslations();
     const isAdmin = useSelector(
@@ -64,7 +81,10 @@ export default function InstalledSVMaps() {
     const [manageDialogVisible, setManageDialogVisible] = useState(false);
     const [updatesStatus, setUpdatesStatus] = useState<MapUpdatesStatus>(EMPTY_UPDATES_STATUS);
     const [updatesDialogVisible, setUpdatesDialogVisible] = useState(false);
+    const [forceFastUpdatesPoll, setForceFastUpdatesPoll] = useState(false);
     const updatesStatusGeneration = useRef(0);
+    const forceFastUpdatesPollRef = useRef(false);
+    forceFastUpdatesPollRef.current = forceFastUpdatesPoll;
     const debouncedMapSearch = useDebouncedValue(mapSearch, MAP_NAME_SEARCH_DEBOUNCE_MS);
 
     const reloadMaps = useCallback((options?: { soft?: boolean }) => {
@@ -89,9 +109,10 @@ export default function InstalledSVMaps() {
         const generation = ++updatesStatusGeneration.current;
         return fetchMapUpdatesStatus()
             .then((status) => {
-                if (generation === updatesStatusGeneration.current) {
-                    setUpdatesStatus(status);
-                }
+                if (generation !== updatesStatusGeneration.current) return;
+                setUpdatesStatus((prev) =>
+                    mergeUpdatesStatus(prev, status, forceFastUpdatesPollRef.current)
+                );
             })
             .catch(() => {
                 /* keep last known status */
@@ -125,7 +146,13 @@ export default function InstalledSVMaps() {
             fetchMapUpdatesStatus()
                 .then((status) => {
                     if (!cancelled && generation === updatesStatusGeneration.current) {
-                        setUpdatesStatus(status);
+                        setUpdatesStatus((prev) =>
+                            mergeUpdatesStatus(
+                                prev,
+                                status,
+                                forceFastUpdatesPollRef.current
+                            )
+                        );
                     }
                 })
                 .catch(() => {
@@ -135,7 +162,7 @@ export default function InstalledSVMaps() {
 
         load();
         const pollMs =
-            updatesStatus.inProgress.length > 0
+            updatesStatus.inProgress.length > 0 || forceFastUpdatesPoll
                 ? MAP_UPDATES_POLL_ACTIVE_MS
                 : MAP_UPDATES_POLL_IDLE_MS;
         const timer = window.setInterval(load, pollMs);
@@ -143,7 +170,7 @@ export default function InstalledSVMaps() {
             cancelled = true;
             window.clearInterval(timer);
         };
-    }, [isAdmin, updatesStatus.inProgress.length]);
+    }, [isAdmin, updatesStatus.inProgress.length, forceFastUpdatesPoll]);
 
     const processedMaps = useMemo(
         () => processMapsWithTranslations(maps, mapsTranslations.allMaps),
@@ -230,8 +257,33 @@ export default function InstalledSVMaps() {
         );
     }, [reloadMaps, reloadUpdatesStatus]);
 
+    const handleUpdatesApplyStarted = useCallback((items: MapUpdateItem[]) => {
+        if (items.length === 0) return;
+        setForceFastUpdatesPoll(true);
+        setUpdatesStatus((prev) => {
+            const startedIds = new Set(items.map((item) => item.mapId));
+            const retained = prev.inProgress.filter((item) => !startedIds.has(item.mapId));
+            const optimistic = items.map((item) => ({
+                ...item,
+                phase: item.phase ?? ('downloading' as const),
+                bytesDownloaded: item.bytesDownloaded ?? 0,
+            }));
+            return {
+                available: prev.available.filter((item) => !startedIds.has(item.mapId)),
+                inProgress: [...retained, ...optimistic],
+            };
+        });
+        void reloadUpdatesStatus();
+    }, [reloadUpdatesStatus]);
+
+    const handleUpdatesApplyFinished = useCallback(() => {
+        setForceFastUpdatesPoll(false);
+        return handleMapsChanged();
+    }, [handleMapsChanged]);
+
     const handleManageUpdated = useCallback(
         (options?: { reloadMaps?: boolean }) => {
+            setForceFastUpdatesPoll(false);
             const tasks: Promise<unknown>[] = [reloadUpdatesStatus()];
             if (options?.reloadMaps) {
                 tasks.push(reloadMaps({ soft: true }));
@@ -347,12 +399,25 @@ export default function InstalledSVMaps() {
                         onHide={handleCloseManageDialog}
                         onRemoved={handleMapsChanged}
                         onUpdated={handleManageUpdated}
+                        onUpdateStarted={(item) =>
+                            handleUpdatesApplyStarted([
+                                {
+                                    name: item.name,
+                                    mapId: item.mapId,
+                                    sourceKind: item.sourceKind,
+                                    phase: 'downloading',
+                                    bytesDownloaded: 0,
+                                },
+                            ])
+                        }
                     />
                     <MapUpdatesDetailsDialog
                         visible={updatesDialogVisible}
                         status={dialogStatus}
                         onHide={() => setUpdatesDialogVisible(false)}
                         onChanged={handleMapsChanged}
+                        onApplyStarted={handleUpdatesApplyStarted}
+                        onApplyFinished={handleUpdatesApplyFinished}
                     />
 
                     {mapsStale && (

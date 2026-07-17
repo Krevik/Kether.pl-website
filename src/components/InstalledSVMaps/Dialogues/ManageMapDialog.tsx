@@ -19,6 +19,11 @@ export type ManageMapDialogProps = {
     onHide: () => void;
     onRemoved: () => void;
     onUpdated: (options?: { reloadMaps?: boolean }) => void | Promise<void>;
+    onUpdateStarted?: (item: {
+        name: string;
+        mapId: number;
+        sourceKind: MapManageDetail['sourceKind'];
+    }) => void;
 };
 
 export function ManageMapDialog({
@@ -27,6 +32,7 @@ export function ManageMapDialog({
     onHide,
     onRemoved,
     onUpdated,
+    onUpdateStarted,
 }: ManageMapDialogProps) {
     const mapsTranslations = useMapsTranslations();
     const commonTranslations = useCommonTranslations();
@@ -72,8 +78,13 @@ export function ManageMapDialog({
     };
 
     const handleCheckUpdate = async () => {
-        if (mapId === null || !supportsUpdates) return;
+        if (mapId === null || !supportsUpdates || !detail) return;
 
+        onUpdateStarted?.({
+            name: detail.name,
+            mapId: detail.id,
+            sourceKind: detail.sourceKind,
+        });
         setOperation('update');
         setUpdateResult(null);
         try {
