@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import {
@@ -15,7 +15,7 @@ export type MapUpdatesDetailsDialogProps = {
     visible: boolean;
     status: MapUpdatesStatus;
     onHide: () => void;
-    onChanged: () => void;
+    onChanged: () => void | Promise<void>;
 };
 
 function sourceLabel(
@@ -40,12 +40,17 @@ export function MapUpdatesDetailsDialog({
 
     const busy = busyMapId !== null || updatingAll;
 
+    const availableVisible = useMemo(() => {
+        const inProgressIds = new Set(status.inProgress.map((item) => item.mapId));
+        return status.available.filter((item) => !inProgressIds.has(item.mapId));
+    }, [status]);
+
     const handleHide = () => {
         if (!busy) onHide();
     };
 
-    const refreshAfterApply = useCallback(() => {
-        onChanged();
+    const refreshAfterApply = useCallback(async () => {
+        await onChanged();
     }, [onChanged]);
 
     const handleUpdateOne = async (mapId: number) => {
@@ -62,20 +67,21 @@ export function MapUpdatesDetailsDialog({
                     result?.message || mapsTranslations.updatesApplyFailed
                 );
             }
-            refreshAfterApply();
+            await refreshAfterApply();
         } catch (error) {
             notificationManager.ERROR(
                 `${mapsTranslations.updatesApplyFailed}: ${
                     error instanceof Error ? error.message : String(error)
                 }`
             );
+            await refreshAfterApply();
         } finally {
             setBusyMapId(null);
         }
     };
 
     const handleUpdateAll = async () => {
-        if (status.available.length === 0) return;
+        if (availableVisible.length === 0) return;
         setUpdatingAll(true);
         try {
             const results = await applyAllMapUpdates();
@@ -83,7 +89,9 @@ export function MapUpdatesDetailsDialog({
             const failed = results.filter((r) => r.status === 'failed').length;
             if (failed > 0) {
                 notificationManager.ERROR(
-                    `${mapsTranslations.updatesApplyFailed} (${failed})`
+                    `${mapsTranslations.updatesApplyFailed} (${failed}${
+                        updated > 0 ? `, ${updated} ok` : ''
+                    })`
                 );
             } else {
                 notificationManager.SUCCESS(
@@ -92,13 +100,14 @@ export function MapUpdatesDetailsDialog({
                         : mapsTranslations.manageUpdateResultUpToDate
                 );
             }
-            refreshAfterApply();
+            await refreshAfterApply();
         } catch (error) {
             notificationManager.ERROR(
                 `${mapsTranslations.updatesApplyFailed}: ${
                     error instanceof Error ? error.message : String(error)
                 }`
             );
+            await refreshAfterApply();
         } finally {
             setUpdatingAll(false);
         }
@@ -167,14 +176,14 @@ export function MapUpdatesDetailsDialog({
                         }
                         className="p-button-sm maps-updates-dialog__update-all app-focus-ring"
                         onClick={handleUpdateAll}
-                        disabled={busy || status.available.length === 0}
+                        disabled={busy || availableVisible.length === 0}
                     />
                 </div>
-                {status.available.length === 0 ? (
+                {availableVisible.length === 0 ? (
                     <p className="maps-updates-dialog__empty">{mapsTranslations.updatesEmptySection}</p>
                 ) : (
                     <ul className="maps-updates-dialog__list">
-                        {status.available.map((item) => {
+                        {availableVisible.map((item) => {
                             const rowBusy = busyMapId === item.mapId || updatingAll;
                             return (
                                 <li key={`available-${item.mapId}`} className="maps-updates-dialog__row">

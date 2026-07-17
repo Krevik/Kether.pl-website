@@ -1,4 +1,6 @@
 import { useTranslation } from 'react-i18next';
+import { polishPluralForm } from '../utils/polishPlural';
+import { InstallSourceMode } from '../components/InstalledSVMaps/installMapUtils';
 
 /**
  * Custom hook for easier translation usage with type safety
@@ -261,13 +263,24 @@ export function useFooterTranslations() {
     };
 }
 
-import { InstallSourceMode } from '../components/InstalledSVMaps/installMapUtils';
-
 /**
  * Hook for maps translations
  */
 export function useMapsTranslations() {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
+
+    const updatesCountStatus = (
+        count: number,
+        keys: { one: string; few: string; many: string }
+    ) => {
+        if (i18n.language.toLowerCase().startsWith('pl')) {
+            const form = polishPluralForm(count);
+            if (form === 'one') return t(keys.one);
+            if (form === 'few') return t(keys.few, { count });
+            return t(keys.many, { count });
+        }
+        return count === 1 ? t(keys.one) : t(keys.many, { count });
+    };
 
     const installInputLabel = (mode: InstallSourceMode) => {
         switch (mode) {
@@ -375,13 +388,17 @@ export function useMapsTranslations() {
         manageRemoveFailed: t('maps.manageRemoveFailed'),
         updatesNone: t('maps.updatesNone'),
         updatesAvailableStatus: (count: number) =>
-            count === 1
-                ? t('maps.updatesAvailableOne')
-                : t('maps.updatesAvailableMany', { count }),
+            updatesCountStatus(count, {
+                one: 'maps.updatesAvailableOne',
+                few: 'maps.updatesAvailableFew',
+                many: 'maps.updatesAvailableMany',
+            }),
         updatesInProgressStatus: (count: number) =>
-            count === 1
-                ? t('maps.updatesInProgressOne')
-                : t('maps.updatesInProgressMany', { count }),
+            updatesCountStatus(count, {
+                one: 'maps.updatesInProgressOne',
+                few: 'maps.updatesInProgressFew',
+                many: 'maps.updatesInProgressMany',
+            }),
         updatesShowDetails: t('maps.updatesShowDetails'),
         updatesDetailsTitle: t('maps.updatesDetailsTitle'),
         updatesSectionAvailable: t('maps.updatesSectionAvailable'),

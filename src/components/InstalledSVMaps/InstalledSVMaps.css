@@ -351,41 +351,45 @@
     }
 }
 
-.maps-admin-toolbar {
-    margin: 0.75rem 0 0.35rem;
-}
-
 .maps-admin-toolbar-wrap {
-    position: relative;
     width: 100%;
     margin: 0.75rem 0 0.35rem;
 }
 
-.maps-admin-toolbar-wrap .maps-admin-toolbar {
-    margin: 0;
+.maps-admin-toolbar-row {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 0.75rem 1rem;
+    width: 100%;
+}
+
+.maps-admin-add-btn {
+    justify-self: start;
+}
+
+.maps-admin-updates-cluster {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem 0.5rem;
+    min-width: 0;
+    text-align: center;
 }
 
 .maps-admin-updates-status {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    max-width: min(28rem, calc(100% - 11rem));
-    padding: 0 0.5rem;
-    text-align: center;
+    max-width: 100%;
     font-size: 0.95rem;
     line-height: 1.4;
     color: var(--color-text-primary, #f0f0f0);
-    pointer-events: none;
-    z-index: 1;
 }
 
 .maps-admin-updates__details-btn {
-    pointer-events: auto;
     appearance: none;
     border: none;
     background: none;
-    padding: 0;
+    padding: 0.25rem 0.35rem;
     margin: 0;
     font: inherit;
     color: var(--color-accent, #e01220);
@@ -401,6 +405,18 @@
 .maps-admin-updates__details-btn:disabled {
     opacity: 0.6;
     cursor: not-allowed;
+}
+
+@media (max-width: 640px) {
+    .maps-admin-toolbar-row {
+        grid-template-columns: 1fr;
+        justify-items: stretch;
+    }
+
+    .maps-admin-updates-cluster {
+        justify-content: flex-start;
+        text-align: left;
+    }
 }
 
 .maps-updates-dialog__section {

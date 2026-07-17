@@ -18,7 +18,7 @@ export type ManageMapDialogProps = {
     mapId: number | null;
     onHide: () => void;
     onRemoved: () => void;
-    onUpdated: () => void;
+    onUpdated: (options?: { reloadMaps?: boolean }) => void | Promise<void>;
 };
 
 export function ManageMapDialog({
@@ -83,19 +83,23 @@ export function ManageMapDialog({
 
             if (result.status === 'updated') {
                 notificationManager.SUCCESS(mapsTranslations.manageUpdateResultUpdated);
-                onUpdated();
+                await onUpdated({ reloadMaps: true });
             } else if (result.status === 'up_to_date') {
                 notificationManager.SUCCESS(mapsTranslations.manageUpdateResultUpToDate);
+                await onUpdated();
             } else if (result.status === 'unsupported') {
                 notificationManager.ERROR(mapsTranslations.manageUpdateResultUnsupported);
+                await onUpdated();
             } else {
                 notificationManager.ERROR(
                     `${mapsTranslations.manageUpdateResultFailed}: ${result.message}`
                 );
+                await onUpdated();
             }
         } catch (error) {
             const message = error instanceof Error ? error.message : String(error);
             notificationManager.ERROR(`${mapsTranslations.manageUpdateResultFailed}: ${message}`);
+            await onUpdated();
         } finally {
             setOperation(null);
         }

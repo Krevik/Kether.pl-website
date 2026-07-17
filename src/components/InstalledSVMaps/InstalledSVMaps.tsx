@@ -1,7 +1,6 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
-import { Toolbar } from 'primereact/toolbar';
 import './InstalledSVMaps.css';
 import { PageWithBackground } from '../PageLayout/PageBackground/PageWithBackground';
 import { BACKGROUNDS } from '../PageLayout/PageBackground/backgrounds';
@@ -41,6 +40,11 @@ export type { MapEntry } from './mapEntry';
 
 type MapsTabId = 'workshop' | 'sirplease' | 'l4d2center' | 'other';
 
+function visibleAvailable(status: MapUpdatesStatus) {
+    const inProgressIds = new Set(status.inProgress.map((item) => item.mapId));
+    return status.available.filter((item) => !inProgressIds.has(item.mapId));
+}
+
 export default function InstalledSVMaps() {
     const mapsTranslations = useMapsTranslations();
     const isAdmin = useSelector(
@@ -57,25 +61,34 @@ export default function InstalledSVMaps() {
     const [manageDialogVisible, setManageDialogVisible] = useState(false);
     const [updatesStatus, setUpdatesStatus] = useState<MapUpdatesStatus>(EMPTY_UPDATES_STATUS);
     const [updatesDialogVisible, setUpdatesDialogVisible] = useState(false);
+    const updatesStatusGeneration = useRef(0);
     const debouncedMapSearch = useDebouncedValue(mapSearch, MAP_NAME_SEARCH_DEBOUNCE_MS);
 
-    const reloadMaps = useCallback(() => {
-        setMapsLoading(true);
+    const reloadMaps = useCallback((options?: { soft?: boolean }) => {
+        const soft = options?.soft ?? true;
+        if (!soft) {
+            setMapsLoading(true);
+        }
         return fetchInstalledMaps()
             .then((result) => {
                 setMaps(result.maps);
                 setMapsStale(result.stale);
             })
             .finally(() => {
-                setMapsLoading(false);
+                if (!soft) {
+                    setMapsLoading(false);
+                }
             });
     }, []);
 
     const reloadUpdatesStatus = useCallback(() => {
         if (!isAdmin) return Promise.resolve();
+        const generation = ++updatesStatusGeneration.current;
         return fetchMapUpdatesStatus()
             .then((status) => {
-                setUpdatesStatus(status);
+                if (generation === updatesStatusGeneration.current) {
+                    setUpdatesStatus(status);
+                }
             })
             .catch(() => {
                 /* keep last known status */
@@ -105,9 +118,12 @@ export default function InstalledSVMaps() {
 
         let cancelled = false;
         const load = () => {
+            const generation = ++updatesStatusGeneration.current;
             fetchMapUpdatesStatus()
                 .then((status) => {
-                    if (!cancelled) setUpdatesStatus(status);
+                    if (!cancelled && generation === updatesStatusGeneration.current) {
+                        setUpdatesStatus(status);
+                    }
                 })
                 .catch(() => {
                     /* ignore poll errors */
@@ -202,12 +218,36 @@ export default function InstalledSVMaps() {
     }, []);
 
     const handleMapsChanged = useCallback(() => {
-        void reloadMaps();
-        void reloadUpdatesStatus();
+        return Promise.all([reloadMaps({ soft: true }), reloadUpdatesStatus()]).then(
+            () => undefined
+        );
     }, [reloadMaps, reloadUpdatesStatus]);
 
+    const handleManageUpdated = useCallback(
+        (options?: { reloadMaps?: boolean }) => {
+            const tasks: Promise<unknown>[] = [reloadUpdatesStatus()];
+            if (options?.reloadMaps) {
+                tasks.push(reloadMaps({ soft: true }));
+            }
+            return Promise.all(tasks).then(() => undefined);
+        },
+        [reloadMaps, reloadUpdatesStatus]
+    );
+
+    const availableVisible = useMemo(
+        () => visibleAvailable(updatesStatus),
+        [updatesStatus]
+    );
+    const dialogStatus = useMemo(
+        () => ({
+            available: availableVisible,
+            inProgress: updatesStatus.inProgress,
+        }),
+        [availableVisible, updatesStatus.inProgress]
+    );
+
     const inProgressCount = updatesStatus.inProgress.length;
-    const availableCount = updatesStatus.available.length;
+    const availableCount = availableVisible.length;
     const updatesStatusText =
         inProgressCount > 0
             ? mapsTranslations.updatesInProgressStatus(inProgressCount)
@@ -234,34 +274,32 @@ export default function InstalledSVMaps() {
 
                     {isAdmin && (
                         <div className="maps-admin-toolbar-wrap">
-                            <Toolbar
-                                className="maps-admin-toolbar app-toolbar"
-                                start={
-                                    <Button
-                                        label={`➕ ${mapsTranslations.addMap}`}
-                                        className="p-button-success mr-2 app-focus-ring"
-                                        title={mapsTranslations.addMapTooltip}
-                                        onClick={() => setAddMapDialogVisible(true)}
-                                    />
-                                }
-                            />
-                            <div className="maps-admin-updates-status" role="status">
-                                <span>{updatesStatusText}</span>
-                                {showUpdatesDetailsLink && (
-                                    <>
-                                        {' '}
-                                            <button
-                                                type="button"
-                                                className="maps-admin-updates__details-btn app-focus-ring"
-                                                onClick={() => {
-                                                    void reloadUpdatesStatus();
-                                                    setUpdatesDialogVisible(true);
-                                                }}
-                                            >
+                            <div className="maps-admin-toolbar-row">
+                                <Button
+                                    label={`➕ ${mapsTranslations.addMap}`}
+                                    className="p-button-success maps-admin-add-btn app-focus-ring"
+                                    title={mapsTranslations.addMapTooltip}
+                                    onClick={() => setAddMapDialogVisible(true)}
+                                />
+                                <div className="maps-admin-updates-cluster">
+                                    <div className="maps-admin-updates-status" role="status">
+                                        <span>{updatesStatusText}</span>
+                                    </div>
+                                    {showUpdatesDetailsLink && (
+                                        <button
+                                            type="button"
+                                            className="maps-admin-updates__details-btn app-focus-ring"
+                                            aria-haspopup="dialog"
+                                            aria-expanded={updatesDialogVisible}
+                                            onClick={() => {
+                                                void reloadUpdatesStatus();
+                                                setUpdatesDialogVisible(true);
+                                            }}
+                                        >
                                             {mapsTranslations.updatesShowDetails}
                                         </button>
-                                    </>
-                                )}
+                                    )}
+                                </div>
                             </div>
                         </div>
                     )}
@@ -277,16 +315,13 @@ export default function InstalledSVMaps() {
                         mapId={manageMapId}
                         onHide={handleCloseManageDialog}
                         onRemoved={handleMapsChanged}
-                        onUpdated={handleMapsChanged}
+                        onUpdated={handleManageUpdated}
                     />
                     <MapUpdatesDetailsDialog
                         visible={updatesDialogVisible}
-                        status={updatesStatus}
+                        status={dialogStatus}
                         onHide={() => setUpdatesDialogVisible(false)}
-                        onChanged={() => {
-                            void reloadUpdatesStatus();
-                            void reloadMaps();
-                        }}
+                        onChanged={handleMapsChanged}
                     />
 
                     {mapsStale && (
