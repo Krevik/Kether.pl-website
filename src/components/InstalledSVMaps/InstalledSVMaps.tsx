@@ -23,8 +23,19 @@ import { LoadingSpinner } from '../LoadingSpinner/LoadingSpinner';
 import { MapEntry } from './mapEntry';
 import { AddNewMapDialog } from './Dialogues/AddNewMapDialog';
 import { ManageMapDialog } from './Dialogues/ManageMapDialog';
+import { MapUpdatesDetailsDialog } from './Dialogues/MapUpdatesDetailsDialog';
+import {
+    fetchMapUpdatesStatus,
+    MapUpdatesStatus,
+} from '../../services/mapsManageService';
 
 const MAP_NAME_SEARCH_DEBOUNCE_MS = 280;
+const MAP_UPDATES_POLL_MS = 10_000;
+
+const EMPTY_UPDATES_STATUS: MapUpdatesStatus = {
+    available: [],
+    inProgress: [],
+};
 
 export type { MapEntry } from './mapEntry';
 
@@ -44,6 +55,8 @@ export default function InstalledSVMaps() {
     const [addMapDialogVisible, setAddMapDialogVisible] = useState(false);
     const [manageMapId, setManageMapId] = useState<number | null>(null);
     const [manageDialogVisible, setManageDialogVisible] = useState(false);
+    const [updatesStatus, setUpdatesStatus] = useState<MapUpdatesStatus>(EMPTY_UPDATES_STATUS);
+    const [updatesDialogVisible, setUpdatesDialogVisible] = useState(false);
     const debouncedMapSearch = useDebouncedValue(mapSearch, MAP_NAME_SEARCH_DEBOUNCE_MS);
 
     const reloadMaps = useCallback(() => {
@@ -57,6 +70,17 @@ export default function InstalledSVMaps() {
                 setMapsLoading(false);
             });
     }, []);
+
+    const reloadUpdatesStatus = useCallback(() => {
+        if (!isAdmin) return Promise.resolve();
+        return fetchMapUpdatesStatus()
+            .then((status) => {
+                setUpdatesStatus(status);
+            })
+            .catch(() => {
+                /* keep last known status */
+            });
+    }, [isAdmin]);
 
     useEffect(() => {
         let cancelled = false;
@@ -72,6 +96,31 @@ export default function InstalledSVMaps() {
             cancelled = true;
         };
     }, []);
+
+    useEffect(() => {
+        if (!isAdmin) {
+            setUpdatesStatus(EMPTY_UPDATES_STATUS);
+            return;
+        }
+
+        let cancelled = false;
+        const load = () => {
+            fetchMapUpdatesStatus()
+                .then((status) => {
+                    if (!cancelled) setUpdatesStatus(status);
+                })
+                .catch(() => {
+                    /* ignore poll errors */
+                });
+        };
+
+        load();
+        const timer = window.setInterval(load, MAP_UPDATES_POLL_MS);
+        return () => {
+            cancelled = true;
+            window.clearInterval(timer);
+        };
+    }, [isAdmin]);
 
     const processedMaps = useMemo(
         () => processMapsWithTranslations(maps, mapsTranslations.allMaps),
@@ -152,6 +201,21 @@ export default function InstalledSVMaps() {
         setManageMapId(null);
     }, []);
 
+    const handleMapsChanged = useCallback(() => {
+        void reloadMaps();
+        void reloadUpdatesStatus();
+    }, [reloadMaps, reloadUpdatesStatus]);
+
+    const inProgressCount = updatesStatus.inProgress.length;
+    const availableCount = updatesStatus.available.length;
+    const updatesStatusText =
+        inProgressCount > 0
+            ? mapsTranslations.updatesInProgressStatus(inProgressCount)
+            : availableCount > 0
+              ? mapsTranslations.updatesAvailableStatus(availableCount)
+              : mapsTranslations.updatesNone;
+    const showUpdatesDetailsLink = inProgressCount > 0 || availableCount > 0;
+
     if (mapsLoading) {
         return (
             <PageWithBackground imageUrl={BACKGROUNDS.BACKGROUND_4}>
@@ -169,31 +233,60 @@ export default function InstalledSVMaps() {
                     <div className="centered-text">{mapsTranslations.title}</div>
 
                     {isAdmin && (
-                        <Toolbar
-                            className="maps-admin-toolbar app-toolbar"
-                            start={
-                                <Button
-                                    label={`➕ ${mapsTranslations.addMap}`}
-                                    className="p-button-success mr-2 app-focus-ring"
-                                    title={mapsTranslations.addMapTooltip}
-                                    onClick={() => setAddMapDialogVisible(true)}
-                                />
-                            }
-                        />
+                        <div className="maps-admin-toolbar-wrap">
+                            <Toolbar
+                                className="maps-admin-toolbar app-toolbar"
+                                start={
+                                    <Button
+                                        label={`➕ ${mapsTranslations.addMap}`}
+                                        className="p-button-success mr-2 app-focus-ring"
+                                        title={mapsTranslations.addMapTooltip}
+                                        onClick={() => setAddMapDialogVisible(true)}
+                                    />
+                                }
+                            />
+                            <div className="maps-admin-updates-status" role="status">
+                                <span>{updatesStatusText}</span>
+                                {showUpdatesDetailsLink && (
+                                    <>
+                                        {' '}
+                                            <button
+                                                type="button"
+                                                className="maps-admin-updates__details-btn app-focus-ring"
+                                                onClick={() => {
+                                                    void reloadUpdatesStatus();
+                                                    setUpdatesDialogVisible(true);
+                                                }}
+                                            >
+                                            {mapsTranslations.updatesShowDetails}
+                                        </button>
+                                    </>
+                                )}
+                            </div>
+                        </div>
                     )}
 
                     <AddNewMapDialog
                         isDialogVisible={addMapDialogVisible}
                         setDialogVisibility={setAddMapDialogVisible}
-                        onInstalled={reloadMaps}
+                        onInstalled={handleMapsChanged}
                         installedMaps={maps}
                     />
                     <ManageMapDialog
                         isDialogVisible={manageDialogVisible}
                         mapId={manageMapId}
                         onHide={handleCloseManageDialog}
-                        onRemoved={reloadMaps}
-                        onUpdated={reloadMaps}
+                        onRemoved={handleMapsChanged}
+                        onUpdated={handleMapsChanged}
+                    />
+                    <MapUpdatesDetailsDialog
+                        visible={updatesDialogVisible}
+                        status={updatesStatus}
+                        onHide={() => setUpdatesDialogVisible(false)}
+                        onChanged={() => {
+                            void reloadUpdatesStatus();
+                            void reloadMaps();
+                        }}
                     />
 
                     {mapsStale && (

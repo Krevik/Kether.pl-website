@@ -109,3 +109,87 @@ export async function checkMapUpdate(id: number): Promise<UpdateCheckResult> {
         map: body.map ? mapDetail(body.map) : undefined,
     };
 }
+
+export interface MapUpdateItem {
+    name: string;
+    mapId: number;
+    sourceKind: MapSourceKind;
+}
+
+export interface MapUpdatesStatus {
+    available: MapUpdateItem[];
+    inProgress: MapUpdateItem[];
+}
+
+interface BackendMapUpdateItem {
+    name: string;
+    map_id: number;
+    source_kind: MapSourceKind;
+}
+
+interface BackendMapUpdatesStatus {
+    available: BackendMapUpdateItem[];
+    in_progress: BackendMapUpdateItem[];
+}
+
+interface BackendApplyUpdatesResponse {
+    results: BackendUpdateCheckResult[];
+}
+
+function mapUpdateItem(item: BackendMapUpdateItem): MapUpdateItem {
+    return {
+        name: item.name,
+        mapId: item.map_id,
+        sourceKind: item.source_kind,
+    };
+}
+
+export async function fetchMapUpdatesStatus(): Promise<MapUpdatesStatus> {
+    const response = await authenticatedRequest(apiPaths.MAPS_ADMIN_UPDATES, 'GET');
+    if (!response.ok) {
+        throw new Error(await errorMessage(response));
+    }
+    const body = (await response.json()) as BackendMapUpdatesStatus;
+    return {
+        available: (body.available ?? []).map(mapUpdateItem),
+        inProgress: (body.in_progress ?? []).map(mapUpdateItem),
+    };
+}
+
+export async function applyMapUpdate(mapId: number): Promise<UpdateCheckResult[]> {
+    return applyMapUpdates({ map_id: mapId });
+}
+
+export async function applyAllMapUpdates(): Promise<UpdateCheckResult[]> {
+    return applyMapUpdates({});
+}
+
+async function applyMapUpdates(body: {
+    map_id?: number;
+}): Promise<UpdateCheckResult[]> {
+    const response = await apiFetch(
+        `${API_DOMAIN}${apiPaths.API_BASE_PATH}${apiPaths.MAPS_ADMIN_UPDATES_APPLY}`,
+        {
+            method: 'POST',
+            auth: true,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(body),
+        }
+    );
+
+    if (handleAuthError(response)) {
+        throw new Error('Authentication required');
+    }
+    if (!response.ok) {
+        throw new Error(await errorMessage(response));
+    }
+
+    const payload = (await response.json()) as BackendApplyUpdatesResponse;
+    return (payload.results ?? []).map((result) => ({
+        status: result.status,
+        message: result.message,
+        map: result.map ? mapDetail(result.map) : undefined,
+    }));
+}

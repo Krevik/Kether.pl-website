@@ -373,5 +373,26 @@ export function useMapsTranslations() {
         manageUpdateResultFailed: t('maps.manageUpdateResultFailed'),
         manageRemoveSuccess: t('maps.manageRemoveSuccess'),
         manageRemoveFailed: t('maps.manageRemoveFailed'),
+        updatesNone: t('maps.updatesNone'),
+        updatesAvailableStatus: (count: number) =>
+            count === 1
+                ? t('maps.updatesAvailableOne')
+                : t('maps.updatesAvailableMany', { count }),
+        updatesInProgressStatus: (count: number) =>
+            count === 1
+                ? t('maps.updatesInProgressOne')
+                : t('maps.updatesInProgressMany', { count }),
+        updatesShowDetails: t('maps.updatesShowDetails'),
+        updatesDetailsTitle: t('maps.updatesDetailsTitle'),
+        updatesSectionAvailable: t('maps.updatesSectionAvailable'),
+        updatesSectionInProgress: t('maps.updatesSectionInProgress'),
+        updatesEmptySection: t('maps.updatesEmptySection'),
+        updatesUpdate: t('maps.updatesUpdate'),
+        updatesUpdateAll: t('maps.updatesUpdateAll'),
+        updatesUpdating: t('maps.updatesUpdating'),
+        updatesApplySuccess: t('maps.updatesApplySuccess'),
+        updatesApplyFailed: t('maps.updatesApplyFailed'),
+        updatesSourceWorkshop: t('maps.updatesSourceWorkshop'),
+        updatesSourceL4d2Center: t('maps.updatesSourceL4d2Center'),
     };
 }
