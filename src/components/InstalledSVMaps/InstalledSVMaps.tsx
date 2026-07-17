@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import { Toolbar } from 'primereact/toolbar';
+import { ProgressBar } from 'primereact/progressbar';
 import './InstalledSVMaps.css';
 import { PageWithBackground } from '../PageLayout/PageBackground/PageWithBackground';
 import { BACKGROUNDS } from '../PageLayout/PageBackground/backgrounds';
@@ -30,7 +31,8 @@ import {
 } from '../../services/mapsManageService';
 
 const MAP_NAME_SEARCH_DEBOUNCE_MS = 280;
-const MAP_UPDATES_POLL_MS = 10_000;
+const MAP_UPDATES_POLL_IDLE_MS = 10_000;
+const MAP_UPDATES_POLL_ACTIVE_MS = 1_000;
 
 const EMPTY_UPDATES_STATUS: MapUpdatesStatus = {
     available: [],
@@ -132,12 +134,16 @@ export default function InstalledSVMaps() {
         };
 
         load();
-        const timer = window.setInterval(load, MAP_UPDATES_POLL_MS);
+        const pollMs =
+            updatesStatus.inProgress.length > 0
+                ? MAP_UPDATES_POLL_ACTIVE_MS
+                : MAP_UPDATES_POLL_IDLE_MS;
+        const timer = window.setInterval(load, pollMs);
         return () => {
             cancelled = true;
             window.clearInterval(timer);
         };
-    }, [isAdmin]);
+    }, [isAdmin, updatesStatus.inProgress.length]);
 
     const processedMaps = useMemo(
         () => processMapsWithTranslations(maps, mapsTranslations.allMaps),
@@ -249,13 +255,21 @@ export default function InstalledSVMaps() {
 
     const inProgressCount = updatesStatus.inProgress.length;
     const availableCount = availableVisible.length;
+    const primaryInProgress = updatesStatus.inProgress[0];
     const updatesStatusText =
-        inProgressCount > 0
-            ? mapsTranslations.updatesInProgressStatus(inProgressCount)
+        inProgressCount > 0 && primaryInProgress
+            ? inProgressCount === 1
+                ? mapsTranslations.updatesPhaseLabel(primaryInProgress)
+                : mapsTranslations.updatesInProgressStatus(inProgressCount)
             : availableCount > 0
               ? mapsTranslations.updatesAvailableStatus(availableCount)
               : mapsTranslations.updatesNone;
     const showUpdatesDetailsLink = inProgressCount > 0 || availableCount > 0;
+    const progressPercent =
+        inProgressCount === 1 && typeof primaryInProgress?.percent === 'number'
+            ? primaryInProgress.percent
+            : null;
+    const showProgressBar = inProgressCount > 0;
 
     if (mapsLoading) {
         return (
@@ -274,38 +288,51 @@ export default function InstalledSVMaps() {
                     <div className="centered-text">{mapsTranslations.title}</div>
 
                     {isAdmin && (
-                        <div className="maps-admin-toolbar-wrap">
-                            <Toolbar
-                                className="maps-admin-toolbar app-toolbar"
-                                start={
-                                    <Button
-                                        label={`➕ ${mapsTranslations.addMap}`}
-                                        className="p-button-success mr-2 app-focus-ring"
-                                        title={mapsTranslations.addMapTooltip}
-                                        onClick={() => setAddMapDialogVisible(true)}
-                                    />
-                                }
-                            />
-                            <div className="maps-admin-updates-cluster">
-                                <div className="maps-admin-updates-status" role="status">
-                                    <span>{updatesStatusText}</span>
+                        <Toolbar
+                            className="mb-4 maps-admin-toolbar app-toolbar"
+                            start={
+                                <Button
+                                    label={`➕ ${mapsTranslations.addMap}`}
+                                    className="p-button-success mr-2 app-focus-ring"
+                                    title={mapsTranslations.addMapTooltip}
+                                    onClick={() => setAddMapDialogVisible(true)}
+                                />
+                            }
+                            end={
+                                <div className="maps-admin-updates-cluster">
+                                    <div className="maps-admin-updates-status" role="status">
+                                        <span>{updatesStatusText}</span>
+                                        {showProgressBar && (
+                                            <ProgressBar
+                                                className="maps-admin-updates-progress"
+                                                value={progressPercent ?? undefined}
+                                                mode={
+                                                    progressPercent === null
+                                                        ? 'indeterminate'
+                                                        : 'determinate'
+                                                }
+                                                showValue={false}
+                                                aria-label={updatesStatusText}
+                                            />
+                                        )}
+                                    </div>
+                                    {showUpdatesDetailsLink && (
+                                        <button
+                                            type="button"
+                                            className="maps-admin-updates__details-btn app-focus-ring"
+                                            aria-haspopup="dialog"
+                                            aria-expanded={updatesDialogVisible}
+                                            onClick={() => {
+                                                void reloadUpdatesStatus();
+                                                setUpdatesDialogVisible(true);
+                                            }}
+                                        >
+                                            {mapsTranslations.updatesShowDetails}
+                                        </button>
+                                    )}
                                 </div>
-                                {showUpdatesDetailsLink && (
-                                    <button
-                                        type="button"
-                                        className="maps-admin-updates__details-btn app-focus-ring"
-                                        aria-haspopup="dialog"
-                                        aria-expanded={updatesDialogVisible}
-                                        onClick={() => {
-                                            void reloadUpdatesStatus();
-                                            setUpdatesDialogVisible(true);
-                                        }}
-                                    >
-                                        {mapsTranslations.updatesShowDetails}
-                                    </button>
-                                )}
-                            </div>
-                        </div>
+                            }
+                        />
                     )}
 
                     <AddNewMapDialog

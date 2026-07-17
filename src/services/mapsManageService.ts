@@ -110,10 +110,17 @@ export async function checkMapUpdate(id: number): Promise<UpdateCheckResult> {
     };
 }
 
+export type MapUpdatePhase = 'downloading' | 'extracting' | 'installing';
+
 export interface MapUpdateItem {
     name: string;
     mapId: number;
     sourceKind: MapSourceKind;
+    phase?: MapUpdatePhase;
+    bytesDownloaded?: number;
+    bytesTotal?: number;
+    percent?: number;
+    detail?: string;
 }
 
 export interface MapUpdatesStatus {
@@ -125,6 +132,11 @@ interface BackendMapUpdateItem {
     name: string;
     map_id: number;
     source_kind: MapSourceKind;
+    phase?: MapUpdatePhase;
+    bytes_downloaded?: number;
+    bytes_total?: number;
+    percent?: number;
+    detail?: string;
 }
 
 interface BackendMapUpdatesStatus {
@@ -141,6 +153,11 @@ function mapUpdateItem(item: BackendMapUpdateItem): MapUpdateItem {
         name: item.name,
         mapId: item.map_id,
         sourceKind: item.source_kind,
+        phase: item.phase,
+        bytesDownloaded: item.bytes_downloaded,
+        bytesTotal: item.bytes_total,
+        percent: item.percent,
+        detail: item.detail,
     };
 }
 

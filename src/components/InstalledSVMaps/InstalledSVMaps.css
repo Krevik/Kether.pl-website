@@ -351,35 +351,44 @@
     }
 }
 
-.maps-admin-toolbar-wrap {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    align-items: center;
-    gap: 0.75rem 1rem;
+.installed-sv-maps .maps-admin-toolbar.app-toolbar {
     width: 100%;
     margin: 0.75rem 0 0.35rem;
-}
-
-.maps-admin-toolbar-wrap .maps-admin-toolbar {
-    margin: 0;
-    width: auto;
 }
 
 .maps-admin-updates-cluster {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: center;
-    gap: 0.35rem 0.5rem;
+    justify-content: flex-end;
+    gap: 0.5rem 0.75rem;
     min-width: 0;
-    text-align: center;
+    max-width: min(100%, 28rem);
+    text-align: right;
 }
 
 .maps-admin-updates-status {
-    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.35rem;
+    min-width: 0;
+    flex: 1 1 12rem;
     font-size: 0.95rem;
     line-height: 1.4;
     color: var(--color-text-primary, #f0f0f0);
+    text-align: right;
+}
+
+.maps-admin-updates-progress.p-progressbar {
+    height: 0.45rem;
+    border-radius: var(--radius-md, 6px);
+    background: rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+}
+
+.maps-admin-updates-progress .p-progressbar-value {
+    background: var(--color-accent, #e01220);
 }
 
 .maps-admin-updates__details-btn {
@@ -393,6 +402,7 @@
     text-decoration: underline;
     text-underline-offset: 0.15em;
     cursor: pointer;
+    flex-shrink: 0;
 }
 
 .maps-admin-updates__details-btn:hover {
@@ -405,17 +415,13 @@
 }
 
 @media (max-width: 640px) {
-    .maps-admin-toolbar-wrap {
-        grid-template-columns: 1fr;
-        justify-items: stretch;
-    }
-
-    .maps-admin-toolbar-wrap .maps-admin-toolbar {
-        width: 100%;
-    }
-
     .maps-admin-updates-cluster {
         justify-content: flex-start;
+        max-width: 100%;
+        text-align: left;
+    }
+
+    .maps-admin-updates-status {
         text-align: left;
     }
 }
@@ -491,6 +497,31 @@
     font-size: 0.9rem;
     color: var(--color-text-muted, #9aa3b2);
     white-space: nowrap;
+}
+
+.maps-updates-dialog__row--progress {
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.maps-updates-dialog__phase {
+    font-size: 0.85rem;
+    color: var(--color-text-muted, #9aa3b2);
+}
+
+.maps-updates-dialog__progress-wrap {
+    width: 100%;
+}
+
+.maps-updates-dialog__progress.p-progressbar {
+    height: 0.55rem;
+    border-radius: var(--radius-md, 6px);
+    background: rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+}
+
+.maps-updates-dialog__progress .p-progressbar-value {
+    background: var(--color-accent, #e01220);
 }
 
 .maps-updates-dialog__update-all {

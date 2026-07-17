@@ -1,6 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
+import { ProgressBar } from 'primereact/progressbar';
 import {
     applyAllMapUpdates,
     applyMapUpdate,
@@ -146,21 +147,35 @@ export function MapUpdatesDetailsDialog({
                     <p className="maps-updates-dialog__empty">{mapsTranslations.updatesEmptySection}</p>
                 ) : (
                     <ul className="maps-updates-dialog__list">
-                        {status.inProgress.map((item) => (
-                            <li key={`progress-${item.mapId}`} className="maps-updates-dialog__row">
-                                <div className="maps-updates-dialog__meta">
-                                    <span className="maps-updates-dialog__name">
-                                        #{item.mapId} {item.name}
-                                    </span>
-                                    <span className="maps-updates-dialog__source">
-                                        {sourceLabel(item.sourceKind, mapsTranslations)}
-                                    </span>
-                                </div>
-                                <span className="maps-updates-dialog__badge">
-                                    {mapsTranslations.updatesUpdating}
-                                </span>
-                            </li>
-                        ))}
+                        {status.inProgress.map((item) => {
+                            const label = mapsTranslations.updatesPhaseLabel(item);
+                            const hasPercent = typeof item.percent === 'number';
+                            return (
+                                <li
+                                    key={`progress-${item.mapId}`}
+                                    className="maps-updates-dialog__row maps-updates-dialog__row--progress"
+                                >
+                                    <div className="maps-updates-dialog__meta">
+                                        <span className="maps-updates-dialog__name">
+                                            #{item.mapId} {item.name}
+                                        </span>
+                                        <span className="maps-updates-dialog__source">
+                                            {sourceLabel(item.sourceKind, mapsTranslations)}
+                                        </span>
+                                        <span className="maps-updates-dialog__phase">{label}</span>
+                                    </div>
+                                    <div className="maps-updates-dialog__progress-wrap">
+                                        <ProgressBar
+                                            className="maps-updates-dialog__progress"
+                                            value={hasPercent ? item.percent : undefined}
+                                            mode={hasPercent ? 'determinate' : 'indeterminate'}
+                                            showValue={hasPercent}
+                                            aria-label={label}
+                                        />
+                                    </div>
+                                </li>
+                            );
+                        })}
                     </ul>
                 )}
             </section>

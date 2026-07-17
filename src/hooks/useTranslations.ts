@@ -407,6 +407,29 @@ export function useMapsTranslations() {
         updatesUpdate: t('maps.updatesUpdate'),
         updatesUpdateAll: t('maps.updatesUpdateAll'),
         updatesUpdating: t('maps.updatesUpdating'),
+        updatesPhaseLabel: (item: {
+            name: string;
+            phase?: string;
+            percent?: number;
+        }) => {
+            const name = item.name;
+            if (item.phase === 'downloading') {
+                if (typeof item.percent === 'number') {
+                    return t('maps.updatesPhaseDownloadingPercent', {
+                        name,
+                        percent: item.percent,
+                    });
+                }
+                return t('maps.updatesPhaseDownloading', { name });
+            }
+            if (item.phase === 'extracting') {
+                return t('maps.updatesPhaseExtracting', { name });
+            }
+            if (item.phase === 'installing') {
+                return t('maps.updatesPhaseInstalling', { name });
+            }
+            return t('maps.updatesPhaseGeneric', { name });
+        },
         updatesApplySuccess: t('maps.updatesApplySuccess'),
         updatesApplyFailed: t('maps.updatesApplyFailed'),
         updatesSourceWorkshop: t('maps.updatesSourceWorkshop'),
