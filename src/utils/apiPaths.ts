@@ -15,6 +15,9 @@ export const apiPaths = {
     MAPS_ADMIN_UPDATES: `/maps/admin/updates`,
     MAPS_ADMIN_UPDATES_CHECK: `/maps/admin/updates/check`,
     MAPS_ADMIN_UPDATES_APPLY: `/maps/admin/updates/apply`,
+    MAPS_SUGGESTIONS_PATH: `/maps/suggestions`,
+    MAPS_SUGGESTION_DENY: (id: number) => `/maps/suggestions/${id}/deny`,
+    MAPS_SUGGESTION_ACCEPT: (id: number) => `/maps/suggestions/${id}/accept`,
     AUTH_BASE_PATH: `/auth`,
 };
 

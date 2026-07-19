@@ -23,14 +23,22 @@ import { fetchInstalledMaps } from '../../services/mapsService';
 import { LoadingSpinner } from '../LoadingSpinner/LoadingSpinner';
 import { MapEntry } from './mapEntry';
 import { AddNewMapDialog } from './Dialogues/AddNewMapDialog';
+import { SuggestMapDialog } from './Dialogues/SuggestMapDialog';
 import { ManageMapDialog } from './Dialogues/ManageMapDialog';
 import { MapUpdatesDetailsDialog } from './Dialogues/MapUpdatesDetailsDialog';
+import { MapSuggestionCard } from './MapSuggestionCard';
 import {
     checkMapUpdates,
     fetchMapUpdatesStatus,
     MapUpdateItem,
     MapUpdatesStatus,
 } from '../../services/mapsManageService';
+import {
+    acceptMapSuggestion,
+    denyMapSuggestion,
+    fetchMapSuggestions,
+    MapSuggestion,
+} from '../../services/mapSuggestionsService';
 
 import { notificationManager } from '../../utils/notificationManager';
 
@@ -45,7 +53,7 @@ const EMPTY_UPDATES_STATUS: MapUpdatesStatus = {
 
 export type { MapEntry } from './mapEntry';
 
-type MapsTabId = 'workshop' | 'sirplease' | 'l4d2center' | 'other';
+type MapsTabId = 'workshop' | 'sirplease' | 'l4d2center' | 'other' | 'suggestions';
 
 function visibleAvailable(status: MapUpdatesStatus) {
     const inProgressIds = new Set(status.inProgress.map((item) => item.mapId));
@@ -92,6 +100,7 @@ export default function InstalledSVMaps() {
     const isAdmin = useSelector(
         (state: AppState) => state.userDataReducer.isAdmin
     );
+    const userID = useSelector((state: AppState) => state.userDataReducer.userID);
     const [helpDialogVisible, setHelpDialogVisible] = useState(false);
     const [activeTab, setActiveTab] = useState<MapsTabId>('workshop');
     const [mapSearch, setMapSearch] = useState('');
@@ -99,6 +108,11 @@ export default function InstalledSVMaps() {
     const [mapsStale, setMapsStale] = useState(false);
     const [mapsLoading, setMapsLoading] = useState(true);
     const [addMapDialogVisible, setAddMapDialogVisible] = useState(false);
+    const [suggestMapDialogVisible, setSuggestMapDialogVisible] = useState(false);
+    const [suggestions, setSuggestions] = useState<MapSuggestion[]>([]);
+    const [suggestionsLoading, setSuggestionsLoading] = useState(false);
+    const [acceptingSuggestionId, setAcceptingSuggestionId] = useState<number | null>(null);
+    const [denyingSuggestionId, setDenyingSuggestionId] = useState<number | null>(null);
     const [manageMapId, setManageMapId] = useState<number | null>(null);
     const [manageDialogVisible, setManageDialogVisible] = useState(false);
     const [updatesStatus, setUpdatesStatus] = useState<MapUpdatesStatus>(EMPTY_UPDATES_STATUS);
@@ -130,6 +144,22 @@ export default function InstalledSVMaps() {
             });
     }, []);
 
+    const reloadSuggestions = useCallback(() => {
+        setSuggestionsLoading(true);
+        return fetchMapSuggestions()
+            .then((items) => {
+                setSuggestions(items);
+            })
+            .catch((error: Error) => {
+                notificationManager.ERROR(
+                    `${mapsTranslations.suggestLoadFailed}: ${error.message}`
+                );
+            })
+            .finally(() => {
+                setSuggestionsLoading(false);
+            });
+    }, [mapsTranslations.suggestLoadFailed]);
+
     const reloadUpdatesStatus = useCallback(() => {
         if (!isAdmin) return Promise.resolve();
         const generation = ++updatesStatusGeneration.current;
@@ -159,6 +189,10 @@ export default function InstalledSVMaps() {
             cancelled = true;
         };
     }, []);
+
+    useEffect(() => {
+        void reloadSuggestions();
+    }, [reloadSuggestions]);
 
     useEffect(() => {
         if (!isAdmin) {
@@ -265,10 +299,16 @@ export default function InstalledSVMaps() {
         debouncedMapSearch.trim().length > 0 ? mapsTranslations.searchNoResults : undefined;
 
     const tabIds = useMemo(() => {
-        const ids: MapsTabId[] = ['workshop', 'sirplease', 'l4d2center'];
+        const ids: MapsTabId[] = ['workshop', 'sirplease', 'l4d2center', 'suggestions'];
         if (otherMaps.length > 0) ids.push('other');
         return ids;
     }, [otherMaps.length]);
+
+    const filteredSuggestions = useMemo(() => {
+        const query = debouncedMapSearch.trim().toLowerCase();
+        if (!query) return suggestions;
+        return suggestions.filter((item) => item.title.toLowerCase().includes(query));
+    }, [suggestions, debouncedMapSearch]);
 
     const handleOpenHelpDialog = () => setHelpDialogVisible(true);
     const handleCloseHelpDialog = () => setHelpDialogVisible(false);
@@ -282,10 +322,58 @@ export default function InstalledSVMaps() {
     }, []);
 
     const handleMapsChanged = useCallback(() => {
-        return Promise.all([reloadMaps({ soft: true }), reloadUpdatesStatus()]).then(
-            () => undefined
-        );
-    }, [reloadMaps, reloadUpdatesStatus]);
+        return Promise.all([
+            reloadMaps({ soft: true }),
+            reloadUpdatesStatus(),
+            reloadSuggestions(),
+        ]).then(() => undefined);
+    }, [reloadMaps, reloadUpdatesStatus, reloadSuggestions]);
+
+    const handleAcceptSuggestion = useCallback(
+        async (id: number) => {
+            setAcceptingSuggestionId(id);
+            try {
+                await acceptMapSuggestion(id);
+                notificationManager.SUCCESS(mapsTranslations.suggestAcceptSuccess);
+                await handleMapsChanged();
+            } catch (error) {
+                const message = error instanceof Error ? error.message : String(error);
+                notificationManager.ERROR(
+                    `${mapsTranslations.suggestAcceptFailed}: ${message}`
+                );
+            } finally {
+                setAcceptingSuggestionId(null);
+            }
+        },
+        [
+            handleMapsChanged,
+            mapsTranslations.suggestAcceptFailed,
+            mapsTranslations.suggestAcceptSuccess,
+        ]
+    );
+
+    const handleDenySuggestion = useCallback(
+        async (id: number) => {
+            setDenyingSuggestionId(id);
+            try {
+                await denyMapSuggestion(id);
+                notificationManager.SUCCESS(mapsTranslations.suggestDenySuccess);
+                await reloadSuggestions();
+            } catch (error) {
+                const message = error instanceof Error ? error.message : String(error);
+                notificationManager.ERROR(
+                    `${mapsTranslations.suggestDenyFailed}: ${message}`
+                );
+            } finally {
+                setDenyingSuggestionId(null);
+            }
+        },
+        [
+            mapsTranslations.suggestDenyFailed,
+            mapsTranslations.suggestDenySuccess,
+            reloadSuggestions,
+        ]
+    );
 
     const handleUpdatesApplyStarted = useCallback((items: MapUpdateItem[]) => {
         if (items.length === 0) return;
@@ -402,63 +490,81 @@ export default function InstalledSVMaps() {
                 <div className="card app-surface app-page-card">
                     <div className="centered-text">{mapsTranslations.title}</div>
 
-                    {isAdmin && (
+                    {(isAdmin || userID) && (
                         <Toolbar
                             className="mb-4 maps-admin-toolbar app-toolbar"
                             start={
                                 <>
-                                    <Button
-                                        label={`➕ ${mapsTranslations.addMap}`}
-                                        className="p-button-success mr-2 app-focus-ring"
-                                        title={mapsTranslations.addMapTooltip}
-                                        onClick={() => setAddMapDialogVisible(true)}
-                                    />
-                                    <Button
-                                        label={
-                                            isCheckingUpdates
-                                                ? mapsTranslations.updatesCheckInProgress
-                                                : mapsTranslations.updatesCheck
-                                        }
-                                        icon={isCheckingUpdates ? "pi pi-spin pi-spinner" : "pi pi-refresh"}
-                                        className="p-button-secondary app-focus-ring"
-                                        onClick={() => void handleCheckUpdates()}
-                                        disabled={isCheckingUpdates}
-                                    />
+                                    {isAdmin && (
+                                        <Button
+                                            label={`➕ ${mapsTranslations.addMap}`}
+                                            className="p-button-success mr-2 app-focus-ring"
+                                            title={mapsTranslations.addMapTooltip}
+                                            onClick={() => setAddMapDialogVisible(true)}
+                                        />
+                                    )}
+                                    {userID && (
+                                        <Button
+                                            label={`💡 ${mapsTranslations.suggestMap}`}
+                                            className="p-button-secondary mr-2 app-focus-ring"
+                                            title={mapsTranslations.suggestMapTooltip}
+                                            onClick={() => setSuggestMapDialogVisible(true)}
+                                        />
+                                    )}
+                                    {isAdmin && (
+                                        <Button
+                                            label={
+                                                isCheckingUpdates
+                                                    ? mapsTranslations.updatesCheckInProgress
+                                                    : mapsTranslations.updatesCheck
+                                            }
+                                            icon={
+                                                isCheckingUpdates
+                                                    ? 'pi pi-spin pi-spinner'
+                                                    : 'pi pi-refresh'
+                                            }
+                                            className="p-button-secondary app-focus-ring"
+                                            onClick={() => void handleCheckUpdates()}
+                                            disabled={isCheckingUpdates}
+                                        />
+                                    )}
                                 </>
                             }
                             end={
-                                <div className="maps-admin-updates-cluster">
-                                    <div className="maps-admin-updates-status" role="status">
-                                        <span>{updatesStatusText}</span>
-                                        {showProgressBar && (
-                                            <ProgressBar
-                                                className="maps-admin-updates-progress"
-                                                value={progressPercent ?? undefined}
-                                                mode={
-                                                    progressPercent === null
-                                                        ? 'indeterminate'
-                                                        : 'determinate'
-                                                }
-                                                showValue={false}
-                                                aria-label={updatesStatusText}
-                                            />
+                                isAdmin ? (
+                                    <div className="maps-admin-updates-cluster">
+                                        <div className="maps-admin-updates-status" role="status">
+                                            <span>{updatesStatusText}</span>
+                                            {showProgressBar && (
+                                                <ProgressBar
+                                                    className="maps-admin-updates-progress"
+                                                    value={progressPercent ?? undefined}
+                                                    mode={
+                                                        progressPercent === null
+                                                            ? 'indeterminate'
+                                                            : 'determinate'
+                                                    }
+                                                    showValue={false}
+                                                    aria-label={updatesStatusText}
+                                                />
+                                            )}
+                                        </div>
+                                        {showUpdatesDetailsLink && (
+                                            <button
+                                                type="button"
+                                                className="maps-admin-updates__details-btn app-focus-ring"
+                                                aria-haspopup="dialog"
+                                                aria-expanded={updatesDialogVisible}
+                                                onClick={() => {
+                                                    void reloadUpdatesStatus();
+                                                    setUpdatesDialogVisible(true);
+                                                }}
+                                            >
+                                                {mapsTranslations.updatesShowDetails}
+                                            </button>
                                         )}
                                     </div>
-                                    {showUpdatesDetailsLink && (
-                                        <button
-                                            type="button"
-                                            className="maps-admin-updates__details-btn app-focus-ring"
-                                            aria-haspopup="dialog"
-                                            aria-expanded={updatesDialogVisible}
-                                            onClick={() => {
-                                                void reloadUpdatesStatus();
-                                                setUpdatesDialogVisible(true);
-                                            }}
-                                        >
-                                            {mapsTranslations.updatesShowDetails}
-                                        </button>
-                                    )}
-                                </div>
+                                ) : undefined
                             }
                         />
                     )}
@@ -467,6 +573,12 @@ export default function InstalledSVMaps() {
                         isDialogVisible={addMapDialogVisible}
                         setDialogVisibility={setAddMapDialogVisible}
                         onInstalled={handleMapsChanged}
+                        installedMaps={maps}
+                    />
+                    <SuggestMapDialog
+                        isDialogVisible={suggestMapDialogVisible}
+                        setDialogVisibility={setSuggestMapDialogVisible}
+                        onSuggested={() => void reloadSuggestions()}
                         installedMaps={maps}
                     />
                     <ManageMapDialog
@@ -534,6 +646,17 @@ export default function InstalledSVMaps() {
                                 onClick={() => setActiveTab('l4d2center')}
                             >
                                 {mapsTranslations.tabL4D2Center}
+                            </button>
+                        )}
+                        {tabIds.includes('suggestions') && (
+                            <button
+                                type="button"
+                                role="tab"
+                                aria-selected={activeTab === 'suggestions'}
+                                className={`maps-tab app-focus-ring ${activeTab === 'suggestions' ? 'maps-tab-active' : ''}`}
+                                onClick={() => setActiveTab('suggestions')}
+                            >
+                                {mapsTranslations.tabSuggestions}
                             </button>
                         )}
                         {tabIds.includes('other') && (
@@ -621,6 +744,43 @@ export default function InstalledSVMaps() {
                                             : tableEmptyMessage
                                     }
                                 />
+                            </div>
+                        )}
+                        {activeTab === 'suggestions' && (
+                            <div
+                                className="maps-tab-panel"
+                                role="tabpanel"
+                                aria-label={mapsTranslations.tabSuggestions}
+                            >
+                                {suggestionsLoading ? (
+                                    <LoadingSpinner />
+                                ) : filteredSuggestions.length === 0 ? (
+                                    <div className="maps-empty">
+                                        {suggestions.length === 0
+                                            ? mapsTranslations.suggestNone
+                                            : mapsTranslations.searchNoResults}
+                                    </div>
+                                ) : (
+                                    <div className="workshop-maps-section">
+                                        <div className="workshop-maps-grid">
+                                            {filteredSuggestions.map((item, index) => (
+                                                <MapSuggestionCard
+                                                    key={item.id}
+                                                    suggestion={item}
+                                                    mapsTranslations={mapsTranslations}
+                                                    isAdmin={isAdmin}
+                                                    acceptingId={acceptingSuggestionId}
+                                                    denyingId={denyingSuggestionId}
+                                                    onAccept={(id) => void handleAcceptSuggestion(id)}
+                                                    onDeny={(id) => void handleDenySuggestion(id)}
+                                                    style={{
+                                                        animationDelay: `${Math.min(index, 24) * 35}ms`,
+                                                    }}
+                                                />
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         )}
                         {activeTab === 'other' && otherMaps.length > 0 && (
