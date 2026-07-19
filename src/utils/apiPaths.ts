@@ -13,6 +13,7 @@ export const apiPaths = {
     MAPS_ADMIN_UNINSTALL: (id: number) => `/maps/admin/${id}/uninstall`,
     MAPS_ADMIN_CHECK_UPDATE: (id: number) => `/maps/admin/${id}/check-update`,
     MAPS_ADMIN_UPDATES: `/maps/admin/updates`,
+    MAPS_ADMIN_UPDATES_CHECK: `/maps/admin/updates/check`,
     MAPS_ADMIN_UPDATES_APPLY: `/maps/admin/updates/apply`,
     AUTH_BASE_PATH: `/auth`,
 };

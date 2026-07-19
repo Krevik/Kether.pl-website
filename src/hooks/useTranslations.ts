@@ -404,6 +404,16 @@ export function useMapsTranslations() {
         updatesSectionAvailable: t('maps.updatesSectionAvailable'),
         updatesSectionInProgress: t('maps.updatesSectionInProgress'),
         updatesEmptySection: t('maps.updatesEmptySection'),
+        updatesCheck: t('maps.updatesCheck'),
+        updatesCheckInProgress: t('maps.updatesCheckInProgress'),
+        updatesCheckFailed: t('maps.updatesCheckFailed'),
+        updatesCheckNone: t('maps.updatesCheckNone'),
+        updatesCheckFound: (count: number) =>
+            updatesCountStatus(count, {
+                one: 'maps.updatesCheckFound_one',
+                few: 'maps.updatesCheckFound_few',
+                many: 'maps.updatesCheckFound_many',
+            }),
         updatesUpdate: t('maps.updatesUpdate'),
         updatesUpdateAll: t('maps.updatesUpdateAll'),
         updatesUpdating: t('maps.updatesUpdating'),

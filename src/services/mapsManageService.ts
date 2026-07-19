@@ -173,6 +173,18 @@ export async function fetchMapUpdatesStatus(): Promise<MapUpdatesStatus> {
     };
 }
 
+export async function checkMapUpdates(): Promise<MapUpdatesStatus> {
+    const response = await authenticatedRequest(apiPaths.MAPS_ADMIN_UPDATES_CHECK, 'POST');
+    if (!response.ok) {
+        throw new Error(await errorMessage(response));
+    }
+    const body = (await response.json()) as BackendMapUpdatesStatus;
+    return {
+        available: (body.available ?? []).map(mapUpdateItem),
+        inProgress: (body.in_progress ?? []).map(mapUpdateItem),
+    };
+}
+
 export async function applyMapUpdate(mapId: number): Promise<UpdateCheckResult[]> {
     return applyMapUpdates({ map_id: mapId });
 }

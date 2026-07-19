@@ -26,10 +26,13 @@ import { AddNewMapDialog } from './Dialogues/AddNewMapDialog';
 import { ManageMapDialog } from './Dialogues/ManageMapDialog';
 import { MapUpdatesDetailsDialog } from './Dialogues/MapUpdatesDetailsDialog';
 import {
+    checkMapUpdates,
     fetchMapUpdatesStatus,
     MapUpdateItem,
     MapUpdatesStatus,
 } from '../../services/mapsManageService';
+
+import { notificationManager } from '../../utils/notificationManager';
 
 const MAP_NAME_SEARCH_DEBOUNCE_MS = 280;
 const MAP_UPDATES_POLL_IDLE_MS = 10_000;
@@ -49,19 +52,38 @@ function visibleAvailable(status: MapUpdatesStatus) {
     return status.available.filter((item) => !inProgressIds.has(item.mapId));
 }
 
-/** Keep optimistic in-progress rows until the daemon reports the same maps. */
+/** Prefer daemon in-progress rows; keep optimistic only while still pending/active. */
 function mergeUpdatesStatus(
     prev: MapUpdatesStatus,
     next: MapUpdatesStatus,
     keepOptimistic: boolean
 ): MapUpdatesStatus {
-    if (!keepOptimistic || next.inProgress.length > 0 || prev.inProgress.length === 0) {
+    if (!keepOptimistic || prev.inProgress.length === 0) {
         return next;
     }
-    const optimisticIds = new Set(prev.inProgress.map((item) => item.mapId));
+
+    const daemonInProgressIds = new Set(next.inProgress.map((item) => item.mapId));
+    const stillAvailableIds = new Set(next.available.map((item) => item.mapId));
+    const mergedInProgress: MapUpdateItem[] = [];
+    const seen = new Set<number>();
+
+    for (const item of next.inProgress) {
+        mergedInProgress.push(item);
+        seen.add(item.mapId);
+    }
+    for (const item of prev.inProgress) {
+        if (seen.has(item.mapId)) continue;
+        // Keep optimistic only if still available (not yet started on daemon)
+        // or already reported in-progress. Drop when absent from both (finished).
+        if (stillAvailableIds.has(item.mapId) || daemonInProgressIds.has(item.mapId)) {
+            mergedInProgress.push(item);
+            seen.add(item.mapId);
+        }
+    }
+
     return {
-        available: next.available.filter((item) => !optimisticIds.has(item.mapId)),
-        inProgress: prev.inProgress,
+        available: next.available.filter((item) => !seen.has(item.mapId)),
+        inProgress: mergedInProgress,
     };
 }
 
@@ -82,9 +104,13 @@ export default function InstalledSVMaps() {
     const [updatesStatus, setUpdatesStatus] = useState<MapUpdatesStatus>(EMPTY_UPDATES_STATUS);
     const [updatesDialogVisible, setUpdatesDialogVisible] = useState(false);
     const [forceFastUpdatesPoll, setForceFastUpdatesPoll] = useState(false);
+    const [isCheckingUpdates, setIsCheckingUpdates] = useState(false);
     const updatesStatusGeneration = useRef(0);
     const forceFastUpdatesPollRef = useRef(false);
+    const checkingRef = useRef(false);
+    const isCheckingUpdatesRef = useRef(false);
     forceFastUpdatesPollRef.current = forceFastUpdatesPoll;
+    isCheckingUpdatesRef.current = isCheckingUpdates;
     const debouncedMapSearch = useDebouncedValue(mapSearch, MAP_NAME_SEARCH_DEBOUNCE_MS);
 
     const reloadMaps = useCallback((options?: { soft?: boolean }) => {
@@ -139,9 +165,13 @@ export default function InstalledSVMaps() {
             setUpdatesStatus(EMPTY_UPDATES_STATUS);
             return;
         }
+        if (isCheckingUpdates) {
+            return;
+        }
 
         let cancelled = false;
         const load = () => {
+            if (isCheckingUpdatesRef.current) return;
             const generation = ++updatesStatusGeneration.current;
             fetchMapUpdatesStatus()
                 .then((status) => {
@@ -170,7 +200,7 @@ export default function InstalledSVMaps() {
             cancelled = true;
             window.clearInterval(timer);
         };
-    }, [isAdmin, updatesStatus.inProgress.length, forceFastUpdatesPoll]);
+    }, [isAdmin, updatesStatus.inProgress.length, forceFastUpdatesPoll, isCheckingUpdates]);
 
     const processedMaps = useMemo(
         () => processMapsWithTranslations(maps, mapsTranslations.allMaps),
@@ -259,6 +289,7 @@ export default function InstalledSVMaps() {
 
     const handleUpdatesApplyStarted = useCallback((items: MapUpdateItem[]) => {
         if (items.length === 0) return;
+        forceFastUpdatesPollRef.current = true;
         setForceFastUpdatesPoll(true);
         setUpdatesStatus((prev) => {
             const startedIds = new Set(items.map((item) => item.mapId));
@@ -277,12 +308,44 @@ export default function InstalledSVMaps() {
     }, [reloadUpdatesStatus]);
 
     const handleUpdatesApplyFinished = useCallback(() => {
+        forceFastUpdatesPollRef.current = false;
         setForceFastUpdatesPoll(false);
         return handleMapsChanged();
     }, [handleMapsChanged]);
 
+    const handleCheckUpdates = async () => {
+        if (checkingRef.current) return;
+        checkingRef.current = true;
+        setIsCheckingUpdates(true);
+        isCheckingUpdatesRef.current = true;
+        // Invalidate in-flight polls so they cannot overwrite the check result.
+        ++updatesStatusGeneration.current;
+        try {
+            const status = await checkMapUpdates();
+            ++updatesStatusGeneration.current;
+            setUpdatesStatus((prev) =>
+                mergeUpdatesStatus(prev, status, forceFastUpdatesPollRef.current)
+            );
+            const availableCount = visibleAvailable(status).length;
+            if (availableCount > 0) {
+                notificationManager.SUCCESS(mapsTranslations.updatesCheckFound(availableCount));
+                setUpdatesDialogVisible(true);
+            } else {
+                notificationManager.SUCCESS(mapsTranslations.updatesCheckNone);
+            }
+        } catch (error) {
+            const message = error instanceof Error ? error.message : String(error);
+            notificationManager.ERROR(`${mapsTranslations.updatesCheckFailed}: ${message}`);
+        } finally {
+            checkingRef.current = false;
+            isCheckingUpdatesRef.current = false;
+            setIsCheckingUpdates(false);
+        }
+    };
+
     const handleManageUpdated = useCallback(
         (options?: { reloadMaps?: boolean }) => {
+            forceFastUpdatesPollRef.current = false;
             setForceFastUpdatesPoll(false);
             const tasks: Promise<unknown>[] = [reloadUpdatesStatus()];
             if (options?.reloadMaps) {
@@ -343,12 +406,25 @@ export default function InstalledSVMaps() {
                         <Toolbar
                             className="mb-4 maps-admin-toolbar app-toolbar"
                             start={
-                                <Button
-                                    label={`➕ ${mapsTranslations.addMap}`}
-                                    className="p-button-success mr-2 app-focus-ring"
-                                    title={mapsTranslations.addMapTooltip}
-                                    onClick={() => setAddMapDialogVisible(true)}
-                                />
+                                <>
+                                    <Button
+                                        label={`➕ ${mapsTranslations.addMap}`}
+                                        className="p-button-success mr-2 app-focus-ring"
+                                        title={mapsTranslations.addMapTooltip}
+                                        onClick={() => setAddMapDialogVisible(true)}
+                                    />
+                                    <Button
+                                        label={
+                                            isCheckingUpdates
+                                                ? mapsTranslations.updatesCheckInProgress
+                                                : mapsTranslations.updatesCheck
+                                        }
+                                        icon={isCheckingUpdates ? "pi pi-spin pi-spinner" : "pi pi-refresh"}
+                                        className="p-button-secondary app-focus-ring"
+                                        onClick={() => void handleCheckUpdates()}
+                                        disabled={isCheckingUpdates}
+                                    />
+                                </>
                             }
                             end={
                                 <div className="maps-admin-updates-cluster">
