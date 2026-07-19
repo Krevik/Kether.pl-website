@@ -12,12 +12,16 @@ interface Language {
 const languages: Language[] = [
     { code: 'en', name: 'English', flag: '🇺🇸' },
     { code: 'pl', name: 'Polski', flag: '🇵🇱' },
+    { code: 'szl', name: 'Ślōnskŏ', flag: 'SZL' },
 ];
 
 export const LanguageSwitcher: React.FC = () => {
     const { i18n } = useTranslation();
 
-    const currentLanguage = languages.find(lang => lang.code === i18n.language) || languages[0];
+    const currentLanguage =
+        languages.find((lang) =>
+            i18n.language.toLowerCase().startsWith(lang.code)
+        ) || languages[0];
 
     const handleLanguageChange = (language: Language) => {
         i18n.changeLanguage(language.code);
@@ -25,14 +29,26 @@ export const LanguageSwitcher: React.FC = () => {
 
     const languageTemplate = (option: Language) => (
         <div className="language-option">
-            <span className="language-flag">{option.flag}</span>
+            <span
+                className={`language-flag${
+                    option.code === 'szl' ? ' language-flag--code' : ''
+                }`}
+            >
+                {option.flag}
+            </span>
             <span className="language-name">{option.name}</span>
         </div>
     );
 
     const selectedLanguageTemplate = (option: Language) => (
         <div className="language-option">
-            <span className="language-flag">{option.flag}</span>
+            <span
+                className={`language-flag${
+                    option?.code === 'szl' ? ' language-flag--code' : ''
+                }`}
+            >
+                {option?.flag}
+            </span>
         </div>
     );
 

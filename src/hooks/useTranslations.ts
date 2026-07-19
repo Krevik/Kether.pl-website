@@ -16,6 +16,7 @@ export function useTranslations() {
         isLanguage: (lang: string) => i18n.language === lang,
         isEnglish: () => i18n.language === 'en',
         isPolish: () => i18n.language === 'pl',
+        isSilesian: () => i18n.language.toLowerCase().startsWith('szl'),
     };
 }
 
@@ -273,7 +274,10 @@ export function useMapsTranslations() {
         count: number,
         keys: { one: string; few: string; many: string }
     ) => {
-        if (i18n.language.toLowerCase().startsWith('pl')) {
+        if (
+            i18n.language.toLowerCase().startsWith('pl') ||
+            i18n.language.toLowerCase().startsWith('szl')
+        ) {
             const form = polishPluralForm(count);
             if (form === 'one') return t(keys.one);
             if (form === 'few') return t(keys.few, { count });

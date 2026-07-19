@@ -2,19 +2,20 @@
 
 ## Overview
 
-This project now supports full internationalization with English and Polish languages, featuring automatic language detection, persistent language preferences, and a user-friendly language switcher.
+This project now supports full internationalization with English, Polish, and Silesian languages, featuring automatic language detection, persistent language preferences, and a user-friendly language switcher.
 
 ## Features
 
 ### ✅ **Supported Languages**
 - **English (en)** - Default language
 - **Polish (pl)** - Full translation support
+- **Silesian (szl)** - Full translation support (Ślōnskŏ); browser `szl-PL` maps to `szl`
 
 ### ✅ **Key Features**
 - **Automatic Language Detection**: Detects user's browser language
 - **Persistent Language Storage**: Remembers user's language preference
 - **Language Switcher**: Easy language switching in the navigation
-- **Fallback Support**: Falls back to English if translation is missing
+- **Fallback Support**: Falls back to Polish then English for missing Silesian keys; English otherwise
 - **Type-Safe Translations**: Custom hooks for type-safe translation usage
 - **Dynamic Loading**: Translations load efficiently with code splitting
 
@@ -39,7 +40,12 @@ i18n
     .use(initReactI18next)
     .init({
         resources,
-        fallbackLng: 'en',
+        supportedLngs: ['en', 'pl', 'szl'],
+        nonExplicitSupportedLngs: true,
+        fallbackLng: {
+            szl: ['pl', 'en'],
+            default: ['en'],
+        },
         debug: process.env.NODE_ENV === 'development',
         interpolation: { escapeValue: false },
         detection: {
@@ -56,7 +62,8 @@ i18n
 ```
 src/i18n/locales/
 ├── en.json (English)
-└── pl.json (Polish)
+├── pl.json (Polish)
+└── szl.json (Silesian / Ślōnskŏ)
 ```
 
 ### **Translation Categories**
@@ -228,6 +235,7 @@ const resources = {
 const languages: Language[] = [
     { code: 'en', name: 'English', flag: '🇺🇸' },
     { code: 'pl', name: 'Polski', flag: '🇵🇱' },
+    { code: 'szl', name: 'Ślōnskŏ', flag: 'SZL' },
     { code: 'es', name: 'Español', flag: '🇪🇸' }, // Add new language
 ];
 ```
@@ -258,9 +266,9 @@ const languages: Language[] = [
 
 ### **Adding New Text**
 1. Add translation key to English file
-2. Add corresponding translation to Polish file
+2. Add corresponding translation to Polish and Silesian files
 3. Use the translation key in components
-4. Test both languages
+4. Test all languages
 
 ### **Testing Translations**
 ```bash
