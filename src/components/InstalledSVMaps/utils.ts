@@ -186,6 +186,14 @@ export const filterMapsBySource = (
 };
 
 /**
+ * Formats an ISO timestamp using the browser locale; returns the raw value if unparsable.
+ */
+export const formatMapDate = (value: string): string => {
+    const date = new Date(value);
+    return Number.isNaN(date.getTime()) ? value : date.toLocaleString();
+};
+
+/**
  * Case-insensitive substring match on `mapName`. Empty / whitespace query returns `maps` unchanged.
  */
 export const filterMapsByNameQuery = (maps: MapEntry[], query: string): MapEntry[] => {
@@ -194,12 +202,59 @@ export const filterMapsByNameQuery = (maps: MapEntry[], query: string): MapEntry
     return maps.filter((m) => m.mapName.toLowerCase().includes(q));
 };
 
+export type MapSortField = 'name' | 'installedAt';
+export type MapSortDirection = 'asc' | 'desc';
+
 /**
- * Alphabetical sort with an optional bundle pinned to the top (e.g. SirPlease all-maps pack).
+ * Compares two maps by name or installed date. Entries missing a valid `installedAt`
+ * always sort after ones that have it, regardless of `direction`.
+ */
+function compareMapValues(
+    nameA: string,
+    dateA: string | undefined,
+    nameB: string,
+    dateB: string | undefined,
+    field: MapSortField,
+    direction: MapSortDirection
+): number {
+    if (field === 'name') {
+        const cmp = nameA.localeCompare(nameB, undefined, { sensitivity: 'base' });
+        return direction === 'desc' ? -cmp : cmp;
+    }
+
+    const timeA = dateA ? new Date(dateA).getTime() : NaN;
+    const timeB = dateB ? new Date(dateB).getTime() : NaN;
+    const validA = Number.isFinite(timeA);
+    const validB = Number.isFinite(timeB);
+    if (!validA && !validB) return 0;
+    if (!validA) return 1;
+    if (!validB) return -1;
+
+    const cmp = timeA - timeB;
+    return direction === 'desc' ? -cmp : cmp;
+}
+
+/**
+ * Sorts maps by name (locale-aware) or installed date, ascending or descending.
+ */
+export const sortMapEntries = <T extends MapEntry>(
+    maps: T[],
+    field: MapSortField,
+    direction: MapSortDirection
+): T[] =>
+    [...maps].sort((a, b) =>
+        compareMapValues(a.mapName, a.installedAt, b.mapName, b.installedAt, field, direction)
+    );
+
+/**
+ * Sorts maps by name or installed date, with an optional bundle pinned to the top
+ * (e.g. SirPlease all-maps pack).
  */
 export const sortDownloadMaps = (
     maps: MapEntry[],
-    pinFirstDownloadUrl?: string
+    pinFirstDownloadUrl?: string,
+    field: MapSortField = 'name',
+    direction: MapSortDirection = 'asc'
 ): MapEntry[] => {
     const pin = pinFirstDownloadUrl?.trim();
     return [...maps].sort((a, b) => {
@@ -209,7 +264,7 @@ export const sortDownloadMaps = (
             if (aPinned && !bPinned) return -1;
             if (!aPinned && bPinned) return 1;
         }
-        return a.mapName.localeCompare(b.mapName, undefined, { sensitivity: 'base' });
+        return compareMapValues(a.mapName, a.installedAt, b.mapName, b.installedAt, field, direction);
     });
 };
 
@@ -315,9 +370,33 @@ function pickFolderPreviewUrl(parts: MapEntry[]): string | undefined {
 }
 
 /**
- * Groups workshop maps into single cards or multi-part folder cards.
+ * Earliest valid `installedAt` among an item's parts — used as the folder-level
+ * install date so multi-part campaigns sort by when they first appeared.
  */
-export const groupWorkshopMaps = (maps: MapEntry[]): WorkshopGridItem[] => {
+function itemInstalledAt(item: WorkshopGridItem): string | undefined {
+    const parts = item.kind === 'folder' ? item.parts : [item.map];
+    let earliest: string | undefined;
+    let earliestTime = Number.POSITIVE_INFINITY;
+    for (const part of parts) {
+        if (!part.installedAt) continue;
+        const time = new Date(part.installedAt).getTime();
+        if (Number.isFinite(time) && time < earliestTime) {
+            earliestTime = time;
+            earliest = part.installedAt;
+        }
+    }
+    return earliest;
+}
+
+/**
+ * Groups workshop maps into single cards or multi-part folder cards, sorted by
+ * name or installed date.
+ */
+export const groupWorkshopMaps = (
+    maps: MapEntry[],
+    field: MapSortField = 'name',
+    direction: MapSortDirection = 'asc'
+): WorkshopGridItem[] => {
     const unique = dedupeMapsByDownloadUrl(maps);
     const buckets = new Map<string, MapEntry[]>();
 
@@ -345,11 +424,16 @@ export const groupWorkshopMaps = (maps: MapEntry[]): WorkshopGridItem[] => {
         }
     }
 
-    return items.sort((a, b) => {
-        const nameA = a.kind === 'folder' ? a.folderName : a.map.mapName;
-        const nameB = b.kind === 'folder' ? b.folderName : b.map.mapName;
-        return nameA.localeCompare(nameB, undefined, { sensitivity: 'base' });
-    });
+    return items.sort((a, b) =>
+        compareMapValues(
+            workshopGridItemSortName(a),
+            itemInstalledAt(a),
+            workshopGridItemSortName(b),
+            itemInstalledAt(b),
+            field,
+            direction
+        )
+    );
 };
 
 export const workshopGridItemSortName = (item: WorkshopGridItem): string =>

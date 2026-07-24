@@ -5,6 +5,7 @@ import { MapEntry } from './mapEntry';
 import { extractSteamWorkshopId, openSteamWorkshopPage, openUrlInNewWindow } from './utils';
 import { useMapsTranslations } from '../../hooks/useTranslations';
 import { ManageMapButton } from './ManageMapButton';
+import { MapInfoButton } from './MapInfoButton';
 
 type MapsTranslations = ReturnType<typeof useMapsTranslations>;
 
@@ -13,6 +14,7 @@ export type WorkshopMapCardProps = {
     mapsTranslations: MapsTranslations;
     isAdmin: boolean;
     onManage: (id: number) => void;
+    onInfo: (id: number) => void;
     style?: CSSProperties;
 };
 
@@ -21,6 +23,7 @@ export function WorkshopMapCard({
     mapsTranslations,
     isAdmin,
     onManage,
+    onInfo,
     style,
 }: WorkshopMapCardProps) {
     const workshopId = extractSteamWorkshopId(map.downloadUrl);
@@ -84,6 +87,12 @@ export function WorkshopMapCard({
                         isAdmin={isAdmin}
                         tooltip={mapsTranslations.manageMapTooltip}
                         onManage={onManage}
+                    />
+                    <MapInfoButton
+                        mapId={map.id}
+                        isAdmin={isAdmin}
+                        tooltip={mapsTranslations.infoTooltip}
+                        onInfo={onInfo}
                     />
                 </div>
                 <div className="workshop-map-card__actions">

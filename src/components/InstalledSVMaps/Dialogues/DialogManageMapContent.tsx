@@ -1,5 +1,6 @@
 import { MapManageDetail, UpdateCheckResult } from '../../../services/mapsManageService';
 import { useMapsTranslations } from '../../../hooks/useTranslations';
+import { formatMapDate } from '../utils';
 
 type MapsTranslations = ReturnType<typeof useMapsTranslations>;
 
@@ -10,11 +11,6 @@ export type DialogManageMapContentProps = {
     updateResult: UpdateCheckResult | null;
     mapsTranslations: MapsTranslations;
 };
-
-function formatDate(value: string): string {
-    const date = new Date(value);
-    return Number.isNaN(date.getTime()) ? value : date.toLocaleString();
-}
 
 export function DialogManageMapContent({
     detail,
@@ -53,12 +49,12 @@ export function DialogManageMapContent({
                 </div>
                 <div className="maps-manage-detail__row">
                     <dt>{mapsTranslations.manageDetailInstalledAt}</dt>
-                    <dd>{formatDate(detail.installedAt)}</dd>
+                    <dd>{formatMapDate(detail.installedAt)}</dd>
                 </div>
                 {detail.workshopUpdatedAt ? (
                     <div className="maps-manage-detail__row">
                         <dt>{mapsTranslations.manageDetailWorkshopUpdatedAt}</dt>
-                        <dd>{formatDate(detail.workshopUpdatedAt)}</dd>
+                        <dd>{formatMapDate(detail.workshopUpdatedAt)}</dd>
                     </div>
                 ) : null}
             </dl>

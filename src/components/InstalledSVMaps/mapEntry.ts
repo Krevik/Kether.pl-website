@@ -9,4 +9,8 @@ export interface MapEntry {
     downloadUrl?: string;
     /** Workshop cover: bare `https://images.steamusercontent.com/ugc/.../` (no query — see `normalizeWorkshopPreviewUrl`). */
     previewUrl?: string;
+    /** ISO timestamp of when this addon was installed on the server. */
+    installedAt?: string;
+    checksum?: string;
+    checksumKind?: string;
 }

@@ -10,6 +10,7 @@ import {
 } from './utils';
 import { useMapsTranslations } from '../../hooks/useTranslations';
 import { ManageMapButton } from './ManageMapButton';
+import { MapInfoButton } from './MapInfoButton';
 
 type MapsTranslations = ReturnType<typeof useMapsTranslations>;
 
@@ -19,6 +20,7 @@ export type WorkshopMapPartRowProps = {
     mapsTranslations: MapsTranslations;
     isAdmin: boolean;
     onManage: (id: number) => void;
+    onInfo: (id: number) => void;
 };
 
 export function WorkshopMapPartRow({
@@ -27,6 +29,7 @@ export function WorkshopMapPartRow({
     mapsTranslations,
     isAdmin,
     onManage,
+    onInfo,
 }: WorkshopMapPartRowProps) {
     const workshopId = extractSteamWorkshopId(map.downloadUrl);
     const partNumber = getWorkshopPartNumber(map, indexInFolder);
@@ -68,6 +71,12 @@ export function WorkshopMapPartRow({
                     isAdmin={isAdmin}
                     tooltip={mapsTranslations.manageMapTooltip}
                     onManage={onManage}
+                />
+                <MapInfoButton
+                    mapId={map.id}
+                    isAdmin={isAdmin}
+                    tooltip={mapsTranslations.infoTooltip}
+                    onInfo={onInfo}
                 />
                 <button
                     type="button"

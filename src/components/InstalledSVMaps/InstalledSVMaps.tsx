@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
+import { Dropdown } from 'primereact/dropdown';
 import { Toolbar } from 'primereact/toolbar';
 import { ProgressBar } from 'primereact/progressbar';
 import './InstalledSVMaps.css';
@@ -15,6 +16,8 @@ import {
     processMapsWithTranslations,
     filterMapsBySource,
     filterMapsByNameQuery,
+    MapSortField,
+    MapSortDirection,
 } from './utils';
 import { InstallationHelpDialog } from './InstallationHelpDialog';
 import { WorkshopMapsGrid } from './WorkshopMapsGrid';
@@ -25,6 +28,7 @@ import { MapEntry } from './mapEntry';
 import { AddNewMapDialog } from './Dialogues/AddNewMapDialog';
 import { SuggestMapDialog } from './Dialogues/SuggestMapDialog';
 import { ManageMapDialog } from './Dialogues/ManageMapDialog';
+import { MapInfoDialog } from './Dialogues/MapInfoDialog';
 import { MapUpdatesDetailsDialog } from './Dialogues/MapUpdatesDetailsDialog';
 import { MapSuggestionCard } from './MapSuggestionCard';
 import {
@@ -104,6 +108,8 @@ export default function InstalledSVMaps() {
     const [helpDialogVisible, setHelpDialogVisible] = useState(false);
     const [activeTab, setActiveTab] = useState<MapsTabId>('workshop');
     const [mapSearch, setMapSearch] = useState('');
+    const [sortField, setSortField] = useState<MapSortField>('name');
+    const [sortDirection, setSortDirection] = useState<MapSortDirection>('asc');
     const [maps, setMaps] = useState<MapEntry[]>([]);
     const [mapsStale, setMapsStale] = useState(false);
     const [mapsLoading, setMapsLoading] = useState(true);
@@ -115,6 +121,8 @@ export default function InstalledSVMaps() {
     const [denyingSuggestionId, setDenyingSuggestionId] = useState<number | null>(null);
     const [manageMapId, setManageMapId] = useState<number | null>(null);
     const [manageDialogVisible, setManageDialogVisible] = useState(false);
+    const [infoMapId, setInfoMapId] = useState<number | null>(null);
+    const [infoDialogVisible, setInfoDialogVisible] = useState(false);
     const [updatesStatus, setUpdatesStatus] = useState<MapUpdatesStatus>(EMPTY_UPDATES_STATUS);
     const [updatesDialogVisible, setUpdatesDialogVisible] = useState(false);
     const [forceFastUpdatesPoll, setForceFastUpdatesPoll] = useState(false);
@@ -310,6 +318,18 @@ export default function InstalledSVMaps() {
         return suggestions.filter((item) => item.title.toLowerCase().includes(query));
     }, [suggestions, debouncedMapSearch]);
 
+    const sortOptions = useMemo(
+        () => [
+            { label: mapsTranslations.sortByName, value: 'name' as MapSortField },
+            { label: mapsTranslations.sortByInstalledAt, value: 'installedAt' as MapSortField },
+        ],
+        [mapsTranslations.sortByName, mapsTranslations.sortByInstalledAt]
+    );
+
+    const handleToggleSortDirection = useCallback(() => {
+        setSortDirection((current) => (current === 'asc' ? 'desc' : 'asc'));
+    }, []);
+
     const handleOpenHelpDialog = () => setHelpDialogVisible(true);
     const handleCloseHelpDialog = () => setHelpDialogVisible(false);
     const handleManageMap = useCallback((id: number) => {
@@ -320,6 +340,18 @@ export default function InstalledSVMaps() {
         setManageDialogVisible(false);
         setManageMapId(null);
     }, []);
+    const handleInfoMap = useCallback((id: number) => {
+        setInfoMapId(id);
+        setInfoDialogVisible(true);
+    }, []);
+    const handleCloseInfoDialog = useCallback(() => {
+        setInfoDialogVisible(false);
+        setInfoMapId(null);
+    }, []);
+    const infoMap = useMemo(
+        () => maps.find((m) => m.id === infoMapId) ?? null,
+        [maps, infoMapId]
+    );
 
     const handleMapsChanged = useCallback(() => {
         return Promise.all([
@@ -599,6 +631,11 @@ export default function InstalledSVMaps() {
                             ])
                         }
                     />
+                    <MapInfoDialog
+                        isDialogVisible={infoDialogVisible}
+                        map={infoMap}
+                        onHide={handleCloseInfoDialog}
+                    />
                     <MapUpdatesDetailsDialog
                         visible={updatesDialogVisible}
                         status={dialogStatus}
@@ -689,6 +726,38 @@ export default function InstalledSVMaps() {
                         />
                     </div>
 
+                    {activeTab !== 'suggestions' && (
+                        <div className="maps-sort-row">
+                            <label className="maps-sort-label" htmlFor="maps-sort-field">
+                                {mapsTranslations.sortLabel}
+                            </label>
+                            <Dropdown
+                                inputId="maps-sort-field"
+                                value={sortField}
+                                options={sortOptions}
+                                onChange={(e) => setSortField(e.value as MapSortField)}
+                                className="maps-sort-dropdown app-focus-ring"
+                            />
+                            <button
+                                type="button"
+                                className="maps-sort-direction-btn app-focus-ring"
+                                onClick={handleToggleSortDirection}
+                                title={
+                                    sortDirection === 'asc'
+                                        ? mapsTranslations.sortDirectionAscendingTooltip
+                                        : mapsTranslations.sortDirectionDescendingTooltip
+                                }
+                                aria-label={
+                                    sortDirection === 'asc'
+                                        ? mapsTranslations.sortDirectionAscendingTooltip
+                                        : mapsTranslations.sortDirectionDescendingTooltip
+                                }
+                            >
+                                <span aria-hidden>{sortDirection === 'asc' ? '↑' : '↓'}</span>
+                            </button>
+                        </div>
+                    )}
+
                     <div className="maps-tab-panels">
                         {activeTab === 'workshop' && (
                             <div
@@ -702,6 +771,9 @@ export default function InstalledSVMaps() {
                                     zeroStateMessage={workshopGridEmptyMessage}
                                     isAdmin={isAdmin}
                                     onManage={handleManageMap}
+                                    onInfo={handleInfoMap}
+                                    sortField={sortField}
+                                    sortDirection={sortDirection}
                                 />
                             </div>
                         )}
@@ -717,6 +789,9 @@ export default function InstalledSVMaps() {
                                     mapsTranslations={mapsTranslations}
                                     onHelpClick={handleOpenHelpDialog}
                                     onManage={handleManageMap}
+                                    onInfo={handleInfoMap}
+                                    sortField={sortField}
+                                    sortDirection={sortDirection}
                                     pinFirstDownloadUrl={SIR_PLEASE_ALL_MAPS_URL}
                                     emptyMessage={
                                         sirPleaseMaps.length === 0
@@ -738,6 +813,9 @@ export default function InstalledSVMaps() {
                                     mapsTranslations={mapsTranslations}
                                     onHelpClick={handleOpenHelpDialog}
                                     onManage={handleManageMap}
+                                    onInfo={handleInfoMap}
+                                    sortField={sortField}
+                                    sortDirection={sortDirection}
                                     emptyMessage={
                                         l4d2CenterMaps.length === 0
                                             ? mapsTranslations.noMapsAvailable
@@ -795,6 +873,9 @@ export default function InstalledSVMaps() {
                                     mapsTranslations={mapsTranslations}
                                     onHelpClick={handleOpenHelpDialog}
                                     onManage={handleManageMap}
+                                    onInfo={handleInfoMap}
+                                    sortField={sortField}
+                                    sortDirection={sortDirection}
                                     emptyMessage={tableEmptyMessage}
                                 />
                             </div>

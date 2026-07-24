@@ -1,6 +1,11 @@
 import { useMemo } from 'react';
 import { MapEntry } from './mapEntry';
-import { dedupeMapsByDownloadUrl, sortDownloadMaps } from './utils';
+import {
+    dedupeMapsByDownloadUrl,
+    sortDownloadMaps,
+    MapSortField,
+    MapSortDirection,
+} from './utils';
 import { DownloadMapRow } from './DownloadMapRow';
 import { useMapsTranslations } from '../../hooks/useTranslations';
 
@@ -12,9 +17,12 @@ export type DownloadMapsListProps = {
     mapsTranslations: MapsTranslations;
     onHelpClick?: () => void;
     onManage: (id: number) => void;
+    onInfo: (id: number) => void;
     emptyMessage?: string;
     /** Keeps a bundle (e.g. all-maps zip) at the top before alphabetical order */
     pinFirstDownloadUrl?: string;
+    sortField?: MapSortField;
+    sortDirection?: MapSortDirection;
 };
 
 export function DownloadMapsList({
@@ -23,13 +31,16 @@ export function DownloadMapsList({
     mapsTranslations,
     onHelpClick,
     onManage,
+    onInfo,
     emptyMessage,
     pinFirstDownloadUrl,
+    sortField = 'name',
+    sortDirection = 'asc',
 }: DownloadMapsListProps) {
     const sorted = useMemo(() => {
         const unique = dedupeMapsByDownloadUrl(maps);
-        return sortDownloadMaps(unique, pinFirstDownloadUrl);
-    }, [maps, pinFirstDownloadUrl]);
+        return sortDownloadMaps(unique, pinFirstDownloadUrl, sortField, sortDirection);
+    }, [maps, pinFirstDownloadUrl, sortField, sortDirection]);
 
     if (sorted.length === 0) {
         return (
@@ -54,6 +65,7 @@ export function DownloadMapsList({
                             showIndex={isAdmin}
                             isAdmin={isAdmin}
                             onManage={onManage}
+                            onInfo={onInfo}
                             mapsTranslations={mapsTranslations}
                             onHelpClick={onHelpClick}
                         />

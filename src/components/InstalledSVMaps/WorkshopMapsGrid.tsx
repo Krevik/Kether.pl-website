@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
 import { MapEntry } from './mapEntry';
-import { groupWorkshopMaps, workshopFolderKey } from './utils';
+import { groupWorkshopMaps, workshopFolderKey, MapSortField, MapSortDirection } from './utils';
 import { WorkshopMapCard } from './WorkshopMapCard';
 import { WorkshopMapFolderCard } from './WorkshopMapFolderCard';
 import { useMapsTranslations } from '../../hooks/useTranslations';
@@ -14,6 +14,9 @@ export type WorkshopMapsGridProps = {
     zeroStateMessage?: string;
     isAdmin: boolean;
     onManage: (id: number) => void;
+    onInfo: (id: number) => void;
+    sortField?: MapSortField;
+    sortDirection?: MapSortDirection;
 };
 
 export function WorkshopMapsGrid({
@@ -22,10 +25,16 @@ export function WorkshopMapsGrid({
     zeroStateMessage,
     isAdmin,
     onManage,
+    onInfo,
+    sortField = 'name',
+    sortDirection = 'asc',
 }: WorkshopMapsGridProps) {
     const [expandedFolderKey, setExpandedFolderKey] = useState<string | null>(null);
 
-    const items = useMemo(() => groupWorkshopMaps(maps), [maps]);
+    const items = useMemo(
+        () => groupWorkshopMaps(maps, sortField, sortDirection),
+        [maps, sortField, sortDirection]
+    );
 
     const handleFolderToggle = useCallback((folderKey: string) => {
         setExpandedFolderKey((current) => (current === folderKey ? null : folderKey));
@@ -55,6 +64,7 @@ export function WorkshopMapsGrid({
                                 onToggle={() => handleFolderToggle(folderKey)}
                                 isAdmin={isAdmin}
                                 onManage={onManage}
+                                onInfo={onInfo}
                             />
                         );
                     }
@@ -66,6 +76,7 @@ export function WorkshopMapsGrid({
                             mapsTranslations={mapsTranslations}
                             isAdmin={isAdmin}
                             onManage={onManage}
+                            onInfo={onInfo}
                             style={style}
                         />
                     );
