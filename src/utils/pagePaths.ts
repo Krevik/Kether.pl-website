@@ -6,4 +6,5 @@ export const pagePaths = {
     INSTALLED_SV_MAPS: 'installed_sv_maps',
     GITHUB: 'github',
     DONATE: 'donate',
+    ADMIN_PANEL: 'admin',
 };

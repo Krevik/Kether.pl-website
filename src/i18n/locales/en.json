@@ -17,6 +17,7 @@
         "installedSVMaps": "Installed Maps",
         "githubRepo": "Github Repo",
         "donate": "Donate",
+        "adminPanel": "Admin Panel",
         "loading": {
             "home": "Loading Home Page...",
             "hallOfFame": "Loading Hall of Fame...",
@@ -24,7 +25,8 @@
             "installedSVMaps": "Loading Installed Maps...",
             "github": "Loading GitHub...",
             "donate": "Loading Donate Page...",
-            "generic": "Loading..."
+            "generic": "Loading...",
+            "adminPanel": "Loading Admin Panel..."
         }
     },
     "serverInfo": {
@@ -274,5 +276,40 @@
         "copyright": "© 2025 Kether by Krevik and SATANIXON.",
         "discordTooltip": "Discord server invitation",
         "steamTooltip": "Steam chat group invitation"
+    },
+    "adminPanel": {
+        "title": "Admin Panel",
+        "description": "Maintenance tools for the Kether.pl services. Only admins can see this page.",
+        "notAdmin": "This page is only available to admins. Log in with an admin Steam account.",
+        "servicesTitle": "Services",
+        "lastUpdated": "Last updated: {{time}}",
+        "statusOnline": "Online",
+        "statusOffline": "Offline",
+        "statusRestarting": "Restarting…",
+        "statusUnknown": "Unknown",
+        "backendName": "Website backend",
+        "backendDescription": "website-server: REST API, Steam bot, FastDL and map sync for this website.",
+        "daemonName": "Map daemon",
+        "daemonDescription": "KetherServerDaemon: installs, updates and syncs the game servers' maps.",
+        "version": "Version",
+        "pid": "PID",
+        "upSince": "Up since",
+        "uptime": "Uptime",
+        "activity": "Activity",
+        "idle": "Idle",
+        "busy": "Busy: {{reason}}",
+        "restart": "Restart",
+        "restartAnyway": "Restart anyway",
+        "restartConfirmTitle": "Restart {{service}}?",
+        "restartBackendConfirm": "The website API and the Steam bot will be unavailable for a few seconds. The restart reloads the configuration and reconnects the Steam bot.",
+        "restartDaemonConfirm": "Map installs, updates and syncing pause for a few seconds. The daemon restarts in place, running the binary currently on disk.",
+        "daemonBusyWarning": "The daemon is busy ({{reason}}). Restarting now would interrupt it.",
+        "restartRequested": "{{service}}: restart requested…",
+        "restartCompleted": "{{service}} restarted",
+        "restartTimedOut": "{{service}} did not come back within 90 seconds",
+        "restartFailed": "Restart failed",
+        "restartUnavailable": "Remote restart is not available for this service",
+        "daemonBusyRefused": "The daemon became busy; confirm again to restart anyway",
+        "loadFailed": "Failed to load service status"
     }
 }

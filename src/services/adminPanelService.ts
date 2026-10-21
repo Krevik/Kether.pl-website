@@ -1,0 +1,112 @@
+import { apiPaths } from '../utils/apiPaths';
+import { API_DOMAIN } from '../utils/envUtils';
+import { handleAuthError } from '../utils/authUtils';
+import { apiFetch } from '../utils/apiClient';
+
+/** Website backend (website-server) status, from `GET /api/admin/status`. */
+export interface BackendStatus {
+    version: string;
+    pid: number;
+    process_started_at: string;
+    /** Reset by every in-process restart of the REST server + Steam bot. */
+    services_started_at: string;
+    uptime_secs: number;
+    restart_supported: boolean;
+}
+
+/** KetherServerDaemon status, as reported by the daemon itself. */
+export interface DaemonStatus {
+    version: string;
+    pid: number;
+    started_at: string;
+    uptime_secs: number;
+    /** What map work is running right now, if any. */
+    busy: string | null;
+    restart_supported: boolean;
+}
+
+export interface DaemonReport {
+    configured: boolean;
+    reachable: boolean;
+    status: DaemonStatus | null;
+    error: string | null;
+}
+
+export interface AdminStatus {
+    backend: BackendStatus;
+    daemon: DaemonReport;
+}
+
+export interface RestartAccepted {
+    requested_at: string;
+}
+
+/** Thrown for non-auth HTTP errors; `status` lets callers react (e.g. 409 = daemon busy). */
+export class AdminApiError extends Error {
+    constructor(message: string, public readonly status: number) {
+        super(message);
+        this.name = 'AdminApiError';
+    }
+}
+
+function adminUrl(path: string): string {
+    return `${API_DOMAIN}${apiPaths.API_BASE_PATH}${path}`;
+}
+
+async function readJson<T>(response: Response): Promise<T> {
+    if (handleAuthError(response)) {
+        throw new AdminApiError('Authentication required', response.status);
+    }
+    let body: unknown = undefined;
+    try {
+        body = await response.json();
+    } catch {
+        body = undefined;
+    }
+    if (!response.ok) {
+        const message =
+            body && typeof body === 'object' && 'error' in body && typeof body.error === 'string'
+                ? body.error
+                : `HTTP error! status: ${response.status}`;
+        throw new AdminApiError(message, response.status);
+    }
+    return body as T;
+}
+
+/**
+ * Like {@link fetchAdminStatus} but returns `null` instead of throwing when the backend is
+ * unreachable (e.g. while it restarts) — used for polling.
+ */
+export async function tryFetchAdminStatus(): Promise<AdminStatus | null> {
+    try {
+        const response = await apiFetch(adminUrl(apiPaths.ADMIN_STATUS), { auth: true });
+        if (!response.ok) {
+            return null;
+        }
+        return (await response.json()) as AdminStatus;
+    } catch {
+        return null;
+    }
+}
+
+export async function fetchAdminStatus(): Promise<AdminStatus> {
+    const response = await apiFetch(adminUrl(apiPaths.ADMIN_STATUS), { auth: true });
+    return readJson<AdminStatus>(response);
+}
+
+export async function restartBackend(): Promise<RestartAccepted> {
+    const response = await apiFetch(adminUrl(apiPaths.ADMIN_RESTART_BACKEND), {
+        method: 'POST',
+        auth: true,
+    });
+    return readJson<RestartAccepted>(response);
+}
+
+/** Without `force`, the daemon refuses (HTTP 409) while map work is running. */
+export async function restartDaemon(force: boolean): Promise<RestartAccepted> {
+    const response = await apiFetch(adminUrl(apiPaths.ADMIN_RESTART_DAEMON(force)), {
+        method: 'POST',
+        auth: true,
+    });
+    return readJson<RestartAccepted>(response);
+}

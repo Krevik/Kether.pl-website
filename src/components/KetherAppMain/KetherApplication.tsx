@@ -20,6 +20,7 @@ const GithubRepo = lazy(() => import('../GithubRepo/GithubRepo'));
 const Donate = lazy(() => import('../Donate/Donate'));
 const AuthCallback = lazy(() => import('../AuthCallback/AuthCallback'));
 const HallOfFameSuggestions = lazy(() => import('../HallOfFame/HallOfFameSuggestions'));
+const AdminPanel = lazy(() => import('../AdminPanel/AdminPanel'));
 export default function KetherApplication() {
     steamAPIService.useSessionHydration();
     steamAPIService.useUserDataFetcher();
@@ -138,6 +139,22 @@ export default function KetherApplication() {
                                 />
                             }>
                                 <Donate/>
+                            </Suspense>
+                        </PageLayout>
+                    }
+                />
+                <Route
+                    path={pagePaths.ADMIN_PANEL}
+                    element={
+                        <PageLayout>
+                            <Suspense fallback={
+                                <LoadingSpinner
+                                    message={navTranslations.loading.adminPanel}
+                                    type="skeleton"
+                                    minDelay={50}
+                                />
+                            }>
+                                <AdminPanel/>
                             </Suspense>
                         </PageLayout>
                     }

@@ -17,6 +17,7 @@
         "installedSVMaps": "Zainstalowane Mapy",
         "githubRepo": "Repo GitHub",
         "donate": "Wsparcie",
+        "adminPanel": "Panel Admina",
         "loading": {
             "home": "Ładowanie Zajty Głownej...",
             "hallOfFame": "Ładowanie Galeryje Sławy...",
@@ -24,7 +25,8 @@
             "installedSVMaps": "Ładowanie Zainstalowanych Map...",
             "github": "Ładowanie Repo GitHub...",
             "donate": "Ładowanie Zajty Wsparcia...",
-            "generic": "Ładowanie..."
+            "generic": "Ładowanie...",
+            "adminPanel": "Ładowanie Panelu Admina..."
         }
     },
     "serverInfo": {
@@ -274,5 +276,40 @@
         "copyright": "© 2025 Kether dziynki: Krevik, SATANIXON.",
         "discordTooltip": "Zaproszenie na serwer Discord",
         "steamTooltip": "Zaproszenie do grupy czatu Steam"
+    },
+    "adminPanel": {
+        "title": "Panel Admina",
+        "description": "Nŏrzyndzia serwisowe usług Kether.pl. Ta zajta widzom ino administratory.",
+        "notAdmin": "Ta zajta je dostympno ino dlŏ administratorōw. Wloguj sie kōntym Steam administratora.",
+        "servicesTitle": "Usługi",
+        "lastUpdated": "Ôstatnio aktualizacyjo: {{time}}",
+        "statusOnline": "Online",
+        "statusOffline": "Offline",
+        "statusRestarting": "Restartowanie…",
+        "statusUnknown": "Niyznany",
+        "backendName": "Backend zajty",
+        "backendDescription": "website-server: REST API, bot Steam, FastDL i synchronizacyjo map tyj zajty.",
+        "daemonName": "Dymōn map",
+        "daemonDescription": "KetherServerDaemon: instaluje, aktualizuje i synchronizuje mapy serwerōw gry.",
+        "version": "Wersyjo",
+        "pid": "PID",
+        "upSince": "Działo ôd",
+        "uptime": "Czas działanio",
+        "activity": "Aktywność",
+        "idle": "Niy robi nic",
+        "busy": "Zajynty: {{reason}}",
+        "restart": "Restartuj",
+        "restartAnyway": "Restartuj i tak",
+        "restartConfirmTitle": "Zrestartować: {{service}}?",
+        "restartBackendConfirm": "API zajty i bot Steam bydom niydostympne bez pora sekund. Restart przeładuje kōnfiguracyjo i zaś połonczy bota Steam.",
+        "restartDaemonConfirm": "Instalacyje, aktualizacyje i synchronizacyjo map stanōm na pora sekund. Dymōn ôdpoli sie zaś na placu, z plikym programu, co terŏz je na dysku.",
+        "daemonBusyWarning": "Dymōn je zajynty ({{reason}}). Restart terŏz przerwie ta robota.",
+        "restartRequested": "{{service}}: zlecōno restart…",
+        "restartCompleted": "{{service}}: zrestartowano",
+        "restartTimedOut": "{{service}}: usługa niy wrōciła bez 90 sekund",
+        "restartFailed": "Restart sie niy podarził",
+        "restartUnavailable": "Zdalny restart niy je dostympny dlŏ tyj usługi",
+        "daemonBusyRefused": "Dymōn sie wziōn do roboty; potwiyrdź zaś, coby zrestartować i tak",
+        "loadFailed": "Niy szło pobrać stanu usług"
     }
 }

@@ -23,6 +23,7 @@ function Navbar() {
     const dispatch = useDispatch();
     const isMenuShown = useSelector((state: AppState) => state.uiReducer.isNavbarVisible);
     const navTranslations = useNavigationTranslations();
+    const isAdmin = useSelector((state: AppState) => state.userDataReducer.isAdmin);
 
     const tabs: TabItem[] = useMemo(() => [
         {
@@ -49,7 +50,11 @@ function Navbar() {
             label: navTranslations.donate,
             targetPage: pagePaths.DONATE,
         },
-    ], [navTranslations]);
+        // Admin-only maintenance page; the backend also enforces admin access on its API.
+        ...(isAdmin
+            ? [{ label: navTranslations.adminPanel, targetPage: pagePaths.ADMIN_PANEL }]
+            : []),
+    ], [navTranslations, isAdmin]);
 
     const getNavigationButtons = useCallback(() => {
         return tabs.map((tab) => {

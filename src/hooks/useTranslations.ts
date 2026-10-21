@@ -70,6 +70,7 @@ export function useNavigationTranslations() {
         installedSVMaps: t('navigation.installedSVMaps'),
         githubRepo: t('navigation.githubRepo'),
         donate: t('navigation.donate'),
+        adminPanel: t('navigation.adminPanel'),
         loading: {
             home: t('navigation.loading.home'),
             hallOfFame: t('navigation.loading.hallOfFame'),
@@ -77,8 +78,52 @@ export function useNavigationTranslations() {
             installedSVMaps: t('navigation.loading.installedSVMaps'),
             github: t('navigation.loading.github'),
             donate: t('navigation.loading.donate'),
+            adminPanel: t('navigation.loading.adminPanel'),
             generic: t('navigation.loading.generic'),
         },
+    };
+}
+
+/**
+ * Hook for admin panel translations
+ */
+export function useAdminPanelTranslations() {
+    const { t } = useTranslation();
+
+    return {
+        title: t('adminPanel.title'),
+        description: t('adminPanel.description'),
+        notAdmin: t('adminPanel.notAdmin'),
+        servicesTitle: t('adminPanel.servicesTitle'),
+        lastUpdated: (time: string) => t('adminPanel.lastUpdated', { time }),
+        statusOnline: t('adminPanel.statusOnline'),
+        statusOffline: t('adminPanel.statusOffline'),
+        statusRestarting: t('adminPanel.statusRestarting'),
+        statusUnknown: t('adminPanel.statusUnknown'),
+        backendName: t('adminPanel.backendName'),
+        backendDescription: t('adminPanel.backendDescription'),
+        daemonName: t('adminPanel.daemonName'),
+        daemonDescription: t('adminPanel.daemonDescription'),
+        version: t('adminPanel.version'),
+        pid: t('adminPanel.pid'),
+        upSince: t('adminPanel.upSince'),
+        uptime: t('adminPanel.uptime'),
+        activity: t('adminPanel.activity'),
+        idle: t('adminPanel.idle'),
+        busy: (reason: string) => t('adminPanel.busy', { reason }),
+        restart: t('adminPanel.restart'),
+        restartAnyway: t('adminPanel.restartAnyway'),
+        restartConfirmTitle: (service: string) => t('adminPanel.restartConfirmTitle', { service }),
+        restartBackendConfirm: t('adminPanel.restartBackendConfirm'),
+        restartDaemonConfirm: t('adminPanel.restartDaemonConfirm'),
+        daemonBusyWarning: (reason: string) => t('adminPanel.daemonBusyWarning', { reason }),
+        restartRequested: (service: string) => t('adminPanel.restartRequested', { service }),
+        restartCompleted: (service: string) => t('adminPanel.restartCompleted', { service }),
+        restartTimedOut: (service: string) => t('adminPanel.restartTimedOut', { service }),
+        restartFailed: t('adminPanel.restartFailed'),
+        restartUnavailable: t('adminPanel.restartUnavailable'),
+        daemonBusyRefused: t('adminPanel.daemonBusyRefused'),
+        loadFailed: t('adminPanel.loadFailed'),
     };
 }
 

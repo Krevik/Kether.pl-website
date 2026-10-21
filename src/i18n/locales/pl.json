@@ -17,6 +17,7 @@
         "installedSVMaps": "Zainstalowane Mapy",
         "githubRepo": "Repo GitHub",
         "donate": "Wsparcie",
+        "adminPanel": "Panel Admina",
         "loading": {
             "home": "Ładowanie Strony Głównej...",
             "hallOfFame": "Ładowanie Galerii Sławy...",
@@ -24,7 +25,8 @@
             "installedSVMaps": "Ładowanie Zainstalowanych Map...",
             "github": "Ładowanie Repo GitHub...",
             "donate": "Ładowanie Strony Wsparcia...",
-            "generic": "Ładowanie..."
+            "generic": "Ładowanie...",
+            "adminPanel": "Ładowanie Panelu Admina..."
         }
     },
     "serverInfo": {
@@ -274,5 +276,40 @@
         "copyright": "© 2025 Kether dzięki: Krevik, SATANIXON.",
         "discordTooltip": "Zaproszenie na serwer Discord",
         "steamTooltip": "Zaproszenie do grupy czatu Steam"
+    },
+    "adminPanel": {
+        "title": "Panel Admina",
+        "description": "Narzędzia serwisowe usług Kether.pl. Tę stronę widzą tylko administratorzy.",
+        "notAdmin": "Ta strona jest dostępna tylko dla administratorów. Zaloguj się kontem Steam administratora.",
+        "servicesTitle": "Usługi",
+        "lastUpdated": "Ostatnia aktualizacja: {{time}}",
+        "statusOnline": "Online",
+        "statusOffline": "Offline",
+        "statusRestarting": "Restartowanie…",
+        "statusUnknown": "Nieznany",
+        "backendName": "Backend strony",
+        "backendDescription": "website-server: REST API, bot Steam, FastDL i synchronizacja map tej strony.",
+        "daemonName": "Demon map",
+        "daemonDescription": "KetherServerDaemon: instaluje, aktualizuje i synchronizuje mapy serwerów gry.",
+        "version": "Wersja",
+        "pid": "PID",
+        "upSince": "Działa od",
+        "uptime": "Czas działania",
+        "activity": "Aktywność",
+        "idle": "Bezczynny",
+        "busy": "Zajęty: {{reason}}",
+        "restart": "Restartuj",
+        "restartAnyway": "Restartuj mimo to",
+        "restartConfirmTitle": "Zrestartować: {{service}}?",
+        "restartBackendConfirm": "API strony i bot Steam będą niedostępne przez kilka sekund. Restart przeładuje konfigurację i ponownie połączy bota Steam.",
+        "restartDaemonConfirm": "Instalacje, aktualizacje i synchronizacja map wstrzymają się na kilka sekund. Demon uruchomi się ponownie w miejscu, z plikiem programu, który jest obecnie na dysku.",
+        "daemonBusyWarning": "Demon jest zajęty ({{reason}}). Restart teraz przerwie tę pracę.",
+        "restartRequested": "{{service}}: zlecono restart…",
+        "restartCompleted": "{{service}}: zrestartowano",
+        "restartTimedOut": "{{service}}: usługa nie wróciła w ciągu 90 sekund",
+        "restartFailed": "Restart nie powiódł się",
+        "restartUnavailable": "Zdalny restart nie jest dostępny dla tej usługi",
+        "daemonBusyRefused": "Demon zajął się pracą; potwierdź ponownie, aby zrestartować mimo to",
+        "loadFailed": "Nie udało się pobrać stanu usług"
     }
 }
