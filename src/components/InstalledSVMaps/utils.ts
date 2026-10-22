@@ -202,37 +202,88 @@ export const filterMapsByNameQuery = (maps: MapEntry[], query: string): MapEntry
     return maps.filter((m) => m.mapName.toLowerCase().includes(q));
 };
 
-export type MapSortField = 'name' | 'installedAt';
+export type MapSortField = 'name' | 'installedAt' | 'size';
 export type MapSortDirection = 'asc' | 'desc';
 
+/** The values a map (or a multi-part folder) is sorted by. */
+type MapSortKeys = {
+    name: string;
+    installedAt: string | undefined;
+    sizeBytes: number | undefined;
+};
+
+const mapSortKeys = (map: MapEntry): MapSortKeys => ({
+    name: map.mapName,
+    installedAt: map.installedAt,
+    sizeBytes: map.sizeBytes,
+});
+
 /**
- * Compares two maps by name or installed date. Entries missing a valid `installedAt`
- * always sort after ones that have it, regardless of `direction`.
+ * Compares by a numeric key; entries without a valid value always sort after ones that
+ * have it, regardless of `direction`.
  */
-function compareMapValues(
-    nameA: string,
-    dateA: string | undefined,
-    nameB: string,
-    dateB: string | undefined,
-    field: MapSortField,
+function compareOptionalNumbers(
+    a: number | undefined,
+    b: number | undefined,
     direction: MapSortDirection
 ): number {
-    if (field === 'name') {
-        const cmp = nameA.localeCompare(nameB, undefined, { sensitivity: 'base' });
-        return direction === 'desc' ? -cmp : cmp;
-    }
-
-    const timeA = dateA ? new Date(dateA).getTime() : NaN;
-    const timeB = dateB ? new Date(dateB).getTime() : NaN;
-    const validA = Number.isFinite(timeA);
-    const validB = Number.isFinite(timeB);
+    const validA = a !== undefined && Number.isFinite(a);
+    const validB = b !== undefined && Number.isFinite(b);
     if (!validA && !validB) return 0;
     if (!validA) return 1;
     if (!validB) return -1;
-
-    const cmp = timeA - timeB;
+    const cmp = (a as number) - (b as number);
     return direction === 'desc' ? -cmp : cmp;
 }
+
+/**
+ * Compares two maps by name, installed date or disk size. Entries missing a valid date or
+ * size always sort after ones that have it, regardless of `direction`; ties on date/size
+ * fall back to name.
+ */
+function compareMapValues(
+    a: MapSortKeys,
+    b: MapSortKeys,
+    field: MapSortField,
+    direction: MapSortDirection
+): number {
+    const byName = () => {
+        const cmp = a.name.localeCompare(b.name, undefined, { sensitivity: 'base' });
+        return direction === 'desc' ? -cmp : cmp;
+    };
+    if (field === 'name') {
+        return byName();
+    }
+
+    const cmp =
+        field === 'size'
+            ? compareOptionalNumbers(a.sizeBytes, b.sizeBytes, direction)
+            : compareOptionalNumbers(
+                  a.installedAt ? new Date(a.installedAt).getTime() : undefined,
+                  b.installedAt ? new Date(b.installedAt).getTime() : undefined,
+                  direction
+              );
+    return cmp !== 0 ? cmp : byName();
+}
+
+/** Human-readable size with 1024-based units (e.g. `1.20 GB`). */
+export const formatMapSize = (bytes: number): string => {
+    if (bytes < 1024) return `${bytes} B`;
+    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+    if (bytes < 1024 * 1024 * 1024) return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+    return `${(bytes / (1024 * 1024 * 1024)).toFixed(2)} GB`;
+};
+
+/** Total size of several map files; `undefined` when none of them has a known size. */
+export const totalMapSize = (maps: MapEntry[]): number | undefined => {
+    let total: number | undefined;
+    for (const map of maps) {
+        if (map.sizeBytes !== undefined && Number.isFinite(map.sizeBytes)) {
+            total = (total ?? 0) + map.sizeBytes;
+        }
+    }
+    return total;
+};
 
 /**
  * Sorts maps by name (locale-aware) or installed date, ascending or descending.
@@ -242,9 +293,7 @@ export const sortMapEntries = <T extends MapEntry>(
     field: MapSortField,
     direction: MapSortDirection
 ): T[] =>
-    [...maps].sort((a, b) =>
-        compareMapValues(a.mapName, a.installedAt, b.mapName, b.installedAt, field, direction)
-    );
+    [...maps].sort((a, b) => compareMapValues(mapSortKeys(a), mapSortKeys(b), field, direction));
 
 /**
  * Sorts maps by name or installed date, with an optional bundle pinned to the top
@@ -264,7 +313,7 @@ export const sortDownloadMaps = (
             if (aPinned && !bPinned) return -1;
             if (!aPinned && bPinned) return 1;
         }
-        return compareMapValues(a.mapName, a.installedAt, b.mapName, b.installedAt, field, direction);
+        return compareMapValues(mapSortKeys(a), mapSortKeys(b), field, direction);
     });
 };
 
@@ -424,16 +473,13 @@ export const groupWorkshopMaps = (
         }
     }
 
-    return items.sort((a, b) =>
-        compareMapValues(
-            workshopGridItemSortName(a),
-            itemInstalledAt(a),
-            workshopGridItemSortName(b),
-            itemInstalledAt(b),
-            field,
-            direction
-        )
-    );
+    const itemKeys = (item: WorkshopGridItem): MapSortKeys => ({
+        name: workshopGridItemSortName(item),
+        installedAt: itemInstalledAt(item),
+        // Multi-part campaigns sort by the combined size of all their parts.
+        sizeBytes: totalMapSize(item.kind === 'folder' ? item.parts : [item.map]),
+    });
+    return items.sort((a, b) => compareMapValues(itemKeys(a), itemKeys(b), field, direction));
 };
 
 export const workshopGridItemSortName = (item: WorkshopGridItem): string =>

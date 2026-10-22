@@ -16,6 +16,7 @@ export interface MapManageDetail {
     version?: string;
     checksum?: string;
     checksumKind?: string;
+    sizeBytes?: number;
 }
 
 export type UpdateCheckStatus = 'updated' | 'up_to_date' | 'unsupported' | 'failed';
@@ -37,6 +38,7 @@ interface BackendMapDetail {
     version?: string;
     checksum?: string;
     checksum_kind?: string;
+    size_bytes?: number;
 }
 
 interface BackendUpdateCheckResult {
@@ -57,6 +59,7 @@ function mapDetail(detail: BackendMapDetail): MapManageDetail {
         version: detail.version,
         checksum: detail.checksum,
         checksumKind: detail.checksum_kind,
+        sizeBytes: detail.size_bytes,
     };
 }
 

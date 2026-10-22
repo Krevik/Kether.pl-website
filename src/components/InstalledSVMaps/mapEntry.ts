@@ -13,4 +13,6 @@ export interface MapEntry {
     installedAt?: string;
     checksum?: string;
     checksumKind?: string;
+    /** Size of the installed file on the server, in bytes (missing with older daemons). */
+    sizeBytes?: number;
 }

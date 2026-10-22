@@ -1,6 +1,6 @@
 import { MapManageDetail, UpdateCheckResult } from '../../../services/mapsManageService';
 import { useMapsTranslations } from '../../../hooks/useTranslations';
-import { formatMapDate } from '../utils';
+import { formatMapDate, formatMapSize } from '../utils';
 
 type MapsTranslations = ReturnType<typeof useMapsTranslations>;
 
@@ -46,6 +46,14 @@ export function DialogManageMapContent({
                 <div className="maps-manage-detail__row">
                     <dt>{mapsTranslations.manageDetailChecksum}</dt>
                     <dd className="maps-manage-detail__checksum">{checksum}</dd>
+                </div>
+                <div className="maps-manage-detail__row">
+                    <dt>{mapsTranslations.manageDetailSize}</dt>
+                    <dd>
+                        {detail.sizeBytes !== undefined
+                            ? formatMapSize(detail.sizeBytes)
+                            : mapsTranslations.manageNotAvailable}
+                    </dd>
                 </div>
                 <div className="maps-manage-detail__row">
                     <dt>{mapsTranslations.manageDetailInstalledAt}</dt>

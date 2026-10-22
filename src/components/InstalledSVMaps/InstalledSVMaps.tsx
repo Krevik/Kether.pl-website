@@ -322,8 +322,9 @@ export default function InstalledSVMaps() {
         () => [
             { label: mapsTranslations.sortByName, value: 'name' as MapSortField },
             { label: mapsTranslations.sortByInstalledAt, value: 'installedAt' as MapSortField },
+            { label: mapsTranslations.sortBySize, value: 'size' as MapSortField },
         ],
-        [mapsTranslations.sortByName, mapsTranslations.sortByInstalledAt]
+        [mapsTranslations.sortByName, mapsTranslations.sortByInstalledAt, mapsTranslations.sortBySize]
     );
 
     const handleToggleSortDirection = useCallback(() => {

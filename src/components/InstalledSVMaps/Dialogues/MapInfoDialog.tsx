@@ -1,7 +1,7 @@
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import { MapEntry } from '../mapEntry';
-import { formatMapDate } from '../utils';
+import { formatMapDate, formatMapSize } from '../utils';
 import { useCommonTranslations, useMapsTranslations } from '../../../hooks/useTranslations';
 import { DIALOG_STYLES } from '../constants';
 
@@ -22,6 +22,8 @@ export function MapInfoDialog({ isDialogVisible, map, onHide }: MapInfoDialogPro
     const checksum = map?.checksum
         ? `${map.checksumKind?.toUpperCase() ?? 'MD5'}: ${map.checksum}`
         : mapsTranslations.manageNotAvailable;
+    const size =
+        map?.sizeBytes !== undefined ? formatMapSize(map.sizeBytes) : mapsTranslations.manageNotAvailable;
     const installedAt = map?.installedAt
         ? formatMapDate(map.installedAt)
         : mapsTranslations.manageNotAvailable;
@@ -56,6 +58,10 @@ export function MapInfoDialog({ isDialogVisible, map, onHide }: MapInfoDialogPro
                         <div className="maps-manage-detail__row">
                             <dt>{mapsTranslations.manageDetailChecksum}</dt>
                             <dd className="maps-manage-detail__checksum">{checksum}</dd>
+                        </div>
+                        <div className="maps-manage-detail__row">
+                            <dt>{mapsTranslations.manageDetailSize}</dt>
+                            <dd>{size}</dd>
                         </div>
                         <div className="maps-manage-detail__row">
                             <dt>{mapsTranslations.manageDetailInstalledAt}</dt>
