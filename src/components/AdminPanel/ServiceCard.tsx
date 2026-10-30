@@ -39,13 +39,14 @@ export function ServiceCard({
     }[state];
 
     return (
-        <section className="admin-service-card app-surface" aria-label={name}>
+        <section className="admin-service-card" aria-label={name}>
             <header className="admin-service-card__header">
                 <h3 className="admin-service-card__name">{name}</h3>
                 <span
                     className={`admin-service-card__state admin-service-card__state--${state}`}
                     role="status"
                 >
+                    <span className="admin-service-card__state-indicator" aria-hidden="true" />
                     {stateLabel}
                 </span>
             </header>
@@ -64,6 +65,7 @@ export function ServiceCard({
             <div className="admin-service-card__actions">
                 <Button
                     label={tr.restart}
+                    icon={state === 'restarting' ? 'pi pi-spin pi-spinner' : 'pi pi-refresh'}
                     className="admin-service-card__restart app-focus-ring"
                     disabled={!canRestart}
                     loading={state === 'restarting'}

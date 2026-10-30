@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
+import { Toolbar } from 'primereact/toolbar';
 import { AppState } from '../../redux/store';
 import { PageWithBackground } from '../PageLayout/PageBackground/PageWithBackground';
 import { BACKGROUNDS } from '../PageLayout/PageBackground/backgrounds';
@@ -227,10 +228,12 @@ export default function AdminPanel() {
     if (!isAdmin) {
         return (
             <PageWithBackground imageUrl={BACKGROUNDS.BACKGROUND_6}>
-                <div className="admin-panel">
-                    <div className="admin-panel__intro app-surface">
-                        <h2 className="admin-panel__title">{tr.title}</h2>
-                        <p>{tr.notAdmin}</p>
+                <div className="admin-panel-page">
+                    <div className="card app-surface app-page-card admin-panel">
+                        <div className="centered-text admin-panel__title">{tr.title}</div>
+                        <div className="admin-panel__warning admin-panel__not-admin" role="alert">
+                            {tr.notAdmin}
+                        </div>
                     </div>
                 </div>
             </PageWithBackground>
@@ -298,70 +301,90 @@ export default function AdminPanel() {
 
     return (
         <PageWithBackground imageUrl={BACKGROUNDS.BACKGROUND_6}>
-            <div className="admin-panel">
-                <div className="admin-panel__intro app-surface">
-                    <h2 className="admin-panel__title">{tr.title}</h2>
-                    <p>{tr.description}</p>
-                </div>
+            <div className="admin-panel-page">
+                <div className="card app-surface app-page-card admin-panel">
+                    <div className="centered-text admin-panel__title">{tr.title}</div>
+                    <p className="admin-panel__description">{tr.description}</p>
 
-                <div className="admin-panel__section-header">
-                    <h3 className="admin-panel__section-title">{tr.servicesTitle}</h3>
-                    <div className="admin-panel__section-meta">
-                        {lastUpdated && (
-                            <span className="admin-panel__last-updated">
-                                {tr.lastUpdated(lastUpdated.toLocaleTimeString(currentLanguage))}
-                            </span>
-                        )}
-                        <Button
-                            label={common.refresh}
-                            className="admin-panel__refresh app-focus-ring"
-                            onClick={() => {
-                                void loadStatus();
-                                void loadGameServerStatus();
-                            }}
-                            loading={isLoading}
-                        />
-                    </div>
-                </div>
-                {loadError && <p className="admin-panel__error app-surface">{loadError}</p>}
-
-                <div className="admin-panel__services">
-                    <ServiceCard
-                        name={tr.backendName}
-                        description={tr.backendDescription}
-                        state={backendState}
-                        details={backendDetails}
-                        message={backend && !backend.restart_supported ? tr.restartUnavailable : null}
-                        canRestart={Boolean(backend?.restart_supported) && !restarting.backend}
-                        onRestart={() => setConfirmTarget('backend')}
-                    />
-                    <ServiceCard
-                        name={tr.daemonName}
-                        description={tr.daemonDescription}
-                        state={daemonState}
-                        details={daemonDetails}
-                        message={daemon?.error ?? null}
-                        canRestart={
-                            Boolean(daemonStatus?.restart_supported) &&
-                            Boolean(daemon?.reachable) &&
-                            !restarting.daemon
+                    <Toolbar
+                        className="mb-4 admin-panel__toolbar app-toolbar"
+                        start={
+                            <Button
+                                label={common.refresh}
+                                icon={isLoading ? 'pi pi-spin pi-spinner' : 'pi pi-refresh'}
+                                className="app-focus-ring admin-panel__btn-refresh"
+                                onClick={() => {
+                                    void loadStatus();
+                                    void loadGameServerStatus();
+                                }}
+                                loading={isLoading}
+                            />
                         }
-                        onRestart={() => setConfirmTarget('daemon')}
+                        end={
+                            lastUpdated ? (
+                                <div
+                                    className="admin-panel__last-updated"
+                                    title={lastUpdated.toLocaleString(currentLanguage)}
+                                >
+                                    <i className="pi pi-clock admin-panel__last-updated-icon" aria-hidden="true" />
+                                    <span>{tr.lastUpdated(lastUpdated.toLocaleTimeString(currentLanguage))}</span>
+                                </div>
+                            ) : undefined
+                        }
                     />
-                </div>
 
-                <div className="admin-panel__section-header" style={{ marginTop: '0.5rem' }}>
-                    <h3 className="admin-panel__section-title">{tr.gameServerStatusSection}</h3>
-                </div>
-                <div className="admin-panel__services">
-                    <GameServerCard
-                        status={gameServerStatus}
-                        loadError={gameServerLoadError}
-                        isActioning={gameServerActioning}
-                        onStart={() => void handleGameServerAction('start')}
-                        onStop={() => void handleGameServerAction('stop')}
-                        onRestart={() => void handleGameServerAction('restart')}
-                    />
+                    {loadError && (
+                        <div className="admin-panel__error" role="alert">
+                            <i className="pi pi-exclamation-triangle admin-panel__error-icon" aria-hidden="true" />
+                            <span>{loadError}</span>
+                        </div>
+                    )}
+
+                    <section className="admin-panel__section">
+                        <div className="admin-panel__section-header">
+                            <h3 className="admin-panel__section-title">{tr.servicesTitle}</h3>
+                        </div>
+                        <div className="admin-panel__services">
+                            <ServiceCard
+                                name={tr.backendName}
+                                description={tr.backendDescription}
+                                state={backendState}
+                                details={backendDetails}
+                                message={backend && !backend.restart_supported ? tr.restartUnavailable : null}
+                                canRestart={Boolean(backend?.restart_supported) && !restarting.backend}
+                                onRestart={() => setConfirmTarget('backend')}
+                            />
+                            <ServiceCard
+                                name={tr.daemonName}
+                                description={tr.daemonDescription}
+                                state={daemonState}
+                                details={daemonDetails}
+                                message={daemon?.error ?? null}
+                                canRestart={
+                                    Boolean(daemonStatus?.restart_supported) &&
+                                    Boolean(daemon?.reachable) &&
+                                    !restarting.daemon
+                                }
+                                onRestart={() => setConfirmTarget('daemon')}
+                            />
+                        </div>
+                    </section>
+
+                    <section className="admin-panel__section">
+                        <div className="admin-panel__section-header">
+                            <h3 className="admin-panel__section-title">{tr.gameServerStatusSection}</h3>
+                        </div>
+                        <div className="admin-panel__services">
+                            <GameServerCard
+                                status={gameServerStatus}
+                                loadError={gameServerLoadError}
+                                isActioning={gameServerActioning}
+                                onStart={() => void handleGameServerAction('start')}
+                                onStop={() => void handleGameServerAction('stop')}
+                                onRestart={() => void handleGameServerAction('restart')}
+                            />
+                        </div>
+                    </section>
                 </div>
             </div>
 

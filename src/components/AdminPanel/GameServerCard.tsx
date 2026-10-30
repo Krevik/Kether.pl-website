@@ -59,13 +59,14 @@ export function GameServerCard({
     const srcdsUptime = status?.srcds_uptime_secs != null ? formatUptime(status.srcds_uptime_secs) : null;
 
     return (
-        <section className="admin-service-card app-surface" aria-label={tr.gameServerName}>
+        <section className="admin-service-card admin-game-server-card" aria-label={tr.gameServerName}>
             <header className="admin-service-card__header">
                 <h3 className="admin-service-card__name">{tr.gameServerName}</h3>
                 <span
                     className={`admin-service-card__state admin-service-card__state--${stateClass}`}
                     role="status"
                 >
+                    <span className="admin-service-card__state-indicator" aria-hidden="true" />
                     {isActioning ? tr.gameServerActioning(isActioning) : stateLabel}
                 </span>
             </header>
@@ -134,6 +135,7 @@ export function GameServerCard({
             <div className="admin-service-card__actions admin-game-server-card__actions">
                 <Button
                     label={tr.gameServerStart}
+                    icon={isActioning === 'start' ? 'pi pi-spin pi-spinner' : 'pi pi-play'}
                     className="app-focus-ring admin-game-server-card__btn-start"
                     disabled={isBusy || activeState === 'active'}
                     loading={isActioning === 'start'}
@@ -141,6 +143,7 @@ export function GameServerCard({
                 />
                 <Button
                     label={tr.gameServerStop}
+                    icon={isActioning === 'stop' ? 'pi pi-spin pi-spinner' : 'pi pi-power-off'}
                     className="app-focus-ring admin-game-server-card__btn-stop"
                     disabled={isBusy || activeState === 'inactive' || activeState === 'failed'}
                     loading={isActioning === 'stop'}
@@ -148,7 +151,8 @@ export function GameServerCard({
                 />
                 <Button
                     label={tr.restart}
-                    className="app-focus-ring"
+                    icon={isActioning === 'restart' ? 'pi pi-spin pi-spinner' : 'pi pi-refresh'}
+                    className="admin-service-card__restart app-focus-ring"
                     disabled={isBusy}
                     loading={isActioning === 'restart'}
                     onClick={onRestart}
