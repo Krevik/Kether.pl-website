@@ -312,6 +312,16 @@
         "restartFailed": "Restart nie powiódł się",
         "restartUnavailable": "Zdalny restart nie jest dostępny dla tej usługi",
         "daemonBusyRefused": "Demon zajął się pracą; potwierdź ponownie, aby zrestartować mimo to",
-        "loadFailed": "Nie udało się pobrać stanu usług"
+        "loadFailed": "Nie udało się pobrać stanu usług",
+        "gameServerName": "Serwer gry L4D2",
+        "gameServerDescription": "Dedykowany serwer Left 4 Dead 2 (l4d2-srcds1.service) — uruchom, zatrzymaj lub zrestartuj proces serwera gry.",
+        "gameServerService": "Usługa",
+        "gameServerSubState": "Pod-stan",
+        "gameServerStart": "Uruchom",
+        "gameServerStop": "Zatrzymaj",
+        "gameServerActioning": "{{action}}…",
+        "gameServerActionDone": "Serwer L4D2: wykonano {{action}}",
+        "gameServerActionFailed": "Akcja serwera L4D2 nie powiodła się",
+        "gameServerStatusSection": "Serwer Gry"
     }
 }

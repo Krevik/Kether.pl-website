@@ -124,6 +124,16 @@ export function useAdminPanelTranslations() {
         restartUnavailable: t('adminPanel.restartUnavailable'),
         daemonBusyRefused: t('adminPanel.daemonBusyRefused'),
         loadFailed: t('adminPanel.loadFailed'),
+        gameServerName: t('adminPanel.gameServerName'),
+        gameServerDescription: t('adminPanel.gameServerDescription'),
+        gameServerService: t('adminPanel.gameServerService'),
+        gameServerSubState: t('adminPanel.gameServerSubState'),
+        gameServerStart: t('adminPanel.gameServerStart'),
+        gameServerStop: t('adminPanel.gameServerStop'),
+        gameServerActioning: (action: string) => t('adminPanel.gameServerActioning', { action }),
+        gameServerActionDone: (action: string) => t('adminPanel.gameServerActionDone', { action }),
+        gameServerActionFailed: t('adminPanel.gameServerActionFailed'),
+        gameServerStatusSection: t('adminPanel.gameServerStatusSection'),
     };
 }
 

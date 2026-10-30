@@ -22,6 +22,10 @@ export const apiPaths = {
     ADMIN_STATUS: `/admin/status`,
     ADMIN_RESTART_BACKEND: `/admin/restart/backend`,
     ADMIN_RESTART_DAEMON: (force: boolean) => `/admin/restart/daemon?force=${force}`,
+    ADMIN_GAME_SERVER_STATUS: `/admin/game-server/status`,
+    ADMIN_GAME_SERVER_START: `/admin/game-server/start`,
+    ADMIN_GAME_SERVER_STOP: `/admin/game-server/stop`,
+    ADMIN_GAME_SERVER_RESTART: `/admin/game-server/restart`,
 };
 
 export const API_PATHS = {

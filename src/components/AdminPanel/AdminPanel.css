@@ -164,3 +164,30 @@
 	background-color: #c0392b;
 	border-color: #c0392b;
 }
+
+.admin-game-server-card__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: flex-end;
+}
+
+.admin-game-server-card__btn-start.p-button {
+    background-color: #27ae60;
+    border-color: #27ae60;
+}
+
+.admin-game-server-card__btn-start.p-button:enabled:hover {
+    background-color: #219a52;
+    border-color: #219a52;
+}
+
+.admin-game-server-card__btn-stop.p-button {
+    background-color: #c0392b;
+    border-color: #c0392b;
+}
+
+.admin-game-server-card__btn-stop.p-button:enabled:hover {
+    background-color: #a93226;
+    border-color: #a93226;
+}

@@ -15,6 +15,12 @@ import {
     AdminApiError,
     AdminStatus,
     fetchAdminStatus,
+    fetchGameServerStatus,
+    GameServerActionResult,
+    GameServerStatus,
+    gameServerRestart,
+    gameServerStart,
+    gameServerStop,
     restartBackend,
     restartDaemon,
     tryFetchAdminStatus,
@@ -27,6 +33,7 @@ import {
     ServiceId,
     serviceStartedAt,
 } from './adminPanelUtils';
+import { GameServerCard, GameServerCardAction } from './GameServerCard';
 import { ServiceCard, ServiceDetail, ServiceState, uptimeDetails } from './ServiceCard';
 
 const AUTO_REFRESH_MS = 15_000;
@@ -50,6 +57,11 @@ export default function AdminPanel() {
     const [confirmTarget, setConfirmTarget] = useState<ServiceId | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
+    // Game server state
+    const [gameServerStatus, setGameServerStatus] = useState<GameServerStatus | null>(null);
+    const [gameServerLoadError, setGameServerLoadError] = useState<string | null>(null);
+    const [gameServerActioning, setGameServerActioning] = useState<GameServerCardAction | null>(null);
+
     const mounted = useRef(true);
     const restartingRef = useRef(restarting);
     restartingRef.current = restarting;
@@ -71,6 +83,21 @@ export default function AdminPanel() {
         setLastUpdated(new Date());
     }, []);
 
+    const loadGameServerStatus = useCallback(async () => {
+        try {
+            const gs = await fetchGameServerStatus();
+            if (mounted.current) {
+                setGameServerStatus(gs);
+                setGameServerLoadError(null);
+            }
+        } catch (error) {
+            if (mounted.current) {
+                const message = error instanceof Error ? error.message : String(error);
+                setGameServerLoadError(message);
+            }
+        }
+    }, []);
+
     const loadStatus = useCallback(async () => {
         setIsLoading(true);
         try {
@@ -90,14 +117,19 @@ export default function AdminPanel() {
             return;
         }
         void loadStatus();
+        void loadGameServerStatus();
         const timer = setInterval(() => {
             // Restart polling keeps the status fresh on its own meanwhile.
             if (!restartingRef.current.backend && !restartingRef.current.daemon) {
                 void loadStatus();
             }
+            if (!gameServerActioning) {
+                void loadGameServerStatus();
+            }
         }, AUTO_REFRESH_MS);
         return () => clearInterval(timer);
-    }, [isAdmin, loadStatus]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isAdmin, loadStatus, loadGameServerStatus]);
 
     /** Polls until the service reports a new instance, or gives up after the timeout. */
     const waitForRestart = useCallback(
@@ -151,7 +183,7 @@ export default function AdminPanel() {
         } catch (error) {
             if (error instanceof AdminApiError && error.status === 409) {
                 // The daemon started map work since the last refresh: show why and let the
-                // admin confirm again (which then forces the restart).
+                // admin confirm again (which then forces the restart)
                 notificationManager.ERROR(tr.daemonBusyRefused);
                 void loadStatus();
             } else {
@@ -163,6 +195,34 @@ export default function AdminPanel() {
             setIsSubmitting(false);
         }
     };
+
+    const handleGameServerAction = useCallback(
+        async (action: GameServerCardAction) => {
+            if (gameServerActioning) return;
+            setGameServerActioning(action);
+            try {
+                let result: GameServerActionResult;
+                if (action === 'start') result = await gameServerStart();
+                else if (action === 'stop') result = await gameServerStop();
+                else result = await gameServerRestart();
+
+                if (mounted.current) {
+                    setGameServerStatus(result.status);
+                    notificationManager.SUCCESS(tr.gameServerActionDone(action));
+                }
+            } catch (error) {
+                const message = error instanceof Error ? error.message : String(error);
+                notificationManager.ERROR(`${tr.gameServerActionFailed}: ${message}`);
+                // Refresh status after error too
+                void loadGameServerStatus();
+            } finally {
+                if (mounted.current) {
+                    setGameServerActioning(null);
+                }
+            }
+        },
+        [gameServerActioning, tr, loadGameServerStatus]
+    );
 
     if (!isAdmin) {
         return (
@@ -255,7 +315,10 @@ export default function AdminPanel() {
                         <Button
                             label={common.refresh}
                             className="admin-panel__refresh app-focus-ring"
-                            onClick={() => void loadStatus()}
+                            onClick={() => {
+                                void loadStatus();
+                                void loadGameServerStatus();
+                            }}
                             loading={isLoading}
                         />
                     </div>
@@ -284,6 +347,20 @@ export default function AdminPanel() {
                             !restarting.daemon
                         }
                         onRestart={() => setConfirmTarget('daemon')}
+                    />
+                </div>
+
+                <div className="admin-panel__section-header" style={{ marginTop: '0.5rem' }}>
+                    <h3 className="admin-panel__section-title">{tr.gameServerStatusSection}</h3>
+                </div>
+                <div className="admin-panel__services">
+                    <GameServerCard
+                        status={gameServerStatus}
+                        loadError={gameServerLoadError}
+                        isActioning={gameServerActioning}
+                        onStart={() => void handleGameServerAction('start')}
+                        onStop={() => void handleGameServerAction('stop')}
+                        onRestart={() => void handleGameServerAction('restart')}
                     />
                 </div>
             </div>

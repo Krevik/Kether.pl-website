@@ -110,3 +110,55 @@ export async function restartDaemon(force: boolean): Promise<RestartAccepted> {
     });
     return readJson<RestartAccepted>(response);
 }
+
+/** Active state of the L4D2 game server systemd unit. */
+export type GameServerActiveState =
+    | 'active'
+    | 'inactive'
+    | 'activating'
+    | 'deactivating'
+    | 'failed'
+    | 'unknown';
+
+export interface GameServerStatus {
+    service: string;
+    active_state: GameServerActiveState;
+    active_state_raw: string;
+    sub_state: string;
+    description: string;
+    main_pid: number;
+}
+
+export interface GameServerActionResult {
+    action: string;
+    status: GameServerStatus;
+}
+
+export async function fetchGameServerStatus(): Promise<GameServerStatus> {
+    const response = await apiFetch(adminUrl(apiPaths.ADMIN_GAME_SERVER_STATUS), { auth: true });
+    return readJson<GameServerStatus>(response);
+}
+
+export async function gameServerStart(): Promise<GameServerActionResult> {
+    const response = await apiFetch(adminUrl(apiPaths.ADMIN_GAME_SERVER_START), {
+        method: 'POST',
+        auth: true,
+    });
+    return readJson<GameServerActionResult>(response);
+}
+
+export async function gameServerStop(): Promise<GameServerActionResult> {
+    const response = await apiFetch(adminUrl(apiPaths.ADMIN_GAME_SERVER_STOP), {
+        method: 'POST',
+        auth: true,
+    });
+    return readJson<GameServerActionResult>(response);
+}
+
+export async function gameServerRestart(): Promise<GameServerActionResult> {
+    const response = await apiFetch(adminUrl(apiPaths.ADMIN_GAME_SERVER_RESTART), {
+        method: 'POST',
+        auth: true,
+    });
+    return readJson<GameServerActionResult>(response);
+}

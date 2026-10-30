@@ -312,6 +312,16 @@
         "restartFailed": "Restart failed",
         "restartUnavailable": "Remote restart is not available for this service",
         "daemonBusyRefused": "The daemon became busy; confirm again to restart anyway",
-        "loadFailed": "Failed to load service status"
+        "loadFailed": "Failed to load service status",
+        "gameServerName": "L4D2 Game Server",
+        "gameServerDescription": "Left 4 Dead 2 dedicated server (l4d2-srcds1.service) — start, stop or restart the game server process.",
+        "gameServerService": "Service",
+        "gameServerSubState": "Sub-state",
+        "gameServerStart": "Start",
+        "gameServerStop": "Stop",
+        "gameServerActioning": "{{action}}…",
+        "gameServerActionDone": "L4D2 server: {{action}} completed",
+        "gameServerActionFailed": "L4D2 server action failed",
+        "gameServerStatusSection": "Game Server"
     }
 }
