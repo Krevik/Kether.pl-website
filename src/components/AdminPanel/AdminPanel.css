@@ -172,22 +172,34 @@
     justify-content: flex-end;
 }
 
-.admin-game-server-card__btn-start.p-button {
+.admin-game-server-card__btn-start.p-button:not(:disabled):not(.p-disabled) {
     background-color: #27ae60;
     border-color: #27ae60;
+    color: #ffffff;
 }
 
-.admin-game-server-card__btn-start.p-button:enabled:hover {
+.admin-game-server-card__btn-start.p-button:not(:disabled):not(.p-disabled):hover {
     background-color: #219a52;
     border-color: #219a52;
 }
 
-.admin-game-server-card__btn-stop.p-button {
+.admin-game-server-card__btn-stop.p-button:not(:disabled):not(.p-disabled) {
     background-color: #c0392b;
     border-color: #c0392b;
+    color: #ffffff;
 }
 
-.admin-game-server-card__btn-stop.p-button:enabled:hover {
+.admin-game-server-card__btn-stop.p-button:not(:disabled):not(.p-disabled):hover {
     background-color: #a93226;
     border-color: #a93226;
+}
+
+/* Explicit styling for disabled buttons in admin service cards */
+.admin-service-card .p-button:disabled,
+.admin-service-card .p-button.p-disabled {
+    background-color: rgba(255, 255, 255, 0.08) !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+    color: rgba(255, 255, 255, 0.35) !important;
+    cursor: not-allowed !important;
+    opacity: 0.6 !important;
 }

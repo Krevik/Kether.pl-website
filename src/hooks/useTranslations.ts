@@ -127,13 +127,47 @@ export function useAdminPanelTranslations() {
         gameServerName: t('adminPanel.gameServerName'),
         gameServerDescription: t('adminPanel.gameServerDescription'),
         gameServerService: t('adminPanel.gameServerService'),
-        gameServerSubState: t('adminPanel.gameServerSubState'),
+        gameServerState: t('adminPanel.gameServerState'),
+        gameServerMainPid: t('adminPanel.gameServerMainPid'),
+        gameServerSrcdsPid: t('adminPanel.gameServerSrcdsPid'),
+        gameServerMainUpSince: t('adminPanel.gameServerMainUpSince'),
+        gameServerMainUptime: t('adminPanel.gameServerMainUptime'),
+        gameServerSrcdsUpSince: t('adminPanel.gameServerSrcdsUpSince'),
+        gameServerSrcdsUptime: t('adminPanel.gameServerSrcdsUptime'),
         gameServerStart: t('adminPanel.gameServerStart'),
         gameServerStop: t('adminPanel.gameServerStop'),
         gameServerActioning: (action: string) => t('adminPanel.gameServerActioning', { action }),
         gameServerActionDone: (action: string) => t('adminPanel.gameServerActionDone', { action }),
         gameServerActionFailed: t('adminPanel.gameServerActionFailed'),
         gameServerStatusSection: t('adminPanel.gameServerStatusSection'),
+        translateSubState: (subState: string) => {
+            const normalized = subState.toLowerCase().trim();
+            switch (normalized) {
+                case 'running':
+                    return t('adminPanel.subStateRunning');
+                case 'dead':
+                    return t('adminPanel.subStateDead');
+                case 'exited':
+                    return t('adminPanel.subStateExited');
+                case 'failed':
+                    return t('adminPanel.subStateFailed');
+                case 'auto-restart':
+                    return t('adminPanel.subStateAutoRestart');
+                case 'start':
+                case 'start-pre':
+                case 'start-post':
+                    return t('adminPanel.subStateStarting');
+                case 'stop':
+                case 'stop-sigterm':
+                case 'stop-sigkill':
+                case 'stop-post':
+                    return t('adminPanel.subStateStopping');
+                case 'reload':
+                    return t('adminPanel.subStateReloading');
+                default:
+                    return subState ? subState.charAt(0).toUpperCase() + subState.slice(1) : '—';
+            }
+        },
     };
 }
 

@@ -127,6 +127,13 @@ export interface GameServerStatus {
     sub_state: string;
     description: string;
     main_pid: number;
+    main_comm?: string | null;
+    main_started_at?: string | null;
+    main_uptime_secs?: number | null;
+    srcds_pid?: number | null;
+    srcds_comm?: string | null;
+    srcds_started_at?: string | null;
+    srcds_uptime_secs?: number | null;
 }
 
 export interface GameServerActionResult {
