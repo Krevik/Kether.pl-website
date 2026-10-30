@@ -64,8 +64,7 @@ export function ServiceCard({
             {message && <p className="admin-service-card__message">{message}</p>}
             <div className="admin-service-card__actions">
                 <Button
-                    label={tr.restart}
-                    icon={state === 'restarting' ? 'pi pi-spin pi-spinner' : 'pi pi-refresh'}
+                    label={`🔄 ${tr.restart}`}
                     className="admin-service-card__restart app-focus-ring"
                     disabled={!canRestart}
                     loading={state === 'restarting'}

@@ -134,24 +134,21 @@ export function GameServerCard({
             {loadError && <p className="admin-service-card__message">{loadError}</p>}
             <div className="admin-service-card__actions admin-game-server-card__actions">
                 <Button
-                    label={tr.gameServerStart}
-                    icon={isActioning === 'start' ? 'pi pi-spin pi-spinner' : 'pi pi-play'}
+                    label={`▶️ ${tr.gameServerStart}`}
                     className="app-focus-ring admin-game-server-card__btn-start"
                     disabled={isBusy || activeState === 'active'}
                     loading={isActioning === 'start'}
                     onClick={onStart}
                 />
                 <Button
-                    label={tr.gameServerStop}
-                    icon={isActioning === 'stop' ? 'pi pi-spin pi-spinner' : 'pi pi-power-off'}
+                    label={`⏹️ ${tr.gameServerStop}`}
                     className="app-focus-ring admin-game-server-card__btn-stop"
                     disabled={isBusy || activeState === 'inactive' || activeState === 'failed'}
                     loading={isActioning === 'stop'}
                     onClick={onStop}
                 />
                 <Button
-                    label={tr.restart}
-                    icon={isActioning === 'restart' ? 'pi pi-spin pi-spinner' : 'pi pi-refresh'}
+                    label={`🔄 ${tr.restart}`}
                     className="admin-service-card__restart app-focus-ring"
                     disabled={isBusy}
                     loading={isActioning === 'restart'}

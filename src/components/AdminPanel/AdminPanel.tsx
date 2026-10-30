@@ -285,13 +285,13 @@ export default function AdminPanel() {
     const dialogFooter = (
         <div className="admin-panel__dialog-actions">
             <Button
-                label={common.cancel}
+                label={`❌ ${common.cancel}`}
                 className="admin-panel__btn-cancel app-focus-ring"
                 onClick={() => setConfirmTarget(null)}
                 disabled={isSubmitting}
             />
             <Button
-                label={confirmForcesDaemon ? tr.restartAnyway : tr.restart}
+                label={confirmForcesDaemon ? `⚠️ ${tr.restartAnyway}` : `🔄 ${tr.restart}`}
                 className={`app-focus-ring ${confirmForcesDaemon ? 'admin-panel__btn-danger' : 'admin-panel__btn-confirm'}`}
                 onClick={() => void confirmRestart()}
                 loading={isSubmitting}
@@ -310,8 +310,7 @@ export default function AdminPanel() {
                         className="mb-4 admin-panel__toolbar app-toolbar"
                         start={
                             <Button
-                                label={common.refresh}
-                                icon={isLoading ? 'pi pi-spin pi-spinner' : 'pi pi-refresh'}
+                                label={`🔄 ${common.refresh}`}
                                 className="app-focus-ring admin-panel__btn-refresh"
                                 onClick={() => {
                                     void loadStatus();
@@ -340,51 +339,53 @@ export default function AdminPanel() {
                         </div>
                     )}
 
-                    <section className="admin-panel__section">
-                        <div className="admin-panel__section-header">
-                            <h3 className="admin-panel__section-title">{tr.servicesTitle}</h3>
-                        </div>
-                        <div className="admin-panel__services">
-                            <ServiceCard
-                                name={tr.backendName}
-                                description={tr.backendDescription}
-                                state={backendState}
-                                details={backendDetails}
-                                message={backend && !backend.restart_supported ? tr.restartUnavailable : null}
-                                canRestart={Boolean(backend?.restart_supported) && !restarting.backend}
-                                onRestart={() => setConfirmTarget('backend')}
-                            />
-                            <ServiceCard
-                                name={tr.daemonName}
-                                description={tr.daemonDescription}
-                                state={daemonState}
-                                details={daemonDetails}
-                                message={daemon?.error ?? null}
-                                canRestart={
-                                    Boolean(daemonStatus?.restart_supported) &&
-                                    Boolean(daemon?.reachable) &&
-                                    !restarting.daemon
-                                }
-                                onRestart={() => setConfirmTarget('daemon')}
-                            />
-                        </div>
-                    </section>
+                    <div className="admin-panel__sections-container">
+                        <section className="admin-panel__section">
+                            <div className="admin-panel__section-header">
+                                <h3 className="admin-panel__section-title">{tr.servicesTitle}</h3>
+                            </div>
+                            <div className="admin-panel__services">
+                                <ServiceCard
+                                    name={tr.backendName}
+                                    description={tr.backendDescription}
+                                    state={backendState}
+                                    details={backendDetails}
+                                    message={backend && !backend.restart_supported ? tr.restartUnavailable : null}
+                                    canRestart={Boolean(backend?.restart_supported) && !restarting.backend}
+                                    onRestart={() => setConfirmTarget('backend')}
+                                />
+                                <ServiceCard
+                                    name={tr.daemonName}
+                                    description={tr.daemonDescription}
+                                    state={daemonState}
+                                    details={daemonDetails}
+                                    message={daemon?.error ?? null}
+                                    canRestart={
+                                        Boolean(daemonStatus?.restart_supported) &&
+                                        Boolean(daemon?.reachable) &&
+                                        !restarting.daemon
+                                    }
+                                    onRestart={() => setConfirmTarget('daemon')}
+                                />
+                            </div>
+                        </section>
 
-                    <section className="admin-panel__section">
-                        <div className="admin-panel__section-header">
-                            <h3 className="admin-panel__section-title">{tr.gameServerStatusSection}</h3>
-                        </div>
-                        <div className="admin-panel__services">
-                            <GameServerCard
-                                status={gameServerStatus}
-                                loadError={gameServerLoadError}
-                                isActioning={gameServerActioning}
-                                onStart={() => void handleGameServerAction('start')}
-                                onStop={() => void handleGameServerAction('stop')}
-                                onRestart={() => void handleGameServerAction('restart')}
-                            />
-                        </div>
-                    </section>
+                        <section className="admin-panel__section">
+                            <div className="admin-panel__section-header">
+                                <h3 className="admin-panel__section-title">{tr.gameServerStatusSection}</h3>
+                            </div>
+                            <div className="admin-panel__services">
+                                <GameServerCard
+                                    status={gameServerStatus}
+                                    loadError={gameServerLoadError}
+                                    isActioning={gameServerActioning}
+                                    onStart={() => void handleGameServerAction('start')}
+                                    onStop={() => void handleGameServerAction('stop')}
+                                    onRestart={() => void handleGameServerAction('restart')}
+                                />
+                            </div>
+                        </section>
+                    </div>
                 </div>
             </div>
 
