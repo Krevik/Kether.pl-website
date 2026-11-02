@@ -18,6 +18,8 @@ export interface ServiceCardProps {
     message?: string | null;
     canRestart: boolean;
     onRestart: () => void;
+    canSoftRestart?: boolean;
+    onSoftRestart?: () => void;
 }
 
 /** Status card for one service, with its maintenance actions. */
@@ -29,6 +31,8 @@ export function ServiceCard({
     message,
     canRestart,
     onRestart,
+    canSoftRestart,
+    onSoftRestart,
 }: ServiceCardProps) {
     const tr = useAdminPanelTranslations();
     const stateLabel = {
@@ -70,6 +74,14 @@ export function ServiceCard({
                     loading={state === 'restarting'}
                     onClick={onRestart}
                 />
+                {onSoftRestart && (
+                    <Button
+                        label={`🔄 ${tr.softRestart}`}
+                        className="admin-service-card__restart app-focus-ring"
+                        disabled={!canSoftRestart}
+                        onClick={onSoftRestart}
+                    />
+                )}
             </div>
         </section>
     );

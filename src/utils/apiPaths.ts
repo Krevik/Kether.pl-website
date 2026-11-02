@@ -21,6 +21,7 @@ export const apiPaths = {
     AUTH_BASE_PATH: `/auth`,
     ADMIN_STATUS: `/admin/status`,
     ADMIN_RESTART_BACKEND: `/admin/restart/backend`,
+    ADMIN_SOFT_RESTART_DAEMON: (force: boolean) => `/admin/soft-restart/daemon?force=${force}`,
     ADMIN_RESTART_DAEMON: (force: boolean) => `/admin/restart/daemon?force=${force}`,
     ADMIN_GAME_SERVER_STATUS: `/admin/game-server/status`,
     ADMIN_GAME_SERVER_START: `/admin/game-server/start`,

@@ -24,6 +24,7 @@ import {
     gameServerStop,
     restartBackend,
     restartDaemon,
+    softRestartDaemon,
     tryFetchAdminStatus,
 } from '../../services/adminPanelService';
 import { notificationManager } from '../../utils/notificationManager';
@@ -56,6 +57,7 @@ export default function AdminPanel() {
         daemon: false,
     });
     const [confirmTarget, setConfirmTarget] = useState<ServiceId | null>(null);
+    const [confirmSoftRestart, setConfirmSoftRestart] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     // Game server state
@@ -171,7 +173,11 @@ export default function AdminPanel() {
         setIsSubmitting(true);
         try {
             const accepted =
-                service === 'backend' ? await restartBackend() : await restartDaemon(force);
+                service === 'backend'
+                    ? await restartBackend()
+                    : confirmSoftRestart
+                      ? await softRestartDaemon(force)
+                      : await restartDaemon(force);
             notificationManager.SUCCESS(tr.restartRequested(serviceName(service)));
             setConfirmTarget(null);
             setRestarting((prev) => ({ ...prev, [service]: true }));
@@ -280,6 +286,7 @@ export default function AdminPanel() {
         : [];
 
     const confirmService = confirmTarget ? serviceName(confirmTarget) : '';
+    const confirmAction = confirmSoftRestart ? tr.softRestart : tr.restart;
     const confirmForcesDaemon = confirmTarget === 'daemon' && daemonBusy !== null;
 
     const dialogFooter = (
@@ -291,7 +298,7 @@ export default function AdminPanel() {
                 disabled={isSubmitting}
             />
             <Button
-                label={confirmForcesDaemon ? `⚠️ ${tr.restartAnyway}` : `🔄 ${tr.restart}`}
+                label={confirmForcesDaemon ? `⚠️ ${tr.restartAnyway}` : `🔄 ${confirmAction}`}
                 className={`app-focus-ring ${confirmForcesDaemon ? 'admin-panel__btn-danger' : 'admin-panel__btn-confirm'}`}
                 onClick={() => void confirmRestart()}
                 loading={isSubmitting}
@@ -352,7 +359,10 @@ export default function AdminPanel() {
                                     details={backendDetails}
                                     message={backend && !backend.restart_supported ? tr.restartUnavailable : null}
                                     canRestart={Boolean(backend?.restart_supported) && !restarting.backend}
-                                    onRestart={() => setConfirmTarget('backend')}
+                                    onRestart={() => {
+                                        setConfirmSoftRestart(false);
+                                        setConfirmTarget('backend');
+                                    }}
                                 />
                                 <ServiceCard
                                     name={tr.daemonName}
@@ -365,7 +375,19 @@ export default function AdminPanel() {
                                         Boolean(daemon?.reachable) &&
                                         !restarting.daemon
                                     }
-                                    onRestart={() => setConfirmTarget('daemon')}
+                                    onRestart={() => {
+                                        setConfirmSoftRestart(false);
+                                        setConfirmTarget('daemon');
+                                    }}
+                                    canSoftRestart={
+                                        Boolean(daemonStatus?.soft_restart_supported) &&
+                                        Boolean(daemon?.reachable) &&
+                                        !restarting.daemon
+                                    }
+                                    onSoftRestart={() => {
+                                        setConfirmSoftRestart(true);
+                                        setConfirmTarget('daemon');
+                                    }}
                                 />
                             </div>
                         </section>
@@ -391,7 +413,9 @@ export default function AdminPanel() {
 
             <Dialog
                 visible={confirmTarget !== null}
-                header={tr.restartConfirmTitle(confirmService)}
+                header={confirmSoftRestart
+                    ? tr.softRestartConfirmTitle(confirmService)
+                    : tr.restartConfirmTitle(confirmService)}
                 modal
                 className="app-dialog admin-panel__dialog"
                 style={{ width: '90vw', maxWidth: '520px' }}
@@ -403,7 +427,11 @@ export default function AdminPanel() {
                 }}
             >
                 <p>
-                    {confirmTarget === 'backend' ? tr.restartBackendConfirm : tr.restartDaemonConfirm}
+                    {confirmTarget === 'backend'
+                        ? tr.restartBackendConfirm
+                        : confirmSoftRestart
+                          ? tr.softRestartDaemonConfirm
+                          : tr.restartDaemonConfirm}
                 </p>
                 {confirmForcesDaemon && daemonBusy && (
                     <p className="admin-panel__warning" role="alert">

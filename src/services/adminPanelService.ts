@@ -23,6 +23,7 @@ export interface DaemonStatus {
     /** What map work is running right now, if any. */
     busy: string | null;
     restart_supported: boolean;
+    soft_restart_supported: boolean;
 }
 
 export interface DaemonReport {
@@ -105,6 +106,15 @@ export async function restartBackend(): Promise<RestartAccepted> {
 /** Without `force`, the daemon refuses (HTTP 409) while map work is running. */
 export async function restartDaemon(force: boolean): Promise<RestartAccepted> {
     const response = await apiFetch(adminUrl(apiPaths.ADMIN_RESTART_DAEMON(force)), {
+        method: 'POST',
+        auth: true,
+    });
+    return readJson<RestartAccepted>(response);
+}
+
+/** Re-executes the daemon in place; refuses busy map work unless forced. */
+export async function softRestartDaemon(force: boolean): Promise<RestartAccepted> {
+    const response = await apiFetch(adminUrl(apiPaths.ADMIN_SOFT_RESTART_DAEMON(force)), {
         method: 'POST',
         auth: true,
     });

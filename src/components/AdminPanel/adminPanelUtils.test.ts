@@ -23,6 +23,7 @@ function status(backendStarted: string, daemonStarted: string | null): AdminStat
                       uptime_secs: 5,
                       busy: null,
                       restart_supported: true,
+                      soft_restart_supported: true,
                   }
                 : null,
             error: daemonStarted ? null : 'Daemon unreachable',
