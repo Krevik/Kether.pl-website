@@ -24,6 +24,7 @@ import {
     gameServerStop,
     restartBackend,
     restartDaemon,
+    softRestartBackend,
     softRestartDaemon,
     tryFetchAdminStatus,
 } from '../../services/adminPanelService';
@@ -174,7 +175,9 @@ export default function AdminPanel() {
         try {
             const accepted =
                 service === 'backend'
-                    ? await restartBackend()
+                    ? confirmSoftRestart
+                        ? await softRestartBackend()
+                        : await restartBackend()
                     : confirmSoftRestart
                       ? await softRestartDaemon(force)
                       : await restartDaemon(force);
@@ -357,10 +360,15 @@ export default function AdminPanel() {
                                     description={tr.backendDescription}
                                     state={backendState}
                                     details={backendDetails}
-                                    message={backend && !backend.restart_supported ? tr.restartUnavailable : null}
+                                    message={backend && !backend.restart_supported && !backend.soft_restart_supported ? tr.restartUnavailable : null}
                                     canRestart={Boolean(backend?.restart_supported) && !restarting.backend}
                                     onRestart={() => {
                                         setConfirmSoftRestart(false);
+                                        setConfirmTarget('backend');
+                                    }}
+                                    canSoftRestart={Boolean(backend?.soft_restart_supported) && !restarting.backend}
+                                    onSoftRestart={() => {
+                                        setConfirmSoftRestart(true);
                                         setConfirmTarget('backend');
                                     }}
                                 />
@@ -428,7 +436,9 @@ export default function AdminPanel() {
             >
                 <p>
                     {confirmTarget === 'backend'
-                        ? tr.restartBackendConfirm
+                        ? confirmSoftRestart
+                            ? tr.softRestartBackendConfirm
+                            : tr.restartBackendConfirm
                         : confirmSoftRestart
                           ? tr.softRestartDaemonConfirm
                           : tr.restartDaemonConfirm}

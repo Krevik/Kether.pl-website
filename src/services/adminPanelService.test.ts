@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { apiFetch } from '../utils/apiClient';
-import { AdminApiError, restartDaemon, softRestartDaemon } from './adminPanelService';
+import { AdminApiError, restartBackend, restartDaemon, softRestartBackend, softRestartDaemon } from './adminPanelService';
 
 vi.mock('../utils/apiClient', () => ({ apiFetch: vi.fn() }));
 vi.mock('../utils/authUtils', () => ({ handleAuthError: () => false }));
@@ -31,5 +31,25 @@ describe('daemon restart requests', () => {
             status: 409,
             message: 'Daemon is busy',
         } satisfies Partial<AdminApiError>);
+    });
+});
+
+describe('backend restart requests', () => {
+    it.each([
+        { restart: restartBackend, path: '/api/admin/restart/backend' },
+        { restart: softRestartBackend, path: '/api/admin/soft-restart/backend' },
+    ])('posts the authenticated request to $path', async ({ restart, path }) => {
+        const accepted = { requested_at: '2026-11-02T10:00:00Z' };
+        vi.mocked(apiFetch).mockResolvedValue(Response.json(accepted));
+        await expect(restart()).resolves.toEqual(accepted);
+        expect(apiFetch).toHaveBeenCalledWith(expect.stringContaining(path), {
+            method: 'POST',
+            auth: true,
+        });
+    });
+
+    it.each([restartBackend, softRestartBackend])('reports unavailable restarts for %s', async (restart) => {
+        vi.mocked(apiFetch).mockResolvedValue(Response.json({ error: 'Restart unavailable' }, { status: 503 }));
+        await expect(restart()).rejects.toMatchObject({ status: 503, message: 'Restart unavailable' });
     });
 });

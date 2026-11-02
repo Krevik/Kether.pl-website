@@ -118,6 +118,7 @@ export function useAdminPanelTranslations() {
         restartAnyway: t('adminPanel.restartAnyway'),
         restartConfirmTitle: (service: string) => t('adminPanel.restartConfirmTitle', { service }),
         restartBackendConfirm: t('adminPanel.restartBackendConfirm'),
+        softRestartBackendConfirm: t('adminPanel.softRestartBackendConfirm'),
         restartDaemonConfirm: t('adminPanel.restartDaemonConfirm'),
         daemonBusyWarning: (reason: string) => t('adminPanel.daemonBusyWarning', { reason }),
         restartRequested: (service: string) => t('adminPanel.restartRequested', { service }),

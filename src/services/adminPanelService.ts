@@ -12,6 +12,7 @@ export interface BackendStatus {
     services_started_at: string;
     uptime_secs: number;
     restart_supported: boolean;
+    soft_restart_supported: boolean;
 }
 
 /** KetherServerDaemon status, as reported by the daemon itself. */
@@ -97,6 +98,15 @@ export async function fetchAdminStatus(): Promise<AdminStatus> {
 
 export async function restartBackend(): Promise<RestartAccepted> {
     const response = await apiFetch(adminUrl(apiPaths.ADMIN_RESTART_BACKEND), {
+        method: 'POST',
+        auth: true,
+    });
+    return readJson<RestartAccepted>(response);
+}
+
+/** Restarts the REST server and Steam bot in the existing backend process. */
+export async function softRestartBackend(): Promise<RestartAccepted> {
+    const response = await apiFetch(adminUrl(apiPaths.ADMIN_SOFT_RESTART_BACKEND), {
         method: 'POST',
         auth: true,
     });

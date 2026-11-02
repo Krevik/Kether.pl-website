@@ -20,6 +20,7 @@ export const apiPaths = {
     MAPS_SUGGESTION_ACCEPT: (id: number) => `/maps/suggestions/${id}/accept`,
     AUTH_BASE_PATH: `/auth`,
     ADMIN_STATUS: `/admin/status`,
+    ADMIN_SOFT_RESTART_BACKEND: `/admin/soft-restart/backend`,
     ADMIN_RESTART_BACKEND: `/admin/restart/backend`,
     ADMIN_SOFT_RESTART_DAEMON: (force: boolean) => `/admin/soft-restart/daemon?force=${force}`,
     ADMIN_RESTART_DAEMON: (force: boolean) => `/admin/restart/daemon?force=${force}`,

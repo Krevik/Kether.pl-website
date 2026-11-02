@@ -11,6 +11,7 @@ function status(backendStarted: string, daemonStarted: string | null): AdminStat
             services_started_at: backendStarted,
             uptime_secs: 5,
             restart_supported: true,
+            soft_restart_supported: true,
         },
         daemon: {
             configured: true,
@@ -53,6 +54,18 @@ describe('adminPanelUtils', () => {
         expect(hasRestarted(null, 'backend', null, requestedAt)).toBe(false);
         expect(hasRestarted(status('2026-10-21T12:00:01Z', null), 'daemon', null, requestedAt)).toBe(false);
         expect(serviceStartedAt(status('not a date', null), 'backend')).toBeNull();
+    });
+
+    it('detects backend soft and service restarts from service start time', () => {
+        const previous = new Date('2026-10-21T12:00:00Z');
+        const softRestarted = status('2026-10-21T12:00:05Z', null);
+        expect(hasRestarted(softRestarted, 'backend', previous, requestedAt)).toBe(true);
+
+        const serviceRestarted = status('2026-10-21T12:00:10Z', null);
+        serviceRestarted.backend.pid = 3;
+        serviceRestarted.backend.process_started_at = '2026-10-21T12:00:10Z';
+        expect(hasRestarted(serviceRestarted, 'backend', previous, requestedAt)).toBe(true);
+        expect(hasRestarted(status(previous.toISOString(), null), 'backend', previous, requestedAt)).toBe(false);
     });
 
     it('formats uptime compactly', () => {
