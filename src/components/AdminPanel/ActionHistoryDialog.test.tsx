@@ -25,6 +25,11 @@ function render(entries: AdminActionEntry[], adminNames: Record<string, string> 
         actions: [
             { id: 2, key: 'daemon', choices: ['restart', 'soft_restart'], modifiers: ['force'] },
             { id: 3, key: 'game_server', choices: ['start', 'stop', 'restart'], modifiers: [] },
+            { id: 4, key: 'map', choices: ['install', 'update', 'delete', 'update_all'], modifiers: [] },
+            { id: 5, key: 'bind', choices: ['create', 'update', 'delete'], modifiers: [] },
+            { id: 6, key: 'bind_suggestion', choices: ['create', 'update', 'delete'], modifiers: [] },
+            { id: 7, key: 'command', choices: ['create', 'update', 'delete'], modifiers: [] },
+            { id: 8, key: 'map_suggestion', choices: ['accept', 'deny'], modifiers: [] },
         ],
     };
     return renderToStaticMarkup(
@@ -64,6 +69,39 @@ describe('IRC-style admin history messages', () => {
         expect(text(markup)).toContain('(Accepted) (Forced restart)');
         expect(markup).toContain('<details>');
         expect(text(markup)).toContain('ksd.service');
+    });
+
+    it('shows map names and safe links before the collapsed additional data', () => {
+        const markup = render([entry({ action_id: 4, choice: 'delete', additional_data: {
+            name: 'No Mercy Rehab', url: 'https://steamcommunity.com/sharedfiles/filedetails/?id=123',
+            before: { id: 42, name: 'No Mercy Rehab', version: '1.0' }, after: null,
+        } })], { '76561198000000001': 'SATANIXON' });
+        const message = text(markup.split('<details>')[0]);
+        expect(message).toContain('SATANIXON removed a map: No Mercy Rehab.');
+        expect(markup).toContain('href="https://steamcommunity.com/sharedfiles/filedetails/?id=123"');
+        expect(markup).toContain('Additional data');
+        expect(markup).not.toContain('<details open');
+        const unsafe = render([entry({ action_id: 4, choice: 'install', additional_data: {
+            name: '<script>map</script>', url: 'javascript:alert(1)',
+        } })]);
+        expect(unsafe).not.toContain('href="javascript:');
+        expect(unsafe).not.toContain('<script>');
+    });
+
+    it('formats content mutations and no-change updates', () => {
+        const markup = render([
+            entry({ id: 1, action_id: 5, choice: 'delete', additional_data: { before: { author: 'Author', text: 'Full bind contents' } } }),
+            entry({ id: 2, action_id: 6, choice: 'update' }),
+            entry({ id: 3, action_id: 7, choice: 'create' }),
+            entry({ id: 4, action_id: 8, choice: 'deny', additional_data: { name: 'No Mercy Rehab' } }),
+            entry({ id: 5, action_id: 4, choice: 'update', outcome: 'unchanged', additional_data: { name: 'No Mercy Rehab' } }),
+        ], { '76561198000000001': 'SATANIXON' });
+        expect(text(markup)).toContain('SATANIXON removed a Hall of Fame bind');
+        expect(text(markup)).toContain('SATANIXON updated a bind suggestion');
+        expect(text(markup)).toContain('SATANIXON created a command');
+        expect(text(markup)).toContain('SATANIXON rejected a map suggestion: No Mercy Rehab.');
+        expect(text(markup)).toContain('checked a map for updates: No Mercy Rehab. (No changes)');
+        expect(text(markup)).toContain('Full bind contents');
     });
 
     it('uses a readable fallback and escapes Steam nicknames', () => {

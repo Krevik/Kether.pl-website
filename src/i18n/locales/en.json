@@ -286,19 +286,44 @@
                 "start": "started {{target}}",
                 "stop": "stopped {{target}}",
                 "restart": "restarted {{target}}",
-                "soft_restart": "soft-restarted {{target}}"
+                "soft_restart": "soft-restarted {{target}}",
+                "create": "created {{target}}",
+                "update": "updated {{target}}",
+                "delete": "removed {{target}}",
+                "install": "installed {{target}}",
+                "update_all": "updated {{target}}",
+                "accept": "accepted {{target}}",
+                "deny": "rejected {{target}}"
             },
             "requested": {
                 "start": "requested to start {{target}}",
                 "stop": "requested to stop {{target}}",
                 "restart": "requested to restart {{target}}",
-                "soft_restart": "requested to soft-restart {{target}}"
+                "soft_restart": "requested to soft-restart {{target}}",
+                "create": "requested to create {{target}}",
+                "update": "requested to update {{target}}",
+                "delete": "requested to remove {{target}}",
+                "install": "requested to install {{target}}",
+                "update_all": "requested to update {{target}}",
+                "accept": "requested to accept {{target}}",
+                "deny": "requested to reject {{target}}"
             },
             "failed": {
                 "start": "failed to start {{target}}",
                 "stop": "failed to stop {{target}}",
                 "restart": "failed to restart {{target}}",
-                "soft_restart": "failed to soft-restart {{target}}"
+                "soft_restart": "failed to soft-restart {{target}}",
+                "create": "failed to create {{target}}",
+                "update": "failed to update {{target}}",
+                "delete": "failed to remove {{target}}",
+                "install": "failed to install {{target}}",
+                "update_all": "failed to update {{target}}",
+                "accept": "failed to accept {{target}}",
+                "deny": "failed to reject {{target}}"
+            },
+            "unchanged": {
+                "update": "checked {{target}} for updates",
+                "update_all": "checked {{target}} for updates"
             }
         },
         "actionHistory": "Action history",
@@ -313,7 +338,13 @@
         "historyTargets": {
             "backend": "the backend server",
             "daemon": "the KetherDaemon",
-            "game_server": "the L4D2 game server"
+            "game_server": "the L4D2 game server",
+            "map": "a map",
+            "maps": "maps",
+            "bind": "a Hall of Fame bind",
+            "bind_suggestion": "a bind suggestion",
+            "command": "a command",
+            "map_suggestion": "a map suggestion"
         },
         "historyChoices": {
             "start": "Start",
@@ -325,7 +356,8 @@
             "requested": "Requested",
             "accepted": "Accepted",
             "completed": "Completed",
-            "failed": "Failed"
+            "failed": "Failed",
+            "unchanged": "No changes"
         },
         "title": "Admin Panel",
         "description": "Maintenance tools for the Kether.pl services. Only admins can see this page.",

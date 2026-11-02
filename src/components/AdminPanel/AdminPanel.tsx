@@ -333,7 +333,6 @@ export default function AdminPanel() {
                                 />
                                 <Button
                                     label={`📓 ${tr.actionHistory}`}
-                                    icon="pi pi-history"
                                     className="app-focus-ring admin-panel__btn-refresh"
                                     onClick={() => setHistoryVisible(true)}
                                 />

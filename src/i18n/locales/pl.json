@@ -286,19 +286,44 @@
                 "start": "uruchomił(a) {{target}}",
                 "stop": "zatrzymał(a) {{target}}",
                 "restart": "zrestartował(a) {{target}}",
-                "soft_restart": "wykonał(a) miękki restart: {{target}}"
+                "soft_restart": "wykonał(a) miękki restart: {{target}}",
+                "create": "dodał(a) {{target}}",
+                "update": "zmienił(a) {{target}}",
+                "delete": "usunął(ęła) {{target}}",
+                "install": "zainstalował(a) {{target}}",
+                "update_all": "zaktualizował(a) {{target}}",
+                "accept": "przyjął(ęła) {{target}}",
+                "deny": "odrzucił(a) {{target}}"
             },
             "requested": {
                 "start": "zażądał(a) uruchomienia: {{target}}",
                 "stop": "zażądał(a) zatrzymania: {{target}}",
                 "restart": "zażądał(a) restartu: {{target}}",
-                "soft_restart": "zażądał(a) miękkiego restartu: {{target}}"
+                "soft_restart": "zażądał(a) miękkiego restartu: {{target}}",
+                "create": "zażądał(a) dodania: {{target}}",
+                "update": "zażądał(a) zmiany: {{target}}",
+                "delete": "zażądał(a) usunięcia: {{target}}",
+                "install": "zażądał(a) instalacji: {{target}}",
+                "update_all": "zażądał(a) aktualizacji: {{target}}",
+                "accept": "zażądał(a) przyjęcia: {{target}}",
+                "deny": "zażądał(a) odrzucenia: {{target}}"
             },
             "failed": {
                 "start": "nie zdołał(a) uruchomić: {{target}}",
                 "stop": "nie zdołał(a) zatrzymać: {{target}}",
                 "restart": "nie zdołał(a) zrestartować: {{target}}",
-                "soft_restart": "nie zdołał(a) wykonać miękkiego restartu: {{target}}"
+                "soft_restart": "nie zdołał(a) wykonać miękkiego restartu: {{target}}",
+                "create": "nie zdołał(a) dodać: {{target}}",
+                "update": "nie zdołał(a) zmienić: {{target}}",
+                "delete": "nie zdołał(a) usunąć: {{target}}",
+                "install": "nie zdołał(a) zainstalować: {{target}}",
+                "update_all": "nie zdołał(a) zaktualizować: {{target}}",
+                "accept": "nie zdołał(a) przyjąć: {{target}}",
+                "deny": "nie zdołał(a) odrzucić: {{target}}"
+            },
+            "unchanged": {
+                "update": "sprawdził(a) aktualizacje: {{target}}",
+                "update_all": "sprawdził(a) aktualizacje: {{target}}"
             }
         },
         "actionHistory": "Historia działań",
@@ -313,7 +338,13 @@
         "historyTargets": {
             "backend": "serwer backendowy",
             "daemon": "KetherDaemon",
-            "game_server": "serwer gry L4D2"
+            "game_server": "serwer gry L4D2",
+            "map": "mapę",
+            "maps": "mapy",
+            "bind": "bind w galerii sław",
+            "bind_suggestion": "propozycję bindu",
+            "command": "komendę",
+            "map_suggestion": "propozycję mapy"
         },
         "historyChoices": {
             "start": "Uruchomienie",
@@ -325,7 +356,8 @@
             "requested": "Zażądano",
             "accepted": "Przyjęto",
             "completed": "Wykonano",
-            "failed": "Niepowodzenie"
+            "failed": "Niepowodzenie",
+            "unchanged": "Bez zmian"
         },
         "title": "Panel Admina",
         "description": "Narzędzia serwisowe usług Kether.pl. Tę stronę widzą tylko administratorzy.",

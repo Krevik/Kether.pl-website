@@ -8,6 +8,22 @@ interface ActionHistoryDialogProps {
     onHide: () => void;
 }
 
+function mapActionDetails(data: unknown): { name: string; url: string | null } | null {
+    if (!data || typeof data !== 'object' || !('name' in data) || typeof data.name !== 'string' || !data.name.trim()) {
+        return null;
+    }
+    let url: string | null = null;
+    if ('url' in data && typeof data.url === 'string') {
+        try {
+            const parsed = new URL(data.url);
+            if (parsed.protocol === 'https:' || parsed.protocol === 'http:') url = parsed.href;
+        } catch {
+            url = null;
+        }
+    }
+    return { name: data.name, url };
+}
+
 export function ActionHistoryMessages({ history }: { history: AdminActionHistory }) {
     const tr = useAdminPanelTranslations();
     const { currentLanguage } = useTranslations();
@@ -19,7 +35,9 @@ export function ActionHistoryMessages({ history }: { history: AdminActionHistory
                 const timestamp = new Date(entry.unix_time * 1000);
                 const validTimestamp = !Number.isNaN(timestamp.getTime());
                 const nickname = history.admin_names?.[entry.steam_id]?.trim() || tr.historyUnknownAdmin;
-                const target = tr.historyTarget(definition?.key ?? String(entry.action_id));
+                const target = tr.historyTarget(entry.choice === 'update_all' ? 'maps' : definition?.key ?? String(entry.action_id));
+                const mapDetails = definition && ['map', 'map_suggestion'].includes(definition.key)
+                    ? mapActionDetails(entry.additional_data) : null;
                 return (
                     <li className={`admin-action-history__entry admin-action-history__entry--${entry.outcome}`} key={entry.id}>
                         <time dateTime={validTimestamp ? timestamp.toISOString() : undefined}>
@@ -32,6 +50,10 @@ export function ActionHistoryMessages({ history }: { history: AdminActionHistory
                             href={`https://steamcommunity.com/profiles/${encodeURIComponent(entry.steam_id)}`}
                             target="_blank" rel="noopener noreferrer">{nickname}</a>{' '}
                         {tr.historyMessage(entry.choice, entry.outcome, target)}
+                        {mapDetails && <>{': '}{mapDetails.url ? (
+                            <a className="admin-action-history__nickname" href={mapDetails.url}
+                                target="_blank" rel="noopener noreferrer">{mapDetails.name}</a>
+                        ) : mapDetails.name}{'.'}</>}
                         {entry.outcome !== 'completed' && (
                             <span className="admin-action-history__outcome"> ({tr.historyOutcome(entry.outcome)})</span>
                         )}

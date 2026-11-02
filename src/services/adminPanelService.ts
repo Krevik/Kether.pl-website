@@ -39,8 +39,9 @@ export interface AdminStatus {
     daemon: DaemonReport;
 }
 
-export type AdminActionChoice = 'start' | 'stop' | 'restart' | 'soft_restart';
-export type AdminActionOutcome = 'requested' | 'accepted' | 'completed' | 'failed';
+export type AdminActionChoice = 'start' | 'stop' | 'restart' | 'soft_restart'
+    | 'create' | 'update' | 'delete' | 'install' | 'update_all' | 'accept' | 'deny';
+export type AdminActionOutcome = 'requested' | 'accepted' | 'completed' | 'failed' | 'unchanged';
 
 export interface AdminActionDefinition {
     id: number;
