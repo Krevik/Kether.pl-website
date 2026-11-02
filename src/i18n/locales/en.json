@@ -280,6 +280,53 @@
         "steamTooltip": "Steam chat group invitation"
     },
     "adminPanel": {
+        "historyUnknownAdmin": "Unknown admin",
+        "historyMessages": {
+            "completed": {
+                "start": "started {{target}}",
+                "stop": "stopped {{target}}",
+                "restart": "restarted {{target}}",
+                "soft_restart": "soft-restarted {{target}}"
+            },
+            "requested": {
+                "start": "requested to start {{target}}",
+                "stop": "requested to stop {{target}}",
+                "restart": "requested to restart {{target}}",
+                "soft_restart": "requested to soft-restart {{target}}"
+            },
+            "failed": {
+                "start": "failed to start {{target}}",
+                "stop": "failed to stop {{target}}",
+                "restart": "failed to restart {{target}}",
+                "soft_restart": "failed to soft-restart {{target}}"
+            }
+        },
+        "actionHistory": "Action history",
+        "historyLoading": "Loading action history…",
+        "historyLoadFailed": "Failed to load action history",
+        "historyEmpty": "No admin actions recorded yet.",
+        "historyDisabled": "Action logging is disabled. Existing history is still available.",
+        "historyAcceptedHint": "\"Accepted\" means the restart request was accepted; it does not confirm the service is online again.",
+        "historyDetails": "Additional data",
+        "historyForced": "Forced restart",
+        "historyCount": "{{count}} entries shown · maximum {{maximum}} · newest first",
+        "historyTargets": {
+            "backend": "the backend server",
+            "daemon": "the KetherDaemon",
+            "game_server": "the L4D2 game server"
+        },
+        "historyChoices": {
+            "start": "Start",
+            "stop": "Stop",
+            "restart": "Restart",
+            "soft_restart": "Soft restart"
+        },
+        "historyOutcomes": {
+            "requested": "Requested",
+            "accepted": "Accepted",
+            "completed": "Completed",
+            "failed": "Failed"
+        },
         "title": "Admin Panel",
         "description": "Maintenance tools for the Kether.pl services. Only admins can see this page.",
         "notAdmin": "This page is only available to admins. Log in with an admin Steam account.",

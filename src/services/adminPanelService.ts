@@ -39,6 +39,36 @@ export interface AdminStatus {
     daemon: DaemonReport;
 }
 
+export type AdminActionChoice = 'start' | 'stop' | 'restart' | 'soft_restart';
+export type AdminActionOutcome = 'requested' | 'accepted' | 'completed' | 'failed';
+
+export interface AdminActionDefinition {
+    id: number;
+    key: string;
+    choices: AdminActionChoice[];
+    modifiers: string[];
+}
+
+export interface AdminActionEntry {
+    id: number;
+    steam_id: string;
+    action_id: number;
+    choice: AdminActionChoice;
+    modifiers: Record<string, boolean>;
+    additional_data: unknown;
+    unix_time: number;
+    outcome: AdminActionOutcome;
+    error: string | null;
+}
+
+export interface AdminActionHistory {
+    enabled: boolean;
+    maximum: number;
+    actions: AdminActionDefinition[];
+    entries: AdminActionEntry[];
+    admin_names?: Record<string, string>;
+}
+
 export interface RestartAccepted {
     requested_at: string;
 }
@@ -94,6 +124,11 @@ export async function tryFetchAdminStatus(): Promise<AdminStatus | null> {
 export async function fetchAdminStatus(): Promise<AdminStatus> {
     const response = await apiFetch(adminUrl(apiPaths.ADMIN_STATUS), { auth: true });
     return readJson<AdminStatus>(response);
+}
+
+export async function fetchAdminActionHistory(): Promise<AdminActionHistory> {
+    const response = await apiFetch(adminUrl(apiPaths.ADMIN_ACTIONS), { auth: true });
+    return readJson<AdminActionHistory>(response);
 }
 
 export async function restartBackend(): Promise<RestartAccepted> {

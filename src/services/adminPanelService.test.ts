@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { apiFetch } from '../utils/apiClient';
-import { AdminApiError, restartBackend, restartDaemon, softRestartBackend, softRestartDaemon } from './adminPanelService';
+import { AdminApiError, fetchAdminActionHistory, restartBackend, restartDaemon, softRestartBackend, softRestartDaemon } from './adminPanelService';
 
 vi.mock('../utils/apiClient', () => ({ apiFetch: vi.fn() }));
 vi.mock('../utils/authUtils', () => ({ handleAuthError: () => false }));
@@ -51,5 +51,26 @@ describe('backend restart requests', () => {
     it.each([restartBackend, softRestartBackend])('reports unavailable restarts for %s', async (restart) => {
         vi.mocked(apiFetch).mockResolvedValue(Response.json({ error: 'Restart unavailable' }, { status: 503 }));
         await expect(restart()).rejects.toMatchObject({ status: 503, message: 'Restart unavailable' });
+    });
+});
+
+describe('admin action history', () => {
+    it('fetches history with authentication and preserves SteamID64 strings', async () => {
+        const history = {
+            enabled: true,
+            maximum: 15,
+            actions: [{ id: 1, key: 'backend', choices: ['restart'], modifiers: [] }],
+            admin_names: { '76561198000000001': 'Krevik' },
+            entries: [{ id: 1, steam_id: '76561198000000001', action_id: 1, choice: 'restart',
+                modifiers: {}, additional_data: null, unix_time: 1793577600, outcome: 'accepted', error: null }],
+        };
+        vi.mocked(apiFetch).mockResolvedValue(Response.json(history));
+        await expect(fetchAdminActionHistory()).resolves.toEqual(history);
+        expect(apiFetch).toHaveBeenCalledWith(expect.stringContaining('/api/admin/actions'), { auth: true });
+    });
+
+    it('reports history loading errors', async () => {
+        vi.mocked(apiFetch).mockResolvedValue(Response.json({ error: 'History unavailable' }, { status: 500 }));
+        await expect(fetchAdminActionHistory()).rejects.toMatchObject({ status: 500, message: 'History unavailable' });
     });
 });

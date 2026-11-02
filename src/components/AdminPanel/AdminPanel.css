@@ -536,3 +536,72 @@
 		flex: 1 1 auto;
 	}
 }
+
+.admin-panel__toolbar-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.55rem;
+}
+
+.admin-action-history {
+	list-style: none;
+	padding: 0.65rem 0.8rem;
+	margin: 0 0 1rem;
+	border: 1px solid var(--color-border-subtle);
+	border-radius: var(--radius-md);
+	background: rgba(9, 12, 19, 0.55);
+	font-family: ui-monospace, 'Cascadia Code', monospace;
+	font-size: 0.8rem;
+	line-height: 1.65;
+}
+
+.admin-action-history__entry {
+	padding: 0.12rem 0;
+	overflow-wrap: anywhere;
+}
+
+.admin-action-history__entry time,
+.admin-action-history__outcome,
+.admin-action-history__hint {
+	color: var(--color-text-muted);
+}
+
+.admin-action-history__hint {
+	font-size: 0.8rem;
+	margin: 0.35rem 0 0.65rem;
+}
+
+.admin-action-history__entry--failed,
+.admin-action-history__error {
+	color: #ff9a9a;
+}
+
+.admin-action-history__nickname {
+	color: var(--color-text-primary);
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.admin-action-history__nickname:hover {
+	color: var(--color-accent-hover);
+	text-decoration: underline;
+}
+
+.admin-action-history__entry details,
+.admin-action-history__entry summary {
+	display: inline;
+}
+
+.admin-action-history__entry summary {
+	margin-left: 0.5rem;
+	color: var(--color-text-muted);
+	cursor: pointer;
+	text-decoration: underline dotted;
+}
+
+.admin-action-history__entry pre {
+	white-space: pre-wrap;
+	overflow-wrap: anywhere;
+	font-size: inherit;
+	margin: 0.25rem 0 0.5rem;
+}

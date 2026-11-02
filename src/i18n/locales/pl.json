@@ -280,6 +280,53 @@
         "steamTooltip": "Zaproszenie do grupy czatu Steam"
     },
     "adminPanel": {
+        "historyUnknownAdmin": "Nieznany administrator",
+        "historyMessages": {
+            "completed": {
+                "start": "uruchomił(a) {{target}}",
+                "stop": "zatrzymał(a) {{target}}",
+                "restart": "zrestartował(a) {{target}}",
+                "soft_restart": "wykonał(a) miękki restart: {{target}}"
+            },
+            "requested": {
+                "start": "zażądał(a) uruchomienia: {{target}}",
+                "stop": "zażądał(a) zatrzymania: {{target}}",
+                "restart": "zażądał(a) restartu: {{target}}",
+                "soft_restart": "zażądał(a) miękkiego restartu: {{target}}"
+            },
+            "failed": {
+                "start": "nie zdołał(a) uruchomić: {{target}}",
+                "stop": "nie zdołał(a) zatrzymać: {{target}}",
+                "restart": "nie zdołał(a) zrestartować: {{target}}",
+                "soft_restart": "nie zdołał(a) wykonać miękkiego restartu: {{target}}"
+            }
+        },
+        "actionHistory": "Historia działań",
+        "historyLoading": "Wczytywanie historii działań…",
+        "historyLoadFailed": "Nie udało się wczytać historii działań",
+        "historyEmpty": "Nie zapisano jeszcze działań administratorów.",
+        "historyDisabled": "Logowanie działań jest wyłączone. Zapisana historia jest nadal dostępna.",
+        "historyAcceptedHint": "\"Przyjęto\" oznacza przyjęcie żądania restartu, a nie potwierdzenie ponownej dostępności usługi.",
+        "historyDetails": "Dodatkowe dane",
+        "historyForced": "Wymuszony restart",
+        "historyCount": "Liczba wpisów: {{count}} · limit: {{maximum}} · od najnowszych",
+        "historyTargets": {
+            "backend": "serwer backendowy",
+            "daemon": "KetherDaemon",
+            "game_server": "serwer gry L4D2"
+        },
+        "historyChoices": {
+            "start": "Uruchomienie",
+            "stop": "Zatrzymanie",
+            "restart": "Restart",
+            "soft_restart": "Miękki restart"
+        },
+        "historyOutcomes": {
+            "requested": "Zażądano",
+            "accepted": "Przyjęto",
+            "completed": "Wykonano",
+            "failed": "Niepowodzenie"
+        },
         "title": "Panel Admina",
         "description": "Narzędzia serwisowe usług Kether.pl. Tę stronę widzą tylko administratorzy.",
         "notAdmin": "Ta strona jest dostępna tylko dla administratorów. Zaloguj się kontem Steam administratora.",

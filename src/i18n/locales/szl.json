@@ -280,6 +280,53 @@
         "steamTooltip": "Zaproszenie do grupy czatu Steam"
     },
     "adminPanel": {
+        "historyUnknownAdmin": "Niyznany administratōr",
+        "historyMessages": {
+            "completed": {
+                "start": "ôdpolił(a) {{target}}",
+                "stop": "zatrzimoł(a) {{target}}",
+                "restart": "zrestartowoł(a) {{target}}",
+                "soft_restart": "zrobił(a) miynkki restart: {{target}}"
+            },
+            "requested": {
+                "start": "zażōndoł(a) ôdpolynio: {{target}}",
+                "stop": "zażōndoł(a) zatrzimanio: {{target}}",
+                "restart": "zażōndoł(a) restartu: {{target}}",
+                "soft_restart": "zażōndoł(a) miynkkigo restartu: {{target}}"
+            },
+            "failed": {
+                "start": "niy zdołoł(a) ôdpolić: {{target}}",
+                "stop": "niy zdołoł(a) zatrzimać: {{target}}",
+                "restart": "niy zdołoł(a) zrestartować: {{target}}",
+                "soft_restart": "niy zdołoł(a) zrobić miynkkigo restartu: {{target}}"
+            }
+        },
+        "actionHistory": "Historyjŏ działań",
+        "historyLoading": "Wczytowanie historyje działań…",
+        "historyLoadFailed": "Niy szło wczytać historyje działań",
+        "historyEmpty": "Niy ma jeszcze zapisanych działań administratōrōw.",
+        "historyDisabled": "Logowanie działań je wyłōnczōne. Zapisanŏ historyjŏ je dalij dostympnŏ.",
+        "historyAcceptedHint": "Przijynto ôznaczŏ przijyncie żōndanio restartu, a niy potwierdzynie, że usuga je zaś dostympnŏ.",
+        "historyDetails": "Dodatkowe dane",
+        "historyForced": "Wymuszōny restart",
+        "historyCount": "Wpisōw: {{count}} · limit: {{maximum}} · ôd nojnow­szych",
+        "historyTargets": {
+            "backend": "serwer backendu",
+            "daemon": "KetherDaemon",
+            "game_server": "serwer gry L4D2"
+        },
+        "historyChoices": {
+            "start": "Ôdpolynie",
+            "stop": "Zatrzimanie",
+            "restart": "Restart",
+            "soft_restart": "Miynkki restart"
+        },
+        "historyOutcomes": {
+            "requested": "Zażōndano",
+            "accepted": "Przijynto",
+            "completed": "Zrobiōno",
+            "failed": "Niy zdarziło sie"
+        },
         "title": "Panel Admina",
         "description": "Nŏrzyndzia serwisowe usług Kether.pl. Ta zajta widzom ino administratory.",
         "notAdmin": "Ta zajta je dostympno ino dlŏ administratorōw. Wloguj sie kōntym Steam administratora.",

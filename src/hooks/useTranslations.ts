@@ -91,6 +91,23 @@ export function useAdminPanelTranslations() {
     const { t } = useTranslation();
 
     return {
+        actionHistory: t('adminPanel.actionHistory'),
+        historyUnknownAdmin: t('adminPanel.historyUnknownAdmin'),
+        historyMessage: (choice: string, outcome: string, target: string) =>
+            t(`adminPanel.historyMessages.${outcome === 'accepted' ? 'completed' : outcome}.${choice}`, {
+                target, defaultValue: `${choice} ${target}`,
+            }),
+        historyLoading: t('adminPanel.historyLoading'),
+        historyLoadFailed: t('adminPanel.historyLoadFailed'),
+        historyEmpty: t('adminPanel.historyEmpty'),
+        historyDisabled: t('adminPanel.historyDisabled'),
+        historyAcceptedHint: t('adminPanel.historyAcceptedHint'),
+        historyDetails: t('adminPanel.historyDetails'),
+        historyForced: t('adminPanel.historyForced'),
+        historyCount: (count: number, maximum: number) => t('adminPanel.historyCount', { count, maximum }),
+        historyTarget: (target: string) => t(`adminPanel.historyTargets.${target}`, { defaultValue: target }),
+        historyChoice: (choice: string) => t(`adminPanel.historyChoices.${choice}`, { defaultValue: choice }),
+        historyOutcome: (outcome: string) => t(`adminPanel.historyOutcomes.${outcome}`, { defaultValue: outcome }),
         title: t('adminPanel.title'),
         description: t('adminPanel.description'),
         notAdmin: t('adminPanel.notAdmin'),

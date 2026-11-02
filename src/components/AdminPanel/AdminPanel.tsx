@@ -36,6 +36,7 @@ import {
     ServiceId,
     serviceStartedAt,
 } from './adminPanelUtils';
+import { ActionHistoryDialog } from './ActionHistoryDialog';
 import { GameServerCard, GameServerCardAction } from './GameServerCard';
 import { ServiceCard, ServiceDetail, ServiceState, uptimeDetails } from './ServiceCard';
 
@@ -59,6 +60,7 @@ export default function AdminPanel() {
     });
     const [confirmTarget, setConfirmTarget] = useState<ServiceId | null>(null);
     const [confirmSoftRestart, setConfirmSoftRestart] = useState(false);
+    const [historyVisible, setHistoryVisible] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     // Game server state
@@ -319,15 +321,23 @@ export default function AdminPanel() {
                     <Toolbar
                         className="mb-4 admin-panel__toolbar app-toolbar"
                         start={
-                            <Button
-                                label={`🔄 ${common.refresh}`}
-                                className="app-focus-ring admin-panel__btn-refresh"
-                                onClick={() => {
-                                    void loadStatus();
-                                    void loadGameServerStatus();
-                                }}
-                                loading={isLoading}
-                            />
+                            <div className="admin-panel__toolbar-actions">
+                                <Button
+                                    label={`🔄 ${common.refresh}`}
+                                    className="app-focus-ring admin-panel__btn-refresh"
+                                    onClick={() => {
+                                        void loadStatus();
+                                        void loadGameServerStatus();
+                                    }}
+                                    loading={isLoading}
+                                />
+                                <Button
+                                    label={`📓 ${tr.actionHistory}`}
+                                    icon="pi pi-history"
+                                    className="app-focus-ring admin-panel__btn-refresh"
+                                    onClick={() => setHistoryVisible(true)}
+                                />
+                            </div>
                         }
                         end={
                             lastUpdated ? (
@@ -418,6 +428,8 @@ export default function AdminPanel() {
                     </div>
                 </div>
             </div>
+
+            <ActionHistoryDialog visible={historyVisible} onHide={() => setHistoryVisible(false)} />
 
             <Dialog
                 visible={confirmTarget !== null}
