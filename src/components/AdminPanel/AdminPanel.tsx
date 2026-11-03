@@ -37,6 +37,7 @@ import {
     serviceStartedAt,
 } from './adminPanelUtils';
 import { ActionHistoryDialog } from './ActionHistoryDialog';
+import { GameServerActionDialog, ConfirmedGameServerAction } from './GameServerActionDialog';
 import { GameServerCard, GameServerCardAction } from './GameServerCard';
 import { ServiceCard, ServiceDetail, ServiceState, uptimeDetails } from './ServiceCard';
 
@@ -66,6 +67,7 @@ export default function AdminPanel() {
     // Game server state
     const [gameServerStatus, setGameServerStatus] = useState<GameServerStatus | null>(null);
     const [gameServerLoadError, setGameServerLoadError] = useState<string | null>(null);
+    const [confirmGameServerAction, setConfirmGameServerAction] = useState<ConfirmedGameServerAction | null>(null);
     const [gameServerActioning, setGameServerActioning] = useState<GameServerCardAction | null>(null);
 
     const mounted = useRef(true);
@@ -419,14 +421,25 @@ export default function AdminPanel() {
                                     loadError={gameServerLoadError}
                                     isActioning={gameServerActioning}
                                     onStart={() => void handleGameServerAction('start')}
-                                    onStop={() => void handleGameServerAction('stop')}
-                                    onRestart={() => void handleGameServerAction('restart')}
+                                    onStop={() => setConfirmGameServerAction('stop')}
+                                    onRestart={() => setConfirmGameServerAction('restart')}
                                 />
                             </div>
                         </section>
                     </div>
                 </div>
             </div>
+
+            <GameServerActionDialog
+                action={confirmGameServerAction}
+                isSubmitting={gameServerActioning !== null}
+                onHide={() => { if (!gameServerActioning) setConfirmGameServerAction(null); }}
+                onConfirm={async () => {
+                    if (!confirmGameServerAction || gameServerActioning) return;
+                    await handleGameServerAction(confirmGameServerAction);
+                    if (mounted.current) setConfirmGameServerAction(null);
+                }}
+            />
 
             <ActionHistoryDialog visible={historyVisible} onHide={() => setHistoryVisible(false)} />
 

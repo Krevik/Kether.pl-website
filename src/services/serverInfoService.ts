@@ -68,6 +68,24 @@ const fetchServerInfoWithRetry = (url: string) =>
         }
     );
 
+/** Fetch a fresh primary-server snapshot without using the HomePage's offline fallback. */
+export async function fetchPrimaryServerInfo(): Promise<ServerInfo> {
+    const result = await fetchServerInfoWithRetry(API_PATHS.SERVER_INFO);
+    if (!result.success || !result.data) {
+        throw new Error(result.error?.message ?? 'Server player status is unavailable');
+    }
+    const serverInfo = result.data;
+    const validCount = (value: unknown) =>
+        (typeof value === 'number' || (typeof value === 'string' && value.trim() !== '')) &&
+        Number.isInteger(Number(value)) && Number(value) >= 0;
+    if (!validCount(serverInfo.players) || !validCount(serverInfo.maxplayers) ||
+        !Array.isArray(serverInfo.playerdetails) ||
+        !serverInfo.playerdetails.every((player) => player && typeof player.name === 'string')) {
+        throw new Error('Server player status is unavailable');
+    }
+    return withComputedStatus(serverInfo);
+}
+
 export const serverInfoService = {
     useServerInfoLoadingService: () => {
         const serverInfo = useSelector(

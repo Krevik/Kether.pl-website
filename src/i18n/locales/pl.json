@@ -280,6 +280,12 @@
         "steamTooltip": "Zaproszenie do grupy czatu Steam"
     },
     "adminPanel": {
+        "gameServerStopConfirmTitle": "Zatrzymać serwer gry L4D2?",
+        "gameServerStopConfirm": "Zatrzymanie serwera gry L4D2 rozłączy wszystkich graczy. Przed kontynuowaniem upewnij się, że przypadkiem nie przerwiesz trwającego Ketherowego meczu.",
+        "gameServerRestartConfirm": "Restart serwera gry L4D2 rozłączy wszystkich graczy. Przed kontynuowaniem upewnij się, że przypadkiem nie przerwiesz trwającego Ketherowego meczu.",
+        "gameServerPlayersLoading": "Sprawdzanie obecnych graczy…",
+        "gameServerPlayersUnavailable": "Status graczy jest niedostępny. Przed kontynuowaniem sprawdź, czy trwa Ketherowy mecz.",
+        "gameServerPlayerNamesUnavailable": "Nicki graczy są niedostępne.",
         "historyUnknownAdmin": "Nieznany administrator",
         "historyMessages": {
             "completed": {

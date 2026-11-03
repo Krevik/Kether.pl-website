@@ -280,6 +280,12 @@
         "steamTooltip": "Steam chat group invitation"
     },
     "adminPanel": {
+        "gameServerStopConfirmTitle": "Stop the L4D2 game server?",
+        "gameServerStopConfirm": "Stopping the L4D2 game server will disconnect all players. Make sure you will not accidentally interrupt an ongoing Kether match before continuing.",
+        "gameServerRestartConfirm": "Restarting the L4D2 game server will disconnect all players. Make sure you will not accidentally interrupt an ongoing Kether match before continuing.",
+        "gameServerPlayersLoading": "Checking current players…",
+        "gameServerPlayersUnavailable": "Player status is unavailable. Check whether a Kether match is in progress before continuing.",
+        "gameServerPlayerNamesUnavailable": "Player nicknames are unavailable.",
         "historyUnknownAdmin": "Unknown admin",
         "historyMessages": {
             "completed": {

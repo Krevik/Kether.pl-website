@@ -280,6 +280,12 @@
         "steamTooltip": "Zaproszenie do grupy czatu Steam"
     },
     "adminPanel": {
+        "gameServerStopConfirmTitle": "Zatrzimać serwer gry L4D2?",
+        "gameServerStopConfirm": "Zatrzimanie serwera gry L4D2 rozłōnczy wszyskich grŏczy. Nim pōdziesz dalij, upewnij sie, że przipadkym niy przerwiesz trwajōncego Ketherowego szpilu.",
+        "gameServerRestartConfirm": "Restart serwera gry L4D2 rozłōnczy wszyskich grŏczy. Nim pōdziesz dalij, upewnij sie, że przipadkym niy przerwiesz trwajōncego Ketherowego szpilu.",
+        "gameServerPlayersLoading": "Sprŏwdzanie ôbecnych grŏczy…",
+        "gameServerPlayersUnavailable": "Status grŏczy je niydostympny. Nim pōdziesz dalij, sprŏwdź, eli trwŏ Ketherowy szpil.",
+        "gameServerPlayerNamesUnavailable": "Nicki grŏczy sōm niydostympne.",
         "historyUnknownAdmin": "Niyznany administratōr",
         "historyMessages": {
             "completed": {
